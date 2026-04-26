@@ -484,12 +484,18 @@
             border: 1px solid var(--mcp-rule) !important;
             border-radius: 0 !important;
             box-shadow: none !important;
-            transition: border-color .25s ease, transform .25s ease;
+            transition: transform .3s cubic-bezier(.34, 1.4, .64, 1),
+                        border-color .25s ease !important;
+            will-change: transform;
             &:hover {
-                border-color: var(--mcp-rule-strong) !important;
-                transform: translateY(-2px);
+                border-color: var(--mcp-accent) !important;
+                transform: translateY(-6px) !important;
                 box-shadow: none !important;
             }
+        }
+        // Wrapper around the card — needs overflow visible so the lift isn't clipped
+        .o_wsale_product_grid_wrapper {
+            overflow: visible !important;
         }
 
         // Add padding around the text block under each product image
