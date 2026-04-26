@@ -480,8 +480,10 @@
 }
 
 // ── Vertical-rule grid overlay (subtle 12-col guide; fixed to viewport) ──
-// Scoped to body:has(#wrapwrap) so it only renders on real frontend pages.
-body:has(#wrapwrap)::before {
+// Renders ONLY on real published frontend pages, NEVER in editor mode —
+// the fixed overlay + mix-blend-mode would obscure Odoo's editor widget chrome
+// (selection outlines, +/- buttons, snippet handles) and make them invisible.
+body:has(#wrapwrap):not(.editor_enable):not(.editor_has_snippets):not(.o_website_iframe_in_edit_mode)::before {
     content: "";
     position: fixed;
     inset: 0;
@@ -500,5 +502,5 @@ body:has(#wrapwrap)::before {
     mix-blend-mode: multiply;
 }
 @media (max-width: 768px) {
-    body:has(#wrapwrap)::before { display: none; }
+    body:has(#wrapwrap):not(.editor_enable):not(.editor_has_snippets):not(.o_website_iframe_in_edit_mode)::before { display: none; }
 }
