@@ -491,6 +491,32 @@
                 box-shadow: none !important;
             }
         }
+
+        // Add padding around the text block under each product image
+        // (Odoo 19 default has 0 padding — title/price stuck to left card edge)
+        .o_wsale_product_information,
+        .o_wsale_product_information_text {
+            padding: 14px 16px !important;
+        }
+        .o_wsale_product_sub {
+            padding: 0 16px 14px !important;
+        }
+        // Subdescription (small grey text)
+        .oe_subdescription, .oe_subdescription_wrapper {
+            padding: 0 4px;
+        }
+        // Product title link
+        .o_wsale_product_information a, .o_wsale_product_information_text a {
+            color: var(--mcp-ink) !important;
+            font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
+            font-weight: 400;
+            font-size: 18px;
+            &:hover { color: var(--mcp-accent) !important; }
+        }
+        // Price block at bottom
+        .product_price {
+            padding: 0 0 4px 0;
+        }
         .product_price, .product_price * {
             font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
         }
