@@ -432,6 +432,28 @@ div.rounded-circle.bg-primary {
     border-width: 2px !important;
 }
 
+// Override Bootstrap utility classes that fight the paper palette
+.card.bg-white,
+.card.border-0 {
+    background-color: var(--mcp-paper-2) !important;
+    border: 1px solid var(--mcp-rule) !important;
+}
+
+// Cards inside Odoo's grid_mode (o_grid_item) — force them to fill grid cell
+// so AGPL self-host vs Hosted comparison cards equalize regardless of inline grid-area heights.
+.o_grid_item {
+    display: flex !important;
+    flex-direction: column !important;
+    > .card,
+    > .card.h-100 {
+        flex: 1 1 auto !important;
+        height: auto !important;
+        min-height: 100% !important;
+    }
+    // Strip aggressive inline box-shadow that breaks the flat paper look
+    box-shadow: none !important;
+}
+
 // When parent is .row with .g-* — ensure column stretches so cards equalize
 .row.g-1 > [class*="col-"], .row.g-2 > [class*="col-"], .row.g-3 > [class*="col-"],
 .row.g-4 > [class*="col-"], .row.g-5 > [class*="col-"] {
