@@ -562,7 +562,7 @@
         background-color: var(--mcp-paper) !important;
     }
     // Add visible gap between left image card + right details card
-    .o_wsale_product_page .row.align-items-start {
+    .o_wsale_product_page #product_detail_main, .o_wsale_product_page .row.align-items-lg-start, .o_wsale_product_page .row.align-items-start {
         --bs-gutter-x: 0 !important;
         gap: 0 48px !important;
         flex-wrap: nowrap !important;
