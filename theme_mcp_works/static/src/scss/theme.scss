@@ -561,12 +561,20 @@
     .oe_website_sale {
         background-color: var(--mcp-paper) !important;
     }
+    // Add visible gap between left image card + right details card
+    .o_wsale_product_page .row.align-items-start {
+        --bs-gutter-x: 2rem;
+        gap: 0 32px;
+    }
     // Left image column — wrap as a paper card
     .o_wsale_product_images {
         background-color: var(--mcp-paper-2) !important;
         border: 1px solid var(--mcp-rule) !important;
         border-radius: 0 !important;
         padding: 16px !important;
+        // Don't let the image card stretch the row; right card auto-heights
+        align-self: flex-start !important;
+        flex: 0 0 auto !important;
     }
     // The product image itself + placeholder
     .product_detail_img,
@@ -576,13 +584,16 @@
         background-color: var(--mcp-paper-2) !important;
         border-radius: 0 !important;
     }
-    // Right details column — paper card
+    // Right details column — paper card, auto-height (no empty bottom)
     .o_wsale_product_details_content,
     #product_details {
         background-color: var(--mcp-paper-2) !important;
         border: 1px solid var(--mcp-rule) !important;
         border-radius: 0 !important;
         padding: 24px !important;
+        align-self: flex-start !important;
+        height: auto !important;
+        min-height: 0 !important;
     }
     // Section dividers
     .o_wsale_product_details_content_section {
@@ -646,11 +657,31 @@
         border: 1px solid var(--mcp-rule) !important;
         color: var(--mcp-ink) !important;
     }
-    // Wishlist heart button
-    .o_add_wishlist, .o_wishlist {
+    // Wishlist heart + compare buttons + outline-primary in product action row
+    .o_add_wishlist, .o_wishlist, .o_add_wishlist_dyn,
+    .o_wsale_product_action_row .btn-outline-primary,
+    .o_wsale_product_action_row .btn-light,
+    button[name="o_compare"], a[data-action="o_comparelist"] {
         border-radius: 0 !important;
         background-color: var(--mcp-paper-2) !important;
         border: 1px solid var(--mcp-rule) !important;
+        color: var(--mcp-ink) !important;
+        box-shadow: none !important;
+        &:hover {
+            background-color: var(--mcp-paper) !important;
+            border-color: var(--mcp-accent) !important;
+            color: var(--mcp-accent) !important;
+        }
+    }
+    // Action row container — no light strip behind buttons
+    .o_wsale_product_action_row,
+    .o_wsale_product_details_content_section_cta {
+        background-color: transparent !important;
+        gap: 8px;
+    }
+    // The whole CTA wrapper / row needs to inherit paper-2
+    .o_wsale_product_details_content_section_cta > * {
+        background-color: transparent !important;
     }
 }
 
