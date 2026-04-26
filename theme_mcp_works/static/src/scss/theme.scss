@@ -372,22 +372,78 @@ div.rounded-circle.bg-primary {
     }
 }
 
-// Cards
+// Cards — paper, sharp, hover lift + EQUAL HEIGHT layout (header / article / footer)
 .card {
     background-color: var(--mcp-paper-2) !important;
     border: 1px solid var(--mcp-rule) !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     transition: border-color .2s, transform .2s;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
     &:hover {
         border-color: var(--mcp-rule-strong) !important;
         transform: translateY(-2px);
     }
 }
 
+// .card-body acts as the flex container — header at top, article fills, footer pinned bottom
+.card .card-body {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+}
+
+// Last <a class="btn">, <button>, or any element with `mt-auto` sticks to bottom
+.card .card-body > .btn:last-child,
+.card .card-body > a.btn:last-child,
+.card .card-body > a[class*="btn-"]:last-child,
+.card .card-body > button:last-child,
+.card .card-body > .mt-auto:last-child {
+    margin-top: auto !important;
+}
+
+// If there's a price block + features list — ensure list grows, prices/title don't
+.card .card-body > h3,
+.card .card-body > h4,
+.card .card-body > h5,
+.card .card-body > .display-1,
+.card .card-body > .display-2,
+.card .card-body > .display-3,
+.card .card-body > .display-4,
+.card .card-body > .display-5,
+.card .card-body > .display-6,
+.card .card-body > hr,
+.card .card-body > .my-2,
+.card .card-body > .my-3 {
+    flex: 0 0 auto !important;
+}
+
+// Lists / paragraph blocks — grow to push button down (only when no explicit mt-auto follower)
+.card .card-body > ul:not(:last-child),
+.card .card-body > .list-unstyled:not(:last-child),
+.card .card-body > p:not(:last-child) {
+    flex: 1 1 auto !important;
+}
+
 .card.border-primary {
     border-color: var(--mcp-accent) !important;
     border-width: 2px !important;
+}
+
+// When parent is .row with .g-* — ensure column stretches so cards equalize
+.row.g-1 > [class*="col-"], .row.g-2 > [class*="col-"], .row.g-3 > [class*="col-"],
+.row.g-4 > [class*="col-"], .row.g-5 > [class*="col-"] {
+    display: flex;
+    align-items: stretch;
+}
+.row.g-1 > [class*="col-"] > .card,
+.row.g-2 > [class*="col-"] > .card,
+.row.g-3 > [class*="col-"] > .card,
+.row.g-4 > [class*="col-"] > .card,
+.row.g-5 > [class*="col-"] > .card {
+    width: 100%;
 }
 
 // Badges
