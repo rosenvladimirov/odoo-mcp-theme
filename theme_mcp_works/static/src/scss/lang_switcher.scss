@@ -1,0 +1,358 @@
+// MCP Lang Switcher — connected dots + animated slider + bouncy flags
+
+.s_mcp_lang_switcher {
+    --lsw-flag-size:   28px;
+    --lsw-dot-size:    8px;
+    --lsw-gap:         44px;
+    --lsw-track-color: var(--mcp-rule, rgba(0,0,0,.18));
+    --lsw-active:      var(--mcp-accent, #c8431a);
+    --lsw-ink:         var(--mcp-ink, #2c2620);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--lsw-gap);
+    padding: 12px 20px;
+    position: relative;
+    user-select: none;
+
+    // Connecting track (line behind dots)
+    &::before {
+        content: "";
+        position: absolute;
+        left: 24px;
+        right: 24px;
+        top: 50%;
+        height: 1px;
+        background: var(--lsw-track-color);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    // Animated slider underneath the active flag
+    .lsw-slider {
+        position: absolute;
+        bottom: 4px;
+        left: 0;
+        width: var(--lsw-flag-size);
+        height: 3px;
+        background: var(--lsw-active);
+        border-radius: 2px;
+        transform: translateX(0);
+        transition: transform .45s cubic-bezier(.5, -.3, .25, 1.4),
+                    width .25s ease;
+        will-change: transform;
+        pointer-events: none;
+    }
+
+    // Each flag/language link
+    .lsw-item {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+        will-change: transform;
+
+        // The dot connecting to the line
+        .lsw-dot {
+            width: var(--lsw-dot-size);
+            height: var(--lsw-dot-size);
+            border-radius: 50%;
+            background: var(--mcp-paper, #f6f0e3);
+            border: 1.5px solid var(--lsw-track-color);
+            transition: background .25s, border-color .25s, transform .35s;
+        }
+
+        // Flag itself (emoji or img)
+        .lsw-flag {
+            font-size: var(--lsw-flag-size);
+            line-height: 1;
+            display: inline-block;
+            transition: transform .35s cubic-bezier(.34, 1.56, .64, 1),
+                        filter .25s;
+            filter: grayscale(.4) opacity(.7);
+        }
+
+        // Lang code label (small, below flag)
+        .lsw-code {
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 9px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--mcp-ink-3, #6a6258);
+            transition: color .25s;
+        }
+
+        // Hover: bounce + zoom + saturate flag
+        &:hover {
+            .lsw-flag {
+                transform: scale(1.35) translateY(-6px);
+                filter: grayscale(0) opacity(1);
+                animation: lsw-bounce .5s cubic-bezier(.36, 0, .66, -0.56);
+            }
+            .lsw-dot {
+                background: var(--lsw-active);
+                border-color: var(--lsw-active);
+                transform: scale(1.4);
+            }
+            .lsw-code {
+                color: var(--lsw-ink);
+            }
+        }
+
+        // Active state (current language)
+        &.is-active {
+            .lsw-flag {
+                filter: grayscale(0) opacity(1);
+                transform: scale(1.15);
+            }
+            .lsw-dot {
+                background: var(--lsw-active);
+                border-color: var(--lsw-active);
+                transform: scale(1.25);
+            }
+            .lsw-code {
+                color: var(--lsw-active);
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+// Bounce keyframe — flag jumps up on hover
+@keyframes lsw-bounce {
+    0%   { transform: scale(1)     translateY(0); }
+    35%  { transform: scale(1.35)  translateY(-12px); }
+    55%  { transform: scale(1.25)  translateY(-2px); }
+    75%  { transform: scale(1.4)   translateY(-8px); }
+    100% { transform: scale(1.35)  translateY(-6px); }
+}
+
+// Compact variant (navbar / under logo)
+.s_mcp_lang_switcher.lsw-compact {
+    --lsw-flag-size: 24px;
+    --lsw-gap:       22px;
+    padding: 4px 12px;
+    align-items: center;
+    .lsw-code { font-size: 9px; margin-top: 2px; }
+    .lsw-flag img {
+        transition: transform .35s cubic-bezier(.34, 1.56, .64, 1),
+                    filter .25s, box-shadow .25s;
+    }
+    .lsw-item:hover .lsw-flag img {
+        animation: lsw-bounce-flag .55s cubic-bezier(.36, 0, .66, -0.56);
+        box-shadow: 0 4px 8px rgba(74, 78, 181, 0.25);
+    }
+}
+
+// Bouncy flag-only animation for navbar variant
+@keyframes lsw-bounce-flag {
+    0%   { transform: scale(1)    translateY(0); }
+    25%  { transform: scale(1.4)  translateY(-10px) rotate(-8deg); }
+    50%  { transform: scale(1.2)  translateY(2px)   rotate(4deg); }
+    75%  { transform: scale(1.35) translateY(-6px)  rotate(-3deg); }
+    100% { transform: scale(1.3)  translateY(-4px)  rotate(0); }
+}
+
+// Navbar variant — anchor flush with navbar items
+.s_mcp_lang_switcher_navbar {
+    .lsw-item {
+        text-decoration: none;
+    }
+}
+
+// Hide Odoo's default language dropdown — header AND footer
+.o_header_language_selector,
+li.o_header_language_selector,
+header li[data-name="Language Selector"],
+.o_footer_copyright .js_language_selector,
+footer .js_language_selector {
+    display: none !important;
+}
+
+// ── MCP Lang dropdown — toggle in navbar, mega-menu-styled panel below ─────
+.mcp-lang-nav {
+    margin-right: 8px;
+    .nav-link.dropdown-toggle {
+        padding: 4px 10px !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        transition: background-color .2s;
+        &:hover {
+            background-color: rgba(74, 78, 181, 0.08) !important;
+        }
+        &::after { display: none; } // hide bootstrap caret
+    }
+    .mcp-lang-current img {
+        transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+    }
+    &:hover .mcp-lang-current img {
+        transform: translateY(-2px) scale(1.08);
+    }
+    .mcp-lang-current-code {
+        color: var(--mcp-accent, #4a4eb5) !important;
+        font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+        font-size: 11px !important;
+        text-transform: uppercase !important;
+        letter-spacing: .08em !important;
+    }
+}
+
+// Page-dim backdrop when lang dropdown is open (BEHIND dropdown)
+body:has(.mcp-lang-mega.show)::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 22, 61, 0.22);
+    backdrop-filter: blur(2px);
+    z-index: 998;
+    pointer-events: none;
+    animation: mcp-dim-in .25s ease-out both;
+}
+@keyframes mcp-dim-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+// The vertical timeline dropdown — fully transparent, just timeline + flags
+.dropdown-menu.mcp-lang-mega.o_mega_menu {
+    min-width: 0 !important;
+    max-width: none !important;
+    width: max-content !important;
+    padding: 16px 22px 16px 12px !important;
+    margin-top: 8px !important;
+
+    // Tiny semi-transparent paper wash + soft blur so the timeline reads cleanly
+    background: rgba(246, 240, 227, 0.18) !important;
+    background-color: rgba(246, 240, 227, 0.18) !important;
+    border: 1px solid rgba(246, 240, 227, 0.25) !important;
+    box-shadow: 0 4px 18px rgba(20, 22, 61, 0.12) !important;
+    z-index: 1500 !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transform-origin: top left;
+
+    // Inner switcher — VERTICAL timeline (line on LEFT, flags to its right)
+    .s_mcp_lang_switcher.mcp-lang-mega-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+        padding: 6px 0 6px 18px;
+        position: relative;
+
+        // Vertical timeline line on the LEFT (dotted indigo)
+        &::before {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 14px;
+            bottom: 14px;
+            width: 1.5px;
+            background: repeating-linear-gradient(
+                to bottom,
+                var(--mcp-accent, #4a4eb5) 0,
+                var(--mcp-accent, #4a4eb5) 3px,
+                transparent 3px,
+                transparent 7px
+            );
+            z-index: 0;
+            opacity: .55;
+        }
+
+        // Vertical slider — dot blob on the line that walks to active/hovered item
+        .lsw-slider {
+            position: absolute;
+            left: 8px;
+            top: 0;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: var(--mcp-accent);
+            border-radius: 50%;
+            transition: top .45s cubic-bezier(.5, -0.3, .25, 1.4);
+            z-index: 1;
+            box-shadow: 0 0 0 6px rgba(74, 78, 181, 0.20),
+                        0 0 0 1.5px var(--mcp-paper);
+        }
+
+        .lsw-item {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            padding-left: 18px;            // space for dot on the line
+            transition: transform .3s cubic-bezier(.34, 1.4, .64, 1);
+
+            .lsw-dot {
+                position: absolute;
+                left: -10px;                // sits on the line (which is at parent's left:8px)
+                top: 50%;
+                transform: translate(0, -50%);
+                width: 9px;
+                height: 9px;
+                background: var(--mcp-paper);
+                border: 1.5px solid var(--mcp-accent);
+                border-radius: 50%;
+                box-shadow: 0 0 0 3px var(--mcp-paper);
+                transition: background .25s, transform .25s;
+            }
+
+            .lsw-flag img {
+                width: 36px !important;
+                height: 26px !important;
+                border-radius: 3px;
+                border: 1px solid rgba(44, 38, 32, .25);
+                display: block;
+                background: var(--mcp-paper);
+                box-shadow: 0 2px 6px rgba(20, 22, 61, 0.15);
+                transition: transform .35s cubic-bezier(.34, 1.56, .64, 1),
+                            filter .25s, box-shadow .25s;
+                filter: grayscale(.4) opacity(.85);
+            }
+
+            .lsw-code {
+                font-family: 'JetBrains Mono', ui-monospace, monospace;
+                font-size: 11px;
+                letter-spacing: .12em;
+                text-transform: uppercase;
+                color: var(--mcp-paper);
+                opacity: .85;
+                min-width: 28px;
+                text-shadow: 0 1px 2px rgba(20, 22, 61, 0.4);
+                transition: color .25s;
+            }
+
+            &:hover {
+                transform: translateX(6px);
+                .lsw-flag img {
+                    transform: scale(1.2);
+                    filter: grayscale(0) opacity(1);
+                    box-shadow: 0 6px 14px rgba(74, 78, 181, .35);
+                    animation: lsw-bounce-flag .5s cubic-bezier(.36, 0, .66, -0.56);
+                }
+                .lsw-dot {
+                    background: var(--mcp-accent);
+                    transform: translate(0, -50%) scale(1.3);
+                }
+                .lsw-code { opacity: 1; color: #fff; }
+            }
+
+            &.is-active {
+                .lsw-flag img {
+                    filter: grayscale(0) opacity(1);
+                    transform: scale(1.05);
+                }
+                .lsw-dot { background: var(--mcp-accent); }
+                .lsw-code { opacity: 1; color: #fff; font-weight: 600; }
+            }
+        }
+    }
+}

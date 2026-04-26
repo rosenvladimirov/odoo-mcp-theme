@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="theme_mcp_works.s_mcp_hero" name="MCP Hero">
+        <section class="s_mcp_hero" data-snippet="s_mcp_hero" data-name="MCP Hero">
+            <div class="container-fluid px-4 px-lg-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="s_mcp_hero_meta">
+                            <span>Production-grade MCP server suite</span>
+                            <span class="ms-3">v2.24.0</span>
+                        </div>
+                        <h1 class="s_mcp_hero_title">
+                            One identity. <em>All servers.</em><br/>
+                            Zero token chaos.
+                        </h1>
+                        <p class="s_mcp_hero_lead">
+                            Single-purpose MCP wrappers don't scale. This one is built for <b>real production</b>:
+                            token-based auth across all endpoints, one identity / all servers, per-user profile
+                            isolation, and multi-tenant switching between dozens of Odoo databases on the fly.
+                        </p>
+                        <div class="s_mcp_hero_cta">
+                            <a href="/contactus" class="btn btn-primary">Заяви демо</a>
+                            <a href="#architecture" class="btn btn-outline-secondary">Архитектура</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="s_mcp_hero_terminal">
+                            <div class="term-line"><span class="term-prompt">$</span> mcp connect <span class="term-accent">poligroup19</span></div>
+                            <div class="term-line"><span class="term-dim"># auth ok · tenant: poligroup · 188 tools</span></div>
+                            <div class="term-line"><span class="term-prompt">$</span> mcp call <span class="term-accent">odoo_search_read</span> --model=sale.order --limit=3</div>
+                            <div class="term-line"><span class="term-dim">→ 3 records · 142ms</span></div>
+                            <div class="term-line"><span class="term-prompt">$</span> _<span style="opacity:.5">▍</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="theme_mcp_works.snippet_hero_options" inherit_id="website.snippets" name="MCP Hero — register">
+        <xpath expr="//snippets[@id='snippet_structure']" position="inside">
+            <t t-snippet="theme_mcp_works.s_mcp_hero" t-thumbnail="/theme_mcp_works/static/src/img/snippet_hero.svg"/>
+        </xpath>
+    </template>
+</odoo>

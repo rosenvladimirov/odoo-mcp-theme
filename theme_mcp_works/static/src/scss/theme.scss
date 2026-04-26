@@ -1,0 +1,473 @@
+// Theme MCP Works — frontend force-overrides on top of Odoo Bootstrap
+
+:root {
+    // Paper background (zip mockup) + ink text + INDIGO accent for links/menus
+    --mcp-paper:        #f6f0e3;     // warm cream paper
+    --mcp-paper-2:      #efe7d5;     // card bg, slightly deeper
+    --mcp-ink:          #2c2620;     // dark brown ink (text)
+    --mcp-ink-2:        #5a5147;     // secondary text
+    --mcp-ink-3:        #807769;     // muted/labels
+    --mcp-rule:         rgba(44, 38, 32, 0.14);
+    --mcp-rule-strong:  rgba(44, 38, 32, 0.28);
+    --mcp-accent:       #4a4eb5;     // indigo — used ONLY for links/menus/active states
+    --mcp-accent-2:     #6366d8;     // indigo hover
+    --mcp-accent-ink:   #f6f0e3;
+    --mcp-chip:         #ebe1cd;
+    --mcp-term-bg:      #14163d;     // dark indigo terminal
+    --mcp-term-ink:     #e8e3d0;
+    --mcp-term-dim:     #9a9486;
+    --mcp-term-green:   #a8d678;
+    --mcp-term-accent:  #d4ad5a;
+    --mcp-term-mauve:   #b48ad8;
+}
+
+// ── Global typography + paper palette ─────────────────────────────────────
+body,
+.o_main_navbar,
+#wrap,
+.s_cover,
+.s_text_block,
+.s_kickoff,
+.s_cta_card,
+.s_process_steps,
+.s_faq_collapse,
+.s_table_of_content {
+    background-color: var(--mcp-paper) !important;
+}
+
+body, .navbar, .footer, p, li, td, .lead {
+    font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif !important;
+    color: var(--mcp-ink);
+    font-feature-settings: "ss01", "cv11";
+}
+
+h1, h2, h3, h4, h5, h6,
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -.015em !important;
+    color: var(--mcp-ink) !important;
+}
+
+code, pre, kbd, samp, .mono {
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
+    font-feature-settings: "calt", "ss01";
+}
+
+// Navbar / menu links — INDIGO
+.o_main_navbar a,
+.navbar a.nav-link,
+.nav .nav-link,
+header a:not(.btn) {
+    color: var(--mcp-accent) !important;
+    transition: color .15s;
+    &:hover, &.active, &:focus {
+        color: var(--mcp-accent-2) !important;
+    }
+}
+
+// Mega menu — contained card style, left-aligned to parent menu item
+.dropdown-menu.o_mega_menu,
+.o_mega_menu {
+    background-color: var(--mcp-paper-2) !important;
+    color: var(--mcp-ink) !important;
+    border: 1.5px solid var(--mcp-accent) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 12px 32px rgba(29, 31, 74, 0.12) !important;
+    max-width: 1100px !important;
+    margin-top: 8px !important;
+    padding: 24px 32px !important;
+    overflow: hidden;
+    transform-origin: top left;
+    // Force left-edge alignment with parent menu item (override Popper centering)
+    left: 0 !important;
+    right: auto !important;
+    inset: auto auto auto 0 !important;
+
+    // Animation — runs once when .show class is added (Bootstrap toggles)
+    &.show {
+        animation: mcp-mega-in .35s cubic-bezier(.34, 1.4, .64, 1) both;
+    }
+
+    // Strip inner borders / shadows on nested SECTIONS only (avoid double-rect; don't touch dropdown toggles/buttons)
+    > section, > .container, > .container-fluid,
+    > div > section, > div > .container {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+
+    // Grid overlay (12-col guide) inside the menu
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image: linear-gradient(
+            to right,
+            transparent calc((100% / 12) - 1px),
+            var(--mcp-rule) calc((100% / 12) - 1px),
+            var(--mcp-rule) calc(100% / 12),
+            transparent calc(100% / 12)
+        );
+        background-size: calc(100% / 12) 100%;
+        opacity: .5;
+        z-index: 0;
+    }
+
+    > div, > .container, > section {
+        position: relative;
+        z-index: 1;
+    }
+
+    .o_mega_menu_title {
+        color: var(--mcp-ink-3) !important;
+        font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+        text-transform: uppercase !important;
+        font-size: 11px !important;
+        letter-spacing: .1em !important;
+    }
+    a {
+        color: var(--mcp-accent) !important;
+        text-decoration: none !important;
+        transition: color .15s, transform .15s;
+        &:hover {
+            color: var(--mcp-accent-2) !important;
+            transform: translateX(2px);
+        }
+        strong {
+            color: var(--mcp-ink) !important;
+            font-weight: 600;
+        }
+        small.text-muted, small {
+            color: var(--mcp-ink-3) !important;
+        }
+        svg {
+            color: var(--mcp-accent) !important;
+        }
+    }
+}
+
+// Generic dropdown menu — keep indigo accent on paper
+.dropdown-menu:not(.o_mega_menu) a {
+    color: var(--mcp-accent) !important;
+    &:hover { color: var(--mcp-accent-2) !important; background-color: var(--mcp-paper-2) !important; }
+}
+
+@keyframes mcp-mega-in {
+    0%   { opacity: 0; transform: translateY(-14px) scale(.97); }
+    60%  { opacity: 1; transform: translateY(2px)   scale(1.005); }
+    100% { opacity: 1; transform: translateY(0)     scale(1); }
+}
+
+// ── Numbered step markers — sharp square paper-style (anywhere on the site) ──
+.s_process_steps .rounded-circle,
+.s_process_steps .d-inline-flex.rounded-circle,
+.s_text_block .rounded-circle.bg-primary,
+.row .text-center > div.rounded-circle.bg-primary,
+div.d-inline-flex.rounded-circle.bg-primary,
+div.rounded-circle.bg-primary {
+    border-radius: 0 !important;
+    background: var(--mcp-paper-2) !important;
+    background-color: var(--mcp-paper-2) !important;
+    color: var(--mcp-accent) !important;
+    border: 2px solid var(--mcp-accent) !important;
+    font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
+    font-weight: 400 !important;
+    font-size: 28px !important;
+    letter-spacing: -.02em;
+    box-shadow: 4px 4px 0 var(--mcp-rule);
+    transition: transform .3s cubic-bezier(.34, 1.4, .64, 1),
+                background .25s, color .25s, box-shadow .25s;
+}
+
+.s_process_steps .text-center:hover .rounded-circle,
+.s_process_steps .col:hover .rounded-circle,
+.s_text_block .col:hover .rounded-circle.bg-primary,
+.row .col:hover .rounded-circle.bg-primary {
+    transform: translateY(-3px) rotate(-3deg);
+    background: var(--mcp-accent) !important;
+    background-color: var(--mcp-accent) !important;
+    color: var(--mcp-paper) !important;
+    box-shadow: 6px 6px 0 var(--mcp-rule-strong);
+}
+
+// ── Process Steps (legacy stub kept for clarity) ─────────────────────────
+.s_process_steps {
+    .rounded-circle,
+    .d-inline-flex.rounded-circle {
+        // Override Bootstrap circle → sharp paper-style square
+        border-radius: 0 !important;
+        background: var(--mcp-paper-2) !important;
+        background-color: var(--mcp-paper-2) !important;
+        color: var(--mcp-accent) !important;
+        border: 2px solid var(--mcp-accent) !important;
+        font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
+        font-weight: 400 !important;
+        font-size: 28px !important;
+        letter-spacing: -.02em;
+        position: relative;
+        transition: transform .3s cubic-bezier(.34, 1.4, .64, 1),
+                    background .25s, color .25s, box-shadow .25s;
+        // Subtle offset shadow for paper-poster feel
+        box-shadow: 4px 4px 0 var(--mcp-rule);
+    }
+    // Hover (also applied on parent step container)
+    .text-center:hover .rounded-circle,
+    .col:hover .rounded-circle {
+        transform: translateY(-3px) rotate(-3deg);
+        background: var(--mcp-accent) !important;
+        background-color: var(--mcp-accent) !important;
+        color: var(--mcp-paper) !important;
+        box-shadow: 6px 6px 0 var(--mcp-rule-strong);
+    }
+}
+
+// ── Tool Catalog (s_table_of_content) — every tool entry as paper card ────
+.s_table_of_content {
+
+    // Strip Odoo's o_cc / o_colored_level light grey wash on the section + main column
+    &.o_cc, &.o_colored_level,
+    .o_cc, .o_colored_level,
+    .table_of_content_main,
+    .table_of_content_main.o_cc,
+    .table_of_content_main.o_colored_level {
+        background-color: var(--mcp-paper) !important;
+        background: var(--mcp-paper) !important;
+    }
+
+    // Right-side content cards (each tool category = 1 card)
+    .table_of_content_main .s_text_block {
+        background-color: var(--mcp-paper-2) !important;
+        border: 1px solid var(--mcp-rule) !important;
+        border-radius: 0 !important;
+        padding: 24px 28px !important;
+        margin-bottom: 16px !important;
+        position: relative;
+        overflow: hidden;
+        transition: border-color .25s ease,
+                    transform .25s cubic-bezier(.34, 1.4, .64, 1),
+                    box-shadow .25s ease;
+
+        // Indigo accent stripe on left edge
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: var(--mcp-accent);
+            opacity: 0;
+            transition: opacity .25s, width .25s;
+        }
+
+        &:hover {
+            border-color: var(--mcp-accent) !important;
+            transform: translateY(-3px) translateX(4px);
+            box-shadow: -6px 6px 0 var(--mcp-accent) !important;
+            z-index: 2;
+            &::before {
+                opacity: 1;
+                width: 5px;
+            }
+            h2 svg {
+                transform: rotate(-8deg) scale(1.15);
+                transition: transform .3s cubic-bezier(.34, 1.4, .64, 1);
+            }
+        }
+
+        // Inner heading + paragraphs
+        h2 {
+            margin: 0 0 12px 0 !important;
+            font-size: 22px !important;
+            font-family: 'Instrument Serif', serif !important;
+            color: var(--mcp-ink) !important;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        hr { display: none !important; }
+        p { margin-bottom: 8px !important; line-height: 1.55; }
+        p strong.text-primary {
+            color: var(--mcp-accent) !important;
+            font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+            font-size: 11px !important;
+            text-transform: uppercase !important;
+            letter-spacing: .06em !important;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .badge.bg-success { background-color: #6f9258 !important; }
+    }
+
+    // Left sticky navbar — paper card style + indigo active link
+    .s_table_of_content_navbar {
+        background-color: var(--mcp-paper-2) !important;
+        border: 1px solid var(--mcp-rule) !important;
+        border-radius: 0 !important;
+        padding: 8px !important;
+
+        .table_of_content_link {
+            background: transparent !important;
+            border-radius: 0 !important;
+            color: var(--mcp-ink) !important;
+            font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+            font-size: 11px !important;
+            transition: background-color .2s, color .2s, padding-left .25s;
+
+            &:hover {
+                background-color: rgba(74, 78, 181, 0.08) !important;
+                color: var(--mcp-accent) !important;
+                padding-left: 18px !important;
+            }
+            &.active {
+                background-color: var(--mcp-accent) !important;
+                color: var(--mcp-paper) !important;
+                font-weight: 600;
+                svg { color: var(--mcp-paper) !important; }
+            }
+        }
+    }
+}
+
+// Buttons — sharp corners, mono uppercase, accent ink
+.btn-primary, a.btn-primary,
+.btn-warning, a.btn-warning {
+    background-color: var(--mcp-ink) !important;
+    border-color: var(--mcp-ink) !important;
+    color: var(--mcp-paper) !important;
+    border-radius: 0 !important;
+    font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+    font-size: 12px !important;
+    letter-spacing: .06em !important;
+    text-transform: uppercase !important;
+    padding: 12px 24px !important;
+    box-shadow: none !important;
+    transition: background-color .2s, transform .2s;
+    &:hover {
+        background-color: var(--mcp-accent) !important;
+        border-color: var(--mcp-accent) !important;
+        transform: translateY(-1px);
+    }
+}
+
+.btn-outline-primary, a.btn-outline-primary,
+.btn-outline-secondary, a.btn-outline-secondary,
+.btn-light, a.btn-light,
+.btn-outline-light, a.btn-outline-light {
+    background-color: transparent !important;
+    color: var(--mcp-ink) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+    font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+    font-size: 12px !important;
+    letter-spacing: .06em !important;
+    text-transform: uppercase !important;
+    padding: 12px 24px !important;
+    box-shadow: none !important;
+    &:hover {
+        border-color: var(--mcp-ink) !important;
+        background-color: var(--mcp-paper-2) !important;
+        color: var(--mcp-ink) !important;
+    }
+}
+
+// Cards
+.card {
+    background-color: var(--mcp-paper-2) !important;
+    border: 1px solid var(--mcp-rule) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transition: border-color .2s, transform .2s;
+    &:hover {
+        border-color: var(--mcp-rule-strong) !important;
+        transform: translateY(-2px);
+    }
+}
+
+.card.border-primary {
+    border-color: var(--mcp-accent) !important;
+    border-width: 2px !important;
+}
+
+// Badges
+.badge {
+    border-radius: 0 !important;
+    font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+    font-weight: 500 !important;
+    letter-spacing: .04em !important;
+    text-transform: uppercase !important;
+    font-size: 10px !important;
+}
+.badge.bg-primary { background-color: var(--mcp-ink) !important; color: var(--mcp-paper) !important; }
+.badge.bg-warning, .badge.bg-warning.text-dark { background-color: var(--mcp-accent) !important; color: var(--mcp-paper) !important; }
+.badge.bg-success { background-color: #6f9258 !important; color: var(--mcp-paper) !important; }
+.badge.bg-info { background-color: var(--mcp-term-accent) !important; color: var(--mcp-ink) !important; }
+
+// Hide default Odoo body shadow / rounded panel chrome that fights paper feel
+.o_main_navbar { box-shadow: 0 1px 0 var(--mcp-rule) !important; }
+
+// ── Vertical-rule grid overlay (subtle 12-col guide; fixed to viewport) ────
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image:
+        linear-gradient(to right,
+            transparent calc((100% - 96px) / 12 - 1px),
+            var(--mcp-rule) calc((100% - 96px) / 12 - 1px),
+            var(--mcp-rule) calc((100% - 96px) / 12),
+            transparent calc((100% - 96px) / 12)
+        );
+    background-size: calc((100% - 96px) / 12 + 1px) 100%;
+    background-position: 48px 0;
+    opacity: .55;
+    mix-blend-mode: multiply;
+}
+@media (max-width: 768px) {
+    body::before { display: none; }
+}
+
+// Pre-formatted code blocks (terminal-style)
+pre {
+    background-color: var(--mcp-term-bg) !important;
+    color: var(--mcp-term-ink) !important;
+    border-radius: 6px !important;
+    padding: 16px 20px !important;
+    border: none !important;
+}
+pre code {
+    color: inherit !important;
+}
+
+// Inline code
+:not(pre) > code {
+    background-color: var(--mcp-chip) !important;
+    color: var(--mcp-ink) !important;
+    padding: 2px 6px !important;
+    border-radius: 3px !important;
+    font-size: .9em !important;
+}
+
+// Links (in body text only)
+.s_text_block a:not(.btn),
+.s_cover a:not(.btn),
+.s_cta_card a:not(.btn) {
+    color: var(--mcp-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    &:hover { color: var(--mcp-ink); }
+}
+
+// Subtle small caps text labels
+.text-muted.fw-bold,
+.text-muted.small.fw-bold {
+    font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+    text-transform: uppercase !important;
+    letter-spacing: .1em !important;
+    color: var(--mcp-ink-3) !important;
+    font-size: 11px !important;
+}

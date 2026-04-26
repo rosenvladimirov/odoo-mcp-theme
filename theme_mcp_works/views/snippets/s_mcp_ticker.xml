@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Snippet body -->
+    <template id="theme_mcp_works.s_mcp_ticker" name="MCP Ticker">
+        <section class="s_mcp_ticker" data-snippet="s_mcp_ticker" data-name="MCP Ticker">
+            <div class="s_mcp_ticker_inner">
+                <span>OPS · 99.97% uptime · 12 days since incident</span>
+                <span>BUILD · v2.24.0 · Sonnet 4.6 + Haiku 4.5</span>
+                <span>STACK · MCP + Odoo 16/17/18/19 · Qdrant + Ollama</span>
+                <span>CHANNELS · MCP + REST + Telegram + Viber</span>
+                <span>OPS · 99.97% uptime · 12 days since incident</span>
+                <span>BUILD · v2.24.0 · Sonnet 4.6 + Haiku 4.5</span>
+                <span>STACK · MCP + Odoo 16/17/18/19 · Qdrant + Ollama</span>
+                <span>CHANNELS · MCP + REST + Telegram + Viber</span>
+            </div>
+        </section>
+    </template>
+
+    <!-- Register in snippets picker (Structure category) -->
+    <template id="theme_mcp_works.snippet_ticker_options" inherit_id="website.snippets" name="MCP Ticker — register">
+        <xpath expr="//snippets[@id='snippet_structure']" position="inside">
+            <t t-snippet="theme_mcp_works.s_mcp_ticker" t-thumbnail="/theme_mcp_works/static/src/img/snippet_ticker.svg"/>
+        </xpath>
+    </template>
+</odoo>

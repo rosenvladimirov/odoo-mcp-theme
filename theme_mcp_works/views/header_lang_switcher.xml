@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Lang switcher as a Bootstrap dropdown that opens below navbar
+        styled as our mega menu (paper-2 bg, indigo border, slide-in).
+    -->
+    <template id="theme_mcp_works.inject_lang_switcher_in_header"
+              inherit_id="website.layout"
+              name="MCP Lang Switcher (mega-menu dropdown)">
+        <xpath expr="//header//ul[contains(@class, 'navbar-nav')][last()]"
+               position="before">
+            <ul class="navbar-nav d-none d-lg-flex align-items-center mcp-lang-nav">
+                <li class="nav-item dropdown mcp-lang-toggle-wrap">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-2"
+                       href="#"
+                       data-bs-toggle="dropdown"
+                       data-bs-auto-close="outside"
+                       aria-expanded="false"
+                       role="button">
+                        <span class="mcp-lang-current">
+                            <img t-if="request.lang and request.lang.flag_image_url"
+                                 t-att-src="request.lang.flag_image_url"
+                                 t-att-alt="request.lang.code"
+                                 style="width:24px;height:18px;border-radius:2px;display:block;border:1px solid rgba(44,38,32,.18);"/>
+                        </span>
+                        <span class="mcp-lang-current-code mono small fw-bold"
+                              t-out="request.lang.url_code if request.lang else 'lang'"/>
+                    </a>
+                    <div class="dropdown-menu o_mega_menu mcp-lang-mega" data-bs-popper="static">
+                        <!-- Original connected-dots switcher with bouncy slider -->
+                        <div class="s_mcp_lang_switcher mcp-lang-mega-inner">
+                            <span class="lsw-slider"/>
+                            <t t-foreach="website.language_ids" t-as="lang">
+                                <a t-attf-href="/#{ lang.url_code }/"
+                                   t-attf-data-url="/#{ lang.url_code }/"
+                                   t-attf-class="lsw-item #{ 'is-active' if request and request.lang and lang.id == request.lang.id else '' }"
+                                   t-att-title="lang.name"
+                                   t-att-aria-label="lang.name">
+                                    <span class="lsw-flag">
+                                        <img t-if="lang.flag_image_url"
+                                             t-att-src="lang.flag_image_url"
+                                             t-att-alt="lang.code"
+                                             style="width:36px;height:26px;border-radius:3px;display:block;border:1px solid rgba(44,38,32,.2);"/>
+                                    </span>
+                                    <span class="lsw-dot"/>
+                                </a>
+                            </t>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </xpath>
+    </template>
+</odoo>

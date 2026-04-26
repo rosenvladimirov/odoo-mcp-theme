@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Snippet body — uses website.lang_ids automatically when rendered server-side -->
+    <template id="theme_mcp_works.s_mcp_lang_switcher" name="MCP Lang Switcher">
+        <div class="s_mcp_lang_switcher" data-snippet="s_mcp_lang_switcher" data-name="MCP Lang Switcher">
+            <span class="lsw-slider"/>
+            <t t-foreach="website.language_ids" t-as="lang">
+                <a t-attf-href="/#{ lang.url_code }/"
+                   t-attf-data-url="/#{ lang.url_code }/"
+                   t-attf-class="lsw-item #{ 'is-active' if lang.id == request.lang.id else '' }"
+                   t-att-title="lang.name"
+                   t-att-aria-label="lang.name">
+                    <span class="lsw-flag" t-out="lang.flag_image_url and '' or _flag_emoji(lang.code)">
+                        <img t-if="lang.flag_image_url" t-att-src="lang.flag_image_url" t-att-alt="lang.code"/>
+                    </span>
+                    <span class="lsw-dot"/>
+                    <span class="lsw-code" t-out="lang.iso_code"/>
+                </a>
+            </t>
+        </div>
+    </template>
+
+    <!-- Demo / fallback variant with hardcoded BG + EN flag emojis (works without server-side lang lookup) -->
+    <template id="theme_mcp_works.s_mcp_lang_switcher_demo" name="MCP Lang Switcher Demo">
+        <div class="s_mcp_lang_switcher" data-snippet="s_mcp_lang_switcher" data-name="MCP Lang Switcher">
+            <span class="lsw-slider"/>
+            <a href="/bg/" data-url="/bg/" class="lsw-item is-active" title="Български" aria-label="Български">
+                <span class="lsw-flag">🇧🇬</span>
+                <span class="lsw-dot"/>
+                <span class="lsw-code">bg</span>
+            </a>
+            <a href="/en/" data-url="/en/" class="lsw-item" title="English" aria-label="English">
+                <span class="lsw-flag">🇬🇧</span>
+                <span class="lsw-dot"/>
+                <span class="lsw-code">en</span>
+            </a>
+            <a href="/de/" data-url="/de/" class="lsw-item" title="Deutsch" aria-label="Deutsch">
+                <span class="lsw-flag">🇩🇪</span>
+                <span class="lsw-dot"/>
+                <span class="lsw-code">de</span>
+            </a>
+        </div>
+    </template>
+
+    <!-- Register both variants in snippets picker -->
+    <template id="theme_mcp_works.snippet_lang_switcher_options" inherit_id="website.snippets" name="MCP Lang Switcher — register">
+        <xpath expr="//snippets[@id='snippet_structure']" position="inside">
+            <t t-snippet="theme_mcp_works.s_mcp_lang_switcher_demo" t-thumbnail="/theme_mcp_works/static/src/img/snippet_lang_switcher.svg"/>
+        </xpath>
+    </template>
+</odoo>

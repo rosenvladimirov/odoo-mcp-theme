@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inject Google Fonts + mega-menu guard JS in <head> -->
+    <template id="theme_mcp_works.assets_fonts" inherit_id="web.layout" name="MCP Works Fonts &amp; Guards">
+        <xpath expr="//head" position="inside">
+            <link rel="preconnect" href="https://fonts.googleapis.com"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Geist:wght@300;400;500;600;700&amp;display=swap"/>
+            <script type="text/javascript">
+                // MCP mega-menu guard — inject ghost mobile toggles so Odoo's
+                // updateActiveMenuLinks() doesn't crash on undefined .classList.
+                (function(){
+                    function shim(){
+                        var collapse = document.querySelector("#top_menu_collapse_mobile");
+                        if(!collapse) return;
+                        var topMenu = collapse.querySelector(".top_menu");
+                        if(!topMenu){
+                            topMenu = document.createElement("ul");
+                            topMenu.className = "top_menu d-none";
+                            collapse.appendChild(topMenu);
+                        }
+                        var desktop = document.querySelectorAll("header .o_mega_menu_toggle, #top_menu .o_mega_menu_toggle");
+                        var mobile = topMenu.querySelectorAll(".o_mega_menu_toggle");
+                        for(var i=mobile.length;i&lt;desktop.length;i++){
+                            var g = document.createElement("a");
+                            g.className = "o_mega_menu_toggle d-none";
+                            g.setAttribute("data-mega-menu-ghost","1");
+                            topMenu.appendChild(g);
+                        }
+                    }
+                    if(document.readyState==="loading"){
+                        document.addEventListener("DOMContentLoaded", shim);
+                    } else { shim(); }
+                })();
+            </script>
+        </xpath>
+    </template>
+
+    <!-- Explicit ir.asset records (manifest 'assets' dict not processed for /mnt/extra-addons modules) -->
+    <record id="theme_mcp_works.asset_theme_scss" model="ir.asset">
+        <field name="name">theme_mcp_works.theme</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field name="path">theme_mcp_works/static/src/scss/theme.scss</field>
+    </record>
+
+    <record id="theme_mcp_works.asset_snippets_scss" model="ir.asset">
+        <field name="name">theme_mcp_works.snippets</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field name="path">theme_mcp_works/static/src/scss/snippets.scss</field>
+    </record>
+
+    <record id="theme_mcp_works.asset_lang_switcher_scss" model="ir.asset">
+        <field name="name">theme_mcp_works.lang_switcher_scss</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field name="path">theme_mcp_works/static/src/scss/lang_switcher.scss</field>
+    </record>
+
+    <record id="theme_mcp_works.asset_lang_switcher_js" model="ir.asset">
+        <field name="name">theme_mcp_works.lang_switcher_js</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field name="path">theme_mcp_works/static/src/js/lang_switcher.js</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,112 @@
+// Theme MCP Works — snippet styles
+
+// ── s_mcp_ticker ───────────────────────────────────────────────────────────
+.s_mcp_ticker {
+    border-top: 1px solid var(--mcp-rule);
+    border-bottom: 1px solid var(--mcp-rule);
+    overflow: hidden;
+    background: var(--mcp-paper);
+
+    .s_mcp_ticker_inner {
+        display: flex;
+        gap: 48px;
+        padding: 10px 0;
+        white-space: nowrap;
+        animation: mcp-tick 60s linear infinite;
+        font-size: 11px;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        color: var(--mcp-ink-3);
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+    }
+}
+@keyframes mcp-tick {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+// ── s_mcp_hero ─────────────────────────────────────────────────────────────
+.s_mcp_hero {
+    padding: 80px 0;
+
+    .s_mcp_hero_meta {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        color: var(--mcp-ink-3);
+        margin-bottom: 32px;
+    }
+
+    .s_mcp_hero_title {
+        font-family: 'Instrument Serif', serif;
+        font-size: clamp(48px, 7vw, 96px);
+        line-height: 1.05;
+        letter-spacing: -.02em;
+        margin-bottom: 24px;
+
+        em {
+            font-style: italic;
+            color: var(--mcp-accent);
+        }
+    }
+
+    .s_mcp_hero_lead {
+        font-size: 18px;
+        line-height: 1.6;
+        color: var(--mcp-ink-2);
+        max-width: 640px;
+    }
+
+    .s_mcp_hero_cta {
+        margin-top: 32px;
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+
+        .btn-primary, a.btn-primary {
+            background: var(--mcp-ink);
+            color: var(--mcp-paper);
+            border: none;
+            padding: 12px 24px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 12px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            border-radius: 0;
+            transition: background .2s;
+            &:hover { background: var(--mcp-accent); }
+        }
+        .btn-outline-secondary, a.btn-outline-secondary {
+            background: transparent;
+            color: var(--mcp-ink);
+            border: 1px solid var(--mcp-rule-strong);
+            padding: 12px 24px;
+            font-family: 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 12px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            border-radius: 0;
+            &:hover { border-color: var(--mcp-ink); }
+        }
+    }
+
+    // Terminal mockup
+    .s_mcp_hero_terminal {
+        background: var(--mcp-term-bg);
+        color: var(--mcp-term-ink);
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 13px;
+        line-height: 1.6;
+        padding: 24px;
+        border-radius: 6px;
+        box-shadow: 0 24px 48px rgba(0,0,0,.18);
+
+        .term-line {
+            white-space: pre-wrap;
+        }
+        .term-prompt { color: var(--mcp-term-green); }
+        .term-accent { color: var(--mcp-term-accent); }
+        .term-dim    { color: var(--mcp-term-dim); }
+    }
+}
