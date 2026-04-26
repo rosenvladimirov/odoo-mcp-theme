@@ -22,37 +22,49 @@
 }
 
 // ── Global typography + paper palette ─────────────────────────────────────
-body,
-.o_main_navbar,
-#wrap,
-.s_cover,
-.s_text_block,
-.s_kickoff,
-.s_cta_card,
-.s_process_steps,
-.s_faq_collapse,
-.s_table_of_content {
+// IMPORTANT: scoped to #wrapwrap (real frontend pages) so we DON'T leak into
+// snippet preview iframes inside the Website Builder, which render bare HTML
+// without #wrapwrap chrome and would otherwise inherit our paper bg + invisible
+// text on their own light backgrounds.
+#wrapwrap {
     background-color: var(--mcp-paper) !important;
-}
 
-body, .navbar, .footer, p, li, td, .lead {
-    font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif !important;
-    color: var(--mcp-ink);
-    font-feature-settings: "ss01", "cv11";
-}
+    .o_main_navbar,
+    #wrap,
+    .s_cover,
+    .s_text_block,
+    .s_kickoff,
+    .s_cta_card,
+    .s_process_steps,
+    .s_faq_collapse,
+    .s_table_of_content {
+        background-color: var(--mcp-paper) !important;
+    }
 
-h1, h2, h3, h4, h5, h6,
-.display-1, .display-2, .display-3, .display-4, .display-5, .display-6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
-    font-weight: 400 !important;
-    letter-spacing: -.015em !important;
-    color: var(--mcp-ink) !important;
-}
+    .navbar, .footer, p, li, td, .lead {
+        font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif !important;
+        color: var(--mcp-ink);
+        font-feature-settings: "ss01", "cv11";
+    }
+    & {
+        font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif !important;
+        color: var(--mcp-ink);
+        font-feature-settings: "ss01", "cv11";
+    }
 
-code, pre, kbd, samp, .mono {
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
-    font-feature-settings: "calt", "ss01";
+    h1, h2, h3, h4, h5, h6,
+    .display-1, .display-2, .display-3, .display-4, .display-5, .display-6,
+    .h1, .h2, .h3, .h4, .h5, .h6 {
+        font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
+        font-weight: 400 !important;
+        letter-spacing: -.015em !important;
+        color: var(--mcp-ink) !important;
+    }
+
+    code, pre, kbd, samp, .mono {
+        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
+        font-feature-settings: "calt", "ss01";
+    }
 }
 
 // Navbar / menu links — INDIGO
@@ -474,7 +486,9 @@ div.rounded-circle.bg-primary {
 .o_main_navbar { box-shadow: 0 1px 0 var(--mcp-rule) !important; }
 
 // ── Vertical-rule grid overlay (subtle 12-col guide; fixed to viewport) ────
-body::before {
+// Scoped to body:has(#wrapwrap) so it does NOT render in snippet preview iframes
+// (those don't include #wrapwrap chrome and would otherwise get a giant fixed overlay).
+body:has(#wrapwrap)::before {
     content: "";
     position: fixed;
     inset: 0;
@@ -493,7 +507,7 @@ body::before {
     mix-blend-mode: multiply;
 }
 @media (max-width: 768px) {
-    body::before { display: none; }
+    body:has(#wrapwrap)::before { display: none; }
 }
 
 // Pre-formatted code blocks (terminal-style)
