@@ -565,21 +565,22 @@
     .o_wsale_product_page .row.align-items-start {
         --bs-gutter-x: 0 !important;
         gap: 0 48px !important;
-        flex-wrap: nowrap;
+        flex-wrap: nowrap !important;
         @media (max-width: 991px) {
-            flex-wrap: wrap;
+            flex-wrap: wrap !important;
             gap: 32px 0 !important;
         }
     }
-    // Left image column — wrap as a paper card, takes ~55% of width
+    // Left image column — paper card, ~55% width
     .o_wsale_product_images {
         background-color: var(--mcp-paper-2) !important;
         border: 1px solid var(--mcp-rule) !important;
         border-radius: 0 !important;
         padding: 16px !important;
         align-self: flex-start !important;
-        flex: 0 0 calc(58% - 24px) !important;
-        max-width: calc(58% - 24px) !important;
+        flex: 0 0 calc(55% - 24px) !important;
+        max-width: calc(55% - 24px) !important;
+        min-width: 0 !important;
         @media (max-width: 991px) {
             flex: 1 1 100% !important;
             max-width: 100% !important;
@@ -593,8 +594,9 @@
         background-color: var(--mcp-paper-2) !important;
         border-radius: 0 !important;
     }
-    // Right details column — paper card, auto-height, fills remaining width
-    // (left card is 58%, gap 48px, right card grows to fill the rest → reaches container right edge)
+    // Right details column — paper card, auto-height, fills remaining width.
+    // flex: 1 1 0 + min-width:0 so it can shrink below content width if needed
+    // (prevents row from wrapping when content slightly overflows).
     .o_wsale_product_details_content,
     #product_details {
         background-color: var(--mcp-paper-2) !important;
@@ -604,7 +606,8 @@
         align-self: flex-start !important;
         height: auto !important;
         min-height: 0 !important;
-        flex: 1 1 auto !important;
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
         max-width: none !important;
         @media (max-width: 991px) {
             flex: 1 1 100% !important;
