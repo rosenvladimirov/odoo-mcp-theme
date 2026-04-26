@@ -266,9 +266,8 @@
             }
 
             &:hover {
-                border-color: var(--mcp-accent) !important;
-                transform: translateY(-3px) translateX(4px);
-                box-shadow: -6px 6px 0 var(--mcp-accent) !important;
+                border-color: var(--mcp-rule-strong) !important;
+                transform: translateY(-2px);
                 z-index: 2;
                 &::before {
                     opacity: 1;
@@ -485,11 +484,11 @@
             border: 1px solid var(--mcp-rule) !important;
             border-radius: 0 !important;
             box-shadow: none !important;
-            transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+            transition: border-color .25s ease, transform .25s ease;
             &:hover {
-                border-color: var(--mcp-accent) !important;
-                transform: translateY(-3px);
-                box-shadow: -6px 6px 0 var(--mcp-accent) !important;
+                border-color: var(--mcp-rule-strong) !important;
+                transform: translateY(-2px);
+                box-shadow: none !important;
             }
         }
         .product_price, .product_price * {
