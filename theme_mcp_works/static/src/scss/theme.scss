@@ -593,7 +593,8 @@
         background-color: var(--mcp-paper-2) !important;
         border-radius: 0 !important;
     }
-    // Right details column — paper card, auto-height, ~38% width (no empty right)
+    // Right details column — paper card, auto-height, fills remaining width
+    // (left card is 58%, gap 48px, right card grows to fill the rest → reaches container right edge)
     .o_wsale_product_details_content,
     #product_details {
         background-color: var(--mcp-paper-2) !important;
@@ -603,16 +604,32 @@
         align-self: flex-start !important;
         height: auto !important;
         min-height: 0 !important;
-        flex: 0 0 calc(42% - 24px) !important;
-        max-width: calc(42% - 24px) !important;
+        flex: 1 1 auto !important;
+        max-width: none !important;
         @media (max-width: 991px) {
             flex: 1 1 100% !important;
-            max-width: 100% !important;
         }
     }
-    // Section dividers
+    // Hide the comparison button (4th icon in product action row — adds visual noise + empty bg)
+    .o_wsale_product_action_row a[data-action="o_comparelist"],
+    .o_wsale_product_action_row button[name="o_compare"],
+    .product_compare_btn,
+    .o_wsale_product_compare {
+        display: none !important;
+    }
+    // Section dividers — flat, no horizontal bar/light strip between CTAs
     .o_wsale_product_details_content_section {
-        border-color: var(--mcp-rule) !important;
+        border: none !important;
+        background: transparent !important;
+    }
+    // CTA wrapper full-width so buttons fill the row (no trailing paper strip)
+    #o_wsale_cta_wrapper {
+        width: 100% !important;
+        background: transparent !important;
+    }
+    #product_option_block:empty,
+    #product_option_block:has(*:only-child) {
+        // Hide if completely empty — leftover wrapper from removed compare
     }
     // Add to cart button — sharp + indigo
     #add_to_cart, .a-submit, button[name="add_to_cart"], .o_wsale_my_cart .btn,
