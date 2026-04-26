@@ -19,9 +19,10 @@
         "views/header_lang_switcher.xml",
     ],
     "assets": {
-        "web._assets_primary_variables": [
-            "theme_mcp_works/static/src/scss/primary_variables.scss",
-        ],
+        # NOTE: primary_variables.scss intentionally NOT loaded — it set
+        # $o-color-palettes-name globally which leaked our paper palette into
+        # Odoo's Website Builder chrome and made snippet panels invisible.
+        # We use CSS custom properties (--mcp-paper, --mcp-ink, ...) instead.
         "web.assets_frontend": [
             "theme_mcp_works/static/src/scss/theme.scss",
             "theme_mcp_works/static/src/scss/snippets.scss",
