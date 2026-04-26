@@ -372,59 +372,20 @@ div.rounded-circle.bg-primary {
     }
 }
 
-// Cards — paper, sharp, hover lift + EQUAL HEIGHT layout (header / article / footer)
+// Cards — paper palette, sharp corners, subtle hover lift.
+// IMPORTANT: do NOT force display:flex/height:100% on the base .card —
+// that breaks horizontal image+text snippets and intrinsic-height cards.
+// Equal-height layout is opt-in via .h-100 OR row/grid containers below.
 .card {
     background-color: var(--mcp-paper-2) !important;
     border: 1px solid var(--mcp-rule) !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     transition: border-color .2s, transform .2s;
-    display: flex !important;
-    flex-direction: column !important;
-    height: 100% !important;
     &:hover {
         border-color: var(--mcp-rule-strong) !important;
         transform: translateY(-2px);
     }
-}
-
-// .card-body acts as the flex container — header at top, article fills, footer pinned bottom
-.card .card-body {
-    display: flex !important;
-    flex-direction: column !important;
-    flex: 1 1 auto !important;
-}
-
-// Last <a class="btn">, <button>, or any element with `mt-auto` sticks to bottom
-.card .card-body > .btn:last-child,
-.card .card-body > a.btn:last-child,
-.card .card-body > a[class*="btn-"]:last-child,
-.card .card-body > button:last-child,
-.card .card-body > .mt-auto:last-child {
-    margin-top: auto !important;
-}
-
-// If there's a price block + features list — ensure list grows, prices/title don't
-.card .card-body > h3,
-.card .card-body > h4,
-.card .card-body > h5,
-.card .card-body > .display-1,
-.card .card-body > .display-2,
-.card .card-body > .display-3,
-.card .card-body > .display-4,
-.card .card-body > .display-5,
-.card .card-body > .display-6,
-.card .card-body > hr,
-.card .card-body > .my-2,
-.card .card-body > .my-3 {
-    flex: 0 0 auto !important;
-}
-
-// Lists / paragraph blocks — grow to push button down (only when no explicit mt-auto follower)
-.card .card-body > ul:not(:last-child),
-.card .card-body > .list-unstyled:not(:last-child),
-.card .card-body > p:not(:last-child) {
-    flex: 1 1 auto !important;
 }
 
 .card.border-primary {
@@ -439,33 +400,60 @@ div.rounded-circle.bg-primary {
     border: 1px solid var(--mcp-rule) !important;
 }
 
-// Cards inside Odoo's grid_mode (o_grid_item) — force them to fill grid cell
-// so AGPL self-host vs Hosted comparison cards equalize regardless of inline grid-area heights.
-.o_grid_item {
+// Equal-height flex layout (header / article / footer pinned bottom)
+// scoped to: cards explicitly marked .h-100, cards inside o_grid_item,
+// or cards that are direct children of grid columns inside .row.
+%mcp-card-flex-layout {
     display: flex !important;
     flex-direction: column !important;
-    > .card,
-    > .card.h-100 {
+    height: 100% !important;
+    > .card-body {
+        display: flex !important;
+        flex-direction: column !important;
         flex: 1 1 auto !important;
-        height: auto !important;
-        min-height: 100% !important;
+        > .btn:last-child,
+        > a.btn:last-child,
+        > a[class*="btn-"]:last-child,
+        > button:last-child,
+        > .mt-auto:last-child {
+            margin-top: auto !important;
+        }
+        > h3, > h4, > h5,
+        > .display-1, > .display-2, > .display-3,
+        > .display-4, > .display-5, > .display-6,
+        > hr, > .my-2, > .my-3 {
+            flex: 0 0 auto !important;
+        }
+        > ul:not(:last-child),
+        > .list-unstyled:not(:last-child),
+        > p:not(:last-child) {
+            flex: 1 1 auto !important;
+        }
     }
-    // Strip aggressive inline box-shadow that breaks the flat paper look
-    box-shadow: none !important;
 }
 
-// When parent is .row with .g-* — ensure column stretches so cards equalize
-.row.g-1 > [class*="col-"], .row.g-2 > [class*="col-"], .row.g-3 > [class*="col-"],
-.row.g-4 > [class*="col-"], .row.g-5 > [class*="col-"] {
-    display: flex;
-    align-items: stretch;
-}
+.card.h-100 { @extend %mcp-card-flex-layout; }
+.o_grid_item > .card { @extend %mcp-card-flex-layout; }
 .row.g-1 > [class*="col-"] > .card,
 .row.g-2 > [class*="col-"] > .card,
 .row.g-3 > [class*="col-"] > .card,
 .row.g-4 > [class*="col-"] > .card,
-.row.g-5 > [class*="col-"] > .card {
-    width: 100%;
+.row.g-5 > [class*="col-"] > .card { @extend %mcp-card-flex-layout; }
+
+// Cards inside Odoo's grid_mode — fill the grid cell, strip aggressive inline shadow
+.o_grid_item {
+    display: flex !important;
+    flex-direction: column !important;
+    box-shadow: none !important;
+    > .card { min-height: 100% !important; }
+}
+
+// Equalize columns inside gutter rows so cards line up
+.row.g-1 > [class*="col-"], .row.g-2 > [class*="col-"], .row.g-3 > [class*="col-"],
+.row.g-4 > [class*="col-"], .row.g-5 > [class*="col-"] {
+    display: flex;
+    align-items: stretch;
+    > .card { width: 100%; }
 }
 
 // Badges
