@@ -563,18 +563,27 @@
     }
     // Add visible gap between left image card + right details card
     .o_wsale_product_page .row.align-items-start {
-        --bs-gutter-x: 2rem;
-        gap: 0 32px;
+        --bs-gutter-x: 0 !important;
+        gap: 0 48px !important;
+        flex-wrap: nowrap;
+        @media (max-width: 991px) {
+            flex-wrap: wrap;
+            gap: 32px 0 !important;
+        }
     }
-    // Left image column — wrap as a paper card
+    // Left image column — wrap as a paper card, takes ~55% of width
     .o_wsale_product_images {
         background-color: var(--mcp-paper-2) !important;
         border: 1px solid var(--mcp-rule) !important;
         border-radius: 0 !important;
         padding: 16px !important;
-        // Don't let the image card stretch the row; right card auto-heights
         align-self: flex-start !important;
-        flex: 0 0 auto !important;
+        flex: 0 0 calc(58% - 24px) !important;
+        max-width: calc(58% - 24px) !important;
+        @media (max-width: 991px) {
+            flex: 1 1 100% !important;
+            max-width: 100% !important;
+        }
     }
     // The product image itself + placeholder
     .product_detail_img,
@@ -584,7 +593,7 @@
         background-color: var(--mcp-paper-2) !important;
         border-radius: 0 !important;
     }
-    // Right details column — paper card, auto-height (no empty bottom)
+    // Right details column — paper card, auto-height, ~38% width (no empty right)
     .o_wsale_product_details_content,
     #product_details {
         background-color: var(--mcp-paper-2) !important;
@@ -594,6 +603,12 @@
         align-self: flex-start !important;
         height: auto !important;
         min-height: 0 !important;
+        flex: 0 0 calc(42% - 24px) !important;
+        max-width: calc(42% - 24px) !important;
+        @media (max-width: 991px) {
+            flex: 1 1 100% !important;
+            max-width: 100% !important;
+        }
     }
     // Section dividers
     .o_wsale_product_details_content_section {
