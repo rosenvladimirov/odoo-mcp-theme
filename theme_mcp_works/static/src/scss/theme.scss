@@ -477,6 +477,156 @@
         color: var(--mcp-ink-3) !important;
         font-size: 11px !important;
     }
+
+    // ── eCommerce shop product cards — paper, sharp ──
+    .oe_product {
+        .oe_product_cart {
+            background-color: var(--mcp-paper-2) !important;
+            border: 1px solid var(--mcp-rule) !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+            &:hover {
+                border-color: var(--mcp-accent) !important;
+                transform: translateY(-3px);
+                box-shadow: -6px 6px 0 var(--mcp-accent) !important;
+            }
+        }
+        .product_price, .product_price * {
+            font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
+        }
+        h6, h5, .h6, .h5 {
+            font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
+            color: var(--mcp-ink) !important;
+        }
+        .o_wsale_product_btn_wrapper .btn,
+        .a-submit,
+        .btn-primary {
+            border-radius: 0 !important;
+            font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+            font-size: 11px !important;
+            letter-spacing: .06em !important;
+            text-transform: uppercase !important;
+        }
+    }
+
+    // /shop hero / search
+    #wrap.wrap_shop, #wrap_shop, .shop_main {
+        background-color: var(--mcp-paper) !important;
+    }
+    .o_wsale_search_input, .o_wsale_search input, input.search-query {
+        border-radius: 0 !important;
+        border: 1px solid var(--mcp-rule-strong) !important;
+        font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+        font-size: 12px !important;
+    }
+    // Shop sidebar (categories/filters)
+    .o_wsale_offcanvas, .o_wsale_products_main_row aside,
+    .o_wsale_apply_filter {
+        background-color: var(--mcp-paper-2) !important;
+        border-radius: 0 !important;
+    }
+    // Add-to-cart bar
+    #o_wsale_cta_wrapper, .o_wsale_product_page {
+        background-color: var(--mcp-paper) !important;
+    }
+
+    // ── Product detail page (/shop/product/N) ───
+    .o_wsale_product_page,
+    .oe_website_sale {
+        background-color: var(--mcp-paper) !important;
+    }
+    // Left image column — wrap as a paper card
+    .o_wsale_product_images {
+        background-color: var(--mcp-paper-2) !important;
+        border: 1px solid var(--mcp-rule) !important;
+        border-radius: 0 !important;
+        padding: 16px !important;
+    }
+    // The product image itself + placeholder
+    .product_detail_img,
+    .o_wsale_product_images img,
+    .o_wsale_product_images .o_image,
+    .o_wsale_image {
+        background-color: var(--mcp-paper-2) !important;
+        border-radius: 0 !important;
+    }
+    // Right details column — paper card
+    .o_wsale_product_details_content,
+    #product_details {
+        background-color: var(--mcp-paper-2) !important;
+        border: 1px solid var(--mcp-rule) !important;
+        border-radius: 0 !important;
+        padding: 24px !important;
+    }
+    // Section dividers
+    .o_wsale_product_details_content_section {
+        border-color: var(--mcp-rule) !important;
+    }
+    // Add to cart button — sharp + indigo
+    #add_to_cart, .a-submit, button[name="add_to_cart"], .o_wsale_my_cart .btn,
+    a.btn.btn_cta, a.a-submit, .o_wsale_image_zoom_btn {
+        border-radius: 0 !important;
+        background-color: var(--mcp-ink) !important;
+        border-color: var(--mcp-ink) !important;
+        color: var(--mcp-paper) !important;
+        font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+        font-size: 12px !important;
+        letter-spacing: .06em !important;
+        text-transform: uppercase !important;
+        padding: 12px 24px !important;
+        &:hover {
+            background-color: var(--mcp-accent) !important;
+            border-color: var(--mcp-accent) !important;
+        }
+    }
+    // Quantity input + +/- buttons
+    .css_quantity input, .input-group .form-control,
+    .o_wsale_quantity input, input[name="add_qty"] {
+        border-radius: 0 !important;
+        border: 1px solid var(--mcp-rule-strong) !important;
+        font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+        background-color: var(--mcp-paper) !important;
+    }
+    .css_quantity .btn, .input-group .btn {
+        border-radius: 0 !important;
+        background-color: var(--mcp-paper-2) !important;
+        border: 1px solid var(--mcp-rule-strong) !important;
+        color: var(--mcp-ink) !important;
+    }
+    // Product title — Instrument Serif
+    .o_wsale_product_details_content_section_title h1,
+    .o_wsale_product_details_content_section_title h2,
+    h1[itemprop="name"], h2[itemprop="name"] {
+        font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
+        color: var(--mcp-ink) !important;
+        font-weight: 400 !important;
+    }
+    // Price block
+    .product_price, .product_price *, .o_wsale_product_details_content_section_price * {
+        font-family: 'Instrument Serif', ui-serif, Georgia, serif !important;
+    }
+    // Breadcrumb
+    .o_wsale_breadcrumb {
+        font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+        font-size: 11px !important;
+        text-transform: uppercase !important;
+        letter-spacing: .06em !important;
+        a { color: var(--mcp-accent) !important; }
+    }
+    // Pricelist dropdown — paper styling
+    .o_pricelist_dropdown .btn, .pricelist_dropdown .btn {
+        border-radius: 0 !important;
+        background-color: var(--mcp-paper-2) !important;
+        border: 1px solid var(--mcp-rule) !important;
+        color: var(--mcp-ink) !important;
+    }
+    // Wishlist heart button
+    .o_add_wishlist, .o_wishlist {
+        border-radius: 0 !important;
+        background-color: var(--mcp-paper-2) !important;
+        border: 1px solid var(--mcp-rule) !important;
+    }
 }
 
 // ── Vertical-rule grid overlay (subtle 12-col guide; fixed to viewport) ──
