@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="theme_mcp_works_backend.McpActionsPanel">
+        <div class="mcp_actions_panel_backdrop" t-on-click="() => this.onBackdrop()"/>
+        <div class="mcp_actions_panel" t-att-style="`--mcp-cols: ${state.cols};`">
+            <div class="mcp_actions_panel_header">
+                <h6 class="mcp_actions_panel_title">Действия</h6>
+                <button class="mcp_actions_panel_close"
+                        t-on-click="() => this.props.onClose()"
+                        aria-label="Close">
+                    ✕
+                </button>
+            </div>
+            <div class="mcp_actions_grid">
+                <t t-foreach="props.items" t-as="item" t-key="item_index">
+                    <button class="mcp_action_btn"
+                            t-on-click="() => this.onItemClick(item)">
+                        <span class="mcp_action_icon" t-out="item.icon or '⚡'"/>
+                        <span class="mcp_action_label" t-out="item.label or item.name"/>
+                        <t t-if="item.description">
+                            <span class="mcp_action_kind" t-out="item.description"/>
+                        </t>
+                    </button>
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

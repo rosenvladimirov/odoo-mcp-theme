@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="theme_mcp_works_backend.ActivitiesIcon">
+        <svg class="mcp_activities_icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="5" cy="5" r="2"/>
+            <circle cx="12" cy="5" r="2"/>
+            <circle cx="19" cy="5" r="2"/>
+            <circle cx="5" cy="12" r="2"/>
+            <circle cx="12" cy="12" r="2"/>
+            <circle cx="19" cy="12" r="2"/>
+            <circle cx="5" cy="19" r="2"/>
+            <circle cx="12" cy="19" r="2"/>
+            <circle cx="19" cy="19" r="2"/>
+        </svg>
+    </t>
+
+    <t t-name="theme_mcp_works_backend.ShowDesktopIcon">
+        <!-- Window-with-down-arrow: classic show-desktop / minimize-all icon -->
+        <svg class="mcp_show_desktop_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="4" width="18" height="11" rx="1.5"/>
+            <path d="M8 19h8"/>
+            <path d="M12 15v4"/>
+            <path d="M9 11l3 3 3-3"/>
+        </svg>
+    </t>
+
+    <t t-name="theme_mcp_works_backend.McpDash">
+        <!-- Hot zone — invisible bottom strip; trigger handled via document mousemove in setup() -->
+        <div class="mcp_dash_hotzone d-print-none"/>
+
+        <!-- Dock container -->
+        <nav class="mcp_dash_dock d-print-none"
+             t-att-class="{ 'is-revealed': state.revealed, 'is-collapsed': state.collapsed }"
+             t-ref="dock">
+            <button class="mcp_dash_collapse"
+                    t-att-title="state.collapsed ? 'Expand dock' : 'Minimize dock'"
+                    t-on-click="onToggleCollapse">
+                <t t-if="state.collapsed">+</t>
+                <t t-else="">−</t>
+            </button>
+
+            <!-- Show Desktop — first icon, minimizes to empty backend -->
+            <a href="#"
+               class="mcp_dash_item mcp_dash_show_desktop"
+               data-tooltip="Show Desktop"
+               t-on-click.prevent="() =&gt; this.onShowDesktopClick()">
+                <t t-call="theme_mcp_works_backend.ShowDesktopIcon"/>
+            </a>
+
+            <span class="mcp_dash_separator" t-if="!state.collapsed"/>
+
+            <!-- Favorite apps -->
+            <t t-foreach="state.apps" t-as="app" t-key="app.id">
+                <a href="#"
+                   class="mcp_dash_item"
+                   t-att-class="{ 'is-active': app.id === state.currentAppId }"
+                   t-att-data-tooltip="app.name"
+                   t-on-click.prevent="() => this.onAppClick(app)">
+                    <img t-if="app.webIconData" t-att-src="app.webIconData" t-att-alt="app.name"/>
+                    <span t-else="" class="o_app_letter" t-esc="app.name.charAt(0).toUpperCase()"/>
+                </a>
+            </t>
+
+            <span class="mcp_dash_separator" t-if="!state.collapsed"/>
+
+            <!-- Activities button — opens the navbar apps dropdown -->
+            <a href="#"
+               class="mcp_dash_item mcp_dash_activities"
+               data-tooltip="Activities"
+               t-on-click.prevent="() => this.onShowAllClick()">
+                <t t-call="theme_mcp_works_backend.ActivitiesIcon"/>
+            </a>
+        </nav>
+    </t>
+
+</templates>

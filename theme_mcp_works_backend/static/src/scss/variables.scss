@@ -1,0 +1,51 @@
+// MCP Works backend — SCSS variables shared между всички backend bundles
+// Loaded в web._assets_primary_variables AFTER web/.../primary_variables.scss
+
+// ── Brand palette (mirror на frontend mcp-works) ──────────────────────────
+$mcp-paper:        #f6f0e3 !default;
+$mcp-paper-light:  #fbf7ee !default;
+$mcp-paper-deep:   #ece4d3 !default;
+$mcp-ink:          #2c2620 !default;
+$mcp-ink-2:        #5a5147 !default;
+$mcp-ink-3:        #6a6258 !default;
+$mcp-accent:       #4338ca !default;  // indigo
+$mcp-accent-dark:  #3730a3 !default;
+$mcp-accent-soft:  rgba(67, 56, 202, 0.08) !default;
+$mcp-accent-glow:  rgba(67, 56, 202, 0.18) !default;
+$mcp-rule:         rgba(44, 38, 32, 0.12) !default;
+$mcp-rule-strong:  rgba(44, 38, 32, 0.20) !default;
+$mcp-grid-color:   rgba(67, 56, 202, 0.16) !default;
+$mcp-grid-size:    56px !default;
+
+// Top bar (GNOME Shell style — paper bg, 32px tall)
+$mcp-topbar-height:        32px !default;
+$mcp-topbar-bg:            $mcp-paper !default;
+$mcp-topbar-border:        2px solid $mcp-accent !default;
+
+// Dash (bottom dock — GNOME style)
+$mcp-dash-height:          64px !default;
+$mcp-dash-bg:              rgba(246, 240, 227, 0.92) !default;
+$mcp-dash-border:           1.5px solid $mcp-accent !default;
+$mcp-dash-icon-size:       40px !default;
+
+// ── Override Odoo defaults ────────────────────────────────────────────────
+$o-brand-odoo:             $mcp-accent;
+$o-brand-primary:           $mcp-accent;
+$o-brand-secondary:         $mcp-ink-2;
+$o-enterprise-color:        $mcp-accent;
+$o-enterprise-action-color: $mcp-accent;
+
+// Navbar
+$o-navbar-height:          $mcp-topbar-height;
+$o-navbar-background:      $mcp-topbar-bg;
+$o-navbar-border-bottom:    $mcp-topbar-border;
+$o-navbar-entry-color:     $mcp-ink;
+$o-navbar-entry-color--hover: $mcp-accent;
+$o-navbar-entry-bg--hover:    $mcp-accent-soft;
+$o-navbar-entry-color--active: $mcp-accent;
+$o-navbar-entry-bg--active:    $mcp-accent-soft;
+$o-navbar-brand-color:     $mcp-ink;
+
+// Body / view backgrounds
+$o-view-background-color:   $mcp-paper-light !default;
+$o-form-view-background-color: #ffffff !default;

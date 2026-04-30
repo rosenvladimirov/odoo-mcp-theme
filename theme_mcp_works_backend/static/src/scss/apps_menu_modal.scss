@@ -1,0 +1,89 @@
+/* Apps Menu — wide horizontal popup, sharp corners, tight grid */
+
+.o-overlay-container .o-dropdown--menu:has(.o_app),
+.o-overlay-container .dropdown-menu:has(.o_app) {
+    position: fixed !important;
+    top: 34px !important;
+    left: 4px !important;
+    transform: none !important;
+    inset: 34px auto auto 4px !important;
+
+    /* Horizontal rectangle */
+    width: 720px !important;
+    max-width: calc(100vw - 8px) !important;
+    height: auto !important;
+    max-height: 360px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+
+    /* Tight grid layout — multi-column */
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 2px !important;
+    align-content: start !important;
+
+    background: var(--mcp-paper-light, #fbf7ee) !important;
+    border: 1.5px solid var(--mcp-accent, #4338ca) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 8px 24px rgba(67, 56, 202, 0.20),
+                0 2px 8px rgba(0, 0, 0, 0.10) !important;
+    padding: 4px !important;
+    margin: 0 !important;
+    z-index: 1050 !important;
+
+    animation: mcp-apps-fade-in 0.15s ease;
+}
+
+/* Custom scrollbar (vertical only) */
+.o-overlay-container .o-dropdown--menu:has(.o_app)::-webkit-scrollbar {
+    width: 8px;
+}
+.o-overlay-container .o-dropdown--menu:has(.o_app)::-webkit-scrollbar-track {
+    background: transparent;
+}
+.o-overlay-container .o-dropdown--menu:has(.o_app)::-webkit-scrollbar-thumb {
+    background: var(--mcp-accent-soft, rgba(67, 56, 202, 0.30));
+    border-radius: 0;
+}
+.o-overlay-container .o-dropdown--menu:has(.o_app)::-webkit-scrollbar-thumb:hover {
+    background: var(--mcp-accent, #4338ca);
+}
+
+/* App items inside — compact tiles */
+.o-overlay-container .o-dropdown--menu:has(.o_app) .o_app,
+.o-overlay-container .dropdown-menu:has(.o_app) .o_app,
+.o-overlay-container .o-dropdown--menu .o-dropdown-item.o_app {
+    display: block !important;
+    width: 100% !important;
+    padding: 6px 8px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--mcp-ink, #2c2620) !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: background 0.1s ease, color 0.1s ease;
+    text-align: center !important;
+    border: 1px solid transparent !important;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.o-overlay-container .o-dropdown--menu:has(.o_app) .o_app:hover,
+.o-overlay-container .dropdown-menu:has(.o_app) .o_app:hover,
+.o-overlay-container .o-dropdown--menu .o_app.o-navigable--active,
+.o-overlay-container .o-dropdown--menu .o_app.focus {
+    background: transparent !important;
+    color: var(--mcp-accent, #4338ca) !important;
+    border-color: transparent !important;
+    transform: translateY(-2px) !important;
+    box-shadow: none !important;
+}
+
+@keyframes mcp-apps-fade-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

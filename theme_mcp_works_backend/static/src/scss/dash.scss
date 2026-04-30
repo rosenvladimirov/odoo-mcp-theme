@@ -1,0 +1,247 @@
+/* MCP Works backend Dash — GNOME Shell style v3
+ * - Always-visible "rest" handle (8px peek) so user discovers it
+ * - Hot zone: bottom 24px, full width, ABOVE other elements (z 1100)
+ * - Pointer-events: auto на hot zone; explicit listener
+ * - Smoother transitions
+ */
+
+.mcp_dash_dock {
+    position: fixed;
+    bottom: -52px;  /* 8px от dock остават visible at top */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: rgba(246, 240, 227, 0.95);
+    border: 1.5px solid var(--mcp-accent, #4338ca);
+    border-bottom-color: transparent;
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 -8px 24px rgba(67, 56, 202, 0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    user-select: none;
+    transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-radius 0.3s ease,
+                box-shadow 0.3s ease;
+    pointer-events: auto;
+}
+
+/* Tiny visible "grip" — invitation to hover when collapsed */
+.mcp_dash_dock::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--mcp-accent, #4338ca);
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+/* Reveal */
+.mcp_dash_dock:hover,
+.mcp_dash_dock.is-revealed {
+    bottom: 0;
+    border-bottom-color: transparent;
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 -16px 40px rgba(67, 56, 202, 0.25);
+}
+.mcp_dash_dock:hover::before,
+.mcp_dash_dock.is-revealed::before {
+    opacity: 0;
+}
+
+/* Hot zone — full bottom 32px strip, above everything */
+.mcp_dash_hotzone {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    z-index: 1099;
+    pointer-events: auto;
+    background: transparent;
+}
+
+/* Collapse / expand button (top-right corner) */
+.mcp_dash_collapse {
+    position: absolute;
+    top: -10px;
+    right: 8px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--mcp-accent, #4338ca);
+    color: var(--mcp-paper, #f6f0e3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1;
+    border: 2px solid var(--mcp-paper, #f6f0e3);
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 2px 6px rgba(67, 56, 202, 0.30);
+}
+.mcp_dash_dock:hover .mcp_dash_collapse,
+.mcp_dash_dock.is-revealed .mcp_dash_collapse {
+    opacity: 1;
+}
+.mcp_dash_collapse:hover {
+    transform: scale(1.15);
+}
+
+/* App icon */
+.mcp_dash_item {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background 0.2s ease;
+    text-decoration: none;
+    position: relative;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+.mcp_dash_item:hover {
+    background: var(--mcp-accent-soft, rgba(67, 56, 202, 0.08));
+    transform: translateY(-6px) scale(1.08);
+}
+
+.mcp_dash_item img {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: cover;
+    transition: filter 0.2s ease;
+    filter: grayscale(0.15);
+}
+.mcp_dash_item:hover img {
+    filter: grayscale(0);
+}
+
+.mcp_dash_item .o_app_letter {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--mcp-accent, #4338ca);
+    color: var(--mcp-paper, #f6f0e3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.mcp_dash_item.is-active::after {
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--mcp-accent, #4338ca);
+    box-shadow: 0 0 6px var(--mcp-accent, #4338ca);
+}
+
+.mcp_dash_separator {
+    width: 1px;
+    height: 32px;
+    background: rgba(44, 38, 32, 0.18);
+    margin: 0 4px;
+}
+
+.mcp_dash_activities {
+    background: var(--mcp-accent, #4338ca) !important;
+}
+.mcp_dash_activities:hover {
+    background: var(--mcp-accent-dark, #3730a3) !important;
+    transform: translateY(-6px) scale(1.08);
+}
+.mcp_dash_activities .mcp_activities_icon {
+    width: 22px;
+    height: 22px;
+    color: var(--mcp-paper, #f6f0e3);
+}
+
+/* Tooltips */
+.mcp_dash_item[data-tooltip] {
+    position: relative;
+}
+.mcp_dash_item[data-tooltip]:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--mcp-ink, #2c2620);
+    color: var(--mcp-paper, #f6f0e3);
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.20);
+    z-index: 1101;
+}
+
+/* Collapsed mode */
+.mcp_dash_dock.is-collapsed {
+    padding: 4px 8px;
+    gap: 0;
+}
+.mcp_dash_dock.is-collapsed .mcp_dash_item:not(.mcp_dash_activities),
+.mcp_dash_dock.is-collapsed .mcp_dash_separator {
+    display: none;
+}
+.mcp_dash_dock.is-collapsed .mcp_dash_activities {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+/* Show Desktop — minimize the current app: hide content + brand + section menu.
+   Keep navbar essentials (apps icon, clock, user, company) visible — same as GNOME. */
+body.mcp-show-desktop .o_action_manager > * {
+    visibility: hidden !important;
+}
+body.mcp-show-desktop .o_action_manager {
+    visibility: visible !important;
+}
+body.mcp-show-desktop .o_main_navbar .o_menu_brand,
+body.mcp-show-desktop .o_main_navbar .o_menu_sections {
+    visibility: hidden !important;
+}
+
+/* Show Desktop icon — same size as other dock items */
+.mcp_dash_show_desktop .mcp_show_desktop_icon {
+    width: 22px;
+    height: 22px;
+    color: var(--mcp-ink, #2c2620);
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.mcp_dash_show_desktop:hover .mcp_show_desktop_icon {
+    color: var(--mcp-accent, #4338ca);
+    transform: translateY(-2px);
+}
+body.mcp-show-desktop .mcp_dash_show_desktop {
+    background: var(--mcp-accent-soft, rgba(67, 56, 202, 0.12)) !important;
+}
+body.mcp-show-desktop .mcp_dash_show_desktop .mcp_show_desktop_icon {
+    color: var(--mcp-accent, #4338ca);
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="theme_mcp_works_backend.ControlPanel" t-inherit="web.ControlPanel" t-inherit-mode="extension">
+
+        <!-- (1) Inject the breadcrumb strip BEFORE .o_control_panel_main -->
+        <xpath expr="//div[hasclass('o_control_panel_main')]" position="before">
+            <div t-if="!env.config.noBreadcrumbs and !env.isSmall"
+                 class="mcp_breadcrumb_strip d-print-none">
+                <i class="mcp_breadcrumb_steps fa fa-map-marker" aria-hidden="true"/>
+                <button type="button"
+                        class="mcp_scroll_btn mcp_scroll_left"
+                        aria-label="Scroll left"
+                        hidden="hidden">
+                    <i class="fa fa-chevron-left" aria-hidden="true"/>
+                </button>
+                <div class="mcp_breadcrumb_scroll">
+                    <Breadcrumbs breadcrumbs="breadcrumbs"/>
+                </div>
+                <button type="button"
+                        class="mcp_scroll_btn mcp_scroll_right"
+                        aria-label="Scroll right"
+                        hidden="hidden">
+                    <i class="fa fa-chevron-right" aria-hidden="true"/>
+                </button>
+            </div>
+        </xpath>
+
+        <!-- (2) Drop the breadcrumb-additional-actions slot from original Breadcrumbs.
+             This stops the cog from rendering inside .o_control_panel_breadcrumbs. -->
+        <xpath expr="//div[hasclass('o_control_panel_breadcrumbs')]//t[@t-set-slot='breadcrumb-additional-actions']" position="replace"/>
+
+        <!-- (3) Re-render the slot inside .o_control_panel_navigation (next to view switchers). -->
+        <xpath expr="//div[hasclass('o_control_panel_navigation')]" position="inside">
+            <div class="mcp_relocated_actions d-flex align-items-center"
+                 t-if="!env.config.noBreadcrumbs and !env.isSmall">
+                <t t-slot="control-panel-additional-actions"/>
+                <span class="mcp_view_separator"/>
+            </div>
+        </xpath>
+
+    </t>
+
+    <!-- Force list-view (single-segment) breadcrumbs to use the same
+         <ol class="breadcrumb"><li class="breadcrumb-item active">…</li></ol>
+         structure as the multi-segment branch, so SCSS rules and DOM stay
+         uniform regardless of whether there's 1 or N path entries. -->
+    <t t-name="theme_mcp_works_backend.Breadcrumbs" t-inherit="web.Breadcrumbs" t-inherit-mode="extension">
+        <xpath expr="//div[@t-else=''][hasclass('o_breadcrumb')]" position="replace">
+            <div t-else="" class="o_breadcrumb d-flex flex-row flex-md-column align-self-stretch justify-content-between min-w-0">
+                <ol class="breadcrumb flex-nowrap text-nowrap lh-sm">
+                    <li class="breadcrumb-item d-inline-flex min-w-0 active">
+                        <span class="fw-bold text-truncate"><t t-call="web.Breadcrumb.Name"/></span>
+                    </li>
+                </ol>
+                <t t-call="web.Breadcrumb.Actions"/>
+            </div>
+        </xpath>
+    </t>
+
+</templates>
