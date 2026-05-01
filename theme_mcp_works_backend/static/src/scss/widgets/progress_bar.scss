@@ -38,5 +38,4 @@
     font-variant-numeric: tabular-nums;
 }
 
-/* ── List view: narrower bar ─────────────────────────────────── */
-.o_list_view .o_field_progress_bar .progress { height: 4px !important; }
+/* View-scoped narrower bar lives in views/list.scss */

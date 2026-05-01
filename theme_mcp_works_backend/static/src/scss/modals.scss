@@ -2,10 +2,16 @@
 
 /* ── Modals ──────────────────────────────────────────────────── */
 .modal-content {
-    background: var(--mcp-paper-light) !important;
+    background: var(--mcp-surface-raised) !important;
     border-radius: var(--mcp-r-md) !important;
     border: 1.5px solid var(--mcp-accent) !important;
     box-shadow: var(--mcp-shadow-modal) !important;
+    max-height: calc(var(--mcp-vp-h, 100vh) - 32px);
+}
+.modal-body {
+    background: var(--mcp-surface-raised) !important;
+    max-height: calc(var(--mcp-vp-h, 100vh) - 200px);
+    overflow-y: auto;
 }
 .modal-header {
     background: var(--mcp-paper) !important;
@@ -19,7 +25,6 @@
     letter-spacing: 0.04em;
     font-size: 14px !important;
 }
-.modal-body  { background: var(--mcp-paper-light) !important; }
 .modal-footer {
     background: var(--mcp-paper) !important;
     border-top: 1px solid var(--mcp-rule) !important;

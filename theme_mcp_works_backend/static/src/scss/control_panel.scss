@@ -1,24 +1,28 @@
 /* MCP Works backend — Control Panel, Breadcrumbs, Pager, Search, Breadcrumb Strip */
 
-/* ── Wrapper: transparent; inner card is the frosted glass ──── */
+/* ── Wrapper: translucent white with soft outward glow ──────── */
+/* LAYOUT CONVENTION (canonical):
+   The root view (.o_form_view / .o_list_view / .o_kanban_view / etc.)
+   owns ALL outer spacing (16px on all sides). The CP only contributes
+   the 8px gap separating it from the sheet/list below — nothing else. */
 .o_control_panel {
-    background: transparent !important;
+    background: rgba(255, 255, 255, 0.55) !important;
+    backdrop-filter: blur(6px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(6px) saturate(140%) !important;
     border: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    gap: 0 !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-shadow-md) !important;
+    margin: 0 0 8px 0 !important;
+    /* keep BS px-3 pt-2 pb-3 — that's INNER content padding, not layout */
     overflow: visible !important;
     position: relative !important;
     z-index: 1 !important;
 }
 .o_control_panel_main {
-    background: rgba(255, 255, 255, 0.30) !important;
-    backdrop-filter: blur(7px) saturate(140%) !important;
-    -webkit-backdrop-filter: blur(7px) saturate(140%) !important;
-    border: 1.5px solid var(--mcp-accent) !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     padding: 6px 8px !important;
@@ -43,6 +47,82 @@
 .o_cp_switch_buttons .btn,
 .o_cp_action_menus .btn { position: relative !important; z-index: 2 !important; }
 
+/* All control-panel rows share --mcp-cp-row-h (defined in tokens.scss).
+   align-self overrides .align-items-lg-start on .o_control_panel_main. */
+.o_control_panel .o_control_panel_main_buttons,
+.o_control_panel .o_control_panel_actions,
+.o_control_panel .o_cp_searchview,
+.o_control_panel .o_cp_switch_buttons,
+.o_control_panel .o_cp_action_menus,
+.o_control_panel_main > .o_searchview {
+    height: var(--mcp-cp-row-h) !important;
+    min-height: var(--mcp-cp-row-h) !important;
+    align-items: center !important;
+    align-self: center !important;
+}
+
+/* Buttons inside any control-panel row */
+.o_control_panel .o_control_panel_main_buttons .btn,
+.o_control_panel .o_control_panel_actions .btn,
+.o_control_panel .o_cp_switch_buttons .btn,
+.o_control_panel .o_cp_action_menus .btn {
+    height: var(--mcp-cp-row-h) !important;
+    min-height: var(--mcp-cp-row-h) !important;
+    padding: 4px 10px !important;
+    font-size: 13px !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.o_cp_action_menus .btn .fa,
+.o_cp_action_menus .btn .oi,
+.o_cp_switch_buttons .btn .fa,
+.o_cp_switch_buttons .btn .oi {
+    font-size: 14px !important;
+    line-height: 1 !important;
+}
+
+/* Active view button — indigo text/icon to mark current view */
+.o_cp_switch_buttons .btn.active,
+.o_cp_switch_buttons .btn[aria-pressed="true"],
+.o_cp_switch_buttons .btn.o_active,
+.o_cp_switch_buttons .o_switch_view.active {
+    color: var(--mcp-accent) !important;
+    background: var(--mcp-accent-soft) !important;
+}
+.o_cp_switch_buttons .btn.active .fa,
+.o_cp_switch_buttons .btn.active .oi,
+.o_cp_switch_buttons .btn[aria-pressed="true"] .fa,
+.o_cp_switch_buttons .btn[aria-pressed="true"] .oi {
+    color: var(--mcp-accent) !important;
+}
+
+/* Vertical separators between CP cluster elements (any pair, any order):
+   pager · switch_buttons · relocated_actions · action_menus */
+.o_cp_pager           + .o_cp_switch_buttons,
+.o_cp_pager           + .mcp_relocated_actions,
+.o_cp_pager           + .o_cp_action_menus,
+.o_cp_switch_buttons  + .o_cp_pager,
+.o_cp_switch_buttons  + .mcp_relocated_actions,
+.o_cp_switch_buttons  + .o_cp_action_menus,
+.mcp_relocated_actions + .o_cp_pager,
+.mcp_relocated_actions + .o_cp_switch_buttons,
+.mcp_relocated_actions + .o_cp_action_menus,
+.o_cp_action_menus    + .o_cp_pager,
+.o_cp_action_menus    + .o_cp_switch_buttons,
+.o_cp_action_menus    + .mcp_relocated_actions {
+    border-left: 1px solid var(--mcp-rule-strong);
+    padding-left: 8px !important;
+    margin-left: 4px !important;
+}
+
+/* Hide the default breadcrumb inside control panel — relocated to .mcp_breadcrumb_strip */
+.o_control_panel .o_control_panel_breadcrumbs .o_breadcrumb,
+.o_control_panel_main .o_breadcrumb {
+    display: none !important;
+}
+
 /* ── Breadcrumbs ─────────────────────────────────────────────── */
 .o_breadcrumb {
     color: var(--mcp-ink-2) !important;
@@ -62,16 +142,37 @@
 
 /* ── Pager ───────────────────────────────────────────────────── */
 .o_pager {
-    background: #ffffff !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
-    border-radius: var(--mcp-r-sm) !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
     padding: 0 !important;
+    height: var(--mcp-cp-row-h) !important;
+    min-height: var(--mcp-cp-row-h) !important;
+    align-self: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 2px;
 }
-.o_pager_counter {
+.o_pager_counter,
+.o_pager_value,
+.o_pager_limit {
     color: var(--mcp-ink-2) !important;
-    font-size: 12px;
-    padding: 4px 10px;
-    border-right: 1px solid var(--mcp-rule);
+    font-size: 12px !important;
+    padding: 0 4px !important;
+    margin: 0 !important;
+    border: none !important;
+    height: var(--mcp-cp-row-h) !important;
+    line-height: var(--mcp-cp-row-h) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    align-self: center !important;
+    vertical-align: middle !important;
+}
+.o_pager_counter input.o_pager_value {
+    background: transparent !important;
+    text-align: center !important;
+    width: 2.5em !important;
+    padding: 0 2px !important;
 }
 .o_pager button,
 .o_pager_previous,
@@ -80,6 +181,15 @@
     border: none !important;
     color: var(--mcp-ink) !important;
     padding: 4px 10px !important;
+    width: auto !important;
+    min-width: var(--mcp-cp-row-h) !important;
+    height: var(--mcp-cp-row-h) !important;
+    min-height: var(--mcp-cp-row-h) !important;
+    border-radius: var(--mcp-r-xs) !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     transition: background var(--mcp-t-base), color var(--mcp-t-base);
 }
 .o_pager button:hover,
@@ -88,16 +198,16 @@
 
 /* ── Search view ─────────────────────────────────────────────── */
 .o_searchview {
-    background: #ffffff !important;
+    background: var(--mcp-surface) !important;
     border: 1px solid var(--mcp-rule-strong) !important;
     border-radius: var(--mcp-r-sm) !important;
     padding: 0 8px !important;
-    min-height: 30px !important;
+    min-height: var(--mcp-cp-row-h) !important;
     transition: border-color var(--mcp-t-base), box-shadow var(--mcp-t-base);
 }
 .o_searchview .o_searchview_input {
-    height: 26px !important;
-    line-height: 26px !important;
+    height: calc(var(--mcp-cp-row-h) - 4px) !important;
+    line-height: calc(var(--mcp-cp-row-h) - 4px) !important;
     font-size: 13px !important;
     padding: 0 !important;
     margin: 0 !important;
@@ -152,8 +262,8 @@
 .o_cp_searchview .dropdown-toggle,
 .o_searchview_dropdown_toggler,
 .o_search_panel_filter_toggler {
-    height: 30px !important;
-    min-height: 30px !important;
+    height: var(--mcp-cp-row-h) !important;
+    min-height: var(--mcp-cp-row-h) !important;
     padding: 0 10px !important;
     font-size: 13px !important;
     display: inline-flex !important;
@@ -166,27 +276,77 @@
 .mcp_breadcrumb_strip {
     position: relative;
     height: 30px;
-    padding: 0 14px 0 38px;
+    padding: 0 4px;
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 6px;
-    background: linear-gradient(to bottom,
-        var(--mcp-paper) 0%,
-        var(--mcp-paper) 55%,
-        rgba(246, 240, 227, 0) 100%);
+    gap: 8px;
+    background: transparent;
     border: none;
     font-size: 12px;
-    overflow: hidden;
+    overflow: visible;
+
+    /* Decorative separator between breadcrumbs and the buttons row.
+       Edge-to-edge thin hairline with gentle fade at the very ends. */
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -8px;
+        height: 1px;
+        background: linear-gradient(to right,
+            transparent 0%,
+            var(--mcp-accent-glow) 4%,
+            var(--mcp-accent) 50%,
+            var(--mcp-accent-glow) 96%,
+            transparent 100%);
+        opacity: 0.6;
+        pointer-events: none;
+    }
 }
+
+/* Leading marker: relocated .o_menu_brand (current app icon + name) */
 .mcp_breadcrumb_strip .mcp_breadcrumb_steps {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
+    flex-shrink: 0;
     color: var(--mcp-accent);
     font-size: 13px;
     opacity: 0.85;
+    text-decoration: none;
+    line-height: 1;
+}
+.mcp_breadcrumb_strip .mcp_app_brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 22px;
+    padding: 0 8px 0 4px;
+    border-radius: var(--mcp-r-pill);
+    background: transparent;
+    color: var(--mcp-accent) !important;
+    text-decoration: none !important;
+    opacity: 0.95;
+    transition: background var(--mcp-t-fast), opacity var(--mcp-t-fast);
+
+    &:hover {
+        background: var(--mcp-accent-soft);
+        opacity: 1;
+    }
+}
+.mcp_breadcrumb_strip .mcp_app_brand_icon {
+    width: 18px;
+    height: 18px;
+    border-radius: var(--mcp-r-sm);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.mcp_breadcrumb_strip .mcp_app_brand_name {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    white-space: nowrap;
 }
 .mcp_breadcrumb_strip .o_breadcrumb {
     background: transparent !important;
@@ -237,4 +397,73 @@
     flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
+}
+
+/* ── Breadcrumb collapse trigger (oi-ellipsis-h) ─────────────────
+   When breadcrumb path overflows, Odoo wraps the older items behind
+   a Dropdown trigger using <button class="btn btn-light btn-sm">
+   <i class="oi oi-ellipsis-h"/></button>. Bootstrap btn-light gives
+   it a grey border + bg we don't want. We strip the chrome and
+   replace the static glyph with three baseline-aligned dots that
+   pulse-animate — same affordance, less visual noise. */
+.mcp_breadcrumb_strip .breadcrumb .breadcrumb-item button.btn,
+.o_breadcrumb .breadcrumb .breadcrumb-item button.btn,
+.breadcrumb .breadcrumb-item > button.btn-light {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 6px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    color: var(--mcp-accent) !important;
+    line-height: 1 !important;
+    transform: none !important;
+    transition: opacity var(--mcp-t-fast);
+
+    &:hover { opacity: 0.7; }
+}
+
+/* Hide the FA/oi glyph and paint 3 animated dots on the baseline */
+.mcp_breadcrumb_strip .oi-ellipsis-h,
+.o_breadcrumb .oi-ellipsis-h,
+.breadcrumb .oi-ellipsis-h {
+    position: relative;
+    display: inline-block;
+    width: 22px;
+    height: 16px;
+    color: transparent !important;       /* hide font glyph */
+    font-size: 0 !important;
+    line-height: 1;
+    vertical-align: middle;
+
+    &::before, &::after { content: none !important; }  /* nuke font glyph */
+
+    /* Three dots — center one + two via box-shadow.
+       Positioned at the bottom (baseline) of the 16px frame. */
+    &::after {
+        content: "" !important;
+        position: absolute;
+        bottom: 2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: var(--mcp-accent);
+        box-shadow:
+            -6px 0 0 0 var(--mcp-accent),
+             6px 0 0 0 var(--mcp-accent);
+        animation: mcp-ellipsis-pulse 1.4s ease-in-out infinite;
+    }
+}
+
+@keyframes mcp-ellipsis-pulse {
+    0%, 100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateX(-50%) scale(1.25);
+        opacity: 1;
+    }
 }

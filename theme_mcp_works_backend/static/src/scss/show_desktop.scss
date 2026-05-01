@@ -1,0 +1,45 @@
+/* MCP Works backend — Show Desktop systray button */
+
+.mcp_show_desktop {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+}
+
+.mcp_show_desktop_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0 !important;
+    margin: 0 4px;
+    border: none !important;
+    border-radius: var(--mcp-r-sm);
+    background: transparent !important;
+    color: var(--mcp-ink-2) !important;
+    cursor: pointer;
+    transition:
+        background var(--mcp-t-fast),
+        color var(--mcp-t-fast),
+        transform var(--mcp-t-spring);
+
+    .fa { font-size: 14px; line-height: 1; }
+
+    &:hover {
+        background: var(--mcp-accent-soft) !important;
+        color: var(--mcp-accent) !important;
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+        background: var(--mcp-accent) !important;
+        color: var(--mcp-paper) !important;
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--mcp-accent-glow);
+    }
+}

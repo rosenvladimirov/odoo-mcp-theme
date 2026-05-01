@@ -3,6 +3,7 @@
    SCSS build-time vars live in variables.scss (primary_variables bundle). */
 
 :root {
+
     /* ── Palette ──────────────────────────────────────────────── */
     --mcp-paper:         #f6f0e3;
     --mcp-paper-light:   #fbf7ee;
@@ -46,9 +47,26 @@
 
     /* ── Z-index layers ───────────────────────────────────────── */
     --mcp-z-actions:  1050;
-    --mcp-z-backdrop: 1099;
-    --mcp-z-modal:    1100;
+    --mcp-z-backdrop: 9998;
+    --mcp-z-modal:    9999;     /* sits above Discuss / kanban / popovers */
+
+    /* ── Surfaces (white card/sheet backgrounds) ─────────────── */
+    --mcp-surface:         #ffffff;   /* form sheets, list tables, kanban cards */
+    --mcp-surface-raised:  #ffffff;   /* modals, dropdowns, popovers            */
+    --mcp-surface-frosted: rgba(255, 255, 255, 0.30); /* frosted control panel  */
 
     /* ── Layout ───────────────────────────────────────────────── */
     --mcp-navbar-height: 32px;
+
+    /* Single control-panel row height — change here to resize all
+       CP rows (main_buttons, actions, searchview, switch_buttons,
+       action_menus) and their inner buttons in one go. */
+    --mcp-cp-row-h:      30px;
+
+    /* Stat-button (smart-button) sizing.
+       --mcp-stat-btn-w is set per-buttonbox by resizer.js to the widest
+       measured segment, clamped to [min, max]. CSS default falls back
+       to min-w when JS hasn't run yet (e.g. SSR / first paint). */
+    --mcp-stat-btn-min-w: 140px;
+    --mcp-stat-btn-max-w: 240px;
 }

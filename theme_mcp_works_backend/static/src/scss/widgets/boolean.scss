@@ -1,55 +1,213 @@
 /* MCP Works backend — Boolean / checkbox widget */
 
-/* ── Checkbox via .o_checkbox wrapper ────────────────────────── */
+/* ── Checkbox via .o_checkbox wrapper ────────────────────────────
+   Unchecked: paper surface + soft inset depth + thin rule.
+   Hover:     accent rule + accent-soft fill (preview).
+   Focus:     3px accent-glow halo (a11y).
+   Checked:   accent fill + animated checkmark drawn via clip-path
+              (crisp at any DPR, no rotated-rectangle artifacts).
+*/
 .o_checkbox {
+    --mcp-cbx-size: 16px;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 16px;
-    height: 16px;
+    width: var(--mcp-cbx-size);
+    height: var(--mcp-cbx-size);
     border: 1.5px solid var(--mcp-rule-strong);
     border-radius: var(--mcp-r-xs);
-    background: #ffffff;
+    background: var(--mcp-paper-light);
+    box-shadow: inset 0 1px 2px rgba(44, 38, 32, 0.06);
     cursor: pointer;
     flex-shrink: 0;
-    transition: background var(--mcp-t-fast), border-color var(--mcp-t-fast);
+    position: relative;
+    transition:
+        background var(--mcp-t-fast),
+        border-color var(--mcp-t-fast),
+        box-shadow var(--mcp-t-fast),
+        transform var(--mcp-t-spring);
 
     input[type="checkbox"] {
         position: absolute;
+        inset: 0;
         opacity: 0;
-        width: 0;
-        height: 0;
-        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        cursor: pointer;
     }
 
+    /* Hover (unchecked) — preview accent */
+    &:hover:not(:has(input:checked)):not(.o_checkbox_checked) {
+        border-color: var(--mcp-accent);
+        background: var(--mcp-accent-soft);
+        box-shadow: inset 0 1px 2px rgba(67, 56, 202, 0.08);
+    }
+
+    /* Keyboard focus halo */
+    &:has(input:focus-visible),
+    &:focus-within {
+        box-shadow:
+            inset 0 1px 2px rgba(44, 38, 32, 0.06),
+            0 0 0 3px var(--mcp-accent-glow);
+        border-color: var(--mcp-accent);
+        outline: none;
+    }
+
+    /* Checkmark glyph — clip-path polygon stays crisp at any size */
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--mcp-paper);
+        clip-path: polygon(
+            18%  48%,  /* tail start  */
+            8%   58%,  /* tail outer  */
+            42%  88%,  /* corner outer*/
+            92%  24%,  /* tip outer   */
+            82%  14%,  /* tip inner   */
+            42%  68%   /* corner inner*/
+        );
+        opacity: 0;
+        transform: scale(0.4);
+        transition:
+            opacity var(--mcp-t-fast),
+            transform var(--mcp-t-spring);
+    }
+
+    /* Checked — fill + reveal checkmark */
     &:has(input:checked),
     &.o_checkbox_checked {
-        background: var(--mcp-accent) !important;
-        border-color: var(--mcp-accent) !important;
+        background: var(--mcp-accent);
+        border-color: var(--mcp-accent);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.18),
+            0 1px 2px rgba(67, 56, 202, 0.25);
 
         &::after {
-            content: "";
-            display: block;
-            width: 9px;
-            height: 5px;
-            border-left: 2px solid var(--mcp-paper);
-            border-bottom: 2px solid var(--mcp-paper);
-            transform: rotate(-45deg) translateY(-1px);
+            opacity: 1;
+            transform: scale(1);
         }
     }
 
-    &:hover { border-color: var(--mcp-accent); }
+    /* Indeterminate — minus glyph instead of check */
+    &:has(input:indeterminate),
+    &.o_checkbox_indeterminate {
+        background: var(--mcp-accent);
+        border-color: var(--mcp-accent);
+
+        &::after {
+            opacity: 1;
+            transform: scale(1);
+            clip-path: polygon(20% 42%, 80% 42%, 80% 58%, 20% 58%);
+        }
+    }
+
+    /* Pressed — subtle squish for tactile feedback */
+    &:active { transform: scale(0.92); }
+
+    /* Disabled */
+    &:has(input:disabled),
+    &.o_checkbox_disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        background: var(--mcp-paper-deep);
+
+        &:hover { border-color: var(--mcp-rule-strong); background: var(--mcp-paper-deep); }
+    }
 }
 
-/* Native checkbox fallback (readonly / no wrapper) */
-input[type="checkbox"].o_input {
-    accent-color: var(--mcp-accent);
-    width: 16px;
-    height: 16px;
+/* Sizing variants — set on parent or inline */
+.o_field_widget[name="active"] .o_checkbox,
+.o_form_view .o_checkbox          { --mcp-cbx-size: 18px; }
+.o_list_view .o_checkbox          { --mcp-cbx-size: 16px; }
+.o_kanban_view .o_checkbox        { --mcp-cbx-size: 16px; }
+
+/* ── Native checkbox fallback (readonly cells, no wrapper) ─────
+   When Odoo renders a bare <input type="checkbox"> without the
+   .o_checkbox wrapper we still get a themed look via accent-color
+   + a custom box-shadow ring on focus.
+
+   IMPORTANT: appearance:none unties the input from its intrinsic
+   16×16 — flex/grid parents will stretch it to column width. We
+   pin the box with flex/min/max so it stays a square regardless. */
+input[type="checkbox"].o_input,
+input[type="checkbox"].form-check-input,
+.o_field_boolean input[type="checkbox"],
+.o_field_widget[name] > input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: 0 0 auto !important;
+    display: inline-block !important;
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px;
+    max-width: 16px;
+    aspect-ratio: 1 / 1;
+    border: 1.5px solid var(--mcp-rule-strong);
+    border-radius: var(--mcp-r-xs);
+    background: var(--mcp-paper-light);
+    box-shadow: inset 0 1px 2px rgba(44, 38, 32, 0.06);
     cursor: pointer;
-    border-radius: var(--mcp-r-xs) !important;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    transition:
+        background var(--mcp-t-fast),
+        border-color var(--mcp-t-fast),
+        box-shadow var(--mcp-t-fast);
+
+    &:hover:not(:checked) {
+        border-color: var(--mcp-accent);
+        background: var(--mcp-accent-soft);
+    }
+
+    &:focus-visible {
+        outline: none;
+        border-color: var(--mcp-accent);
+        box-shadow:
+            inset 0 1px 2px rgba(44, 38, 32, 0.06),
+            0 0 0 3px var(--mcp-accent-glow);
+    }
+
+    &:checked {
+        background: var(--mcp-accent);
+        border-color: var(--mcp-accent);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.18),
+            0 1px 2px rgba(67, 56, 202, 0.25);
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--mcp-paper);
+            clip-path: polygon(
+                18% 48%, 8% 58%, 42% 88%, 92% 24%, 82% 14%, 42% 68%
+            );
+        }
+    }
+
+    &:indeterminate {
+        background: var(--mcp-accent);
+        border-color: var(--mcp-accent);
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--mcp-paper);
+            clip-path: polygon(20% 42%, 80% 42%, 80% 58%, 20% 58%);
+        }
+    }
+
+    &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        background: var(--mcp-paper-deep);
+    }
 }
 
-/* ── View overrides ──────────────────────────────────────────── */
-/* List: center checkboxes in the cell */
-.o_list_view .o_field_boolean { justify-content: center; display: flex; }
+/* View-scoped sizing/alignment lives in views/list.scss */

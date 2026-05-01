@@ -1,0 +1,54 @@
+/* MCP Works backend — Activity view
+   Layout convention (canonical, see feedback memory):
+   • .o_activity_view.o_view_controller (root, disambiguated by the
+     o_view_controller class) → padding: 16px on all sides.
+   • main.o_content + inner .o_activity_view.h-100 → flush.
+   • Table inherits Bootstrap mb-5 (48px bottom margin) — we strip it
+     so the table sits flush within the root padding.
+   • Inner header cells (.o_activity_type_cell) keep their p-3 utility
+     — that's CONTENT padding (column header breathing). */
+
+.o_activity_view.o_view_controller {
+    background: transparent !important;
+    padding: 16px !important;
+    margin: 0 !important;
+}
+
+.o_activity_view.o_view_controller main.o_content,
+.o_activity_view.o_view_controller main.o_content > .o_activity_view {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.o_activity_view.o_view_controller .o_activity_view_table {
+    margin: 0 !important;                    /* strip Bootstrap mb-5 */
+    background: var(--mcp-surface) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-shadow-sm) !important;
+    overflow: hidden;
+}
+
+/* Header type cells — accent underline + paper bg, in line with our
+   list/pivot header treatment */
+.o_activity_view .o_activity_type_cell {
+    background: var(--mcp-paper) !important;
+    border-bottom: 2px solid var(--mcp-accent) !important;
+    color: var(--mcp-ink) !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Footer (Schedule activity link row) */
+.o_activity_view .o_activity_view_table_footer {
+    background: var(--mcp-paper-light) !important;
+    border-top: 1px solid var(--mcp-rule) !important;
+}
+.o_activity_view .o_activity_view_table_footer .o_record_selector {
+    color: var(--mcp-accent) !important;
+    font-weight: 500;
+    transition: color var(--mcp-t-fast);
+    &:hover { color: var(--mcp-accent-dark) !important; }
+}

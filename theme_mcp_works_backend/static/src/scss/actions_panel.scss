@@ -2,7 +2,7 @@
 
 .mcp_actions_panel {
     position: fixed;
-    top: calc(var(--mcp-navbar-height) + 48px);
+    top: calc(var(--mcp-navbar-h, var(--mcp-navbar-height)) + 48px);
     left: 16px;
     right: 16px;
     z-index: var(--mcp-z-actions);
@@ -12,7 +12,7 @@
     box-shadow: var(--mcp-shadow-panel);
     padding: 16px 20px;
     animation: mcp-actions-slide-down 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    max-height: calc(100vh - 200px);
+    max-height: var(--mcp-panel-max-h, calc(100vh - 200px));
     overflow-y: auto;
 }
 @keyframes mcp-actions-slide-down {
@@ -51,7 +51,7 @@
 
 .mcp_actions_grid {
     display: grid;
-    grid-template-columns: repeat(var(--mcp-cols, 4), 1fr);
+    grid-template-columns: repeat(var(--mcp-cols, var(--mcp-actions-cols, 4)), 1fr);
     gap: 10px;
 }
 
@@ -60,7 +60,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
-    background: #ffffff;
+    background: var(--mcp-surface);
     border: 1.5px solid var(--mcp-rule-strong);
     border-radius: var(--mcp-r-base);
     color: var(--mcp-ink);

@@ -1,7 +1,23 @@
-/* MCP Works backend — Calendar view */
+/* MCP Works backend — Calendar view
+   Layout convention (canonical, see feedback memory):
+   • .o_calendar_view (root) → padding: 16px on all sides.
+   • main.o_content + .o_calendar_container (the d-grid h-100 wrapper) → flush.
+   • Inner header/toggler/sidebar keep their own Bootstrap utility paddings
+     (px-3, py-2, pe-3) — those are CONTENT padding (button breathing
+     against the border-bottom), not layout glue.
+   • FullCalendar.js .fc-* classes — DO NOT TOUCH (third-party library). */
 
 .o_calendar_view {
     background: transparent !important;
+    padding: 16px !important;
+    margin: 0 !important;
+}
+.o_calendar_view main.o_content,
+.o_calendar_view .o_calendar_container,
+.o_calendar_view .o_calendar_wrapper,
+.o_calendar_view .o_calendar_renderer {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* ── Header (week/day titles) ────────────────────────────────── */
@@ -31,7 +47,7 @@
 /* ── Day cells ───────────────────────────────────────────────── */
 .o_calendar_row .o_calendar_cell,
 .fc-daygrid-day {
-    background: #ffffff !important;
+    background: var(--mcp-surface) !important;
     border: 1px solid var(--mcp-rule) !important;
     transition: background var(--mcp-t-fast);
     &:hover { background: var(--mcp-paper-light) !important; }

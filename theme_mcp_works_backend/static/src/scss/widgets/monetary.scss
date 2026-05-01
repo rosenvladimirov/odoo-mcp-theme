@@ -29,7 +29,4 @@
     min-width: 80px;
 }
 
-/* ── View overrides ──────────────────────────────────────────── */
-/* List: right-align amounts */
-.o_list_view .o_field_monetary { justify-content: flex-end; }
-.o_list_view td .o_field_monetary { font-variant-numeric: tabular-nums; }
+/* View-scoped alignment + tabular nums live in views/list.scss */

@@ -1,12 +1,33 @@
-/* MCP Works backend — Pivot view */
+/* MCP Works backend — Pivot view
+   Layout convention (canonical, see feedback memory):
+   • .o_pivot_view (root) → padding: 16px on all sides.
+   • main.o_content + anonymous div wrapper → flush.
+   • .o_pivot_buttons + .o_pivot inner — Odoo ships them with Bootstrap
+     mx-3/mt-2/mb-3 utilities. We strip those because root padding
+     already handles outer gutters. */
 
-.o_pivot {
+.o_pivot_view {
     background: transparent !important;
     padding: 16px !important;
+    margin: 0 !important;
+}
+.o_pivot_view main.o_content,
+.o_pivot_view main.o_content > div {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.o_pivot_view .o_pivot_buttons,
+.o_pivot_view .o_pivot {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+.o_pivot_view .o_pivot_buttons {
+    margin-bottom: 8px !important;   /* gap to the pivot table below */
 }
 
 .o_pivot table {
-    background: #ffffff !important;
+    background: var(--mcp-surface) !important;
     border: 1px solid var(--mcp-rule-strong) !important;
     border-radius: var(--mcp-r-md) !important;
     border-collapse: separate !important;

@@ -1,11 +1,38 @@
-/* MCP Works backend — Kanban view */
+/* MCP Works backend — Kanban view
+   Layout convention (canonical, see feedback memory):
+   • .o_kanban_view (root) → padding: 16px on all sides.
+   • main.o_content, .o_kanban_renderer → flush.
+   • .o_control_panel → margin-bottom: 8px (set in control_panel.scss).
+   • Embedded dashboards (.o_purchase_dashboard …) keep their own
+     Bootstrap utility padding — content widgets, not layout glue. */
 
 .o_kanban_view {
     background: transparent !important;
     padding: 16px !important;
+    margin: 0 !important;
 }
-.o_kanban_view .o_kanban_record {
-    background: #ffffff !important;
+.o_kanban_view main.o_content {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Kanban grid surface — soft outward shadow only, no fill. */
+.o_kanban_view .o_kanban_renderer {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-shadow-md) !important;
+}
+
+/* Embedded dashboard widgets (purchase, helpdesk, sale, etc.) — content
+   widgets that sit ABOVE the kanban. 8px bottom gap so the cards
+   breathe after the dashboard's border-bottom. */
+.o_kanban_view main.o_content > [class*="_dashboard"] {
+    margin-bottom: 8px !important;
+}
+.o_kanban_view .o_kanban_record:not(.o_kanban_ghost) {
+    background: var(--mcp-surface) !important;
     border: 1.5px solid var(--mcp-rule-strong) !important;
     border-radius: var(--mcp-r-md) !important;
     box-shadow: var(--mcp-shadow-card) !important;
@@ -14,6 +41,16 @@
         border-color var(--mcp-t-slow),
         box-shadow var(--mcp-t-slow) !important;
     padding: 12px !important;
+}
+
+/* Ghost records — flex placeholders Odoo injects to keep the last row
+   from collapsing. They share the .o_kanban_record class but must stay
+   visually empty. */
+.o_kanban_view .o_kanban_record.o_kanban_ghost {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
 }
 .o_kanban_view .o_kanban_record:hover {
     transform: translateY(-3px);

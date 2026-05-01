@@ -35,11 +35,8 @@
 .o_avatar_lg  { --Avatar-size: 32px; }
 .o_avatar_xl  { --Avatar-size: 48px; }
 
-/* ── View overrides ──────────────────────────────────────────── */
-/* Navbar systray / chatter */
+/* ── Component-context overrides (not view-scoped) ───────────── */
+/* Navbar systray / chatter — these are chrome, not views */
 .o_menu_systray .o_avatar     { --Avatar-size: 24px; }
 .o-mail-Chatter .o_avatar     { --Avatar-size: 32px; }
-/* List view — stay small */
-.o_list_view .o_avatar        { --Avatar-size: 18px; }
-/* Form sheet header */
-.o_form_view .o_form_sheet .o_avatar { --Avatar-size: 40px; }
+/* View-scoped sizes live in views/list.scss + views/form.scss */

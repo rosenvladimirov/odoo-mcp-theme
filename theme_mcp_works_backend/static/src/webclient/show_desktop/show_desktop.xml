@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="theme_mcp_works_backend.McpShowDesktopSystray">
+        <div class="mcp_show_desktop dropdown">
+            <button type="button"
+                    class="mcp_show_desktop_btn btn"
+                    t-on-click="onClick"
+                    title="Покажи десктопа"
+                    aria-label="Покажи десктопа">
+                <i class="fa fa-desktop" aria-hidden="true"/>
+            </button>
+        </div>
+    </t>
+
+</templates>

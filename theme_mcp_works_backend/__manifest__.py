@@ -65,15 +65,19 @@
             "theme_mcp_works_backend/static/src/scss/views/calendar.scss",
             "theme_mcp_works_backend/static/src/scss/views/pivot.scss",
             "theme_mcp_works_backend/static/src/scss/views/graph.scss",
+            "theme_mcp_works_backend/static/src/scss/views/activity.scss",
+            "theme_mcp_works_backend/static/src/scss/views/discuss.scss",
             "theme_mcp_works_backend/static/src/scss/views/settings.scss",
 
             # ── 6. Component panels ────────────────────────────────────
             "theme_mcp_works_backend/static/src/scss/dash.scss",
             "theme_mcp_works_backend/static/src/scss/apps_trigger.scss",
             "theme_mcp_works_backend/static/src/scss/actions_panel.scss",
+            "theme_mcp_works_backend/static/src/scss/show_desktop.scss",
 
             # ── 7. JS utilities ────────────────────────────────────────
             "theme_mcp_works_backend/static/src/js/sizing.js",
+            "theme_mcp_works_backend/static/src/js/resizer.js",
 
             # ── 8. OWL components ──────────────────────────────────────
             "theme_mcp_works_backend/static/src/webclient/dash/dash.js",
@@ -82,6 +86,8 @@
             "theme_mcp_works_backend/static/src/webclient/actions_panel/actions_panel.xml",
             "theme_mcp_works_backend/static/src/webclient/breadcrumb_strip/breadcrumb_strip.js",
             "theme_mcp_works_backend/static/src/webclient/control_panel/control_panel.xml",
+            "theme_mcp_works_backend/static/src/webclient/show_desktop/show_desktop.js",
+            "theme_mcp_works_backend/static/src/webclient/show_desktop/show_desktop.xml",
         ],
     },
     "installable": True,

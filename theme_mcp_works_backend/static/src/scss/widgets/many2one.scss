@@ -40,6 +40,14 @@
     overflow-y: auto;
 }
 
-/* ── View overrides ──────────────────────────────────────────── */
-/* Form: full-width inside a cell */
-.o_form_view .o_field_many2one { width: 100%; }
+/* Many2one input: no focus underline (kill the inset accent shadow) */
+.o_field_many2one input:focus,
+.o_field_many2one input.o_input:focus,
+.o_field_many2one .o-autocomplete--input:focus,
+.o_field_many2one .o_input_dropdown input:focus {
+    box-shadow: none !important;
+    border-color: transparent !important;
+    background: #ffffff !important;
+}
+
+/* View-scoped width lives in views/form.scss */

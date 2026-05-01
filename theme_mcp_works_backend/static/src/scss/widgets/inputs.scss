@@ -1,20 +1,29 @@
 /* MCP Works backend — Input/field widget base (unscoped)
    View-specific overrides: views/form.scss (scoped to .o_form_view)
-   Future field-type snippets: widgets/many2one.scss, widgets/selection.scss etc. */
+   Field-type snippets: widgets/many2one.scss, widgets/boolean.scss etc.
 
-.o_input,
-input.o_input,
+   IMPORTANT: text-input rules below explicitly exclude
+   [type=checkbox] and [type=radio] — those have their own
+   square 16×16 styling in widgets/boolean.scss / widgets/radio.scss
+   and must NOT inherit border-radius:0, padding, or focus underline. */
+
+.o_input:not([type="checkbox"]):not([type="radio"]),
+input.o_input:not([type="checkbox"]):not([type="radio"]),
 textarea.o_input,
 select.o_input {
-    background: #ffffff;
+    background: var(--mcp-surface);
     border: 1px solid var(--mcp-rule-strong);
-    border-radius: var(--mcp-r-sm);
+    border-radius: 0;
     color: var(--mcp-ink);
     transition: border-color var(--mcp-t-base), box-shadow var(--mcp-t-base);
 
+    /* On focus: white bg, no borders, no halo — only a thin indigo
+       underline drawn INSIDE via inset box-shadow so it never overflows. */
     &:focus {
-        border-color: var(--mcp-accent);
-        box-shadow: 0 0 0 3px var(--mcp-accent-soft);
-        outline: none;
+        background: #ffffff !important;
+        border-color: transparent !important;
+        border-radius: 0 !important;
+        box-shadow: inset 0 -1px 0 0 var(--mcp-accent) !important;
+        outline: none !important;
     }
 }

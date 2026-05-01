@@ -27,11 +27,28 @@
 
     <t t-name="theme_mcp_works_backend.ControlPanel" t-inherit="web.ControlPanel" t-inherit-mode="extension">
 
-        <!-- (1) Inject the breadcrumb strip BEFORE .o_control_panel_main -->
+        <!-- (1) Inject the breadcrumb strip BEFORE .o_control_panel_main.
+             The leading marker is the relocated .o_menu_brand: shows the
+             current app's icon + name (the original in the navbar is
+             hidden via SCSS — see navbar.scss). -->
         <xpath expr="//div[hasclass('o_control_panel_main')]" position="before">
             <div t-if="!env.config.noBreadcrumbs and !env.isSmall"
                  class="mcp_breadcrumb_strip d-print-none">
-                <i class="mcp_breadcrumb_steps fa fa-map-marker" aria-hidden="true"/>
+                <t t-set="mcpCurrentApp" t-value="env.services.menu and env.services.menu.getCurrentApp()"/>
+                <a t-if="mcpCurrentApp"
+                   class="mcp_breadcrumb_steps mcp_app_brand"
+                   t-att-href="'/odoo/' + (mcpCurrentApp.actionPath or ('action-' + mcpCurrentApp.actionID))"
+                   t-att-data-menu-xmlid="mcpCurrentApp.xmlid"
+                   t-att-data-section="mcpCurrentApp.id"
+                   t-att-title="mcpCurrentApp.name">
+                    <img t-if="mcpCurrentApp.webIconData"
+                         class="mcp_app_brand_icon"
+                         t-att-src="mcpCurrentApp.webIconData"
+                         t-att-alt="mcpCurrentApp.name"/>
+                    <i t-else="" class="fa fa-map-marker" aria-hidden="true"/>
+                    <span class="mcp_app_brand_name" t-esc="mcpCurrentApp.name"/>
+                </a>
+                <i t-else="" class="mcp_breadcrumb_steps fa fa-map-marker" aria-hidden="true"/>
                 <button type="button"
                         class="mcp_scroll_btn mcp_scroll_left"
                         aria-label="Scroll left"

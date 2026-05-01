@@ -47,10 +47,4 @@
     min-height: 28px;
 }
 
-/* ── View overrides ──────────────────────────────────────────── */
-/* List view: constrain height, truncate overflow */
-.o_list_view .o_field_many2many_tags {
-    flex-wrap: nowrap;
-    max-width: 260px;
-    overflow: hidden;
-}
+/* View-scoped constraints live in views/list.scss */

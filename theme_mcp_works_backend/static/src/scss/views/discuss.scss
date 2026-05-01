@@ -1,0 +1,51 @@
+/* MCP Works backend — Discuss app
+   Layout convention (canonical, see feedback memory):
+   • .o-mail-Discuss (root) → padding: 16px on all sides, like every
+     other top-level view in the theme. Earlier we treated it as a
+     full-screen exception, but the user prefers visual consistency.
+   • Inner wrappers (sidebar container, content) stay flush — only the
+     root pads.
+   • Inner panels are transparent so the paper-cream workspace bg shows
+     through. Discuss ships with `bg-inherit`, `bg-100`, custom
+     `o-mail-discussSidebarBgColor` classes that pin everything to white. */
+
+.o-mail-Discuss {
+    padding: 16px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border-top: none !important;     /* strip the BS border-top secondary */
+}
+
+/* Sidebar resizable panel + content side — flush within the root padding */
+.o-mail-Discuss > .o-mail-DiscussSidebar-resizablePanelContainer,
+.o-mail-Discuss > .o-mail-DiscussContent {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Strip white backgrounds from every panel so the paper-cream workspace
+   shows through. Bubbles, composer borders, etc. keep their own colours
+   (they use o-blue / colored classes) — only the layout chrome goes
+   transparent. */
+.o-mail-Discuss,
+.o-mail-Discuss .o-mail-DiscussSidebar,
+.o-mail-Discuss .o-mail-DiscussContent,
+.o-mail-Discuss .o-mail-DiscussContent-main,
+.o-mail-Discuss .o-mail-DiscussContent-core,
+.o-mail-Discuss .o-mail-Thread,
+.o-mail-Discuss .o-mail-DiscussSearch,
+.o-mail-Discuss .o-mail-Composer,
+.o-mail-Discuss .o-mail-Composer-input,
+.o-mail-Discuss .o-mail-Composer-fake,
+.o-mail-Discuss .o-mail-Message,
+.o-mail-Discuss .bg-inherit,
+.o-mail-Discuss .bg-100,
+.o-mail-Discuss .o-mail-discussSidebarBgColor {
+    background-color: transparent !important;
+}
+
+/* Restore composer textarea visibility — it needs a subtle surface so
+   the paper texture doesn't bleed through the typing area. */
+.o-mail-Discuss .o-mail-Composer-bg {
+    background-color: var(--mcp-surface) !important;
+}

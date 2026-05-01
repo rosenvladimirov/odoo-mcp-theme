@@ -1,21 +1,40 @@
-/* MCP Works backend — Graph / Chart view */
+/* MCP Works backend — Graph / Chart view
+   Layout convention (canonical, see feedback memory):
+   • .o_graph_view (root) → padding: 16px on all sides.
+   • main.o_content, .o_graph_renderer → flush (renderer is layout glue).
+   • Toolbar div + .o_graph_canvas_container — Odoo ships them with
+     Bootstrap mt-2/mx-3/mb-3/px-3/pb-3 utilities. Strip and replace
+     with content-pad on the canvas card itself. */
 
 .o_graph_view {
     background: transparent !important;
     padding: 16px !important;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    margin: 0 !important;
+}
+.o_graph_view main.o_content,
+.o_graph_view .o_graph_renderer {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
-/* ── Chart container ─────────────────────────────────────────── */
-.o_graph_canvas_container,
-.o_graph_renderer {
-    background: #ffffff !important;
+/* Toolbar (anonymous div with .btn-group children) — strip Bootstrap mx/mt/mb,
+   keep only an 8px bottom gap to the chart card. */
+.o_graph_view .o_graph_renderer > div:not(.o_graph_canvas_container) {
+    margin: 0 0 8px 0 !important;
+    padding: 0 !important;
+}
+
+/* Chart container — visual card holding the canvas */
+.o_graph_view .o_graph_canvas_container {
+    background: var(--mcp-surface) !important;
     border: 1px solid var(--mcp-rule-strong) !important;
     border-radius: var(--mcp-r-md) !important;
     box-shadow: var(--mcp-shadow-sm) !important;
-    padding: 16px !important;
+    padding: 16px !important;       /* CONTENT padding inside the card */
+    margin: 0 !important;
     flex: 1 1 auto;
 }
 

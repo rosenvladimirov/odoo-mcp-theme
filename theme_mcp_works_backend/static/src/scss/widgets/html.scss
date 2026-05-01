@@ -13,7 +13,7 @@
     padding: 10px 14px;
     border: 1px solid var(--mcp-rule-strong);
     border-radius: var(--mcp-r-sm);
-    background: #ffffff;
+    background: var(--mcp-surface);
     color: var(--mcp-ink);
     font-size: 13px;
     line-height: 1.6;
@@ -22,8 +22,10 @@
 
     &:focus,
     &[contenteditable="true"]:focus {
-        border-color: var(--mcp-accent);
-        box-shadow: 0 0 0 3px var(--mcp-accent-soft);
+        background: #ffffff !important;
+        border-color: transparent !important;
+        box-shadow: inset 0 -1px 0 0 var(--mcp-accent) !important;
+        outline: none !important;
     }
 }
 

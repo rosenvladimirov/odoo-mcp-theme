@@ -29,7 +29,7 @@
 
 /* No-color option */
 .o_colorlist_item_color_0 {
-    background: #ffffff;
+    background: var(--mcp-surface);
     border-color: var(--mcp-rule-strong) !important;
     background-image: linear-gradient(135deg, transparent 40%, #e11d48 40%, #e11d48 60%, transparent 60%);
 }

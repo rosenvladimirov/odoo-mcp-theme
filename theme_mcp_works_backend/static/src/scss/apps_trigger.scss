@@ -22,9 +22,11 @@
     transition: background var(--mcp-t-fast), color var(--mcp-t-fast), transform var(--mcp-t-fast);
 }
 .mcp_apps_trigger:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--mcp-accent-soft);
+    color: var(--mcp-accent);
 }
 .mcp_apps_trigger.is-active {
-    background: rgba(255, 255, 255, 0.18);
+    background: var(--mcp-accent-glow);
+    color: var(--mcp-accent);
     transform: scale(0.92);
 }
