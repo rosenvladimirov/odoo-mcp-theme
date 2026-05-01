@@ -1,0 +1,70 @@
+/* MCP Works backend — Pivot view */
+
+.o_pivot {
+    background: transparent !important;
+    padding: 16px !important;
+}
+
+.o_pivot table {
+    background: #ffffff !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: var(--mcp-r-md) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    overflow: hidden;
+    box-shadow: var(--mcp-shadow-sm) !important;
+    width: 100%;
+}
+
+/* ── Column / row headers ────────────────────────────────────── */
+.o_pivot thead th,
+.o_pivot .o_pivot_header_cell_opened,
+.o_pivot .o_pivot_header_cell_closed {
+    background: var(--mcp-paper) !important;
+    color: var(--mcp-ink) !important;
+    border-bottom: 2px solid var(--mcp-accent) !important;
+    border-right: 1px solid var(--mcp-rule) !important;
+    padding: 8px 12px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    user-select: none;
+    white-space: nowrap;
+}
+
+/* Drilldown cursor */
+.o_pivot .o_pivot_header_cell_opened,
+.o_pivot .o_pivot_header_cell_closed {
+    cursor: pointer;
+    &:hover { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent) !important; }
+}
+
+/* ── Data cells ──────────────────────────────────────────────── */
+.o_pivot tbody td {
+    padding: 7px 12px !important;
+    border-right: 1px solid var(--mcp-rule) !important;
+    border-bottom: 1px solid var(--mcp-rule) !important;
+    color: var(--mcp-ink) !important;
+    text-align: right !important;
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    transition: background var(--mcp-t-fast);
+
+    &:hover { background: var(--mcp-accent-soft) !important; }
+}
+
+/* Row label cells */
+.o_pivot tbody .o_pivot_cell_value:first-child { text-align: left !important; }
+
+/* Total row */
+.o_pivot tfoot td,
+.o_pivot tr.o_pivot_total td {
+    background: var(--mcp-paper-deep) !important;
+    font-weight: 700;
+    border-top: 2px solid var(--mcp-accent) !important;
+    color: var(--mcp-ink) !important;
+}
+
+/* ── Controls ────────────────────────────────────────────────── */
+.o_pivot_buttons .btn { margin-right: 4px; }

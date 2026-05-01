@@ -1,0 +1,122 @@
+/* MCP Works backend — Search Panel (left sidebar filters) */
+
+/* ── Panel wrapper ───────────────────────────────────────────── */
+.o_search_panel {
+    flex-shrink: 0;
+    background: var(--mcp-paper) !important;
+    border-right: 1px solid var(--mcp-rule-strong) !important;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mcp-rule-strong) transparent;
+    padding: 8px 0;
+    min-width: 200px;
+    max-width: 280px;
+}
+
+/* ── Section (category group) ────────────────────────────────── */
+.o_search_panel_section {
+    padding: 0 0 8px;
+}
+
+.o_search_panel_section_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px 4px;
+    cursor: default;
+}
+
+.o_search_panel_section_header .o_search_panel_section_title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--mcp-ink-3);
+}
+
+/* Collapse toggle */
+.o_search_panel_section_header .o_search_panel_section_fold {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--mcp-ink-3) !important;
+    padding: 0 4px !important;
+    font-size: 10px !important;
+    height: auto !important;
+    transform: none !important;
+    opacity: 0.55;
+    transition: opacity var(--mcp-t-fast), transform var(--mcp-t-fast);
+    &:hover { opacity: 1; }
+}
+.o_search_panel_section.o_search_panel_section_folded .o_search_panel_section_fold {
+    transform: rotate(-90deg);
+}
+
+/* ── Filter item ─────────────────────────────────────────────── */
+.o_search_panel_filter_item,
+.o_search_panel_category_item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--mcp-ink);
+    border-radius: 0;
+    transition: background var(--mcp-t-fast);
+    user-select: none;
+
+    &:hover { background: var(--mcp-accent-soft) !important; }
+}
+
+/* Active */
+.o_search_panel_filter_item.active,
+.o_search_panel_category_item.active,
+.o_search_panel_filter_item.o_active,
+.o_search_panel_category_item.o_active {
+    background: var(--mcp-accent-soft) !important;
+    color: var(--mcp-accent) !important;
+    font-weight: 500;
+}
+
+/* Checkbox */
+.o_search_panel_filter_item input[type="checkbox"] {
+    accent-color: var(--mcp-accent);
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+/* Color dot (kanban-style) */
+.o_search_panel_category_item .o_record_color_dot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--mcp-r-pill);
+    flex-shrink: 0;
+}
+
+/* Count badge */
+.o_search_panel_filter_item .o_search_panel_filter_item_count,
+.o_search_panel_category_item .o_search_panel_category_item_count {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--mcp-ink-3);
+    background: var(--mcp-paper-deep);
+    border-radius: var(--mcp-r-pill);
+    padding: 0 6px;
+    line-height: 1.6;
+}
+
+/* Child items indent */
+.o_search_panel_filter_group,
+.o_search_panel_category_item .o_search_panel_child_items {
+    .o_search_panel_filter_item,
+    .o_search_panel_category_item { padding-left: 28px; }
+}
+
+/* Separator between sections */
+.o_search_panel_section + .o_search_panel_section {
+    border-top: 1px solid var(--mcp-rule);
+    padding-top: 8px;
+}

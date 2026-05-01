@@ -1,0 +1,76 @@
+/* MCP Works backend — Image field & PDF viewer */
+
+/* ── Image field ─────────────────────────────────────────────── */
+.o_field_image {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+}
+
+.o_field_image img {
+    border: 1.5px solid var(--mcp-rule-strong);
+    border-radius: var(--mcp-r-base);
+    object-fit: cover;
+    display: block;
+    max-width: 100%;
+    background: var(--mcp-paper-deep);
+    transition: border-color var(--mcp-t-fast);
+
+    &:hover { border-color: var(--mcp-accent); }
+}
+
+/* Upload overlay on hover */
+.o_field_image .o_select_file_button,
+.o_field_image .o_field_widget_upload {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(67, 56, 202, 0.08);
+    border-radius: var(--mcp-r-base);
+    opacity: 0;
+    transition: opacity var(--mcp-t-base);
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--mcp-accent);
+}
+.o_field_image:hover .o_select_file_button,
+.o_field_image:hover .o_field_widget_upload { opacity: 1; }
+
+/* Clear / remove image button */
+.o_field_image .o_clear_file_button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: var(--mcp-r-pill);
+    background: var(--mcp-ink) !important;
+    color: var(--mcp-paper) !important;
+    border: none !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25) !important;
+    font-size: 10px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--mcp-t-fast);
+    cursor: pointer;
+    padding: 0 !important;
+    line-height: 1;
+    height: auto !important;
+    transform: none !important;
+}
+.o_field_image:hover .o_clear_file_button { opacity: 0.85; }
+.o_clear_file_button:hover { opacity: 1 !important; }
+
+/* ── PDF viewer field ────────────────────────────────────────── */
+.o_field_pdf_viewer {
+    border: 1.5px solid var(--mcp-rule-strong);
+    border-radius: var(--mcp-r-base);
+    overflow: hidden;
+    background: var(--mcp-paper-deep);
+
+    iframe { display: block; width: 100%; }
+}

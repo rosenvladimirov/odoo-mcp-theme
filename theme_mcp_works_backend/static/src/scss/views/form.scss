@@ -95,22 +95,57 @@
     background: transparent !important;
 }
 
-/* ── Stat buttons (button box) ───────────────────────────────── */
+/* ── Button box (stat buttons row) ──────────────────────────── */
+.o_form_view .oe_button_box {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    margin-bottom: 12px;
+    overflow: visible !important;
+}
+
 .o_form_view .oe_button_box .oe_stat_button {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+    height: 52px;
+    padding: 6px 12px !important;
     background: #ffffff !important;
     border: 1.5px solid var(--mcp-rule-strong) !important;
     border-radius: var(--mcp-r-base) !important;
     color: var(--mcp-ink) !important;
     transition: all var(--mcp-t-base);
+    box-shadow: var(--mcp-shadow-xs);
+    position: relative;
+    overflow: visible !important;
 }
 .o_form_view .oe_button_box .oe_stat_button:hover {
     border-color: var(--mcp-accent) !important;
     color: var(--mcp-accent) !important;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     box-shadow: var(--mcp-shadow-glow);
 }
-.o_form_view .oe_button_box .oe_stat_button .o_stat_value,
-.o_form_view .oe_button_box .oe_stat_button .o_stat_text { color: inherit !important; }
+.o_form_view .oe_button_box .oe_stat_button .o_stat_value {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 1.2;
+    color: inherit !important;
+}
+.o_form_view .oe_button_box .oe_stat_button .o_stat_text {
+    font-size: 10px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: inherit !important;
+    opacity: 0.75;
+}
+.o_form_view .oe_button_box .oe_stat_button .fa,
+.o_form_view .oe_button_box .oe_stat_button .o_button_icon {
+    font-size: 18px;
+    color: var(--mcp-accent);
+    margin-bottom: 2px;
+}
 
 /* ── Chatter ─────────────────────────────────────────────────── */
 .o-mail-Chatter {

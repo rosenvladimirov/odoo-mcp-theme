@@ -1,0 +1,84 @@
+/* MCP Works backend — HTML / WYSIWYG field */
+
+/* ── Editor wrapper ───────────────────────────────────────────── */
+.o_field_html {
+    position: relative;
+    width: 100%;
+}
+
+/* Odoo 19 uses the Composer / odoo-editor */
+.o_field_html .odoo-editor-editable,
+.o_field_html .o_editable {
+    min-height: 120px;
+    padding: 10px 14px;
+    border: 1px solid var(--mcp-rule-strong);
+    border-radius: var(--mcp-r-sm);
+    background: #ffffff;
+    color: var(--mcp-ink);
+    font-size: 13px;
+    line-height: 1.6;
+    transition: border-color var(--mcp-t-base), box-shadow var(--mcp-t-base);
+    outline: none;
+
+    &:focus,
+    &[contenteditable="true"]:focus {
+        border-color: var(--mcp-accent);
+        box-shadow: 0 0 0 3px var(--mcp-accent-soft);
+    }
+}
+
+/* Toolbar */
+.o_field_html_toolbar,
+.odoo-editor-toolbar,
+.oe-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 4px 6px;
+    background: var(--mcp-paper);
+    border: 1px solid var(--mcp-rule-strong);
+    border-bottom: none;
+    border-radius: var(--mcp-r-sm) var(--mcp-r-sm) 0 0;
+
+    .btn, button {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: var(--mcp-ink-2) !important;
+        padding: 3px 6px !important;
+        border-radius: var(--mcp-r-xs) !important;
+        font-size: 12px !important;
+        font-weight: normal !important;
+        height: auto !important;
+        transform: none !important;
+        transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
+
+        &:hover  { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent) !important; }
+        &.active, &[aria-pressed="true"] {
+            background: var(--mcp-accent-soft) !important;
+            color: var(--mcp-accent) !important;
+        }
+    }
+
+    .separator { width: 1px; background: var(--mcp-rule); margin: 3px 2px; align-self: stretch; }
+}
+
+/* When toolbar is present, connect to editor */
+.o_field_html:has(.o_field_html_toolbar) .o_editable,
+.o_field_html:has(.odoo-editor-toolbar) .odoo-editor-editable {
+    border-top: none;
+    border-radius: 0 0 var(--mcp-r-sm) var(--mcp-r-sm);
+}
+
+/* Readonly rendered HTML */
+.o_field_html[readonly] .odoo-editor-editable,
+.o_field_html .o_field_value {
+    border: none;
+    padding: 0;
+    background: transparent;
+    min-height: unset;
+
+    h1, h2, h3, h4 { color: var(--mcp-ink); }
+    a { color: var(--mcp-accent); }
+    blockquote { border-left: 3px solid var(--mcp-accent); padding-left: 12px; color: var(--mcp-ink-2); }
+}

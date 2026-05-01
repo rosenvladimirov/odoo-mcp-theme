@@ -22,6 +22,34 @@
 .badge.bg-secondary { background: var(--mcp-paper-deep) !important;  color: var(--mcp-ink-2) !important;  border: 1px solid var(--mcp-rule-strong) !important; }
 
 /* ── o_field_badge (field widget variant) ────────────────────── */
-.o_field_badge .badge {
-    vertical-align: middle;
+.o_field_badge .badge { vertical-align: middle; }
+
+/* ── Odoo 12-color map (o_tag_color_* / o_badge_color_*) ──────
+   Matches Odoo's $o-colors palette (0-11)                       */
+$mcp-badge-colors: (
+    0:  (#6b7280, #f3f4f6),   /* gray      */
+    1:  (#ef4444, #fef2f2),   /* red       */
+    2:  (#f97316, #fff7ed),   /* orange    */
+    3:  (#eab308, #fefce8),   /* yellow    */
+    4:  (#22c55e, #f0fdf4),   /* green     */
+    5:  (#14b8a6, #f0fdfa),   /* teal      */
+    6:  (#38bdf8, #f0f9ff),   /* light-blue*/
+    7:  (#3b82f6, #eff6ff),   /* blue      */
+    8:  (#6366f1, #eef2ff),   /* indigo    */
+    9:  (#a855f7, #faf5ff),   /* purple    */
+    10: (#ec4899, #fdf2f8),   /* pink      */
+    11: (#f59e0b, #fffbeb),   /* amber     */
+);
+
+@each $i, $pair in $mcp-badge-colors {
+    $fg: nth($pair, 1);
+    $bg: nth($pair, 2);
+
+    .o_tag.o_tag_color_#{$i},
+    .badge.o_badge_color_#{$i},
+    .o_tag_color_#{$i} {
+        background: rgba(red($bg), green($bg), blue($bg), 0.75) !important;
+        color: $fg !important;
+        border-color: rgba(red($fg), green($fg), blue($fg), 0.25) !important;
+    }
 }

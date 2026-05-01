@@ -1,0 +1,101 @@
+/* MCP Works backend — Settings form view (res.config.settings) */
+
+/* ── Settings wrapper ────────────────────────────────────────── */
+.o_settings {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+.o_settings .o_setting_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px;
+}
+
+/* ── Settings tab sidebar ────────────────────────────────────── */
+.o_settings_tabs {
+    flex: 0 0 220px;
+}
+
+.o_settings_tabs .o_settings_tab,
+.o_settings_tabs .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px !important;
+    border-radius: var(--mcp-r-sm) !important;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mcp-ink-2) !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
+
+    &:hover { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent) !important; }
+    &.active { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent) !important; font-weight: 600; }
+}
+
+/* ── Settings content area ───────────────────────────────────── */
+.o_settings_content {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* ── Setting module header ───────────────────────────────────── */
+.o_settings_module_header,
+.o_settings_app_name {
+    padding: 12px 0 8px;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--mcp-ink);
+    border-bottom: 2px solid var(--mcp-accent);
+    margin-bottom: 12px;
+}
+
+/* ── Individual setting box ──────────────────────────────────── */
+.o_setting_box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--mcp-rule);
+
+    &:last-child { border-bottom: none; }
+}
+
+.o_setting_box .o_setting_left_pane {
+    flex-shrink: 0;
+    width: 32px;
+    display: flex;
+    justify-content: center;
+    padding-top: 2px;
+}
+
+.o_setting_box .o_setting_right_pane { flex: 1 1 auto; min-width: 0; }
+
+.o_setting_box .o_setting_box_title {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--mcp-ink);
+    margin-bottom: 2px;
+}
+
+.o_setting_box .o_setting_box_desc {
+    font-size: 12px;
+    color: var(--mcp-ink-3);
+    line-height: 1.4;
+}
+
+/* Enterprise badge */
+.o_setting_enterprise_icon {
+    font-size: 11px;
+    color: var(--mcp-accent);
+    margin-left: 4px;
+}

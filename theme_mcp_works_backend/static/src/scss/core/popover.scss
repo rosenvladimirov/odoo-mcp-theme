@@ -1,0 +1,49 @@
+/* MCP Works backend — Popover component */
+
+/* ── Base popover ────────────────────────────────────────────── */
+.o-popover,
+.o_popover {
+    background: var(--mcp-paper-light) !important;
+    border: 1.5px solid var(--mcp-accent) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-shadow-modal) !important;
+    padding: 0;
+    max-width: 320px;
+    z-index: var(--mcp-z-modal);
+    animation: mcp-pop-in 0.15s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+@keyframes mcp-pop-in {
+    from { opacity: 0; transform: scale(0.94); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Arrow */
+.o-popover .o-popover-arrow::before,
+.o_popover .popover-arrow::before {
+    border-color: var(--mcp-accent) transparent transparent transparent;
+}
+
+/* Header */
+.o-popover-header,
+.o_popover .popover-header {
+    background: var(--mcp-paper) !important;
+    border-bottom: 1px solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-md) var(--mcp-r-md) 0 0 !important;
+    padding: 8px 12px !important;
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--mcp-ink) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Body */
+.o-popover-body,
+.o_popover .popover-body {
+    padding: 10px 12px !important;
+    font-size: 13px;
+    color: var(--mcp-ink) !important;
+    background: var(--mcp-paper-light) !important;
+    border-radius: 0 0 var(--mcp-r-md) var(--mcp-r-md);
+}

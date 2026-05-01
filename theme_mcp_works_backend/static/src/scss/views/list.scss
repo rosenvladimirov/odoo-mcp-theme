@@ -40,3 +40,60 @@
     font-weight: 600;
 }
 .o_list_view tbody tr.o_group_header:hover              { background: var(--mcp-accent-soft) !important; }
+
+/* ── Record selector column (checkboxes) ─────────────────────── */
+.o_list_view .o_list_record_selector,
+.o_list_view th.o_list_record_selector {
+    width: 32px !important;
+    padding: 0 8px !important;
+    text-align: center !important;
+}
+.o_list_view .o_list_record_selector input[type="checkbox"] {
+    accent-color: var(--mcp-accent);
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+/* ── Sticky header ───────────────────────────────────────────── */
+.o_list_view thead th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 2 !important;
+}
+
+/* ── Optional columns button ─────────────────────────────────── */
+.o_list_view .o_optional_columns_dropdown .btn {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--mcp-ink-3) !important;
+    padding: 4px 6px !important;
+    transform: none !important;
+    opacity: 0.55;
+    &:hover { opacity: 1; color: var(--mcp-accent) !important; }
+}
+
+/* ── Tree expansion ──────────────────────────────────────────── */
+.o_list_view .o_group_header td .o_group_name { cursor: pointer; }
+.o_list_view .o_group_header td .o_group_caret {
+    margin-right: 6px;
+    color: var(--mcp-accent);
+    transition: transform var(--mcp-t-fast);
+}
+.o_list_view .o_group_header.o_group_open td .o_group_caret { transform: rotate(90deg); }
+
+/* ── Loading skeleton ────────────────────────────────────────── */
+.o_list_view .o_list_skeleton td {
+    background: linear-gradient(90deg,
+        var(--mcp-paper-deep) 25%, var(--mcp-paper-light) 50%, var(--mcp-paper-deep) 75%
+    ) !important;
+    background-size: 200% 100% !important;
+    animation: mcp-skeleton 1.4s ease infinite;
+    border-radius: var(--mcp-r-xs);
+    color: transparent !important;
+}
+@keyframes mcp-skeleton {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
+}

@@ -1,0 +1,67 @@
+/* MCP Works backend — State Selection & Badge Selection widgets */
+
+/* ── State selection (pill group) ────────────────────────────── */
+.o_field_state_selection,
+.o_status_bar_buttons {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.o_field_state_selection .btn,
+.o_field_state_selection .o_status_button {
+    padding: 3px 12px !important;
+    font-size: 11px !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-radius: var(--mcp-r-pill) !important;
+    border: 1.5px solid var(--mcp-rule-strong) !important;
+    background: transparent !important;
+    color: var(--mcp-ink-2) !important;
+    box-shadow: none !important;
+    transition: background var(--mcp-t-fast), border-color var(--mcp-t-fast), color var(--mcp-t-fast);
+    cursor: pointer;
+
+    &:hover {
+        border-color: var(--mcp-accent) !important;
+        color: var(--mcp-accent) !important;
+        background: var(--mcp-accent-soft) !important;
+    }
+}
+
+/* Active / current state */
+.o_field_state_selection .btn.btn-primary,
+.o_field_state_selection .o_status_button.o_arrow_button_current,
+.o_field_state_selection .active {
+    background: var(--mcp-accent) !important;
+    border-color: var(--mcp-accent) !important;
+    color: var(--mcp-paper) !important;
+    font-weight: 600;
+}
+
+/* ── Badge Selection (colored toggle group) ──────────────────── */
+.o_badge_selection,
+.o_field_badge_selection {
+    display: inline-flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.o_badge_selection .badge,
+.o_field_badge_selection .badge {
+    cursor: pointer;
+    border: 1.5px solid transparent !important;
+    border-radius: var(--mcp-r-sm) !important;
+    font-size: 11px !important;
+    font-weight: 500;
+    padding: 3px 8px !important;
+    transition: all var(--mcp-t-fast);
+    opacity: 0.65;
+
+    &:hover  { opacity: 0.90; transform: translateY(-1px); }
+    &.active,
+    &.o_badge_active { opacity: 1; border-color: currentColor !important; }
+}

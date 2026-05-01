@@ -1,0 +1,102 @@
+/* MCP Works backend — Calendar view */
+
+.o_calendar_view {
+    background: transparent !important;
+}
+
+/* ── Header (week/day titles) ────────────────────────────────── */
+.o_calendar_header {
+    background: var(--mcp-paper) !important;
+    border-bottom: 2px solid var(--mcp-accent) !important;
+    padding: 6px 0 !important;
+}
+
+.o_calendar_header .o_calendar_navigation .btn {
+    background: transparent !important;
+    border: 1.5px solid var(--mcp-rule-strong) !important;
+    color: var(--mcp-ink) !important;
+    padding: 4px 10px !important;
+    border-radius: var(--mcp-r-sm) !important;
+    &:hover { border-color: var(--mcp-accent) !important; color: var(--mcp-accent) !important; }
+}
+
+.o_calendar_header .o_calendar_title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--mcp-ink);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* ── Day cells ───────────────────────────────────────────────── */
+.o_calendar_row .o_calendar_cell,
+.fc-daygrid-day {
+    background: #ffffff !important;
+    border: 1px solid var(--mcp-rule) !important;
+    transition: background var(--mcp-t-fast);
+    &:hover { background: var(--mcp-paper-light) !important; }
+}
+
+/* Today */
+.o_calendar_row .o_calendar_today,
+.fc-day-today {
+    background: var(--mcp-accent-soft) !important;
+}
+
+/* Weekend */
+.o_calendar_row .o_calendar_weekend,
+.fc-day-sat, .fc-day-sun {
+    background: var(--mcp-paper) !important;
+}
+
+/* Day number */
+.fc-daygrid-day-number,
+.o_calendar_day_number {
+    color: var(--mcp-ink-2);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ── Events ──────────────────────────────────────────────────── */
+.o_event,
+.fc-event,
+.fc-daygrid-event {
+    background: var(--mcp-accent) !important;
+    border: none !important;
+    border-radius: var(--mcp-r-xs) !important;
+    color: var(--mcp-paper) !important;
+    font-size: 11px !important;
+    padding: 1px 4px !important;
+    cursor: pointer;
+    transition: filter var(--mcp-t-fast), transform var(--mcp-t-fast);
+
+    &:hover { filter: brightness(0.9); transform: translateY(-1px); }
+}
+
+.fc-event-title { font-weight: 500; }
+
+/* ── Popover (event detail) ──────────────────────────────────── */
+.o_calendar_popover {
+    background: var(--mcp-paper-light) !important;
+    border: 1.5px solid var(--mcp-accent) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-shadow-modal) !important;
+    padding: 12px 14px;
+    max-width: 280px;
+    z-index: var(--mcp-z-modal);
+}
+
+.o_calendar_popover_date {
+    font-size: 11px;
+    color: var(--mcp-ink-3);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.o_calendar_popover_title {
+    font-weight: 600;
+    color: var(--mcp-ink);
+    font-size: 14px;
+    margin-bottom: 8px;
+}

@@ -4,13 +4,7 @@
     "name": "Theme MCP Works — Backend (GNOME Shell style)",
     "summary": "Independent GNOME Shell-styled Odoo CE backend — paper bg, "
                "indigo accents, Activities pill, bottom Dash, paper buttons",
-    "description": """
-        Standalone backend (ERP UI) theme. NOT a website theme — does not
-        depend on theme_mcp_works frontend. Targets Odoo Community Edition
-        only (excludes web_enterprise). Compatible with default Odoo CE web
-        client.
-    """,
-    "version": "19.0.1.12.0",
+    "version": "19.0.1.13.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -20,7 +14,7 @@
     "excludes": ["web_enterprise"],
     "data": [],
     "assets": {
-        # SCSS build-time variables (loaded before web primary variables)
+        # SCSS build-time variables
         "web._assets_primary_variables": [
             (
                 "after",
@@ -29,7 +23,7 @@
             ),
         ],
         "web.assets_backend": [
-            # ── 1. Runtime design tokens (CSS custom properties) ───────
+            # ── 1. Runtime design tokens ───────────────────────────────
             "theme_mcp_works_backend/static/src/scss/tokens.scss",
 
             # ── 2. Layout foundation ───────────────────────────────────
@@ -38,32 +32,50 @@
             "theme_mcp_works_backend/static/src/scss/control_panel.scss",
             "theme_mcp_works_backend/static/src/scss/modals.scss",
 
-            # ── 3. Base widgets (first level — no view scope) ──────────
+            # ── 3. Core components ─────────────────────────────────────
+            "theme_mcp_works_backend/static/src/scss/core/notifications.scss",
+            "theme_mcp_works_backend/static/src/scss/core/popover.scss",
+            "theme_mcp_works_backend/static/src/scss/core/search_panel.scss",
+
+            # ── 4. Base widgets (first level — no view scope) ──────────
             "theme_mcp_works_backend/static/src/scss/widgets/buttons.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/inputs.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/avatar.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/statusbar.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/state_selection.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/many2one.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/tags.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/badge.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/boolean.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/boolean_favorite.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/date.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/monetary.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/priority.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/color_picker.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/email_phone.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/progress_bar.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/image.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/html.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/translation.scss",
 
-            # ── 4. View-specific overrides ─────────────────────────────
+            # ── 5. View-specific overrides ─────────────────────────────
             "theme_mcp_works_backend/static/src/scss/views/form.scss",
             "theme_mcp_works_backend/static/src/scss/views/list.scss",
             "theme_mcp_works_backend/static/src/scss/views/kanban.scss",
+            "theme_mcp_works_backend/static/src/scss/views/calendar.scss",
+            "theme_mcp_works_backend/static/src/scss/views/pivot.scss",
+            "theme_mcp_works_backend/static/src/scss/views/graph.scss",
+            "theme_mcp_works_backend/static/src/scss/views/settings.scss",
 
-            # ── 5. Component panels ────────────────────────────────────
+            # ── 6. Component panels ────────────────────────────────────
             "theme_mcp_works_backend/static/src/scss/dash.scss",
             "theme_mcp_works_backend/static/src/scss/apps_trigger.scss",
             "theme_mcp_works_backend/static/src/scss/actions_panel.scss",
 
-            # ── 6. JS utilities ────────────────────────────────────────
+            # ── 7. JS utilities ────────────────────────────────────────
             "theme_mcp_works_backend/static/src/js/sizing.js",
 
-            # ── 7. OWL components ──────────────────────────────────────
+            # ── 8. OWL components ──────────────────────────────────────
             "theme_mcp_works_backend/static/src/webclient/dash/dash.js",
             "theme_mcp_works_backend/static/src/webclient/dash/dash.xml",
             "theme_mcp_works_backend/static/src/webclient/actions_panel/actions_panel.js",

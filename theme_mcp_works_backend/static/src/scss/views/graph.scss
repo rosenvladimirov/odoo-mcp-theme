@@ -1,0 +1,82 @@
+/* MCP Works backend — Graph / Chart view */
+
+.o_graph_view {
+    background: transparent !important;
+    padding: 16px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ── Chart container ─────────────────────────────────────────── */
+.o_graph_canvas_container,
+.o_graph_renderer {
+    background: #ffffff !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-shadow-sm) !important;
+    padding: 16px !important;
+    flex: 1 1 auto;
+}
+
+/* Chart.js canvas */
+.o_graph_canvas_container canvas {
+    display: block;
+    max-height: 480px;
+}
+
+/* ── Legend ──────────────────────────────────────────────────── */
+.o_graph_renderer .chartjs-legend,
+.o_graph_legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 8px 0 0;
+    font-size: 12px;
+    color: var(--mcp-ink-2);
+}
+
+.o_graph_legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: opacity var(--mcp-t-fast);
+    &:hover { opacity: 0.7; }
+}
+
+.o_graph_legend li span {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--mcp-r-xs);
+    flex-shrink: 0;
+    display: inline-block;
+}
+
+/* ── No-data placeholder ─────────────────────────────────────── */
+.o_graph_no_content_helper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 48px 16px;
+    color: var(--mcp-ink-3);
+    font-size: 14px;
+
+    .o_graph_no_content_helper_title {
+        font-weight: 600;
+        color: var(--mcp-ink-2);
+    }
+}
+
+/* ── View type buttons (bar/line/pie) ────────────────────────── */
+.o_graph_buttons .btn {
+    border-radius: var(--mcp-r-sm) !important;
+}
+.o_graph_buttons .btn.active {
+    background: var(--mcp-accent) !important;
+    border-color: var(--mcp-accent) !important;
+    color: var(--mcp-paper) !important;
+}

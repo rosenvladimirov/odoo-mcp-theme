@@ -1,0 +1,45 @@
+/* MCP Works backend — Avatar widget (.o_avatar)
+   Used by: many2one_avatar, many2many_tags_avatar, user/partner fields */
+
+:root { --Avatar-size: 20px; }
+
+/* Base avatar — image or letter */
+.o_avatar,
+.o_avatar img {
+    width: var(--Avatar-size);
+    height: var(--Avatar-size);
+    aspect-ratio: 1;
+    border-radius: var(--mcp-r-pill) !important;
+    object-fit: cover;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Empty avatar — letter placeholder */
+.o_avatar_empty,
+.o_avatar.o_avatar_empty {
+    background: var(--mcp-accent-soft);
+    color: var(--mcp-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(var(--Avatar-size) * 0.45);
+    font-weight: 600;
+    border: 1px solid rgba(67, 56, 202, 0.15);
+}
+
+/* ── Size presets ─────────────────────────────────────────────── */
+.o_avatar_sm  { --Avatar-size: 16px; }
+.o_avatar_md  { --Avatar-size: 24px; }
+.o_avatar_lg  { --Avatar-size: 32px; }
+.o_avatar_xl  { --Avatar-size: 48px; }
+
+/* ── View overrides ──────────────────────────────────────────── */
+/* Navbar systray / chatter */
+.o_menu_systray .o_avatar     { --Avatar-size: 24px; }
+.o-mail-Chatter .o_avatar     { --Avatar-size: 32px; }
+/* List view — stay small */
+.o_list_view .o_avatar        { --Avatar-size: 18px; }
+/* Form sheet header */
+.o_form_view .o_form_sheet .o_avatar { --Avatar-size: 40px; }

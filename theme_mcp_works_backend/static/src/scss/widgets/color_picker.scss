@@ -1,0 +1,78 @@
+/* MCP Works backend — Color Picker & Color List widgets */
+
+/* ── Color list (core component) ─────────────────────────────── */
+.o_colorlist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+    padding: 4px 0;
+}
+
+.o_colorlist_item_color,
+.o_color_pick_option,
+.o_color_pill {
+    width: 18px;
+    height: 18px;
+    border-radius: var(--mcp-r-pill) !important;
+    cursor: pointer;
+    border: 2px solid transparent !important;
+    transition: transform var(--mcp-t-fast), border-color var(--mcp-t-fast);
+    display: inline-block;
+    flex-shrink: 0;
+
+    &:hover   { transform: scale(1.2); }
+    &.o_colorlist_item_color_selected,
+    &.active,
+    &.selected { border-color: var(--mcp-ink) !important; transform: scale(1.1); }
+}
+
+/* No-color option */
+.o_colorlist_item_color_0 {
+    background: #ffffff;
+    border-color: var(--mcp-rule-strong) !important;
+    background-image: linear-gradient(135deg, transparent 40%, #e11d48 40%, #e11d48 60%, transparent 60%);
+}
+
+/* ── Color picker field ───────────────────────────────────────── */
+.o_color_picker,
+.o_field_color_picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.o_color_picker .o_selected_color,
+.o_field_color_picker .o_current_color {
+    width: 22px;
+    height: 22px;
+    border-radius: var(--mcp-r-sm);
+    border: 1.5px solid var(--mcp-rule-strong);
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: border-color var(--mcp-t-fast);
+    &:hover { border-color: var(--mcp-accent); }
+}
+
+/* ── Kanban card color picker ────────────────────────────────── */
+.o_kanban_color_picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 8px;
+    max-width: 160px;
+}
+
+/* Kanban record left color stripe */
+.o_kanban_record[class*="o_kanban_color_"] {
+    border-left-width: 3px !important;
+}
+/* Color stripe map — 12 colors */
+$kanban-colors: (
+    0: #6b7280,  1: #ef4444,  2: #f97316,  3: #eab308,
+    4: #22c55e,  5: #14b8a6,  6: #38bdf8,  7: #3b82f6,
+    8: #6366f1,  9: #a855f7,  10: #ec4899, 11: #f59e0b
+);
+@each $i, $color in $kanban-colors {
+    .o_kanban_record.o_kanban_color_#{$i} { border-left-color: #{$color} !important; }
+}

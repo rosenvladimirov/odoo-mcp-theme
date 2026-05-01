@@ -1,0 +1,55 @@
+/* MCP Works backend — Boolean Favorite (heart/star toggle) */
+
+.o_field_boolean_favorite {
+    display: inline-flex;
+    align-items: center;
+}
+
+.o_field_boolean_favorite .o_favorite,
+.o_field_boolean_favorite button {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 2px !important;
+    height: auto !important;
+    transform: none !important;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    transition: color var(--mcp-t-fast), transform var(--mcp-t-fast);
+}
+
+/* Off state — hollow heart */
+.o_field_boolean_favorite .fa-heart-o,
+.o_field_boolean_favorite .fa-star-o {
+    color: var(--mcp-rule-strong) !important;
+}
+
+/* On state — filled heart */
+.o_field_boolean_favorite .fa-heart,
+.o_field_boolean_favorite .fa-star {
+    color: #ef4444 !important;
+}
+
+/* Hover — anticipation color */
+.o_field_boolean_favorite button:hover .fa-heart-o,
+.o_field_boolean_favorite button:hover .fa-star-o {
+    color: #fca5a5 !important;
+    transform: scale(1.15);
+}
+.o_field_boolean_favorite button:hover .fa-heart,
+.o_field_boolean_favorite button:hover .fa-star {
+    color: #dc2626 !important;
+    transform: scale(1.15);
+}
+
+/* Pulse on toggle */
+@keyframes mcp-fav-pulse {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35); }
+    100% { transform: scale(1); }
+}
+.o_field_boolean_favorite .fa-heart.o_toggle_anim,
+.o_field_boolean_favorite .fa-star.o_toggle_anim {
+    animation: mcp-fav-pulse 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}

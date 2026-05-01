@@ -1,0 +1,42 @@
+/* MCP Works backend — Progress Bar field widget */
+
+.o_field_progress_bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+/* Bootstrap progress wrapper */
+.o_field_progress_bar .progress {
+    flex: 1 1 auto;
+    height: 6px !important;
+    border-radius: var(--mcp-r-pill) !important;
+    background: var(--mcp-rule) !important;
+    overflow: hidden;
+}
+
+.o_field_progress_bar .progress-bar {
+    background: var(--mcp-accent) !important;
+    border-radius: var(--mcp-r-pill) !important;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Danger threshold (> 100% or overdue) */
+.o_field_progress_bar .progress-bar.bg-danger  { background: #ef4444 !important; }
+.o_field_progress_bar .progress-bar.bg-warning { background: #f59e0b !important; }
+.o_field_progress_bar .progress-bar.bg-success { background: #22c55e !important; }
+
+/* Numeric label */
+.o_field_progress_bar .o_progress_value {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--mcp-ink-2);
+    min-width: 32px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── List view: narrower bar ─────────────────────────────────── */
+.o_list_view .o_field_progress_bar .progress { height: 4px !important; }

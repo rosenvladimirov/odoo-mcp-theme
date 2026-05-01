@@ -1,0 +1,53 @@
+/* MCP Works backend — Email, Phone, URL fields + copy-to-clipboard */
+
+/* ── Shared container ─────────────────────────────────────────── */
+.o_field_email,
+.o_field_phone,
+.o_field_url {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+/* Value link (readonly) */
+.o_field_email a,
+.o_field_phone a,
+.o_field_url a {
+    color: var(--mcp-accent) !important;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color var(--mcp-t-fast);
+    &:hover { color: var(--mcp-accent-dark) !important; text-decoration: underline; }
+}
+
+/* ── Copy-to-clipboard button (.o_field_copy) ────────────────── */
+.o_field_copy,
+.o_copy_to_clipboard {
+    flex-shrink: 0;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--mcp-ink-3) !important;
+    padding: 2px 4px !important;
+    font-size: 12px !important;
+    border-radius: var(--mcp-r-xs) !important;
+    opacity: 0;
+    transition: opacity var(--mcp-t-fast), color var(--mcp-t-fast);
+    height: auto !important;
+    transform: none !important;
+    cursor: pointer;
+    line-height: 1;
+}
+/* Show copy icon when row/field is hovered */
+.o_field_email:hover .o_field_copy,
+.o_field_phone:hover .o_field_copy,
+.o_field_url:hover .o_field_copy,
+tr:hover .o_field_copy { opacity: 0.55; }
+.o_field_copy:hover    { opacity: 1 !important; color: var(--mcp-accent) !important; }
+
+/* Copied confirmation flash */
+.o_field_copy.o_copied,
+.o_field_copy[data-copied] { color: #16a34a !important; opacity: 1 !important; }
