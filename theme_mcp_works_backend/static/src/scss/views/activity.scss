@@ -10,7 +10,7 @@
 
 .o_activity_view.o_view_controller {
     background: transparent !important;
-    padding: 16px !important;
+    padding: var(--mcp-view-pad) !important;
     margin: 0 !important;
 }
 

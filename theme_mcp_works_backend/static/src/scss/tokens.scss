@@ -15,6 +15,8 @@
     --mcp-accent-dark:   #3730a3;
     --mcp-accent-soft:   rgba(67, 56, 202, 0.08);
     --mcp-accent-glow:   rgba(67, 56, 202, 0.18);
+    --mcp-danger:        #c41e3a;   /* cherry red — discard / destructive actions */
+    --mcp-danger-soft:   rgba(196, 30, 58, 0.10);
     --mcp-rule:          rgba(44, 38, 32, 0.12);
     --mcp-rule-strong:   rgba(44, 38, 32, 0.20);
     --mcp-grid-color:    rgba(67, 56, 202, 0.16);
@@ -50,10 +52,30 @@
     --mcp-z-backdrop: 9998;
     --mcp-z-modal:    9999;     /* sits above Discuss / kanban / popovers */
 
+    /* ── Typography ───────────────────────────────────────────────
+       Roboto is bundled by Odoo core (web/static/fonts/google/Roboto/)
+       and registered via web/static/fonts/fonts.scss in assets_backend.
+       We just reference it — no @import, no extra hosting. */
+    --mcp-font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Ubuntu, "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
     /* ── Surfaces (white card/sheet backgrounds) ─────────────── */
     --mcp-surface:         #ffffff;   /* form sheets, list tables, kanban cards */
     --mcp-surface-raised:  #ffffff;   /* modals, dropdowns, popovers            */
     --mcp-surface-frosted: rgba(255, 255, 255, 0.30); /* frosted control panel  */
+
+    /* Control-panel surface — white with a very faint indigo wash (≈4%
+       of accent mixed into white). Tweak the percentage to dial the
+       tint up or down without touching individual selectors. */
+    --mcp-cp-bg: color-mix(in srgb, #ffffff 96%, var(--mcp-accent) 4%);
+
+    /* Control-panel shadow — soft drop + outward indigo glow halo. */
+    --mcp-cp-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.05),
+        0 0 24px rgba(67, 56, 202, 0.14);
+
+    /* Form-sheet card chrome — same treatment as the control panel. */
+    --mcp-sheet-border: var(--mcp-rule);
+    --mcp-sheet-shadow: var(--mcp-cp-shadow);
 
     /* ── Layout ───────────────────────────────────────────────── */
     --mcp-navbar-height: 32px;
@@ -62,6 +84,12 @@
        CP rows (main_buttons, actions, searchview, switch_buttons,
        action_menus) and their inner buttons in one go. */
     --mcp-cp-row-h:      30px;
+
+    /* Outer padding applied uniformly to every top-level view root
+       (.o_form_view, .o_list_view, .o_kanban_view, .o_pivot_view,
+       .o_graph_view, .o_calendar_view, .o_activity_view, .o-mail-Discuss,
+       .o_spreadsheet_dashboard_action). One knob, all views move. */
+    --mcp-view-pad:      8px;
 
     /* Stat-button (smart-button) sizing.
        --mcp-stat-btn-w is set per-buttonbox by resizer.js to the widest

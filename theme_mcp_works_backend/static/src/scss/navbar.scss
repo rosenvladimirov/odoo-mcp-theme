@@ -2,7 +2,8 @@
 
 .o_main_navbar {
     background: var(--mcp-paper) !important;
-    border-bottom: 2px solid var(--mcp-accent) !important;
+    /* Soft hairline like the other panels (control panel, sheet, chatter) */
+    border-bottom: 1px solid var(--mcp-rule) !important;
     color: var(--mcp-ink) !important;
     height: var(--mcp-navbar-height) !important;
     min-height: var(--mcp-navbar-height) !important;

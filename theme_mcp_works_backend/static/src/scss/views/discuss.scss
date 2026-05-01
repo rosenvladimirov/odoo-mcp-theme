@@ -10,7 +10,7 @@
      `o-mail-discussSidebarBgColor` classes that pin everything to white. */
 
 .o-mail-Discuss {
-    padding: 16px !important;
+    padding: var(--mcp-view-pad) !important;
     margin: 0 !important;
     background: transparent !important;
     border-top: none !important;     /* strip the BS border-top secondary */

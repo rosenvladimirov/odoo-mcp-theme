@@ -8,7 +8,7 @@
 
 .o_graph_view {
     background: transparent !important;
-    padding: 16px !important;
+    padding: var(--mcp-view-pad) !important;
     margin: 0 !important;
 }
 .o_graph_view main.o_content,
@@ -33,7 +33,7 @@
     border: 1px solid var(--mcp-rule-strong) !important;
     border-radius: var(--mcp-r-md) !important;
     box-shadow: var(--mcp-shadow-sm) !important;
-    padding: 16px !important;       /* CONTENT padding inside the card */
+    padding: var(--mcp-view-pad) !important;       /* CONTENT padding inside the card */
     margin: 0 !important;
     flex: 1 1 auto;
 }

@@ -6,12 +6,10 @@
    owns ALL outer spacing (16px on all sides). The CP only contributes
    the 8px gap separating it from the sheet/list below — nothing else. */
 .o_control_panel {
-    background: rgba(255, 255, 255, 0.55) !important;
-    backdrop-filter: blur(6px) saturate(140%) !important;
-    -webkit-backdrop-filter: blur(6px) saturate(140%) !important;
-    border: none !important;
+    background: var(--mcp-cp-bg) !important;
+    border: 1px solid var(--mcp-rule) !important;
     border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-shadow-md) !important;
+    box-shadow: var(--mcp-cp-shadow) !important;
     margin: 0 0 8px 0 !important;
     /* keep BS px-3 pt-2 pb-3 — that's INNER content padding, not layout */
     overflow: visible !important;

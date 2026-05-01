@@ -1,0 +1,106 @@
+/* MCP Works backend — Form-view splitter (between sheet & chatter)
+   Injected by webclient/form_splitter/form_splitter.js. */
+
+/* When the splitter is present, the renderer becomes the bounding box —
+   sheet sticks to the left edge, chatter to the right, splitter in
+   between. No max-width clamp, no auto-margin centring, no overflow. */
+.o_form_renderer:has(.mcp_form_splitter) {
+    overflow: hidden !important;
+    max-width: 100% !important;
+}
+.o_form_renderer:has(.mcp_form_splitter) > .o_form_sheet_bg {
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    min-width: 320px !important;       /* mirrors MIN_SHEET_PX in JS */
+}
+/* Chatter docked to the right edge — override core's fixed-width rule */
+.o_form_renderer:has(.mcp_form_splitter) > .o-mail-ChatterContainer.o-aside {
+    width: auto !important;            /* let flex govern, not core's calc() */
+    max-width: none !important;
+    margin-right: 0 !important;
+    min-width: 585px !important;       /* mirrors MIN_CHATTER_PX in JS — natural message-bubble width */
+}
+
+.mcp_form_splitter {
+    flex: 0 0 8px;
+    align-self: stretch;
+    position: relative;
+    background: transparent;
+    cursor: col-resize;
+    transition: background var(--mcp-t-fast);
+    z-index: 2;
+
+    /* Vertical hairline always visible in the centre */
+    &::before {
+        content: "";
+        position: absolute;
+        top: 12%;
+        bottom: 12%;
+        left: 50%;
+        width: 1px;
+        background: var(--mcp-rule);
+        transition: width var(--mcp-t-base), background var(--mcp-t-base);
+    }
+
+    /* Arrow hint pill — hidden by default, fades in on hover/drag */
+    .mcp_form_splitter_arrows {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: var(--mcp-r-pill);
+        background: #ffffff;
+        color: var(--mcp-accent);
+        font-size: 10px;
+        line-height: 1;
+        box-shadow: var(--mcp-shadow-sm), 0 0 0 1px var(--mcp-rule);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--mcp-t-base), transform var(--mcp-t-spring);
+        white-space: nowrap;
+    }
+
+    &:hover {
+        background: var(--mcp-accent-soft);
+
+        &::before {
+            width: 2px;
+            background: var(--mcp-accent);
+        }
+
+        .mcp_form_splitter_arrows {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+    }
+
+    &.is-dragging {
+        background: var(--mcp-accent-soft);
+
+        &::before {
+            width: 2px;
+            background: var(--mcp-accent);
+        }
+
+        .mcp_form_splitter_arrows {
+            opacity: 1;
+        }
+    }
+
+    /* Keyboard focus — same accent indicator as hover */
+    &:focus-visible {
+        outline: none;
+        background: var(--mcp-accent-soft);
+
+        &::before { width: 2px; background: var(--mcp-accent); }
+        .mcp_form_splitter_arrows { opacity: 1; }
+    }
+
+    /* Print: hide */
+    @media print { display: none !important; }
+}

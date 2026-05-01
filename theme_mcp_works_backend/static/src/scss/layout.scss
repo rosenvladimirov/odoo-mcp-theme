@@ -1,5 +1,34 @@
 /* MCP Works backend — workspace background (paper-cream + indigo grid mesh) */
 
+/* Thin scrollbars everywhere in the backend.
+   Firefox uses scrollbar-width/colour. WebKit uses pseudo-elements. */
+.o_web_client,
+.o_web_client *,
+.o_web_client *::before,
+.o_web_client *::after {
+    scrollbar-width: thin;
+    scrollbar-color: var(--mcp-rule-strong) transparent;
+}
+.o_web_client *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.o_web_client *::-webkit-scrollbar-track {
+    background: transparent;
+}
+.o_web_client *::-webkit-scrollbar-thumb {
+    background: var(--mcp-rule-strong);
+    border-radius: 100px;
+    transition: background var(--mcp-t-fast);
+}
+.o_web_client *::-webkit-scrollbar-thumb:hover {
+    background: var(--mcp-accent);
+}
+.o_web_client *::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+
 .o_web_client,
 .o_main_content,
 .o_action_manager {
@@ -8,4 +37,16 @@
         linear-gradient(to right, var(--mcp-grid-color) 1px, transparent 1px),
         linear-gradient(to bottom, var(--mcp-grid-color) 1px, transparent 1px) !important;
     background-size: var(--mcp-grid-size) var(--mcp-grid-size) !important;
+}
+
+/* Typography — Roboto (already bundled by Odoo core). System fallbacks
+   if for any reason the bundled face doesn't load. */
+.o_web_client,
+.o_web_client input,
+.o_web_client button,
+.o_web_client select,
+.o_web_client textarea {
+    font-family: var(--mcp-font-family) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

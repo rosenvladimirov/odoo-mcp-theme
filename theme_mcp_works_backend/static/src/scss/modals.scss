@@ -31,11 +31,15 @@
 }
 
 /* ── Dropdowns ───────────────────────────────────────────────── */
-.dropdown-menu {
-    background: var(--mcp-paper) !important;
-    border: 1.5px solid var(--mcp-accent) !important;
-    border-radius: var(--mcp-r-sm) !important;
-    box-shadow: var(--mcp-shadow-glow) !important;
+/* Bootstrap (.dropdown-menu) AND Odoo OWL (.o-dropdown--menu, double dash)
+   panels — both use the same indigo-tinted card surface as the CP. */
+.dropdown-menu,
+.o-dropdown--menu {
+    /* Same indigo-tinted white as the control panel header */
+    background: var(--mcp-cp-bg) !important;
+    border: 1px solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-cp-shadow) !important;
     padding: 4px !important;
 }
 .dropdown-item {

@@ -74,6 +74,7 @@
             "theme_mcp_works_backend/static/src/scss/apps_trigger.scss",
             "theme_mcp_works_backend/static/src/scss/actions_panel.scss",
             "theme_mcp_works_backend/static/src/scss/show_desktop.scss",
+            "theme_mcp_works_backend/static/src/scss/form_splitter.scss",
 
             # ── 7. JS utilities ────────────────────────────────────────
             "theme_mcp_works_backend/static/src/js/sizing.js",
@@ -88,6 +89,8 @@
             "theme_mcp_works_backend/static/src/webclient/control_panel/control_panel.xml",
             "theme_mcp_works_backend/static/src/webclient/show_desktop/show_desktop.js",
             "theme_mcp_works_backend/static/src/webclient/show_desktop/show_desktop.xml",
+            "theme_mcp_works_backend/static/src/webclient/form_splitter/form_splitter.js",
+            "theme_mcp_works_backend/static/src/webclient/statusbar_unhide/statusbar_unhide.js",
         ],
     },
     "installable": True,

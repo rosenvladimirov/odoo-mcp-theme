@@ -1,52 +1,8 @@
 /* MCP Works backend — Statusbar widget (state chevron bar)
-   View override: form.scss can further scope if needed. */
-
-.o_statusbar_status {
-    background: var(--mcp-paper) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
-    border-radius: var(--mcp-r-sm) !important;
-    padding: 0 !important;
-    display: flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
-}
-
-.o_statusbar_status .btn,
-.o_statusbar_status .o_arrow_button {
-    background: transparent !important;
-    border: none !important;
-    border-right: 1px solid var(--mcp-rule) !important;
-    color: var(--mcp-ink-2) !important;
-    border-radius: 0 !important;
-    padding: 5px 14px !important;
-    font-size: 11px !important;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    box-shadow: none !important;
-    transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
-
-    &:last-child { border-right: none !important; }
-    &:hover {
-        background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
-    }
-}
-
-/* Current / active state */
-.o_statusbar_status .btn-primary,
-.o_statusbar_status .o_arrow_button_current,
-.o_statusbar_status .btn.o_arrow_button_current {
-    background: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
-    border-right-color: var(--mcp-accent-dark) !important;
-    font-weight: 600;
-
-    &:hover {
-        background: var(--mcp-accent-dark) !important;
-        color: var(--mcp-paper) !important;
-    }
-}
+   The chevron strip (Odoo's polygon clip-path) is styled in
+   views/form.scss in the .o_form_statusbar scope. The container
+   (.o_statusbar_status) keeps Odoo's defaults — we don't wrap it in
+   a paper card any more, that fought with the chevron silhouette. */
 
 /* Action buttons row (Save/Confirm etc.) above the status bar */
 .o_statusbar_buttons .btn { margin-right: 4px; }

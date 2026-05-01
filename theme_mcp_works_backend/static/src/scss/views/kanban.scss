@@ -8,7 +8,7 @@
 
 .o_kanban_view {
     background: transparent !important;
-    padding: 16px !important;
+    padding: var(--mcp-view-pad) !important;
     margin: 0 !important;
 }
 .o_kanban_view main.o_content {

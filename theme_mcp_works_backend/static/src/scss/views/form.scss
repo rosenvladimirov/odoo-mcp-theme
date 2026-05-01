@@ -16,7 +16,7 @@
 .o_form_view,
 .o_spreadsheet_dashboard_action {
     background: transparent !important;
-    padding: 16px !important;
+    padding: var(--mcp-view-pad) !important;
     margin: 0 !important;
 }
 
@@ -29,25 +29,197 @@
 .o_form_view_container,
 .o_form_view .o_form_renderer,
 .o_form_view main.o_content,
-.o_form_view .o-mail-ChatterContainer,
 .o_form_view .o-mail-Chatter {
     padding: 0 !important;
     margin: 0 !important;
 }
-.o_form_view .o_form_sheet_bg {
-    background: transparent !important;
+
+/* Side-chatter container — same card chrome as the form sheet:
+   white surface, soft grey border, drop shadow + indigo aura. */
+.o_form_view .o-mail-ChatterContainer.o-aside {
+    background-color: var(--mcp-surface) !important;
+    border: 1px solid var(--mcp-sheet-border) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-sheet-shadow) !important;
     padding: 0 !important;
     margin: 0 !important;
+    overflow: hidden;             /* keep rounded corners on inner content */
+}
+/* Sheet-bg owns the card chrome (border + glow) so that the shadow
+   propagates fully on all four sides. We also FLIP the scroll axis:
+   instead of letting Odoo core scroll the whole sheet_bg (which carries
+   the statusbar with it), we lock sheet_bg's overflow and put the
+   scroll on .o_form_sheet alone. Statusbar stays put, only fields move. */
+.o_form_view .o_form_sheet_bg {
+    background-color: var(--mcp-surface) !important;
+    background-image: none !important;
+    border: 1px solid var(--mcp-sheet-border) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-sheet-shadow) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: var(--mcp-form-max-w, 1200px);
+    margin-left: auto !important;
+    margin-right: auto !important;
+    /* Stop the whole bg from scrolling — child .o_form_sheet does it */
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    min-height: 0 !important;
+}
+.o_form_view .o_form_statusbar {
+    flex-shrink: 0 !important;               /* never shrinks, never scrolls */
+    flex-grow: 0 !important;
+    background-color: var(--mcp-cp-bg) !important;   /* same tint as CP & chatter top */
+    padding: 8px !important;
+    border-bottom: 1px solid var(--mcp-rule) !important;
+    border-top-left-radius: var(--mcp-r-md);
+    border-top-right-radius: var(--mcp-r-md);
+    align-items: center !important;          /* action buttons + status chevron share centreline */
+}
+
+/* Wizard steps (chevron strip) — match the height of the .btn action
+   buttons next to them (Bootstrap default ≈ 38px) and centre on the
+   statusbar's vertical midline. */
+.o_form_view .o_form_statusbar .o_field_statusbar {
+    align-self: center !important;
+}
+.o_form_view .o_form_statusbar .o_field_statusbar > .o_statusbar_status > .o_arrow_button,
+.o_form_view .o_form_statusbar .o_field_statusbar > .o_statusbar_status > .o_arrow_button:disabled,
+.o_form_view .o_form_statusbar .o_field_statusbar > .o_statusbar_status > .o_arrow_button.disabled {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 38px !important;
+    line-height: 38px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 12px !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    /* White fill — keep Odoo's ::before chevron border (it draws the
+       outline ring along the clip-path edges). */
+    background-color: var(--mcp-surface) !important;
+    background-image: none !important;
+    color: var(--mcp-ink-2) !important;
+}
+
+/* Active step — same indigo wash as the control panel header */
+.o_form_view .o_form_statusbar .o_field_statusbar > .o_statusbar_status > .o_arrow_button.o_arrow_button_current,
+.o_form_view .o_form_statusbar .o_field_statusbar > .o_statusbar_status > .o_arrow_button.o_arrow_button_current:disabled {
+    background-color: var(--mcp-cp-bg) !important;
+    color: var(--mcp-accent) !important;
+}
+
+/* Kill the "..." dropdown-toggle stub buttons that bookend the strip.
+   Odoo renders them as overflow triggers; with our JS un-hider showing
+   every step, they're noise. Belt-and-braces hide using multiple
+   independent properties so Bootstrap's :disabled fill can't show. */
+.o_form_view .o_field_statusbar .o_statusbar_status .dropdown-toggle,
+.o_form_view .o_field_statusbar button.dropdown-toggle,
+.o_field_statusbar button.dropdown-toggle.o_arrow_button {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
+
+/* Form status indicator buttons (top-right of the CP):
+   - cloud-upload (save)   → indigo icon + indigo border, transparent bg
+   - X         (discard)   → cherry red icon + red border, transparent bg
+   Both share the same outlined treatment, only colour differs. */
+.o_form_status_indicator .o_form_button_save,
+.o_form_status_indicator .o_form_button_cancel {
+    background-color: transparent !important;
+    border-radius: var(--mcp-r-sm) !important;
+    /* Match the height/padding of other CP buttons (action-menus etc.) */
+    height: var(--mcp-cp-row-h) !important;
+    min-height: var(--mcp-cp-row-h) !important;
+    padding: 0 10px !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition:
+        background-color var(--mcp-t-fast),
+        border-color var(--mcp-t-fast),
+        color var(--mcp-t-fast);
+
+    .fa, .oi { font-size: 14px !important; line-height: 1; }
+}
+
+/* Save (cloud) — indigo */
+.o_form_status_indicator .o_form_button_save,
+.o_form_status_indicator .o_form_button_save:focus {
+    color: var(--mcp-accent) !important;
+    border: 1px solid var(--mcp-accent) !important;
+}
+.o_form_status_indicator .o_form_button_save:hover {
+    color: var(--mcp-accent) !important;
+    border-color: var(--mcp-accent) !important;
+    background-color: var(--mcp-accent-soft) !important;
+}
+
+/* Cancel (X) — cherry red */
+.o_form_status_indicator .o_form_button_cancel,
+.o_form_status_indicator .o_form_button_cancel:focus {
+    color: var(--mcp-danger) !important;
+    border: 1px solid var(--mcp-danger) !important;
+}
+.o_form_status_indicator .o_form_button_cancel:hover {
+    color: var(--mcp-danger) !important;
+    border-color: var(--mcp-danger) !important;
+    background-color: var(--mcp-danger-soft) !important;
+}
+
+/* Chatter-top action strip — same tint as the form statusbar so the
+   two header strips read as siblings across the splitter. */
+.o_form_view .o-mail-Chatter-top {
+    background-color: var(--mcp-cp-bg) !important;
+    border-bottom: 1px solid var(--mcp-rule) !important;
+    border-top-left-radius: var(--mcp-r-md);
+    border-top-right-radius: var(--mcp-r-md);
+}
+
+/* Chatter-topbar action buttons — match the 38px height of the form
+   statusbar buttons. Strip Bootstrap `my-2` margin so the strip itself
+   stays compact; the buttons own their height directly. */
+.o_form_view .o-mail-Chatter-topbar .btn {
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 0 12px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.o_form_view .o-mail-Chatter-topbar {
+    align-items: center !important;
+    padding: 8px !important;
 }
 .o_form_view .o_form_sheet {
     position: relative !important;
-    background: var(--mcp-surface) !important;
-    border: 1.5px solid var(--mcp-accent) !important;
+    background: transparent !important;     /* sheet-bg owns the colour */
+    border: none !important;
     border-radius: 0 !important;
-    box-shadow: var(--mcp-shadow-md) !important;
-    max-width: var(--mcp-form-max-w, 1200px);
-    margin: 0 auto !important;
-    padding: 24px !important;     /* CONTENT padding — field breathing */
+    box-shadow: none !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 24px !important;                /* CONTENT padding — field breathing */
+    /* Take the scroll itself instead of letting it ride sheet_bg */
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    min-height: 0 !important;
 }
 
 /* ── Labels ──────────────────────────────────────────────────── */
@@ -72,10 +244,12 @@
 .o_form_view .o_field_widget textarea,
 .o_form_view .o_field_widget select {
     background: var(--mcp-surface) !important;
+    border: none !important;
     border-radius: 0 !important;
+    box-shadow: none !important;
     color: var(--mcp-ink) !important;
     padding: 6px 10px !important;
-    transition: border-color var(--mcp-t-base), box-shadow var(--mcp-t-base);
+    transition: box-shadow var(--mcp-t-base);
 }
 .o_form_view input.o_input:not([type="checkbox"]):not([type="radio"]):focus,
 .o_form_view textarea.o_input:focus,
@@ -84,7 +258,7 @@
 .o_form_view .o_field_widget textarea:focus,
 .o_form_view .o_field_widget select:focus {
     background: #ffffff !important;
-    border-color: transparent !important;
+    border: none !important;
     box-shadow: inset 0 -1px 0 0 var(--mcp-accent) !important;
     outline: none !important;
 }
