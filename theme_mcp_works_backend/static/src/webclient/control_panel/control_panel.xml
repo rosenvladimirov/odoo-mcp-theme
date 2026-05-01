@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
 
+    <!-- Apps menu: add icon + name to each item (replaces muk_web_theme role) -->
+    <t t-name="theme_mcp_works_backend.NavBar.AppsMenu" t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
+        <xpath expr="//DropdownItem[@t-foreach='apps']" position="replace">
+            <DropdownItem
+                t-foreach="apps"
+                t-as="app"
+                t-key="app.id"
+                class="{ 'o_app': true, focus: menuService.getCurrentApp() === app }"
+                onSelected="() => this.onNavBarDropdownItemSelection(app)"
+                attrs="{ href: getMenuItemHref(app), 'data-menu-xmlid': app.xmlid, 'data-section': app.id }"
+            >
+                <img t-if="app.webIconData"
+                     class="mcp_app_icon"
+                     t-att-src="app.webIconData"
+                     t-att-alt="app.name"/>
+                <img t-else=""
+                     class="mcp_app_icon"
+                     src="/base/static/description/icon.png"
+                     t-att-alt="app.name"/>
+                <span class="mcp_app_name" t-esc="app.name"/>
+            </DropdownItem>
+        </xpath>
+    </t>
+
     <t t-name="theme_mcp_works_backend.ControlPanel" t-inherit="web.ControlPanel" t-inherit-mode="extension">
 
         <!-- (1) Inject the breadcrumb strip BEFORE .o_control_panel_main -->

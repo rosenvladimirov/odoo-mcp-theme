@@ -1,76 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
 
-    <t t-name="theme_mcp_works_backend.ActivitiesIcon">
-        <svg class="mcp_activities_icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="5" cy="5" r="2"/>
-            <circle cx="12" cy="5" r="2"/>
-            <circle cx="19" cy="5" r="2"/>
-            <circle cx="5" cy="12" r="2"/>
-            <circle cx="12" cy="12" r="2"/>
-            <circle cx="19" cy="12" r="2"/>
-            <circle cx="5" cy="19" r="2"/>
-            <circle cx="12" cy="19" r="2"/>
-            <circle cx="19" cy="19" r="2"/>
-        </svg>
-    </t>
-
-    <t t-name="theme_mcp_works_backend.ShowDesktopIcon">
-        <!-- Window-with-down-arrow: classic show-desktop / minimize-all icon -->
-        <svg class="mcp_show_desktop_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-            <rect x="3" y="4" width="18" height="11" rx="1.5"/>
-            <path d="M8 19h8"/>
-            <path d="M12 15v4"/>
-            <path d="M9 11l3 3 3-3"/>
-        </svg>
-    </t>
-
     <t t-name="theme_mcp_works_backend.McpDash">
-        <!-- Hot zone — invisible bottom strip; trigger handled via document mousemove in setup() -->
-        <div class="mcp_dash_hotzone d-print-none"/>
 
-        <!-- Dock container -->
-        <nav class="mcp_dash_dock d-print-none"
-             t-att-class="{ 'is-revealed': state.revealed, 'is-collapsed': state.collapsed }"
+        <!-- Backdrop — closes modal on click -->
+        <div t-if="state.appsOpen"
+             class="mcp_modal_backdrop"
+             t-on-click="() => { state.appsOpen = false; }"/>
+
+        <!-- Modal panel -->
+        <nav class="mcp_dash_modal d-print-none"
+             t-att-class="{
+                 'is-open':    state.appsOpen,
+                 'is-compact': state.viewMode === 0,
+                 'is-list':    state.viewMode === 1,
+                 'is-grid':    state.viewMode === 2
+             }"
              t-ref="dock">
-            <button class="mcp_dash_collapse"
-                    t-att-title="state.collapsed ? 'Expand dock' : 'Minimize dock'"
-                    t-on-click="onToggleCollapse">
-                <t t-if="state.collapsed">+</t>
-                <t t-else="">−</t>
+
+            <!-- Header: title (hidden in compact) + optional pager (grid) + toggle button always top-right -->
+            <div class="mcp_dash_header">
+                <div t-if="state.viewMode !== 0"
+                     class="mcp_dash_header_title"
+                     t-att-class="{ 'has-name': !!state.hoveredAppName }">
+                    <span t-esc="state.hoveredAppName"/>
+                </div>
+                <div t-if="state.viewMode === 2 and gridPageCount > 1"
+                     class="mcp_dash_pager">
+                    <button class="mcp_dash_pager_btn"
+                            t-att-disabled="state.gridPage === 0 ? 1 : undefined"
+                            t-on-click.stop="onGridPrevPage">
+                        <i class="fa fa-chevron-left" aria-hidden="true"/>
+                    </button>
+                    <span class="mcp_dash_pager_label">
+                        <t t-esc="state.gridPage + 1"/>/<t t-esc="gridPageCount"/>
+                    </span>
+                    <button class="mcp_dash_pager_btn"
+                            t-att-disabled="state.gridPage >= gridPageCount - 1 ? 1 : undefined"
+                            t-on-click.stop="onGridNextPage">
+                        <i class="fa fa-chevron-right" aria-hidden="true"/>
+                    </button>
+                </div>
+                <button class="mcp_dash_mode_toggle"
+                        t-att-title="state.viewMode === 0 ? 'Покажи имена' : state.viewMode === 1 ? 'Разгъни решетка' : 'Свий'"
+                        t-on-click="onToggleViewMode">
+                    <i t-if="state.viewMode === 0" class="fa fa-chevron-right" aria-hidden="true"/>
+                    <i t-elif="state.viewMode === 1" class="fa fa-chevron-up" aria-hidden="true"/>
+                    <i t-else="" class="fa fa-chevron-down" aria-hidden="true"/>
+                </button>
+            </div>
+
+            <span class="mcp_dash_separator mcp_dash_sep_full"/>
+
+            <!-- Scroll up -->
+            <button t-if="state.canScrollUp"
+                    class="mcp_dash_scroll_btn mcp_dash_scroll_up"
+                    t-on-click="onScrollUp">
+                <i class="fa fa-chevron-up" aria-hidden="true"/>
             </button>
 
-            <!-- Show Desktop — first icon, minimizes to empty backend -->
-            <a href="#"
-               class="mcp_dash_item mcp_dash_show_desktop"
-               data-tooltip="Show Desktop"
-               t-on-click.prevent="() =&gt; this.onShowDesktopClick()">
-                <t t-call="theme_mcp_works_backend.ShowDesktopIcon"/>
-            </a>
+            <!-- Apps area -->
+            <div class="mcp_dash_apps_scroll" t-ref="appsScroll">
+                <t t-foreach="currentApps" t-as="app" t-key="app.id">
+                    <a href="#"
+                       class="mcp_dash_item"
+                       t-att-class="{ 'is-active': app.id === state.currentAppId }"
+                       t-on-click.prevent="() => this.onAppClick(app)"
+                       t-on-mouseenter="(ev) => this.onAppMouseEnter(app, ev)"
+                       t-on-mouseleave="onAppMouseLeave">
+                        <img t-if="app.webIconData" t-att-src="app.webIconData" t-att-alt="app.name"/>
+                        <span t-else="" class="o_app_letter" t-esc="app.name.charAt(0).toUpperCase()"/>
+                        <span t-if="state.viewMode === 1" class="mcp_dash_label" t-esc="app.name"/>
+                    </a>
+                </t>
+            </div>
 
-            <span class="mcp_dash_separator" t-if="!state.collapsed"/>
+            <!-- Scroll down -->
+            <button t-if="state.canScrollDown"
+                    class="mcp_dash_scroll_btn mcp_dash_scroll_down"
+                    t-on-click="onScrollDown">
+                <i class="fa fa-chevron-down" aria-hidden="true"/>
+            </button>
 
-            <!-- Favorite apps -->
-            <t t-foreach="state.apps" t-as="app" t-key="app.id">
-                <a href="#"
-                   class="mcp_dash_item"
-                   t-att-class="{ 'is-active': app.id === state.currentAppId }"
-                   t-att-data-tooltip="app.name"
-                   t-on-click.prevent="() => this.onAppClick(app)">
-                    <img t-if="app.webIconData" t-att-src="app.webIconData" t-att-alt="app.name"/>
-                    <span t-else="" class="o_app_letter" t-esc="app.name.charAt(0).toUpperCase()"/>
-                </a>
-            </t>
+            <!-- Compact mode: name bubble to the right -->
+            <div t-if="state.viewMode === 0 and state.hoveredAppName"
+                 class="mcp_dash_name_bubble"
+                 t-att-style="'top: ' + (state.hoveredY - 12) + 'px'">
+                <t t-esc="state.hoveredAppName"/>
+            </div>
 
-            <span class="mcp_dash_separator" t-if="!state.collapsed"/>
-
-            <!-- Activities button — opens the navbar apps dropdown -->
-            <a href="#"
-               class="mcp_dash_item mcp_dash_activities"
-               data-tooltip="Activities"
-               t-on-click.prevent="() => this.onShowAllClick()">
-                <t t-call="theme_mcp_works_backend.ActivitiesIcon"/>
-            </a>
         </nav>
     </t>
 
