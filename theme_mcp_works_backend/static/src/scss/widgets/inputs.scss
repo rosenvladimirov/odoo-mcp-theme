@@ -1,0 +1,20 @@
+/* MCP Works backend — Input/field widget base (unscoped)
+   View-specific overrides: views/form.scss (scoped to .o_form_view)
+   Future field-type snippets: widgets/many2one.scss, widgets/selection.scss etc. */
+
+.o_input,
+input.o_input,
+textarea.o_input,
+select.o_input {
+    background: #ffffff;
+    border: 1px solid var(--mcp-rule-strong);
+    border-radius: var(--mcp-r-sm);
+    color: var(--mcp-ink);
+    transition: border-color var(--mcp-t-base), box-shadow var(--mcp-t-base);
+
+    &:focus {
+        border-color: var(--mcp-accent);
+        box-shadow: 0 0 0 3px var(--mcp-accent-soft);
+        outline: none;
+    }
+}

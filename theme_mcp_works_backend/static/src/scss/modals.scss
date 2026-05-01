@@ -1,0 +1,61 @@
+/* MCP Works backend — Modals, Dropdowns, Notifications, Tooltips */
+
+/* ── Modals ──────────────────────────────────────────────────── */
+.modal-content {
+    background: var(--mcp-paper-light) !important;
+    border-radius: var(--mcp-r-md) !important;
+    border: 1.5px solid var(--mcp-accent) !important;
+    box-shadow: var(--mcp-shadow-modal) !important;
+}
+.modal-header {
+    background: var(--mcp-paper) !important;
+    border-bottom: 1px solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-md) var(--mcp-r-md) 0 0 !important;
+}
+.modal-title {
+    color: var(--mcp-ink) !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 14px !important;
+}
+.modal-body  { background: var(--mcp-paper-light) !important; }
+.modal-footer {
+    background: var(--mcp-paper) !important;
+    border-top: 1px solid var(--mcp-rule) !important;
+}
+
+/* ── Dropdowns ───────────────────────────────────────────────── */
+.dropdown-menu {
+    background: var(--mcp-paper) !important;
+    border: 1.5px solid var(--mcp-accent) !important;
+    border-radius: var(--mcp-r-sm) !important;
+    box-shadow: var(--mcp-shadow-glow) !important;
+    padding: 4px !important;
+}
+.dropdown-item {
+    color: var(--mcp-ink) !important;
+    border-radius: var(--mcp-r-xs);
+    padding: 6px 12px !important;
+    font-size: 13px !important;
+    transition: all var(--mcp-t-fast);
+}
+.dropdown-item:hover,
+.dropdown-item.active,
+.dropdown-item:focus {
+    background: var(--mcp-accent-soft) !important;
+    color: var(--mcp-accent) !important;
+}
+
+/* ── Notifications ───────────────────────────────────────────── */
+.o_notification {
+    border-radius: var(--mcp-r-md) !important;
+    border-left-width: 4px !important;
+}
+
+/* ── Tooltips ────────────────────────────────────────────────── */
+.tooltip-inner {
+    background: var(--mcp-ink) !important;
+    color: var(--mcp-paper) !important;
+    border-radius: var(--mcp-r-sm) !important;
+}

@@ -1,0 +1,11 @@
+/* MCP Works backend — workspace background (paper-cream + indigo grid mesh) */
+
+.o_web_client,
+.o_main_content,
+.o_action_manager {
+    background-color: var(--mcp-paper-light) !important;
+    background-image:
+        linear-gradient(to right, var(--mcp-grid-color) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--mcp-grid-color) 1px, transparent 1px) !important;
+    background-size: var(--mcp-grid-size) var(--mcp-grid-size) !important;
+}

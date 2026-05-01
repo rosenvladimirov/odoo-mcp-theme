@@ -1,0 +1,30 @@
+/* MCP Works — Hide Odoo's default apps menu; replaced by .mcp_apps_trigger + McpDash */
+
+.o_navbar_apps_menu { display: none !important; }
+.o-overlay-container .o-dropdown--menu:has(.o_app),
+.o-overlay-container .dropdown-menu:has(.o_app) { display: none !important; }
+
+/* ── Trigger button in navbar ────────────────────────────────── */
+.mcp_apps_trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: none;
+    border-radius: var(--mcp-r-md);
+    cursor: pointer;
+    color: var(--o-navbar-color, var(--mcp-ink));
+    font-size: 18px;
+    padding: 0;
+    flex-shrink: 0;
+    transition: background var(--mcp-t-fast), color var(--mcp-t-fast), transform var(--mcp-t-fast);
+}
+.mcp_apps_trigger:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+.mcp_apps_trigger.is-active {
+    background: rgba(255, 255, 255, 0.18);
+    transform: scale(0.92);
+}

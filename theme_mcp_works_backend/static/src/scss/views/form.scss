@@ -1,0 +1,147 @@
+/* MCP Works backend — Form view
+   Base input/button rules live in widgets/; this file has form-scoped overrides. */
+
+.o_form_view {
+    background: transparent !important;
+}
+.o_form_view .o_form_sheet_bg {
+    background: transparent !important;
+    padding: 16px !important;
+}
+.o_form_view .o_form_sheet {
+    position: relative !important;
+    background: #ffffff !important;
+    border: 1.5px solid var(--mcp-accent) !important;
+    border-radius: 0 !important;
+    box-shadow: var(--mcp-shadow-md) !important;
+    max-width: 1200px;
+    margin: 0 auto !important;
+    padding: 24px !important;
+}
+
+/* ── Labels ──────────────────────────────────────────────────── */
+.o_form_view .o_form_label,
+.o_form_view label.o_form_label {
+    color: var(--mcp-ink-2) !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 11px !important;
+    margin-bottom: 4px;
+}
+
+/* ── Inputs (view-scoped override of base widget) ────────────── */
+.o_form_view input.o_input,
+.o_form_view textarea.o_input,
+.o_form_view select.o_input,
+.o_form_view .o_field_widget input,
+.o_form_view .o_field_widget textarea,
+.o_form_view .o_field_widget select {
+    background: #ffffff !important;
+    border-radius: var(--mcp-r-sm) !important;
+    color: var(--mcp-ink) !important;
+    padding: 6px 10px !important;
+    transition: border-color var(--mcp-t-base), box-shadow var(--mcp-t-base);
+}
+.o_form_view input.o_input:focus,
+.o_form_view textarea.o_input:focus,
+.o_form_view select.o_input:focus,
+.o_form_view .o_field_widget input:focus,
+.o_form_view .o_field_widget textarea:focus,
+.o_form_view .o_field_widget select:focus {
+    border-color: var(--mcp-accent) !important;
+    box-shadow: 0 0 0 3px var(--mcp-accent-soft) !important;
+    outline: none !important;
+}
+
+/* ── Section separators ──────────────────────────────────────── */
+.o_form_view .o_horizontal_separator,
+.o_form_view h2,
+.o_form_view h3 {
+    color: var(--mcp-ink) !important;
+    border-bottom: 2px solid var(--mcp-accent) !important;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 13px !important;
+    font-weight: 600;
+}
+
+/* ── Statusbar ───────────────────────────────────────────────── */
+.o_form_view .o_statusbar_status {
+    background: var(--mcp-paper) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: var(--mcp-r-sm) !important;
+    padding: 0 !important;
+}
+.o_form_view .o_statusbar_status .btn,
+.o_form_view .o_statusbar_status .o_arrow_button {
+    background: transparent !important;
+    border: none !important;
+    border-right: 1px solid var(--mcp-rule) !important;
+    color: var(--mcp-ink-2) !important;
+    border-radius: 0 !important;
+    padding: 6px 16px !important;
+    font-size: 12px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow: none !important;
+}
+.o_form_view .o_statusbar_status .btn-primary,
+.o_form_view .o_statusbar_status .o_arrow_button_current {
+    background: var(--mcp-accent) !important;
+    color: var(--mcp-paper) !important;
+    font-weight: 600;
+}
+.o_form_view .o_statusbar_buttons .btn { margin-right: 4px; }
+
+/* ── Notebook tabs ───────────────────────────────────────────── */
+.o_form_view .o_notebook .nav.nav-tabs {
+    border-bottom: 1px solid var(--mcp-rule-strong) !important;
+    margin-bottom: 16px;
+}
+.o_form_view .o_notebook .nav-item .nav-link {
+    color: var(--mcp-ink-2) !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    padding: 8px 16px !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 12px;
+    transition: color var(--mcp-t-base), border-color var(--mcp-t-base);
+}
+.o_form_view .o_notebook .nav-item .nav-link:hover {
+    color: var(--mcp-accent) !important;
+    border-bottom-color: var(--mcp-accent-soft) !important;
+}
+.o_form_view .o_notebook .nav-item .nav-link.active {
+    color: var(--mcp-accent) !important;
+    border-bottom-color: var(--mcp-accent) !important;
+    background: transparent !important;
+}
+
+/* ── Stat buttons (button box) ───────────────────────────────── */
+.o_form_view .oe_button_box .oe_stat_button {
+    background: #ffffff !important;
+    border: 1.5px solid var(--mcp-rule-strong) !important;
+    border-radius: var(--mcp-r-base) !important;
+    color: var(--mcp-ink) !important;
+    transition: all var(--mcp-t-base);
+}
+.o_form_view .oe_button_box .oe_stat_button:hover {
+    border-color: var(--mcp-accent) !important;
+    color: var(--mcp-accent) !important;
+    transform: translateY(-1px);
+    box-shadow: var(--mcp-shadow-glow);
+}
+.o_form_view .oe_button_box .oe_stat_button .o_stat_value,
+.o_form_view .oe_button_box .oe_stat_button .o_stat_text { color: inherit !important; }
+
+/* ── Chatter ─────────────────────────────────────────────────── */
+.o-mail-Chatter {
+    background: #ffffff !important;
+    border-left: 1px solid var(--mcp-rule) !important;
+}

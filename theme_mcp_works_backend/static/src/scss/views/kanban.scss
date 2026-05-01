@@ -1,0 +1,40 @@
+/* MCP Works backend — Kanban view */
+
+.o_kanban_view {
+    background: transparent !important;
+    padding: 16px !important;
+}
+.o_kanban_view .o_kanban_record {
+    background: #ffffff !important;
+    border: 1.5px solid var(--mcp-rule-strong) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-shadow-card) !important;
+    transition:
+        transform var(--mcp-t-spring),
+        border-color var(--mcp-t-slow),
+        box-shadow var(--mcp-t-slow) !important;
+    padding: 12px !important;
+}
+.o_kanban_view .o_kanban_record:hover {
+    transform: translateY(-3px);
+    border-color: var(--mcp-accent) !important;
+    box-shadow: 0 8px 20px rgba(67, 56, 202, 0.15) !important;
+}
+.o_kanban_view .o_kanban_record.oe_kanban_card_global_click { cursor: pointer; }
+
+/* Grouped columns */
+.o_kanban_view.o_kanban_grouped .o_kanban_group {
+    background: var(--mcp-paper) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: var(--mcp-r-md) !important;
+    margin: 4px;
+}
+.o_kanban_view .o_column_title {
+    color: var(--mcp-ink) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 12px;
+    border-bottom: 2px solid var(--mcp-accent) !important;
+    padding: 8px 12px !important;
+}

@@ -1,0 +1,42 @@
+/* MCP Works backend — List view */
+
+.o_list_view {
+    background: transparent !important;
+    padding: 16px !important;
+}
+.o_list_view .o_list_table {
+    background: #ffffff !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-shadow-sm) !important;
+    overflow: hidden;
+}
+.o_list_view thead { background: var(--mcp-paper) !important; }
+.o_list_view thead th {
+    background: var(--mcp-paper) !important;
+    color: var(--mcp-ink) !important;
+    border-bottom: 2px solid var(--mcp-accent) !important;
+    border-top: none !important;
+    text-transform: uppercase;
+    font-size: 11px !important;
+    letter-spacing: 0.04em;
+    font-weight: 600 !important;
+    padding: 10px 12px !important;
+    user-select: none;
+}
+.o_list_view tbody tr {
+    border-bottom: 1px solid var(--mcp-rule) !important;
+    transition: background var(--mcp-t-fast);
+}
+.o_list_view tbody tr:hover                             { background: var(--mcp-accent-soft) !important; }
+.o_list_view tbody tr.o_data_row.table-success,
+.o_list_view tbody tr.o_data_row.o_row_selected         { background: var(--mcp-accent-glow) !important; }
+.o_list_view tbody td                                   { padding: 8px 12px !important; color: var(--mcp-ink) !important; }
+
+/* Group rows */
+.o_list_view tbody tr.o_group_header {
+    background: var(--mcp-paper-deep) !important;
+    color: var(--mcp-ink) !important;
+    font-weight: 600;
+}
+.o_list_view tbody tr.o_group_header:hover              { background: var(--mcp-accent-soft) !important; }

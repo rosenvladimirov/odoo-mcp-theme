@@ -4,7 +4,7 @@
 .mcp_modal_backdrop {
     position: fixed;
     inset: 0;
-    z-index: 1099;
+    z-index: var(--mcp-z-backdrop);
     background: rgba(0, 0, 0, 0.18);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
@@ -18,20 +18,19 @@
 /* ── Modal panel ────────────────────────────────────────────── */
 .mcp_dash_modal {
     position: fixed;
-    top: 56px;
+    top: calc(var(--mcp-navbar-height) + 24px);
     left: 16px;
-    z-index: 1100;
+    z-index: var(--mcp-z-modal);
     display: flex;
     flex-direction: column;
     gap: 6px;
     padding: 8px 10px 10px;
     width: 80px;
     background: rgba(246, 240, 227, 0.97);
-    border: 1.5px solid var(--mcp-accent, #4338ca);
-    border-radius: 8px;
+    border: 1.5px solid var(--mcp-accent);
+    border-radius: var(--mcp-r-lg);
     max-height: calc(100vh - 72px);
-    box-shadow: 0 16px 40px rgba(67, 56, 202, 0.22),
-                0 4px 12px rgba(0, 0, 0, 0.14);
+    box-shadow: var(--mcp-shadow-modal);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     user-select: none;
@@ -40,8 +39,8 @@
     opacity: 0;
     pointer-events: none;
     transform: translateY(-12px) scale(0.94);
-    transition: opacity 0.18s ease,
-                transform 0.18s ease,
+    transition: opacity var(--mcp-t-fast),
+                transform var(--mcp-t-fast),
                 width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -94,14 +93,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--mcp-accent-soft, rgba(67, 56, 202, 0.08));
-    color: var(--mcp-accent, #4338ca);
+    background: var(--mcp-accent-soft);
+    color: var(--mcp-accent);
     border: none;
-    border-radius: 4px;
+    border-radius: var(--mcp-r-base);
     cursor: pointer;
     font-size: 10px;
-    transition: background 0.15s ease;
-    &:hover { background: rgba(67, 56, 202, 0.18); }
+    transition: background var(--mcp-t-fast);
+    &:hover { background: var(--mcp-accent-glow); }
 }
 
 /* ── App items ──────────────────────────────────────────────── */
@@ -113,9 +112,9 @@
     align-items: center;
     justify-content: center;
     gap: 0;
-    border-radius: 10px;
+    border-radius: var(--mcp-r-xl);
     cursor: pointer;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform var(--mcp-t-spring);
     text-decoration: none;
     position: relative;
     background: transparent;
@@ -123,7 +122,7 @@
     padding: 0;
     overflow: hidden;
     white-space: nowrap;
-    color: var(--mcp-ink, #2c2620);
+    color: var(--mcp-ink);
 }
 .mcp_dash_item:hover {
     background: transparent;
@@ -133,10 +132,10 @@
     width: 38px;
     height: 38px;
     flex-shrink: 0;
-    border-radius: 8px;
+    border-radius: var(--mcp-r-lg);
     object-fit: cover;
     filter: grayscale(0.15);
-    transition: filter 0.2s ease;
+    transition: filter var(--mcp-t-base);
 }
 .mcp_dash_item:hover img { filter: grayscale(0); }
 
@@ -144,9 +143,9 @@
     width: 38px;
     height: 38px;
     flex-shrink: 0;
-    border-radius: 8px;
-    background: var(--mcp-accent, #4338ca);
-    color: var(--mcp-paper, #f6f0e3);
+    border-radius: var(--mcp-r-lg);
+    background: var(--mcp-accent);
+    color: var(--mcp-paper);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,16 +162,16 @@
     transform: translateY(-50%);
     width: 4px;
     height: 4px;
-    border-radius: 50%;
-    background: var(--mcp-accent, #4338ca);
-    box-shadow: 0 0 6px var(--mcp-accent, #4338ca);
+    border-radius: var(--mcp-r-pill);
+    background: var(--mcp-accent);
+    box-shadow: 0 0 6px var(--mcp-accent);
 }
 
 /* ── Labels (list mode) ─────────────────────────────────────── */
 .mcp_dash_label {
     font-size: 13px;
     font-weight: 500;
-    color: var(--mcp-ink, #2c2620);
+    color: var(--mcp-ink);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -184,7 +183,7 @@
 .mcp_dash_separator {
     width: 32px;
     height: 1px;
-    background: rgba(44, 38, 32, 0.18);
+    background: var(--mcp-rule);
     margin: 2px 0;
     flex-shrink: 0;
 }
@@ -202,7 +201,7 @@
     min-height: 28px;
     display: flex;
     align-items: center;
-    padding-right: 32px;   /* reserve space for the absolute toggle button */
+    padding-right: 32px;
 }
 
 .mcp_dash_header_title {
@@ -211,16 +210,16 @@
     padding: 0 4px 0 2px;
     font-size: 11px;
     font-weight: 600;
-    color: var(--mcp-ink, #2c2620);
+    color: var(--mcp-ink);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     opacity: 0;
-    transition: opacity 0.15s ease;
+    transition: opacity var(--mcp-t-fast);
 }
 .mcp_dash_header_title.has-name { opacity: 0.85; }
 
-/* Toggle button — always at top-right via absolute */
+/* Toggle button — always top-right via absolute */
 .mcp_dash_mode_toggle {
     position: absolute;
     right: 0;
@@ -233,14 +232,46 @@
     justify-content: center;
     background: transparent;
     border: none;
-    border-radius: 4px;
-    color: var(--mcp-accent, #4338ca);
+    border-radius: var(--mcp-r-base);
+    color: var(--mcp-accent);
     cursor: pointer;
     font-size: 11px;
-    transition: background 0.15s ease;
+    transition: background var(--mcp-t-fast);
+    &:hover { background: var(--mcp-accent-soft); }
 }
-.mcp_dash_mode_toggle:hover {
-    background: var(--mcp-accent-soft, rgba(67, 56, 202, 0.10));
+
+/* ── Grid pager ─────────────────────────────────────────────── */
+.mcp_dash_pager {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+    margin-right: 4px;
+}
+.mcp_dash_pager_btn {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: var(--mcp-r-base);
+    color: var(--mcp-accent);
+    cursor: pointer;
+    font-size: 10px;
+    padding: 0;
+    transition: background var(--mcp-t-fast);
+    &:hover:not(:disabled) { background: var(--mcp-accent-soft); }
+    &:disabled { opacity: 0.35; cursor: default; }
+}
+.mcp_dash_pager_label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--mcp-ink);
+    min-width: 28px;
+    text-align: center;
+    opacity: 0.7;
 }
 
 /* ── Mode 0: compact ────────────────────────────────────────── */
@@ -260,7 +291,7 @@
     width: 212px;
     height: 40px;
     justify-content: flex-start;
-    border-radius: 8px;
+    border-radius: var(--mcp-r-lg);
     padding: 0 8px;
     gap: 10px;
 }
@@ -312,7 +343,7 @@
 .mcp_dash_modal.is-grid .mcp_dash_item .o_app_letter {
     width: 54px;
     height: 54px;
-    border-radius: 10px;
+    border-radius: var(--mcp-r-xl);
     font-size: 22px;
 }
 .mcp_dash_modal.is-grid .mcp_dash_item:hover img { transform: translateY(-3px); }
@@ -323,48 +354,14 @@
     padding-right: 32px;
 }
 
-/* ── Grid pager ─────────────────────────────────────────────── */
-.mcp_dash_pager {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    flex-shrink: 0;
-    margin-right: 4px;
-}
-.mcp_dash_pager_btn {
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    border-radius: 4px;
-    color: var(--mcp-accent, #4338ca);
-    cursor: pointer;
-    font-size: 10px;
-    padding: 0;
-    transition: background 0.15s ease;
-    &:hover:not(:disabled) { background: var(--mcp-accent-soft, rgba(67, 56, 202, 0.10)); }
-    &:disabled { opacity: 0.35; cursor: default; }
-}
-.mcp_dash_pager_label {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--mcp-ink, #2c2620);
-    min-width: 28px;
-    text-align: center;
-    opacity: 0.7;
-}
-
 /* ── Compact name bubble ────────────────────────────────────── */
 .mcp_dash_name_bubble {
     position: absolute;
     left: calc(100% + 8px);
-    background: var(--mcp-ink, #2c2620);
-    color: var(--mcp-paper, #f6f0e3);
+    background: var(--mcp-ink);
+    color: var(--mcp-paper);
     padding: 4px 10px;
-    border-radius: 4px;
+    border-radius: var(--mcp-r-base);
     font-size: 11px;
     font-weight: 500;
     white-space: nowrap;

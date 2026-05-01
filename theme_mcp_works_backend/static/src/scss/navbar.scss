@@ -1,0 +1,88 @@
+/* MCP Works backend — top bar (GNOME Shell style, paper bg + indigo border) */
+
+.o_main_navbar {
+    background: var(--mcp-paper) !important;
+    border-bottom: 2px solid var(--mcp-accent) !important;
+    color: var(--mcp-ink) !important;
+    height: var(--mcp-navbar-height) !important;
+    min-height: var(--mcp-navbar-height) !important;
+    --o-navbar-height: var(--mcp-navbar-height);
+    box-shadow: var(--mcp-shadow-xs);
+
+    a, .nav-link, .dropdown-toggle, button {
+        color: var(--mcp-ink) !important;
+        background: transparent !important;
+    }
+    a:hover, .nav-link:hover, .dropdown-toggle:hover, button:hover {
+        color: var(--mcp-accent) !important;
+        background: var(--mcp-accent-soft) !important;
+    }
+
+    /* Apps button — minimal circular icon, replaces heavy dropdown */
+    .o_navbar_apps_menu .dropdown-toggle,
+    .o_navbar_apps_menu > .o-dropdown {
+        position: relative;
+        margin: 4px 6px 4px 10px !important;
+        padding: 0 !important;
+        width: 24px;
+        height: 24px;
+        border-radius: var(--mcp-r-pill) !important;
+        background: transparent !important;
+        color: var(--mcp-ink) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 14px;
+        line-height: 1;
+        transition: background var(--mcp-t-base), color var(--mcp-t-base), transform var(--mcp-t-base);
+        border: none !important;
+        box-shadow: none !important;
+    }
+    .o_navbar_apps_menu .dropdown-toggle::after,
+    .o_navbar_apps_menu .dropdown-toggle::before { display: none !important; content: none !important; }
+    .o_navbar_apps_menu .dropdown-toggle:hover {
+        background: var(--mcp-accent-soft) !important;
+        color: var(--mcp-accent) !important;
+        transform: scale(1.05);
+    }
+    .o_navbar_apps_menu .dropdown-toggle[aria-expanded='true'],
+    .o_navbar_apps_menu.show .dropdown-toggle {
+        background: var(--mcp-accent) !important;
+        color: var(--mcp-paper) !important;
+    }
+    .o_navbar_apps_menu .dropdown-toggle i.oi,
+    .o_navbar_apps_menu .dropdown-toggle .oi-apps { font-size: 16px !important; line-height: 1 !important; }
+
+    /* Current app name */
+    .o_menu_brand {
+        font-weight: 500 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        font-size: 11px !important;
+        color: var(--mcp-ink-2) !important;
+        padding: 0 12px !important;
+    }
+
+    /* Section dropdowns */
+    .o_menu_sections .dropdown-toggle,
+    .o_menu_sections > * {
+        font-size: 12px !important;
+        font-weight: 500;
+        padding: 0 10px !important;
+        height: 28px;
+        line-height: 28px;
+        border-radius: var(--mcp-r-xs);
+        margin: 2px 1px;
+    }
+
+    /* Systray (right side) */
+    .o_menu_systray {
+        gap: 2px;
+        > * { min-height: 28px; display: flex; align-items: center; }
+        .dropdown-toggle, button, a {
+            padding: 0 10px !important;
+            border-radius: var(--mcp-r-xs);
+            font-size: 12px;
+        }
+    }
+}

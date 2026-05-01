@@ -1,0 +1,72 @@
+/* MCP Works backend — Button widget (first-level base rules)
+   View-specific overrides live in views/form.scss, views/list.scss etc.
+   Widget-specific overrides live in widgets/statusbar.scss, widgets/stat_button.scss etc. */
+
+/* ── Base ────────────────────────────────────────────────────── */
+.btn,
+button.btn,
+.btn-secondary {
+    background: transparent !important;
+    border: 1.5px solid var(--mcp-ink) !important;
+    color: var(--mcp-ink) !important;
+    border-radius: var(--mcp-r-sm) !important;
+    padding: 6px 14px !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    transition: all var(--mcp-t-base) !important;
+    box-shadow: none !important;
+}
+.btn:hover,
+button.btn:hover,
+.btn-secondary:hover {
+    background: transparent !important;
+    border-color: var(--mcp-accent) !important;
+    color: var(--mcp-accent) !important;
+    box-shadow: none !important;
+    transform: translateY(-1px);
+}
+
+/* ── Primary ─────────────────────────────────────────────────── */
+.btn.btn-primary,
+.btn-primary,
+.o_form_button_save,
+button.o_form_button_save {
+    background: var(--mcp-accent) !important;
+    border-color: var(--mcp-accent) !important;
+    color: var(--mcp-paper) !important;
+}
+.btn.btn-primary:hover,
+.btn-primary:hover,
+.o_form_button_save:hover {
+    background: var(--mcp-accent-dark) !important;
+    border-color: var(--mcp-accent-dark) !important;
+    color: var(--mcp-paper) !important;
+    box-shadow: var(--mcp-shadow-glow-strong) !important;
+}
+
+/* ── Link ────────────────────────────────────────────────────── */
+.btn.btn-link {
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--mcp-accent) !important;
+    background: transparent !important;
+}
+.btn.btn-link:hover {
+    color: var(--mcp-accent-dark) !important;
+    background: var(--mcp-accent-soft) !important;
+    transform: none !important;
+}
+
+/* ── Size variants ───────────────────────────────────────────── */
+.btn-sm { padding: 4px 10px !important;  font-size: 12px !important; }
+.btn-lg { padding: 8px 18px !important;  font-size: 14px !important; }
+
+/* ── Disabled ────────────────────────────────────────────────── */
+.btn:disabled,
+.btn.disabled {
+    background: var(--mcp-paper-deep) !important;
+    border-color: var(--mcp-rule-strong) !important;
+    color: var(--mcp-ink-3) !important;
+    cursor: not-allowed;
+    transform: none !important;
+}

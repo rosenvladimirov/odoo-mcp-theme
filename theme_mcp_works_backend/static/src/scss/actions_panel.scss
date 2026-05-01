@@ -1,25 +1,20 @@
-/* MCP Works backend — Smart Actions Panel
- * When the cog menu (.o_cp_action_menus) has more items than fit comfortably,
- * we render them as a full-width grid panel that drops down from the toolbar
- * with column count matching the underlying view (list/kanban) columns. */
+/* MCP Works backend — Smart Actions Panel */
 
 .mcp_actions_panel {
     position: fixed;
-    top: 80px;  // below navbar + control panel
+    top: calc(var(--mcp-navbar-height) + 48px);
     left: 16px;
     right: 16px;
-    z-index: 1050;
-    background: var(--mcp-paper, #f6f0e3);
-    border: 2px solid var(--mcp-accent, #4338ca);
-    border-radius: 6px;
-    box-shadow: 0 16px 48px rgba(67, 56, 202, 0.25),
-                0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: var(--mcp-z-actions);
+    background: var(--mcp-paper);
+    border: 2px solid var(--mcp-accent);
+    border-radius: var(--mcp-r-md);
+    box-shadow: var(--mcp-shadow-panel);
     padding: 16px 20px;
     animation: mcp-actions-slide-down 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     max-height: calc(100vh - 200px);
     overflow-y: auto;
 }
-
 @keyframes mcp-actions-slide-down {
     from { opacity: 0; transform: translateY(-12px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -31,10 +26,10 @@
     justify-content: space-between;
     margin-bottom: 12px;
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--mcp-rule, rgba(44, 38, 32, 0.12));
+    border-bottom: 1px solid var(--mcp-rule);
 }
 .mcp_actions_panel_title {
-    color: var(--mcp-ink, #2c2620);
+    color: var(--mcp-ink);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -44,22 +39,18 @@
 .mcp_actions_panel_close {
     background: transparent;
     border: none;
-    color: var(--mcp-ink-2, #5a5147);
+    color: var(--mcp-ink-2);
     cursor: pointer;
     font-size: 18px;
     line-height: 1;
     padding: 4px 10px;
-    border-radius: 3px;
-    transition: background 0.15s ease, color 0.15s ease;
-}
-.mcp_actions_panel_close:hover {
-    background: var(--mcp-accent-soft, rgba(67, 56, 202, 0.08));
-    color: var(--mcp-accent, #4338ca);
+    border-radius: var(--mcp-r-sm);
+    transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
+    &:hover { background: var(--mcp-accent-soft); color: var(--mcp-accent); }
 }
 
 .mcp_actions_grid {
     display: grid;
-    /* Default: 4 columns; JS sets --mcp-cols based on underlying view */
     grid-template-columns: repeat(var(--mcp-cols, 4), 1fr);
     gap: 10px;
 }
@@ -70,44 +61,38 @@
     align-items: flex-start;
     gap: 6px;
     background: #ffffff;
-    border: 1.5px solid var(--mcp-rule-strong, rgba(44, 38, 32, 0.20));
-    border-radius: 4px;
-    color: var(--mcp-ink, #2c2620);
+    border: 1.5px solid var(--mcp-rule-strong);
+    border-radius: var(--mcp-r-base);
+    color: var(--mcp-ink);
     padding: 12px 14px;
     text-align: left;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--mcp-t-base);
     text-decoration: none;
     font-size: 13px;
     line-height: 1.3;
 }
 .mcp_action_btn:hover {
-    background: var(--mcp-paper-light, #fbf7ee);
-    border-color: var(--mcp-accent, #4338ca);
-    color: var(--mcp-accent, #4338ca);
-    box-shadow: 0 4px 12px rgba(67, 56, 202, 0.15);
+    background: var(--mcp-paper-light);
+    border-color: var(--mcp-accent);
+    color: var(--mcp-accent);
+    box-shadow: var(--mcp-shadow-glow);
     transform: translateY(-2px);
 }
-.mcp_action_btn .mcp_action_icon {
-    font-size: 18px;
-    line-height: 1;
-    color: var(--mcp-accent, #4338ca);
-}
-.mcp_action_btn .mcp_action_label {
-    font-weight: 500;
-}
-.mcp_action_btn .mcp_action_kind {
+.mcp_action_btn .mcp_action_icon  { font-size: 18px; line-height: 1; color: var(--mcp-accent); }
+.mcp_action_btn .mcp_action_label { font-weight: 500; }
+.mcp_action_btn .mcp_action_kind  {
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--mcp-ink-3, #6a6258);
+    color: var(--mcp-ink-3);
 }
 
 /* Backdrop */
 .mcp_actions_panel_backdrop {
     position: fixed;
     inset: 0;
-    z-index: 1049;
+    z-index: calc(var(--mcp-z-actions) - 1);
     background: rgba(44, 38, 32, 0.20);
     backdrop-filter: blur(2px);
     animation: mcp-fade-in 0.2s ease;

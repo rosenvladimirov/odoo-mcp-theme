@@ -1,0 +1,240 @@
+/* MCP Works backend — Control Panel, Breadcrumbs, Pager, Search, Breadcrumb Strip */
+
+/* ── Wrapper: transparent; inner card is the frosted glass ──── */
+.o_control_panel {
+    background: transparent !important;
+    border: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    overflow: visible !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+.o_control_panel_main {
+    background: rgba(255, 255, 255, 0.30) !important;
+    backdrop-filter: blur(7px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(7px) saturate(140%) !important;
+    border: 1.5px solid var(--mcp-accent) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 6px 8px !important;
+    overflow: visible !important;
+    margin: 0 !important;
+}
+
+/* Propagate overflow:visible so translateY(-1px) hover lifts don't clip */
+.o_control_panel_breadcrumbs,
+.o_control_panel_main_buttons,
+.o_control_panel_navigation,
+.o_control_panel_actions,
+.o_cp_action_menus,
+.o_cp_switch_buttons,
+.o_control_panel .btn-group,
+.o_control_panel .btn-group-vertical { overflow: visible !important; }
+
+/* Buttons sit above the panel border */
+.o_control_panel .btn,
+.o_control_panel button.btn,
+.o_control_panel a.btn,
+.o_cp_switch_buttons .btn,
+.o_cp_action_menus .btn { position: relative !important; z-index: 2 !important; }
+
+/* ── Breadcrumbs ─────────────────────────────────────────────── */
+.o_breadcrumb {
+    color: var(--mcp-ink-2) !important;
+    font-size: 13px;
+}
+.o_breadcrumb a,
+.o_breadcrumb .breadcrumb-item a,
+.breadcrumb-item a {
+    color: var(--mcp-accent) !important;
+    text-decoration: none;
+    transition: color var(--mcp-t-base);
+}
+.o_breadcrumb a:hover,
+.breadcrumb-item a:hover { color: var(--mcp-accent-dark) !important; text-decoration: underline; }
+.o_breadcrumb .breadcrumb-item.active,
+.o_breadcrumb_record_name { color: var(--mcp-ink) !important; font-weight: 500; }
+
+/* ── Pager ───────────────────────────────────────────────────── */
+.o_pager {
+    background: #ffffff !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: var(--mcp-r-sm) !important;
+    padding: 0 !important;
+}
+.o_pager_counter {
+    color: var(--mcp-ink-2) !important;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-right: 1px solid var(--mcp-rule);
+}
+.o_pager button,
+.o_pager_previous,
+.o_pager_next {
+    background: transparent !important;
+    border: none !important;
+    color: var(--mcp-ink) !important;
+    padding: 4px 10px !important;
+    transition: background var(--mcp-t-base), color var(--mcp-t-base);
+}
+.o_pager button:hover,
+.o_pager_previous:hover,
+.o_pager_next:hover { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent) !important; }
+
+/* ── Search view ─────────────────────────────────────────────── */
+.o_searchview {
+    background: #ffffff !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: var(--mcp-r-sm) !important;
+    padding: 0 8px !important;
+    min-height: 30px !important;
+    transition: border-color var(--mcp-t-base), box-shadow var(--mcp-t-base);
+}
+.o_searchview .o_searchview_input {
+    height: 26px !important;
+    line-height: 26px !important;
+    font-size: 13px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.o_searchview .o_searchview_input_container { align-items: center !important; }
+.o_searchview:focus-within {
+    border-color: var(--mcp-accent) !important;
+    box-shadow: 0 0 0 3px var(--mcp-accent-soft) !important;
+}
+.o_searchview input { color: var(--mcp-ink) !important; }
+.o_searchview .o_facet_values {
+    background: var(--mcp-accent-soft) !important;
+    color: var(--mcp-accent) !important;
+    border-radius: var(--mcp-r-sm) !important;
+    padding: 2px 8px !important;
+    font-size: 12px;
+}
+.o_searchview_facet_label {
+    background: var(--mcp-accent) !important;
+    color: var(--mcp-paper) !important;
+    border-radius: var(--mcp-r-sm) 0 0 var(--mcp-r-sm) !important;
+    padding: 2px 8px !important;
+}
+
+/* Search icon — not a button, suppress all btn overrides */
+.o_searchview .btn,
+.o_searchview button.btn,
+.o_searchview > button {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 4px 0 0 !important;
+    height: auto !important;
+    font-weight: normal !important;
+    transform: none !important;
+}
+.o_searchview .o_searchview_icon,
+.o_searchview .oi-search {
+    color: var(--mcp-ink-2) !important;
+    opacity: 0.55;
+    font-size: 14px !important;
+}
+.o_searchview:focus-within .o_searchview_icon {
+    color: var(--mcp-accent) !important;
+    opacity: 0.85;
+}
+
+/* SearchBarMenu caret + siblings height */
+.o_cp_searchview { align-items: center !important; gap: 0 !important; }
+.o_cp_searchview > button,
+.o_cp_searchview .dropdown-toggle,
+.o_searchview_dropdown_toggler,
+.o_search_panel_filter_toggler {
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 0 10px !important;
+    font-size: 13px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-left: 0 !important;
+}
+
+/* ── Breadcrumb strip (injected by control_panel.xml patch) ─── */
+.mcp_breadcrumb_strip {
+    position: relative;
+    height: 30px;
+    padding: 0 14px 0 38px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(to bottom,
+        var(--mcp-paper) 0%,
+        var(--mcp-paper) 55%,
+        rgba(246, 240, 227, 0) 100%);
+    border: none;
+    font-size: 12px;
+    overflow: hidden;
+}
+.mcp_breadcrumb_strip .mcp_breadcrumb_steps {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--mcp-accent);
+    font-size: 13px;
+    opacity: 0.85;
+}
+.mcp_breadcrumb_strip .o_breadcrumb {
+    background: transparent !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-direction: row !important;
+    height: auto !important;
+    line-height: 30px !important;
+    color: var(--mcp-ink);
+}
+.mcp_breadcrumb_strip .breadcrumb {
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.mcp_breadcrumb_strip .breadcrumb-item,
+.mcp_breadcrumb_strip .breadcrumb-item a {
+    font-size: 12px !important;
+    color: var(--mcp-accent) !important;
+    line-height: 30px !important;
+}
+.mcp_breadcrumb_strip .o_last_breadcrumb_item,
+.mcp_breadcrumb_strip .breadcrumb-item.active {
+    color: var(--mcp-ink) !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+}
+
+/* Scroll arrows (breadcrumb_strip.js toggles hidden) */
+.mcp_scroll_btn {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    color: var(--mcp-accent);
+    padding: 0 4px;
+    cursor: pointer;
+    font-size: 11px;
+    opacity: 0.7;
+    transition: opacity var(--mcp-t-fast);
+    &:hover { opacity: 1; }
+}
+.mcp_breadcrumb_scroll {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+}

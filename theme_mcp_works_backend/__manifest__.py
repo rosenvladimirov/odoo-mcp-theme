@@ -25,7 +25,7 @@
         Pairs visually with theme_mcp_works (frontend) but they are now
         completely independent — install/upgrade/uninstall on their own.
     """,
-    "version": "19.0.1.10.0",
+    "version": "19.0.1.11.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -39,6 +39,7 @@
     ],
     "data": [],
     "assets": {
+        # SCSS build-time variables (loaded before web primary variables)
         "web._assets_primary_variables": [
             (
                 "after",
@@ -47,11 +48,33 @@
             ),
         ],
         "web.assets_backend": [
-            "theme_mcp_works_backend/static/src/scss/top_bar.scss",
-            "theme_mcp_works_backend/static/src/scss/workspace.scss",
+            # ── 1. Runtime design tokens (CSS custom properties) ───────
+            "theme_mcp_works_backend/static/src/scss/tokens.scss",
+
+            # ── 2. Layout foundation ───────────────────────────────────
+            "theme_mcp_works_backend/static/src/scss/layout.scss",
+            "theme_mcp_works_backend/static/src/scss/navbar.scss",
+            "theme_mcp_works_backend/static/src/scss/control_panel.scss",
+            "theme_mcp_works_backend/static/src/scss/modals.scss",
+
+            # ── 3. Base widgets (first level — no view scope) ──────────
+            "theme_mcp_works_backend/static/src/scss/widgets/buttons.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/inputs.scss",
+
+            # ── 4. View-specific overrides ─────────────────────────────
+            "theme_mcp_works_backend/static/src/scss/views/form.scss",
+            "theme_mcp_works_backend/static/src/scss/views/list.scss",
+            "theme_mcp_works_backend/static/src/scss/views/kanban.scss",
+
+            # ── 5. Component panels ────────────────────────────────────
             "theme_mcp_works_backend/static/src/scss/dash.scss",
-            "theme_mcp_works_backend/static/src/scss/apps_menu_modal.scss",
+            "theme_mcp_works_backend/static/src/scss/apps_trigger.scss",
             "theme_mcp_works_backend/static/src/scss/actions_panel.scss",
+
+            # ── 6. JS utilities ────────────────────────────────────────
+            "theme_mcp_works_backend/static/src/js/sizing.js",
+
+            # ── 7. OWL components ──────────────────────────────────────
             "theme_mcp_works_backend/static/src/webclient/dash/dash.js",
             "theme_mcp_works_backend/static/src/webclient/dash/dash.xml",
             "theme_mcp_works_backend/static/src/webclient/actions_panel/actions_panel.js",
