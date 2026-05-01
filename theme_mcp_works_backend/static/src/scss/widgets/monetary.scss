@@ -1,0 +1,35 @@
+/* MCP Works backend — Monetary field widget */
+
+.o_field_monetary {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+/* Currency symbol badge */
+.o_monetary_currency_symbol,
+.o_field_monetary .o_currency_symbol {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--mcp-ink-3);
+    background: var(--mcp-paper-deep);
+    border: 1px solid var(--mcp-rule);
+    border-radius: var(--mcp-r-xs) 0 0 var(--mcp-r-xs);
+    padding: 5px 6px;
+    line-height: 1;
+    user-select: none;
+}
+
+/* Amount input */
+.o_field_monetary input {
+    text-align: right !important;
+    font-variant-numeric: tabular-nums;
+    min-width: 80px;
+}
+
+/* ── View overrides ──────────────────────────────────────────── */
+/* List: right-align amounts */
+.o_list_view .o_field_monetary { justify-content: flex-end; }
+.o_list_view td .o_field_monetary { font-variant-numeric: tabular-nums; }

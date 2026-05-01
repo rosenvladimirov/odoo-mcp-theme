@@ -1,0 +1,68 @@
+/* MCP Works backend — Date / DateTime field widget */
+
+/* ── Input (inherits base from widgets/inputs.scss) ──────────── */
+.o_field_date,
+.o_field_datetime {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    position: relative;
+}
+
+/* Calendar icon button next to the input */
+.o_field_date .o_datepicker_button,
+.o_field_datetime .o_datepicker_button,
+.o_field_date .o_date_button,
+.o_field_datetime .o_date_button {
+    flex-shrink: 0;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--mcp-ink-2) !important;
+    padding: 0 4px !important;
+    height: auto !important;
+    font-size: 13px !important;
+    opacity: 0.55;
+    transition: opacity var(--mcp-t-fast), color var(--mcp-t-fast);
+    transform: none !important;
+
+    &:hover { opacity: 1; color: var(--mcp-accent) !important; }
+}
+
+/* Datepicker popup */
+.o_datepicker,
+.bootstrap-datetimepicker-widget {
+    background: var(--mcp-paper-light) !important;
+    border: 1.5px solid var(--mcp-accent) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-shadow-modal) !important;
+    padding: 8px !important;
+
+    table th,
+    .picker-switch,
+    .prev, .next {
+        color: var(--mcp-ink) !important;
+        font-weight: 600;
+        border-radius: var(--mcp-r-sm) !important;
+    }
+    table td span,
+    table td .day {
+        border-radius: var(--mcp-r-sm) !important;
+        color: var(--mcp-ink) !important;
+        transition: background var(--mcp-t-fast);
+    }
+    table td span:hover,
+    table td .day:hover {
+        background: var(--mcp-accent-soft) !important;
+        color: var(--mcp-accent) !important;
+    }
+    table td .active,
+    table td span.active {
+        background: var(--mcp-accent) !important;
+        color: var(--mcp-paper) !important;
+    }
+    table td .today::before {
+        border-bottom-color: var(--mcp-accent) !important;
+    }
+}

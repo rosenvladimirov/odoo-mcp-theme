@@ -1,0 +1,56 @@
+/* MCP Works backend — Many2many tags widget */
+
+/* ── Tag pill ────────────────────────────────────────────────── */
+.o_tag,
+.badge.o_tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px !important;
+    border-radius: var(--mcp-r-sm) !important;
+    font-size: 11px !important;
+    font-weight: 500;
+    line-height: 1.4;
+    background: var(--mcp-accent-soft) !important;
+    color: var(--mcp-accent) !important;
+    border: 1px solid rgba(67, 56, 202, 0.20) !important;
+    transition: background var(--mcp-t-fast), border-color var(--mcp-t-fast);
+
+    &:hover { background: var(--mcp-accent-glow) !important; }
+}
+
+/* Delete cross on tag */
+.o_tag .o_delete,
+.o_tag .o_tag_badge_delete {
+    font-size: 10px;
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity var(--mcp-t-fast);
+    line-height: 1;
+    padding: 0 1px;
+
+    &:hover { opacity: 1; }
+}
+
+/* Color variants — Odoo maps color indexes 0-11 */
+.o_tag[style*="background"] {
+    border-color: transparent !important;
+}
+
+/* Tags container */
+.o_field_many2many_tags,
+.o_field_tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+    min-height: 28px;
+}
+
+/* ── View overrides ──────────────────────────────────────────── */
+/* List view: constrain height, truncate overflow */
+.o_list_view .o_field_many2many_tags {
+    flex-wrap: nowrap;
+    max-width: 260px;
+    overflow: hidden;
+}

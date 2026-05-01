@@ -9,34 +9,15 @@
         depend on theme_mcp_works frontend. Targets Odoo Community Edition
         only (excludes web_enterprise). Compatible with default Odoo CE web
         client.
-
-        Visual identity (self-contained):
-          • Top bar — paper bg + indigo border-bottom + round Activities pill
-          • Workspace — paper-cream + 56px indigo grid mesh
-          • Bottom Dash — floating pill with favorite apps + Show all button
-          • Apps overview — translucent cards with indigo border + hover lift
-          • Form view — white card sheets, indigo focus rings on inputs
-          • List view — indigo header, hover row highlight
-          • Kanban — paper cards with hover lift
-          • Buttons — white bg with ink borders + indigo focus glow
-          • Modals + dropdowns — indigo border, paper bg
-          • Pager + breadcrumbs + search bar — themed
-
-        Pairs visually with theme_mcp_works (frontend) but they are now
-        completely independent — install/upgrade/uninstall on their own.
     """,
-    "version": "19.0.1.11.0",
+    "version": "19.0.1.12.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
     "website": "https://www.mcpworks.net",
     "license": "AGPL-3",
-    "depends": [
-        "web",
-    ],
-    "excludes": [
-        "web_enterprise",
-    ],
+    "depends": ["web"],
+    "excludes": ["web_enterprise"],
     "data": [],
     "assets": {
         # SCSS build-time variables (loaded before web primary variables)
@@ -60,6 +41,14 @@
             # ── 3. Base widgets (first level — no view scope) ──────────
             "theme_mcp_works_backend/static/src/scss/widgets/buttons.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/inputs.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/statusbar.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/many2one.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/tags.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/badge.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/boolean.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/date.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/monetary.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/priority.scss",
 
             # ── 4. View-specific overrides ─────────────────────────────
             "theme_mcp_works_backend/static/src/scss/views/form.scss",

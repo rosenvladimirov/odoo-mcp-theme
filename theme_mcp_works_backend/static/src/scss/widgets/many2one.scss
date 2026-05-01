@@ -1,0 +1,45 @@
+/* MCP Works backend — Many2one field widget */
+
+.o_field_many2one {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+/* External link button (open record in new window) */
+.o_external_button {
+    flex-shrink: 0;
+    background: transparent !important;
+    border: none !important;
+    color: var(--mcp-accent) !important;
+    padding: 2px 4px !important;
+    border-radius: var(--mcp-r-xs) !important;
+    font-size: 12px !important;
+    opacity: 0.55;
+    transition: opacity var(--mcp-t-fast), color var(--mcp-t-fast);
+    box-shadow: none !important;
+    line-height: 1;
+
+    &:hover { opacity: 1; color: var(--mcp-accent-dark) !important; }
+}
+
+/* Avatar variant (partner image + name) */
+.o_m2o_avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--mcp-r-pill) !important;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* Autocomplete dropdown */
+.o_field_many2one .dropdown-menu,
+.o_field_widget .ui-autocomplete {
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+/* ── View overrides ──────────────────────────────────────────── */
+/* Form: full-width inside a cell */
+.o_form_view .o_field_many2one { width: 100%; }

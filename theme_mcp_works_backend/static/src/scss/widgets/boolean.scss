@@ -1,0 +1,55 @@
+/* MCP Works backend — Boolean / checkbox widget */
+
+/* ── Checkbox via .o_checkbox wrapper ────────────────────────── */
+.o_checkbox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--mcp-rule-strong);
+    border-radius: var(--mcp-r-xs);
+    background: #ffffff;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background var(--mcp-t-fast), border-color var(--mcp-t-fast);
+
+    input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+    }
+
+    &:has(input:checked),
+    &.o_checkbox_checked {
+        background: var(--mcp-accent) !important;
+        border-color: var(--mcp-accent) !important;
+
+        &::after {
+            content: "";
+            display: block;
+            width: 9px;
+            height: 5px;
+            border-left: 2px solid var(--mcp-paper);
+            border-bottom: 2px solid var(--mcp-paper);
+            transform: rotate(-45deg) translateY(-1px);
+        }
+    }
+
+    &:hover { border-color: var(--mcp-accent); }
+}
+
+/* Native checkbox fallback (readonly / no wrapper) */
+input[type="checkbox"].o_input {
+    accent-color: var(--mcp-accent);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    border-radius: var(--mcp-r-xs) !important;
+}
+
+/* ── View overrides ──────────────────────────────────────────── */
+/* List: center checkboxes in the cell */
+.o_list_view .o_field_boolean { justify-content: center; display: flex; }

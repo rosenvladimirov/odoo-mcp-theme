@@ -1,0 +1,27 @@
+/* MCP Works backend — Badge / state label widget */
+
+/* ── Bootstrap badge base ────────────────────────────────────── */
+.badge {
+    border-radius: var(--mcp-r-xs) !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em;
+    padding: 3px 8px !important;
+}
+
+/* Map Odoo semantic badge classes to theme colors */
+.badge.text-bg-success,
+.badge.bg-success { background: rgba(16, 185, 129, 0.12) !important; color: #065f46 !important; border: 1px solid rgba(16, 185, 129, 0.25) !important; }
+.badge.text-bg-danger,
+.badge.bg-danger  { background: rgba(220, 38, 38,  0.10) !important; color: #991b1b !important; border: 1px solid rgba(220, 38, 38,  0.20) !important; }
+.badge.text-bg-warning,
+.badge.bg-warning { background: rgba(245, 158, 11, 0.12) !important; color: #92400e !important; border: 1px solid rgba(245, 158, 11, 0.25) !important; }
+.badge.text-bg-info,
+.badge.bg-info    { background: var(--mcp-accent-soft) !important;   color: var(--mcp-accent) !important; border: 1px solid rgba(67, 56, 202, 0.20) !important; }
+.badge.text-bg-secondary,
+.badge.bg-secondary { background: var(--mcp-paper-deep) !important;  color: var(--mcp-ink-2) !important;  border: 1px solid var(--mcp-rule-strong) !important; }
+
+/* ── o_field_badge (field widget variant) ────────────────────── */
+.o_field_badge .badge {
+    vertical-align: middle;
+}

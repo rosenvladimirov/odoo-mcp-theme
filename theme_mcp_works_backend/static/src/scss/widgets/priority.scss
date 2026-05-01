@@ -1,0 +1,26 @@
+/* MCP Works backend — Priority (star) widget */
+
+.o_priority {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.o_priority .o_priority_star,
+.o_priority .fa-star,
+.o_priority .fa-star-o {
+    font-size: 14px !important;
+    cursor: pointer;
+    transition: color var(--mcp-t-fast), transform var(--mcp-t-fast);
+    color: var(--mcp-rule-strong) !important;
+
+    &:hover,
+    &.fa-star {
+        color: #f59e0b !important;
+        transform: scale(1.15);
+    }
+}
+
+/* All stars up to and including selected */
+.o_priority .fa-star { color: #f59e0b !important; }
+.o_priority .fa-star-o { color: var(--mcp-rule-strong) !important; }

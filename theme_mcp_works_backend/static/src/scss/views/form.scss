@@ -68,34 +68,6 @@
     font-weight: 600;
 }
 
-/* ── Statusbar ───────────────────────────────────────────────── */
-.o_form_view .o_statusbar_status {
-    background: var(--mcp-paper) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
-    border-radius: var(--mcp-r-sm) !important;
-    padding: 0 !important;
-}
-.o_form_view .o_statusbar_status .btn,
-.o_form_view .o_statusbar_status .o_arrow_button {
-    background: transparent !important;
-    border: none !important;
-    border-right: 1px solid var(--mcp-rule) !important;
-    color: var(--mcp-ink-2) !important;
-    border-radius: 0 !important;
-    padding: 6px 16px !important;
-    font-size: 12px !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    box-shadow: none !important;
-}
-.o_form_view .o_statusbar_status .btn-primary,
-.o_form_view .o_statusbar_status .o_arrow_button_current {
-    background: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
-    font-weight: 600;
-}
-.o_form_view .o_statusbar_buttons .btn { margin-right: 4px; }
-
 /* ── Notebook tabs ───────────────────────────────────────────── */
 .o_form_view .o_notebook .nav.nav-tabs {
     border-bottom: 1px solid var(--mcp-rule-strong) !important;
