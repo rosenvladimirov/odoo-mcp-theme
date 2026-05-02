@@ -20,19 +20,24 @@
     box-shadow: none !important;
 }
 
-/* Toolbar (anonymous div with .btn-group children) — strip Bootstrap mx/mt/mb,
-   keep only an 8px bottom gap to the chart card. */
+/* Toolbar — same card chrome as pivot toolbar / form statusbar:
+   indigo-tinted bg, soft border, drop+aura shadow. */
 .o_graph_view .o_graph_renderer > div:not(.o_graph_canvas_container) {
-    margin: 0 0 8px 0 !important;
-    padding: 0 !important;
+    background-color: var(--mcp-cp-bg) !important;
+    padding: 8px !important;
+    margin: 8px 0 8px 0 !important;
+    border: 1px solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-cp-shadow) !important;
+    align-items: center !important;
 }
 
-/* Chart container — visual card holding the canvas */
+/* Chart container — same card family as the toolbar */
 .o_graph_view .o_graph_canvas_container {
-    background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    background: var(--mcp-cp-bg) !important;
+    border: 1px solid var(--mcp-rule) !important;
     border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-shadow-sm) !important;
+    box-shadow: var(--mcp-cp-shadow) !important;
     padding: var(--mcp-view-pad) !important;       /* CONTENT padding inside the card */
     margin: 0 !important;
     flex: 1 1 auto;

@@ -24,25 +24,126 @@
 .o_list_view main.o_content > [class*="_dashboard"] {
     margin-bottom: 8px !important;
 }
+/* List table — same card chrome as the control panel:
+   indigo-tinted white surface, soft grey border, drop+aura shadow.
+   Also kill all Bootstrap table state vars so striped/info/hover
+   tints don't leak into rows. We control row colour ourselves. */
 .o_list_view .o_list_table {
+    /* White table body — only the header gets the indigo wash */
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: 1px solid var(--mcp-rule) !important;
     border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-shadow-sm) !important;
+    box-shadow: var(--mcp-cp-shadow) !important;
     overflow: hidden;
+
+    /* Fluid layout — Odoo bakes inline widths summing > viewport, which
+       triggers horizontal scroll under .table-responsive. We override
+       to let the browser auto-distribute columns within the available
+       width. Selector/actions columns keep their fixed min-width below. */
+    table-layout: auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+
+    --bs-table-bg: transparent;
+    --bs-table-accent-bg: transparent;
+    --bs-table-striped-bg: transparent;
+    --bs-table-striped-color: inherit;
+    --bs-table-hover-bg: transparent;
+    --bs-table-hover-color: inherit;
+    --bs-table-active-bg: transparent;
+    --bs-table-active-color: inherit;
 }
-.o_list_view thead { background: var(--mcp-paper) !important; }
+/* Top-level list views — keep Odoo's inline column widths (so the
+   .o_resize drag-handle works), but enforce a 100px floor so text
+   stays readable when columns shrink. width: auto !important would
+   block Odoo's resize JS from writing inline `style="width: Npx"`. */
+.o_list_view:not(.o_field_x2many) .o_list_table > thead > tr > th:not(.o_list_record_selector):not(.o_list_actions_header):not(.o_list_button),
+.o_list_view:not(.o_field_x2many) .o_list_table > tbody > tr > td:not(.o_list_record_selector):not(.o_list_actions_header):not(.o_list_button) {
+    min-width: 100px !important;
+    max-width: none !important;
+}
+/* Renderer wraps the table — let Bootstrap's overflow-x: auto do its
+   job. Scroll appears ONLY when columns × min-width > viewport. */
+.o_list_view .o_list_renderer.table-responsive {
+    overflow-x: auto !important;
+}
+
+/* Odoo bakes `position-sticky end-0` Bootstrap utilities into the
+   actions header (settings-dropdown column). That pins it while the
+   middle scrolls — but the row's trash button doesn't get the same
+   treatment, so they fall out of sync. Unpin everything; the column
+   scrolls with the rest. */
+.o_list_view .o_list_table > thead > tr > th.o_list_actions_header,
+.o_list_view .o_list_table > thead > tr > th.position-sticky.end-0,
+.o_list_view .o_list_table > thead > tr > th.position-sticky {
+    position: static !important;
+}
+.o_list_view .o_list_table > tbody > tr > td.o_list_record_remove,
+.o_list_view .o_list_table > tbody > tr > td.position-sticky {
+    position: static !important;
+}
+
+/* Last column width — keep header (settings dropdown) and data-row
+   trash cell aligned to the same 36px so both sit flush at the right
+   edge of the table. */
+.o_list_view .o_list_table > thead > tr > th.o_list_actions_header,
+.o_list_view .o_list_table > tbody > tr > td.o_list_record_remove,
+.o_list_view .o_list_table > tbody > tr > td:last-child:not(.o_data_cell) {
+    width: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
+    padding: 0 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+/* Trash icon (per-row delete) — visible by default with mid-grey,
+   danger red on hover. Was hidden under ink-3 (~40% opacity grey). */
+.o_list_view .o_list_record_remove button,
+.o_list_view .o_list_record_remove .fa,
+.o_list_view .o_list_record_remove .fa-trash-o {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--mcp-ink-2) !important;
+    font-size: 14px !important;
+    padding: 4px !important;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity var(--mcp-t-fast), color var(--mcp-t-fast);
+}
+.o_list_view tbody tr:hover .o_list_record_remove button,
+.o_list_view tbody tr:hover .o_list_record_remove .fa-trash-o {
+    opacity: 0.85;
+}
+.o_list_view .o_list_record_remove button:hover,
+.o_list_view .o_list_record_remove .fa-trash-o:hover {
+    opacity: 1;
+    color: var(--mcp-danger) !important;
+}
+.o_list_view thead { background: var(--mcp-cp-bg) !important; }
+/* Match list row height to the navbar (--mcp-navbar-height = 32px).
+   Padding kept symmetrical so text vertically centres in the 32px frame.
+   Filler / empty rows that Odoo injects (single colspan cell with NBSP)
+   keep auto height so they don't blow the table up. */
+.o_list_view thead tr,
+.o_list_view tbody tr.o_data_row {
+    height: var(--mcp-navbar-height, 32px) !important;
+}
 .o_list_view thead th {
-    background: var(--mcp-paper) !important;
+    background: var(--mcp-cp-bg) !important;
     color: var(--mcp-ink) !important;
-    border-bottom: 2px solid var(--mcp-accent) !important;
+    border-bottom: 1px solid var(--mcp-rule) !important;
     border-top: none !important;
     text-transform: uppercase;
     font-size: 11px !important;
     letter-spacing: 0.04em;
     font-weight: 600 !important;
-    padding: 10px 12px !important;
+    padding: 0 12px !important;
+    height: var(--mcp-navbar-height, 32px) !important;
+    line-height: 1 !important;
     user-select: none;
+    vertical-align: middle !important;
 }
 .o_list_view tbody tr {
     border-bottom: 1px solid var(--mcp-rule) !important;
@@ -51,7 +152,66 @@
 .o_list_view tbody tr:hover                             { background: var(--mcp-accent-soft) !important; }
 .o_list_view tbody tr.o_data_row.table-success,
 .o_list_view tbody tr.o_data_row.o_row_selected         { background: var(--mcp-accent-glow) !important; }
-.o_list_view tbody td                                   { padding: 8px 12px !important; color: var(--mcp-ink) !important; }
+.o_list_view tbody td {
+    padding: 0 12px !important;
+    color: var(--mcp-ink) !important;
+    vertical-align: middle !important;
+    line-height: 1 !important;
+}
+.o_list_view tbody tr.o_data_row td {
+    height: var(--mcp-navbar-height, 32px) !important;
+}
+
+/* Empty filler rows Odoo injects for visual rhythm — keep them flat */
+.o_list_view tbody tr:not(.o_data_row):not(.o_group_header) td {
+    height: auto !important;
+    padding: 0 !important;
+}
+
+/* Footer (totals row) — flat, transparent, no stripe inheritance.
+   Bootstrap tables put bg on the <td> via --bs-table-bg; we already
+   neutralised those vars on .o_list_table, but belt-and-braces here. */
+.o_list_view .o_list_table tfoot,
+.o_list_view .o_list_table tfoot tr,
+.o_list_view .o_list_table tfoot td,
+.o_list_view .o_list_table.table-striped tfoot tr,
+.o_list_view .o_list_table.table-striped tfoot td,
+.o_list_view .o_list_table.table-striped > :not(caption) > * > * {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+.o_list_view .o_list_table tfoot td {
+    border-top: 1px solid var(--mcp-rule) !important;
+    color: var(--mcp-ink) !important;
+    font-weight: 600;
+}
+
+/* Bootstrap state classes on data rows (.text-info, .table-info,
+   .table-success, .table-warning, .table-danger) — keep the text
+   colour but reset the background. */
+.o_list_view tbody tr.o_data_row,
+.o_list_view tbody tr.o_data_row td {
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+/* Bootstrap .form-check wrapper inside cells adds 1.5rem min-height +
+   left padding by default — kills row compactness. Reset it inside
+   the list table so the checkbox sits flat. */
+.o_list_view .o_list_table .form-check,
+.o_list_view .o_list_table .o-checkbox.form-check {
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.o_list_view .o_list_table .form-check-input {
+    margin: 0 !important;
+}
 
 /* Group rows */
 .o_list_view tbody tr.o_group_header {
@@ -65,14 +225,17 @@
 .o_list_view .o_list_record_selector,
 .o_list_view th.o_list_record_selector {
     width: 32px !important;
-    padding: 0 8px !important;
+    padding: 4px 8px !important;
     text-align: center !important;
+    vertical-align: middle !important;
 }
 .o_list_view .o_list_record_selector input[type="checkbox"] {
     accent-color: var(--mcp-accent);
-    width: 14px;
-    height: 14px;
+    width: 14px !important;
+    height: 14px !important;
+    margin: 0 !important;
     cursor: pointer;
+    vertical-align: middle;
 }
 
 /* ── Sticky header ───────────────────────────────────────────── */
@@ -82,7 +245,21 @@
     z-index: 2 !important;
 }
 
-/* ── Optional columns button ─────────────────────────────────── */
+/* ── Optional columns button (settings dropdown at far right) ─── */
+.o_list_view .o_list_actions_header,
+.o_list_view th.o_list_actions_header {
+    width: 32px !important;
+    padding: 0 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+.o_list_view .o_optional_columns_dropdown {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100%;
+    height: 100%;
+}
 .o_list_view .o_optional_columns_dropdown .btn {
     background: transparent !important;
     border: none !important;
@@ -90,6 +267,10 @@
     color: var(--mcp-ink-3) !important;
     padding: 4px 6px !important;
     transform: none !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     opacity: 0.55;
     &:hover { opacity: 1; color: var(--mcp-accent) !important; }
 }

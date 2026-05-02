@@ -34,6 +34,17 @@
     margin: 0 !important;
 }
 
+/* Forms without a sheet (Document Layout, some settings dialogs) — no
+   sheet means no container to absorb Bootstrap's `.row` negative
+   margins (~-8px each side from --bs-gutter-x). The inner row leaks
+   outside the modal-body's padding box. Fix: zero the row's negative
+   margins; columns keep their built-in padding for gutter spacing. */
+.o_form_renderer.o_form_nosheet > .o_group.row,
+.o_form_renderer.o_form_nosheet .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
 /* Side-chatter container — same card chrome as the form sheet:
    white surface, soft grey border, drop shadow + indigo aura. */
 .o_form_view .o-mail-ChatterContainer.o-aside {
@@ -76,6 +87,41 @@
     border-top-left-radius: var(--mcp-r-md);
     border-top-right-radius: var(--mcp-r-md);
     align-items: center !important;          /* action buttons + status chevron share centreline */
+}
+
+/* Embedded x2many list (notebook tab inside a form) — break out of the
+   form sheet's 24px content padding so the table reaches the sheet's
+   inner edges. Other field widgets in the same tab keep their normal
+   width (they're inside .o_group containers, this rule only targets
+   the x2many list itself). */
+.o_form_view .o_form_sheet .o_field_x2many.o_list_view {
+    width: calc(100% + 48px) !important;
+    max-width: calc(100% + 48px) !important;
+    margin-left: -24px !important;
+    margin-right: -24px !important;
+}
+.o_form_view .o_form_sheet .o_field_x2many.o_list_view .o_list_renderer {
+    width: 100% !important;
+}
+
+/* Embedded x2many keeps Odoo's default table-layout: fixed + the inline
+   per-column widths (`style="width: Npx"`). Column-resize handles work
+   naturally because the browser respects those widths. */
+
+/* Empty filler rows Odoo injects after the "Add row" link — they're
+   `<tr><td colspan="N">​</td></tr>` with no class, just a non-breaking
+   space. Hide them. The "Add row" tr (class="d-print-none") stays
+   visible, the data rows (class includes o_data_row) stay visible. */
+.o_form_view .o_form_sheet .o_field_x2many.o_list_view .o_list_table > tbody > tr:not([class]) {
+    display: none !important;
+}
+
+/* "Add row / Add section / Add note / Catalog" link row — left-align
+   the cell so the links sit flush against the table edge instead of
+   centred under the data columns. */
+.o_form_view .o_form_sheet .o_field_x2many.o_list_view .o_field_x2many_list_row_add {
+    text-align: left !important;
+    padding-left: 12px !important;
 }
 
 /* Wizard steps (chevron strip) — match the height of the .btn action
@@ -222,14 +268,17 @@
     min-height: 0 !important;
 }
 
-/* ── Labels ──────────────────────────────────────────────────── */
+/* ── Labels ────────────────────────────────────────────────────
+   Match Odoo Enterprise's understated look — normal case, normal
+   tracking, mid-weight (500), 13px. We just tint with --mcp-ink-2 so
+   labels read a touch lighter than field values without screaming. */
 .o_form_view .o_form_label,
 .o_form_view label.o_form_label {
     color: var(--mcp-ink-2) !important;
-    font-weight: 600 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: 11px !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
     margin-bottom: 4px;
 }
 
@@ -548,8 +597,18 @@
 }
 
 /* ── Field widget sizing in this view ────────────────────────── */
-/* Base widget styles in widgets/*.scss; only context tweaks here. */
-.o_form_view .o_form_sheet .o_avatar    { --Avatar-size: 40px; }
+/* Base widget styles in widgets/*.scss; only context tweaks here.
+   Avatar inside an inline many2one_avatar field is small (matches the
+   field row height); the title-area avatar (.oe_title) is larger. */
+.o_form_view .o_field_many2one_avatar .o_avatar,
+.o_form_view .o_field_many2one_avatar_user .o_avatar,
+.o_form_view .o_field_many2one_avatar .o_m2o_avatar,
+.o_form_view .o_field_many2one_avatar_user .o_m2o_avatar {
+    --Avatar-size: 22px;
+    width: 22px !important;
+    height: 22px !important;
+}
+.o_form_view .o_form_sheet .oe_title .o_avatar { --Avatar-size: 40px; }
 .o_form_view .o_field_many2one          { width: 100%; }
 
 /* ── Chatter ─────────────────────────────────────────────────── */

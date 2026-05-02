@@ -89,6 +89,8 @@
             "theme_mcp_works_backend/static/src/webclient/control_panel/control_panel.xml",
             "theme_mcp_works_backend/static/src/webclient/show_desktop/show_desktop.js",
             "theme_mcp_works_backend/static/src/webclient/show_desktop/show_desktop.xml",
+            "theme_mcp_works_backend/static/src/webclient/show_desktop/empty_desktop.js",
+            "theme_mcp_works_backend/static/src/webclient/show_desktop/empty_desktop.xml",
             "theme_mcp_works_backend/static/src/webclient/form_splitter/form_splitter.js",
             "theme_mcp_works_backend/static/src/webclient/statusbar_unhide/statusbar_unhide.js",
         ],

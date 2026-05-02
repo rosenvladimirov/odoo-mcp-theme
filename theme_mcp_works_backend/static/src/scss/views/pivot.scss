@@ -11,45 +11,87 @@
     padding: var(--mcp-view-pad) !important;
     margin: 0 !important;
 }
-.o_pivot_view main.o_content,
+/* Make the pivot view a column that fills remaining vertical space —
+   so .o_pivot can stretch to the bottom edge below the toolbar. */
+.o_pivot_view {
+    display: flex !important;
+    flex-direction: column !important;
+}
+.o_pivot_view main.o_content {
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
 .o_pivot_view main.o_content > div {
     padding: 0 !important;
     margin: 0 !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
-.o_pivot_view .o_pivot_buttons,
 .o_pivot_view .o_pivot {
     margin: 0 !important;
     padding: 0 !important;
     background: transparent !important;
 }
+
+/* Pivot toolbar — styled like the form statusbar (indigo-tinted card,
+   rounded top corners, hairline rule). Sits between CP and pivot table. */
 .o_pivot_view .o_pivot_buttons {
-    margin-bottom: 8px !important;   /* gap to the pivot table below */
+    background-color: var(--mcp-cp-bg) !important;
+    padding: 8px !important;
+    margin: 8px 0 8px 0 !important;
+    border: 1px solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-cp-shadow) !important;
+    align-items: center !important;
 }
 
-.o_pivot table {
+/* Pivot panel — translucent white surface that stretches to fill the
+   remaining vertical space below the toolbar (smart-resizer driven
+   via flex parents above). Both axes scroll inside the panel. */
+.o_pivot_view .o_pivot {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    width: 100%;
+    overflow: auto;
+    background: rgba(255, 255, 255, 0.55) !important;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-md) !important;
+    box-shadow: var(--mcp-cp-shadow) !important;
+    padding: 12px !important;
+}
+.o_pivot > table {
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: 1px solid var(--mcp-rule) !important;
     border-radius: var(--mcp-r-md) !important;
     border-collapse: separate !important;
     border-spacing: 0 !important;
     overflow: hidden;
-    box-shadow: var(--mcp-shadow-sm) !important;
+    box-shadow: var(--mcp-cp-shadow) !important;
     width: 100%;
+    table-layout: auto;
 }
 
 /* ── Column / row headers ────────────────────────────────────── */
 .o_pivot thead th,
 .o_pivot .o_pivot_header_cell_opened,
 .o_pivot .o_pivot_header_cell_closed {
-    background: var(--mcp-paper) !important;
+    background: var(--mcp-cp-bg) !important;
     color: var(--mcp-ink) !important;
-    border-bottom: 2px solid var(--mcp-accent) !important;
+    border-bottom: 1px solid var(--mcp-rule) !important;
     border-right: 1px solid var(--mcp-rule) !important;
     padding: 8px 12px !important;
-    font-size: 11px !important;
-    font-weight: 600 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    text-transform: none;
+    letter-spacing: normal;
     user-select: none;
     white-space: nowrap;
 }

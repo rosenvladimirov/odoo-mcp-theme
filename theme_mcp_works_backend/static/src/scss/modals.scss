@@ -1,33 +1,50 @@
 /* MCP Works backend — Modals, Dropdowns, Notifications, Tooltips */
 
 /* ── Modals ──────────────────────────────────────────────────── */
+/* Three-band layout:
+   • Header → CP-style band (cp-bg + cp-shadow + hairline rule).
+   • Body   → white surface (content area).
+   • Footer → white surface (action buttons sit on the same white). */
 .modal-content {
-    background: var(--mcp-surface-raised) !important;
+    background: var(--mcp-surface) !important;       /* content = white */
     border-radius: var(--mcp-r-md) !important;
-    border: 1.5px solid var(--mcp-accent) !important;
+    border: 1px solid var(--mcp-rule) !important;
     box-shadow: var(--mcp-shadow-modal) !important;
     max-height: calc(var(--mcp-vp-h, 100vh) - 32px);
-}
-.modal-body {
-    background: var(--mcp-surface-raised) !important;
-    max-height: calc(var(--mcp-vp-h, 100vh) - 200px);
-    overflow-y: auto;
+    overflow: hidden !important;                     /* keep rounded corners clean */
 }
 .modal-header {
-    background: var(--mcp-paper) !important;
+    background-color: var(--mcp-cp-bg) !important;
     border-bottom: 1px solid var(--mcp-rule) !important;
+    box-shadow: var(--mcp-cp-shadow) !important;
     border-radius: var(--mcp-r-md) var(--mcp-r-md) 0 0 !important;
+    padding: 12px 16px !important;
+    position: relative;
+    z-index: 1;                                       /* shadow paints over body */
 }
 .modal-title {
     color: var(--mcp-ink) !important;
-    font-weight: 500;
+    font-weight: 600 !important;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     font-size: 14px !important;
 }
+.modal-header .btn-close {
+    color: var(--mcp-ink-2) !important;
+    opacity: 0.75;
+    &:hover { opacity: 1; color: var(--mcp-accent) !important; }
+}
+.modal-body {
+    background: var(--mcp-surface) !important;
+    max-height: calc(var(--mcp-vp-h, 100vh) - 200px);
+    overflow-y: auto;
+    padding: 16px !important;
+}
 .modal-footer {
-    background: var(--mcp-paper) !important;
+    background: var(--mcp-surface) !important;
     border-top: 1px solid var(--mcp-rule) !important;
+    padding: 12px 16px !important;
+    gap: 8px !important;
 }
 
 /* ── Dropdowns ───────────────────────────────────────────────── */

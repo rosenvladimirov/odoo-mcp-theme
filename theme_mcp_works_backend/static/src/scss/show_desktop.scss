@@ -6,7 +6,260 @@
     height: 100%;
 }
 
-.mcp_show_desktop_btn {
+/* Empty desktop client action — Odoo help-forum feed */
+.mcp_empty_desktop {
+    background: transparent;
+    color: var(--mcp-ink);
+    overflow-y: auto;
+    padding: 24px 32px 48px;
+}
+
+.mcp_forum_header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--mcp-rule);
+    /* Animate the header in first */
+    opacity: 0;
+    animation: mcp-feed-reveal 0.5s ease-out 0s forwards;
+}
+.mcp_forum_title_main {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--mcp-ink);
+    margin: 0;
+}
+.mcp_forum_meta_main {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--mcp-ink-3);
+}
+
+.mcp_forum_loading,
+.mcp_forum_error,
+.mcp_forum_empty {
+    padding: 48px;
+    text-align: center;
+    color: var(--mcp-ink-3);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+.mcp_forum_loader {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--mcp-rule);
+    border-top-color: var(--mcp-accent);
+    border-radius: 50%;
+    animation: mcp-spin 0.8s linear infinite;
+}
+
+/* Forum list — vertical, hairline-free (clean stacked rows) */
+.mcp_forum_feed {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: transparent;
+}
+
+.mcp_forum_post {
+    background: transparent;
+    border-radius: var(--mcp-r-sm);
+    transition: background-color var(--mcp-t-fast);
+
+    /* Slide-up reveal — visible by default if animation never runs */
+    opacity: 1;
+    animation: mcp-post-slide-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+    &:hover { background-color: var(--mcp-accent-soft); }
+    &.is-expanded { background-color: var(--mcp-cp-bg); }
+}
+
+@for $i from 1 through 24 {
+    .mcp_forum_post:nth-child(#{$i}) {
+        animation-delay: #{($i - 1) * 0.04}s;
+    }
+}
+
+/* Row trigger (button so it's keyboard-accessible) */
+.mcp_forum_post_link {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 14px;
+    background: transparent;
+    border: none;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.mcp_forum_post_caret {
+    flex-shrink: 0;
+    width: 16px;
+    color: var(--mcp-ink-3);
+    font-size: 12px;
+    line-height: 1.4;
+    margin-top: 2px;
+    transition: color var(--mcp-t-fast);
+
+    .mcp_forum_post.is-expanded & { color: var(--mcp-accent); }
+}
+
+.mcp_forum_post_main {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.mcp_forum_post_title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--mcp-accent);
+    margin: 0 0 4px 0;
+    transition: color var(--mcp-t-fast);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .mcp_forum_post_link:hover & { color: var(--mcp-accent-dark); }
+}
+
+.mcp_forum_post_excerpt {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--mcp-ink-2);
+    margin: 0 0 6px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    .mcp_forum_post.is-expanded & {
+        display: none;   /* full thread shows below; excerpt is redundant */
+    }
+}
+
+.mcp_forum_post_meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 11px;
+    color: var(--mcp-ink-3);
+
+    span { display: inline-flex; align-items: center; }
+    .mcp_forum_post_author { font-weight: 600; }
+    .fa { font-size: 11px; opacity: 0.6; }
+}
+
+/* Expanded thread — accordion body */
+.mcp_forum_thread {
+    padding: 6px 18px 16px 40px;     /* indent under the caret */
+    background: transparent;
+    animation: mcp-thread-expand 0.35s ease-out;
+}
+
+.mcp_forum_reply {
+    padding: 12px 0;
+
+    & + & {
+        border-top: 1px dashed var(--mcp-rule);
+    }
+}
+
+.mcp_forum_reply_header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--mcp-ink-3);
+}
+.mcp_forum_reply_kind {
+    font-weight: 700;
+    color: var(--mcp-accent);
+
+    .mcp_forum_reply_reply & { color: var(--mcp-ink-2); }
+}
+.mcp_forum_reply_author {
+    font-weight: 600;
+    color: var(--mcp-ink-2);
+}
+.mcp_forum_reply_content {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--mcp-ink);
+    margin: 0;
+    white-space: pre-line;        /* preserve line breaks from the source */
+}
+
+.mcp_forum_open_full {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 14px;
+    padding: 6px 12px;
+    border: 1px solid var(--mcp-rule);
+    border-radius: var(--mcp-r-sm);
+    color: var(--mcp-accent);
+    font-size: 12px;
+    text-decoration: none;
+    transition:
+        background-color var(--mcp-t-fast),
+        border-color var(--mcp-t-fast),
+        color var(--mcp-t-fast);
+
+    &:hover {
+        background-color: var(--mcp-accent-soft);
+        border-color: var(--mcp-accent);
+        color: var(--mcp-accent-dark);
+        text-decoration: none;
+    }
+}
+
+@keyframes mcp-thread-expand {
+    from { opacity: 0; transform: translateY(-4px); max-height: 0; }
+    to   { opacity: 1; transform: translateY(0);    max-height: 2000px; }
+}
+
+/* Slide-up from below — newer items "rise" into the list */
+@keyframes mcp-post-slide-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mcp-feed-reveal {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mcp-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* High-specificity selector chain so Bootstrap .btn defaults
+   (border: 1px solid transparent + focus ring + active fill) lose. */
+button.mcp_show_desktop_btn,
+.o_main_navbar button.mcp_show_desktop_btn,
+.o_menu_systray button.mcp_show_desktop_btn,
+.o_main_navbar .mcp_show_desktop_btn,
+.o_menu_systray .mcp_show_desktop_btn,
+button.mcp_show_desktop_btn:focus,
+button.mcp_show_desktop_btn:focus-visible,
+button.mcp_show_desktop_btn:active,
+button.mcp_show_desktop_btn:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -14,32 +267,30 @@
     height: 32px;
     padding: 0 !important;
     margin: 0 4px;
-    border: none !important;
+    border: 0 !important;
+    outline: 0 !important;
     border-radius: var(--mcp-r-sm);
     background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
     color: var(--mcp-ink-2) !important;
     cursor: pointer;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent;
     transition:
         background var(--mcp-t-fast),
         color var(--mcp-t-fast),
         transform var(--mcp-t-spring);
+}
+.mcp_show_desktop_btn .fa { font-size: 14px; line-height: 1; }
 
-    .fa { font-size: 14px; line-height: 1; }
-
-    &:hover {
-        background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
-        transform: translateY(-1px);
-    }
-
-    &:active {
-        transform: translateY(0);
-        background: var(--mcp-accent) !important;
-        color: var(--mcp-paper) !important;
-    }
-
-    &:focus-visible {
-        outline: none;
-        box-shadow: 0 0 0 2px var(--mcp-accent-glow);
-    }
+.mcp_show_desktop_btn:hover {
+    background: var(--mcp-accent-soft) !important;
+    color: var(--mcp-accent) !important;
+    transform: translateY(-1px);
+}
+.mcp_show_desktop_btn:active {
+    transform: translateY(0);
+    background: var(--mcp-accent) !important;
+    color: var(--mcp-paper) !important;
 }

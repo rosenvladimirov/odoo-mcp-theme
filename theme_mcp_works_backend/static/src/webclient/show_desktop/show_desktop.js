@@ -30,12 +30,63 @@ export class McpShowDesktopSystray extends Component {
     }
 
     onClick() {
-        // 1) Clear current menu so the home menu is rendered
-        if (this.menu && typeof this.menu.setCurrentMenu === "function") {
-            try { this.menu.setCurrentMenu(false); } catch (e) {}
+        /* TOGGLE behaviour:
+           — if we're already on the empty desktop, restore the previous
+             work area (browser-back; the action service pushed a history
+             entry when we mounted McpEmptyDesktop);
+           — otherwise, hide everything and mount the empty desktop. */
+        const onEmpty = !!document.querySelector(".mcp_empty_desktop");
+
+        /* Always close transient overlays first */
+        for (let i = 0; i < 10; i++) {
+            document.dispatchEvent(new KeyboardEvent("keydown", {
+                key: "Escape",
+                code: "Escape",
+                keyCode: 27,
+                which: 27,
+                bubbles: true,
+                cancelable: true,
+            }));
         }
-        // 2) Hard navigate to /odoo — resets breadcrumbs, drops modals,
-        //    closes any in-progress action. Equivalent to "Show Desktop".
+
+        if (onEmpty) {
+            /* Click #2 — back to the previous action.
+               Odoo's action service pushed a history entry when the
+               empty desktop mounted, so a single back step restores
+               whatever was open before. */
+            try {
+                history.back();
+                return;
+            } catch (e) {
+                console.warn("[McpShowDesktop] history.back failed", e);
+            }
+        }
+
+        /* Click #1 — drop the current app so the navbar's app-menu items
+           disappear, then swap action for the empty canvas.
+           Note: setCurrentMenu(false) is a no-op (the source guards on
+           `menu &&`), so we pass the root menu — which has no appID,
+           clearing currentAppId and firing MENUS:APP-CHANGED. */
+        if (this.menu && typeof this.menu.setCurrentMenu === "function") {
+            try {
+                const root = this.menu.getMenu && this.menu.getMenu("root");
+                if (root) this.menu.setCurrentMenu(root);
+            } catch (e) {}
+        }
+
+        if (this.action && typeof this.action.doAction === "function") {
+            try {
+                this.action.doAction({
+                    type: "ir.actions.client",
+                    tag: "mcp_empty_desktop",
+                });
+                return;
+            } catch (e) {
+                console.warn("[McpShowDesktop] doAction failed; falling back to reload", e);
+            }
+        }
+
+        /* Fallback — full reload if action service is unavailable */
         window.location.href = "/odoo";
     }
 }

@@ -216,6 +216,14 @@
     box-shadow: 0 0 0 3px var(--mcp-accent-soft) !important;
 }
 .o_searchview input { color: var(--mcp-ink) !important; }
+.o_searchview .o_searchview_facet {
+    /* Kill the hover-overlay border (the absolute-positioned inner div
+       with .bg-view.border.shadow that fades in on hover/focus). */
+    > div.position-absolute.border {
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+}
 .o_searchview .o_facet_values {
     background: var(--mcp-accent-soft) !important;
     color: var(--mcp-accent) !important;
@@ -223,14 +231,41 @@
     padding: 2px 8px !important;
     font-size: 12px;
 }
-.o_searchview_facet_label {
+/* Search-facet label (left coloured chip with the icon) — keep our
+   accent fill and beat the .o_searchview .btn { padding: 0 } global. */
+.o_searchview .o_searchview_facet_label,
+.o_searchview .o_searchview_facet_label.btn {
     background: var(--mcp-accent) !important;
     color: var(--mcp-paper) !important;
+    border: 0 !important;
     border-radius: var(--mcp-r-sm) 0 0 var(--mcp-r-sm) !important;
-    padding: 2px 8px !important;
+    padding: 2px 6px !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    height: auto !important;
+    box-shadow: none !important;
+}
+.o_searchview .o_searchview_facet_label .fa,
+.o_searchview .o_searchview_facet_label .oi {
+    font-size: 11px !important;
+    line-height: 1 !important;
+}
+/* Hide the base icon when an overlay (pencil / sort) fades in on hover —
+   Odoo's overlay relies on `bg-inherit` to mask the base, but our
+   accent bg + transparency rules let it bleed through. Direct fade. */
+.o_searchview .o_searchview_facet_label:hover > i.fa-fw {
+    opacity: 0;
+    transition: opacity var(--mcp-t-fast);
+}
+/* Make sure the overlay spans cover the base icon entirely with the
+   accent fill so the swap reads cleanly. */
+.o_searchview .o_searchview_facet_label > span.position-absolute {
+    background-color: var(--mcp-accent) !important;
+    color: var(--mcp-paper) !important;
 }
 
-/* Search icon — not a button, suppress all btn overrides */
+/* Search-icon button — square, sized like other CP icon buttons.
+   Suppress all .btn overrides so it stays a quiet icon, not a chip. */
 .o_searchview .btn,
 .o_searchview button.btn,
 .o_searchview > button {
@@ -238,10 +273,21 @@
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
-    margin: 0 4px 0 0 !important;
-    height: auto !important;
+    margin: 0 !important;
+    width: 24px !important;
+    height: 24px !important;
+    flex-shrink: 0;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     font-weight: normal !important;
     transform: none !important;
+}
+/* Magnifier glyph itself — drop the Bootstrap me-2 margin so the glyph
+   is centred in its 24×24 frame instead of pushed to the left edge. */
+.o_searchview .o_searchview_icon,
+.o_searchview .oi-search {
+    margin: 0 !important;
 }
 .o_searchview .o_searchview_icon,
 .o_searchview .oi-search {

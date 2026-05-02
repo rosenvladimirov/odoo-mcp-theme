@@ -40,13 +40,23 @@
 }
 
 /* Typography — Roboto (already bundled by Odoo core). System fallbacks
-   if for any reason the bundled face doesn't load. */
+   if for any reason the bundled face doesn't load.
+
+   IMPORTANT: do NOT force the font on `button` directly. Some Odoo
+   buttons are icon-only (`<button class="fa fa-trash-o">`) and rely
+   on font-family: 'FontAwesome' to render their glyph. Forcing Roboto
+   maps the FA glyph code to a non-existent Roboto codepoint → blank.
+   We set font on the root + form fields; buttons inherit text via
+   normal cascade, while FA's own rules keep icon-button glyphs alive. */
 .o_web_client,
 .o_web_client input,
-.o_web_client button,
 .o_web_client select,
 .o_web_client textarea {
     font-family: var(--mcp-font-family) !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+/* Restore Roboto on text buttons only — exclude any with FA/OI markers */
+.o_web_client button:not([class*="fa-"]):not([class*="oi-"]):not(.fa):not(.oi) {
+    font-family: var(--mcp-font-family);
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="theme_mcp_works_backend.McpEmptyDesktop">
+        <div class="mcp_empty_desktop d-flex flex-column h-100 w-100"
+             role="region"
+             aria-label="Празен десктоп — Odoo Help форум">
+
+            <header class="mcp_forum_header">
+                <h2 class="mcp_forum_title_main">Odoo Help — последни постове</h2>
+                <span t-if="state.fetchedAt" class="mcp_forum_meta_main">
+                    Обновено в <t t-esc="formatDate(new Date(state.fetchedAt * 1000).toISOString())"/>
+                </span>
+            </header>
+
+            <div t-if="state.loading and !state.posts.length" class="mcp_forum_loading">
+                <span class="mcp_forum_loader"></span>
+                <span>Зареждане на форум поток…</span>
+            </div>
+
+            <div t-elif="state.error and !state.posts.length" class="mcp_forum_error">
+                Не успях да изтегля поток: <t t-esc="state.error"/>
+            </div>
+
+            <div t-elif="!state.posts.length" class="mcp_forum_empty">
+                Няма налични постове.
+            </div>
+
+            <ol t-else="" class="mcp_forum_feed">
+                <li t-foreach="state.posts" t-as="post" t-key="post.url"
+                    class="mcp_forum_post"
+                    t-att-class="{ 'is-expanded': isExpanded(post) }">
+
+                    <button type="button" class="mcp_forum_post_link"
+                            t-on-click="(ev) => this.toggleExpand(post, ev)"
+                            t-att-aria-expanded="isExpanded(post) ? 'true' : 'false'">
+                        <i class="mcp_forum_post_caret fa"
+                           t-att-class="isExpanded(post) ? 'fa-caret-down' : 'fa-caret-right'"/>
+                        <div class="mcp_forum_post_main">
+                            <h3 class="mcp_forum_post_title" t-esc="post.title"/>
+                            <p t-if="post.excerpt" class="mcp_forum_post_excerpt" t-esc="post.excerpt"/>
+                            <div class="mcp_forum_post_meta">
+                                <span t-if="post.author" class="mcp_forum_post_author">
+                                    <i class="fa fa-user-circle-o me-1"></i>
+                                    <t t-esc="post.author"/>
+                                </span>
+                                <span t-if="post.pub_date" class="mcp_forum_post_date">
+                                    <i class="fa fa-clock-o me-1"></i>
+                                    <t t-esc="formatDate(post.pub_date)"/>
+                                </span>
+                                <span t-if="post.thread and post.thread.length > 1" class="mcp_forum_post_replies">
+                                    <i class="fa fa-comments-o me-1"></i>
+                                    <t t-esc="post.thread.length - 1"/> отговор(а)
+                                </span>
+                            </div>
+                        </div>
+                    </button>
+
+                    <div t-if="isExpanded(post) and post.thread" class="mcp_forum_thread">
+                        <article t-foreach="post.thread" t-as="reply" t-key="reply_index"
+                                 class="mcp_forum_reply"
+                                 t-att-class="'mcp_forum_reply_' + reply.kind">
+                            <header class="mcp_forum_reply_header">
+                                <span class="mcp_forum_reply_kind">
+                                    <t t-if="reply.kind === 'question'">Въпрос</t>
+                                    <t t-else="">Отговор</t>
+                                </span>
+                                <span t-if="reply.author" class="mcp_forum_reply_author"
+                                      t-esc="reply.author"/>
+                            </header>
+                            <p class="mcp_forum_reply_content" t-esc="reply.content"/>
+                        </article>
+                        <a class="mcp_forum_open_full"
+                           t-att-href="post.url"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            Отвори пълната дискусия в Odoo Help
+                            <i class="fa fa-external-link ms-1"></i>
+                        </a>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </t>
+
+</templates>
