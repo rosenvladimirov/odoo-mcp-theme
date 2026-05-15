@@ -1,106 +1,110 @@
-/* MCP Works backend — Graph / Chart view
-   Layout convention (canonical, see feedback memory):
-   • .o_graph_view (root) → padding: 16px on all sides.
-   • main.o_content, .o_graph_renderer → flush (renderer is layout glue).
-   • Toolbar div + .o_graph_canvas_container — Odoo ships them with
-     Bootstrap mt-2/mx-3/mb-3/px-3/pb-3 utilities. Strip and replace
-     with content-pad on the canvas card itself. */
+/* MCP Works backend — Robot Theme · Graph view
+   Sapphire bars/lines, sharp 0-radius, monospace axis labels,
+   sapphire legend chips. */
 
 .o_graph_view {
+    padding: var(--mcp-view-pad);
+    background: var(--mcp-surface) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+    box-shadow:
+        0 0 0 1px rgba(15, 82, 186, 0.06),
+        0 2px 12px -2px rgba(15, 82, 186, 0.12),
+        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
+}
+
+.o_graph_view .o_graph_renderer,
+.o_graph_view .o_graph_container {
+    padding: 12px 16px !important;
     background: transparent !important;
-    padding: var(--mcp-view-pad) !important;
-    margin: 0 !important;
-}
-.o_graph_view main.o_content,
-.o_graph_view .o_graph_renderer {
-    padding: 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
 }
 
-/* Toolbar — same card chrome as pivot toolbar / form statusbar:
-   indigo-tinted bg, soft border, drop+aura shadow. */
-.o_graph_view .o_graph_renderer > div:not(.o_graph_canvas_container) {
-    background-color: var(--mcp-cp-bg) !important;
-    padding: 8px !important;
-    margin: 8px 0 8px 0 !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    align-items: center !important;
+/* Chart.js canvas wrapper */
+.o_graph_view canvas {
+    image-rendering: crisp-edges;
 }
 
-/* Chart container — same card family as the toolbar */
-.o_graph_view .o_graph_canvas_container {
-    background: var(--mcp-cp-bg) !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    padding: var(--mcp-view-pad) !important;       /* CONTENT padding inside the card */
-    margin: 0 !important;
-    flex: 1 1 auto;
+/* Tooltip styling (Chart.js v3+) */
+.o_graph_view .chartjs-tooltip,
+body > .chartjs-tooltip {
+    background: var(--mcp-ink) !important;
+    color: var(--mcp-surface) !important;
+    border: 1px solid var(--mcp-accent) !important;
+    border-radius: 0 !important;
+    font-family: var(--mcp-font-mono) !important;
+    font-size: 10px !important;
+    letter-spacing: 0.06em !important;
+    padding: 6px 10px !important;
+    box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
 }
 
-/* Chart.js canvas */
-.o_graph_canvas_container canvas {
-    display: block;
-    max-height: 480px;
-}
-
-/* ── Legend ──────────────────────────────────────────────────── */
-.o_graph_renderer .chartjs-legend,
-.o_graph_legend {
-    display: flex;
+/* Legend (top of chart) */
+.o_graph_view .o_graph_buttons,
+.o_graph_view .o_graph_chartjs_legend,
+.o_graph_view ul.chartjs-legend {
+    display: flex !important;
     flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    padding: 8px 0 0;
-    font-size: 12px;
-    color: var(--mcp-ink-2);
-}
+    gap: 6px;
+    padding: 8px 16px !important;
+    border-bottom: 1px solid var(--mcp-rule) !important;
+    background: var(--mcp-surface-2) !important;
 
-.o_graph_legend li {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    transition: opacity var(--mcp-t-fast);
-    &:hover { opacity: 0.7; }
-}
-
-.o_graph_legend li span {
-    width: 10px;
-    height: 10px;
-    border-radius: var(--mcp-r-xs);
-    flex-shrink: 0;
-    display: inline-block;
-}
-
-/* ── No-data placeholder ─────────────────────────────────────── */
-.o_graph_no_content_helper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 48px 16px;
-    color: var(--mcp-ink-3);
-    font-size: 14px;
-
-    .o_graph_no_content_helper_title {
-        font-weight: 600;
+    li,
+    .o_graph_legend_item {
+        display: inline-flex !important;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 8px !important;
+        background: transparent;
+        border: 1px solid var(--mcp-rule-strong);
+        border-radius: 0;
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 10px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.06em !important;
+        text-transform: uppercase !important;
         color: var(--mcp-ink-2);
+        cursor: pointer;
+
+        &:hover { border-color: var(--mcp-accent); color: var(--mcp-accent); }
     }
 }
 
-/* ── View type buttons (bar/line/pie) ────────────────────────── */
-.o_graph_buttons .btn {
-    border-radius: var(--mcp-r-sm) !important;
+/* Mode toolbar (bar/line/pie) */
+.o_graph_view .o_graph_button_group {
+    display: inline-flex !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+
+    .btn {
+        background: transparent !important;
+        color: var(--mcp-ink-2) !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        padding: 4px 10px !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 10px !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+
+        & + .btn { border-left: 1px solid var(--mcp-rule-strong) !important; }
+        &:hover { color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
+        &.active,
+        &[aria-pressed="true"] {
+            background: var(--mcp-accent) !important;
+            color: var(--mcp-surface) !important;
+            box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+        }
+    }
 }
-.o_graph_buttons .btn.active {
-    background: var(--mcp-accent) !important;
-    border-color: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
+
+/* Empty / no-data state */
+.o_graph_view .o_view_nocontent {
+    padding: 48px !important;
+    text-align: center;
+    color: var(--mcp-ink-3);
+    font-family: var(--mcp-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }

@@ -13,7 +13,7 @@
     line-height: 1.4;
     background: var(--mcp-accent-soft) !important;
     color: var(--mcp-accent) !important;
-    border: 1px solid rgba(67, 56, 202, 0.20) !important;
+    border: 1px solid var(--mcp-accent-soft) !important;
     transition: background var(--mcp-t-fast), border-color var(--mcp-t-fast);
 
     &:hover { background: var(--mcp-accent-glow) !important; }

@@ -1,11 +1,14 @@
-/* MCP Works — Apps launcher modal */
+/* MCP Works — Robot Theme · Apps launcher modal (McpDash widget)
+   Rewrites the GNOME-style dock modal into a HUD panel:
+   sharp 0px corners, electric-blue border, scanline texture,
+   accent indicator beside the active app instead of the soft dot. */
 
 /* ── Backdrop ───────────────────────────────────────────────── */
 .mcp_modal_backdrop {
     position: fixed;
     inset: 0;
     z-index: var(--mcp-z-backdrop);
-    background: rgba(0, 0, 0, 0.18);
+    background: rgba(5, 10, 20, 0.45);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     animation: mcp-backdrop-in 0.18s ease both;
@@ -15,10 +18,10 @@
     to   { opacity: 1; }
 }
 
-/* ── Modal panel ────────────────────────────────────────────── */
+/* ── Modal panel — sharp HUD frame ──────────────────────────── */
 .mcp_dash_modal {
     position: fixed;
-    top: calc(var(--mcp-navbar-h, var(--mcp-navbar-height)) + 24px);
+    top: calc(var(--mcp-navbar-height) + 16px);
     left: 16px;
     z-index: var(--mcp-z-modal);
     display: flex;
@@ -26,47 +29,64 @@
     gap: 6px;
     padding: 8px 10px 10px;
     width: 80px;
-    background: rgba(246, 240, 227, 0.97);
-    border: 1.5px solid var(--mcp-accent);
-    border-radius: var(--mcp-r-lg);
-    max-height: var(--mcp-modal-max-h, calc(100vh - 72px));
+    background: var(--mcp-surface);
+    border: 1px solid var(--mcp-rule-strong);
     box-shadow: var(--mcp-shadow-modal);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    max-height: var(--mcp-modal-max-h, calc(100vh - 72px));
     user-select: none;
     overflow: visible;
+    /* Cut top-right notch — HUD panel signature */
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+
     /* Hidden by default */
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-12px) scale(0.94);
-    transition: opacity var(--mcp-t-fast),
-                transform var(--mcp-t-fast),
-                width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(-8px);
+    transition:
+        opacity var(--mcp-t-fast),
+        transform var(--mcp-t-fast),
+        width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Scanline texture on the panel itself */
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+            0deg,
+            transparent 0 3px,
+            var(--mcp-scan-color) 3px 4px
+        );
+        opacity: .8;
+        pointer-events: none;
+        z-index: 0;
+    }
+    > * { position: relative; z-index: 1; }
 }
 
 /* ── Open state ─────────────────────────────────────────────── */
 .mcp_dash_modal.is-open {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0) scale(1);
-    animation: mcp-modal-appear 0.28s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+    transform: translateY(0);
+    animation: mcp-modal-appear 0.22s cubic-bezier(.2,.6,.2,1) both;
 }
 @keyframes mcp-modal-appear {
-    from { opacity: 0; transform: translateY(-14px) scale(0.93); }
-    to   { opacity: 1; transform: translateY(0)     scale(1); }
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Item stagger on open ───────────────────────────────────── */
+/* ── Item stagger ───────────────────────────────────────────── */
 .mcp_dash_modal.is-open .mcp_dash_apps_scroll .mcp_dash_item {
     animation: mcp-item-in 0.22s ease both;
 }
-@for $i from 1 through 20 {
+@for $i from 1 through 24 {
     .mcp_dash_modal.is-open .mcp_dash_apps_scroll .mcp_dash_item:nth-child(#{$i}) {
-        animation-delay: #{($i - 1) * 0.025}s;
+        animation-delay: #{($i - 1) * 0.02}s;
     }
 }
 @keyframes mcp-item-in {
-    from { opacity: 0; transform: translateY(6px); }
+    from { opacity: 0; transform: translateY(4px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -79,7 +99,7 @@
     scrollbar-width: none;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     padding: 2px 0;
     width: 100%;
     &::-webkit-scrollbar { display: none; }
@@ -96,14 +116,14 @@
     background: var(--mcp-accent-soft);
     color: var(--mcp-accent);
     border: none;
-    border-radius: var(--mcp-r-base);
+    border-radius: 0;
     cursor: pointer;
     font-size: 10px;
     transition: background var(--mcp-t-fast);
     &:hover { background: var(--mcp-accent-glow); }
 }
 
-/* ── App items ──────────────────────────────────────────────── */
+/* ── App items — sharp tile with HUD active marker ──────────── */
 .mcp_dash_item {
     width: 54px;
     height: 54px;
@@ -111,10 +131,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0;
-    border-radius: var(--mcp-r-xl);
+    border-radius: 0;
     cursor: pointer;
-    transition: transform var(--mcp-t-spring);
+    transition: transform var(--mcp-t-base);
     text-decoration: none;
     position: relative;
     background: transparent;
@@ -122,54 +141,65 @@
     padding: 0;
     overflow: hidden;
     white-space: nowrap;
-    color: var(--mcp-ink);
+    color: var(--mcp-ink-2);
 }
-.mcp_dash_item:hover {
-    background: transparent;
-    transform: translateY(-4px) scale(1.06);
-}
+.mcp_dash_item:hover { transform: translateY(-2px); }
 .mcp_dash_item img {
     width: 38px;
     height: 38px;
     flex-shrink: 0;
-    border-radius: var(--mcp-r-lg);
+    border-radius: 0;
     object-fit: cover;
-    filter: grayscale(0.15);
-    transition: filter var(--mcp-t-base);
+    border: 1px solid var(--mcp-rule-strong);
+    filter: saturate(0.6) brightness(.95);
+    transition: filter var(--mcp-t-base), border-color var(--mcp-t-base);
 }
-.mcp_dash_item:hover img { filter: grayscale(0); }
-
+.mcp_dash_item:hover img {
+    filter: saturate(1) brightness(1);
+    border-color: var(--mcp-accent);
+}
 .mcp_dash_item .o_app_letter {
     width: 38px;
     height: 38px;
     flex-shrink: 0;
-    border-radius: var(--mcp-r-lg);
-    background: var(--mcp-accent);
-    color: var(--mcp-paper);
+    border-radius: 0;
+    background: var(--mcp-surface-2);
+    border: 1px solid var(--mcp-rule-strong);
+    color: var(--mcp-ink-2);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    font-size: 16px;
+    font-family: var(--mcp-font-mono);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    transition: background var(--mcp-t-base), border-color var(--mcp-t-base), color var(--mcp-t-base);
+}
+.mcp_dash_item:hover .o_app_letter {
+    background: var(--mcp-accent-soft);
+    border-color: var(--mcp-accent);
+    color: var(--mcp-accent);
 }
 
-/* Active dot */
-.mcp_dash_item.is-active::after {
+/* Active indicator — cyan bar on the left, no soft dot */
+.mcp_dash_item.is-active::before {
     content: "";
     position: absolute;
-    right: 3px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 4px;
-    border-radius: var(--mcp-r-pill);
+    left: 0; top: 8px; bottom: 8px;
+    width: 3px;
+    background: var(--mcp-accent-2);
+    box-shadow: 0 0 6px var(--mcp-accent-2);
+}
+.mcp_dash_item.is-active img,
+.mcp_dash_item.is-active .o_app_letter {
+    border-color: var(--mcp-accent);
     background: var(--mcp-accent);
-    box-shadow: 0 0 6px var(--mcp-accent);
+    color: var(--mcp-surface);
 }
 
 /* ── Labels (list mode) ─────────────────────────────────────── */
 .mcp_dash_label {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--mcp-ink);
     overflow: hidden;
@@ -179,11 +209,11 @@
     min-width: 0;
 }
 
-/* ── Separator ──────────────────────────────────────────────── */
+/* ── Separator — accent gradient hairline ───────────────────── */
 .mcp_dash_separator {
     width: 32px;
     height: 1px;
-    background: var(--mcp-rule);
+    background: var(--mcp-rule-strong);
     margin: 2px 0;
     flex-shrink: 0;
 }
@@ -191,6 +221,13 @@
     width: calc(100% + 20px) !important;
     margin-left: -10px;
     margin-right: -10px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--mcp-accent) 50%,
+        transparent
+    );
+    opacity: .55;
 }
 
 /* ── Header ─────────────────────────────────────────────────── */
@@ -203,36 +240,36 @@
     align-items: center;
     padding-right: 32px;
 }
-
 .mcp_dash_header_title {
     flex: 1 1 auto;
     min-width: 0;
     padding: 0 4px 0 2px;
-    font-size: 11px;
+    font-family: var(--mcp-font-mono);
+    font-size: 10px;
     font-weight: 600;
-    color: var(--mcp-ink);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mcp-accent);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     opacity: 0;
     transition: opacity var(--mcp-t-fast);
 }
-.mcp_dash_header_title.has-name { opacity: 0.85; }
+.mcp_dash_header_title.has-name { opacity: 1; }
 
-/* Toggle button — always top-right via absolute */
+/* Mode toggle (top-right) */
 .mcp_dash_mode_toggle {
     position: absolute;
-    right: 0;
-    top: 50%;
+    right: 0; top: 50%;
     transform: translateY(-50%);
-    width: 28px;
-    height: 28px;
+    width: 28px; height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: transparent;
     border: none;
-    border-radius: var(--mcp-r-base);
+    border-radius: 0;
     color: var(--mcp-accent);
     cursor: pointer;
     font-size: 11px;
@@ -241,46 +278,32 @@
 }
 
 /* ── Grid pager ─────────────────────────────────────────────── */
-.mcp_dash_pager {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    flex-shrink: 0;
-    margin-right: 4px;
-}
+.mcp_dash_pager { display: flex; align-items: center; gap: 2px; flex-shrink: 0; margin-right: 4px; }
 .mcp_dash_pager_btn {
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    border-radius: var(--mcp-r-base);
-    color: var(--mcp-accent);
-    cursor: pointer;
-    font-size: 10px;
-    padding: 0;
+    width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; border-radius: 0;
+    color: var(--mcp-accent); cursor: pointer;
+    font-size: 10px; padding: 0;
     transition: background var(--mcp-t-fast);
     &:hover:not(:disabled) { background: var(--mcp-accent-soft); }
     &:disabled { opacity: 0.35; cursor: default; }
 }
 .mcp_dash_pager_label {
-    font-size: 11px;
+    font-family: var(--mcp-font-mono);
+    font-size: 10px;
     font-weight: 500;
-    color: var(--mcp-ink);
+    color: var(--mcp-ink-2);
     min-width: 28px;
     text-align: center;
-    opacity: 0.7;
+    letter-spacing: 0.06em;
 }
 
-/* ── Mode 0: compact ────────────────────────────────────────── */
+/* ── Modes ──────────────────────────────────────────────────── */
 .mcp_dash_modal.is-compact {
     width: 80px;
     align-items: center;
 }
-
-/* ── Mode 1: list ───────────────────────────────────────────── */
 .mcp_dash_modal.is-list {
     width: 240px;
     align-items: flex-start;
@@ -291,40 +314,39 @@
     width: 212px;
     height: 40px;
     justify-content: flex-start;
-    border-radius: var(--mcp-r-lg);
+    border-radius: 0;
     padding: 0 8px;
     gap: 10px;
 }
-.mcp_dash_modal.is-list .mcp_dash_item:hover { transform: translateY(-2px); }
+.mcp_dash_modal.is-list .mcp_dash_item:hover { transform: translateX(2px); }
 .mcp_dash_modal.is-list .mcp_dash_item img,
 .mcp_dash_modal.is-list .mcp_dash_item .o_app_letter {
-    width: 26px;
-    height: 26px;
-    font-size: 12px;
+    width: 26px; height: 26px; font-size: 11px;
 }
 .mcp_dash_modal.is-list .mcp_dash_scroll_btn { width: 212px; }
 .mcp_dash_modal.is-list .mcp_dash_separator  { width: 212px; }
-.mcp_dash_modal.is-list .mcp_dash_header     { padding-right: 32px; }
 
-/* ── Mode 2: grid (centered) ────────────────────────────────── */
 .mcp_dash_modal.is-grid {
     width: var(--mcp-dash-grid-w, 720px);
     max-width: calc(100vw - 32px);
     left: 50%;
     transform: translateX(-50%);
+    /* Top-left + bottom-right HUD notches */
+    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
 }
 .mcp_dash_modal.is-grid.is-open {
-    transform: translateX(-50%) translateY(0) scale(1);
-    animation: mcp-modal-appear-grid 0.28s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+    transform: translateX(-50%) translateY(0);
+    animation: mcp-modal-appear-grid 0.22s cubic-bezier(.2,.6,.2,1) both;
 }
 @keyframes mcp-modal-appear-grid {
-    from { opacity: 0; transform: translateX(-50%) translateY(-14px) scale(0.93); }
-    to   { opacity: 1; transform: translateX(-50%) translateY(0)     scale(1); }
+    from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 .mcp_dash_modal.is-grid .mcp_dash_apps_scroll {
     display: grid !important;
     grid-template-columns: repeat(var(--mcp-dash-grid-cols, 5), 1fr);
-    gap: 0;
+    gap: 1px;
+    background: var(--mcp-rule);
     max-height: #{"min(420px, calc(var(--mcp-modal-max-h, 100vh) - 88px))"};
     padding: 0;
     width: 100%;
@@ -338,40 +360,38 @@
     justify-content: center;
     align-items: center;
     gap: 0;
+    background: var(--mcp-surface);
+}
+.mcp_dash_modal.is-grid .mcp_dash_item:hover {
+    background: var(--mcp-accent-soft);
+    transform: none;
 }
 .mcp_dash_modal.is-grid .mcp_dash_item img,
 .mcp_dash_modal.is-grid .mcp_dash_item .o_app_letter {
-    width: 54px;
-    height: 54px;
-    border-radius: var(--mcp-r-xl);
-    font-size: 22px;
-}
-.mcp_dash_modal.is-grid .mcp_dash_item:hover img { transform: translateY(-3px); }
-.mcp_dash_modal.is-grid .mcp_dash_scroll_btn { width: 100%; }
-.mcp_dash_modal.is-grid .mcp_dash_separator  { width: calc(100% - 20px); }
-.mcp_dash_modal.is-grid .mcp_dash_header {
-    width: 100%;
-    padding-right: 32px;
+    width: 48px; height: 48px;
+    border-radius: 0;
+    font-size: 18px;
 }
 
-/* ── Compact name bubble ────────────────────────────────────── */
+/* ── Compact name bubble — HUD tag style ────────────────────── */
 .mcp_dash_name_bubble {
     position: absolute;
     left: calc(100% + 8px);
     background: var(--mcp-ink);
-    color: var(--mcp-paper);
+    color: var(--mcp-surface);
     padding: 4px 10px;
-    border-radius: var(--mcp-r-base);
-    font-size: 11px;
+    border-radius: 0;
+    font-family: var(--mcp-font-mono);
+    font-size: 10px;
     font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     white-space: nowrap;
     pointer-events: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 2px 8px rgba(5, 10, 20, 0.45);
     z-index: 1;
     transform: translateY(-50%);
-    animation: mcp-bubble-in 0.12s ease both;
-}
-@keyframes mcp-bubble-in {
-    from { opacity: 0; transform: translateY(-50%) translateX(-4px); }
-    to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+    /* Notched left edge — arrow tag */
+    clip-path: polygon(4px 0, 100% 0, 100% 100%, 4px 100%, 0 50%);
+    padding-left: 14px;
 }

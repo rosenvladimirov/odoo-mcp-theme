@@ -1,618 +1,304 @@
-/* MCP Works backend — Form view
-   Base input/button rules live in widgets/; this file has form-scoped overrides.
+/* MCP Works backend — Robot Theme · Form view
+   Statusbar with HUD arrow segments, smart buttons row, sheet title,
+   notebook tabs with sapphire underline, totals box with corner notch. */
 
-   LAYOUT CONVENTION (canonical, all views):
-   • Root view (.o_form_view, .o_list_view, .o_kanban_view, .o_pivot_view,
-     .o_graph_view) → padding: 16px on ALL sides. Single source of outer
-     spacing. Works the same for standard and .o_xxl_form_view layouts
-     because .o_form_view sits at the root in both.
-   • Inner wrappers (.o_form_view_container, .o_form_renderer, main.o_content,
-     .o-mail-ChatterContainer, .o_form_sheet_bg) → padding: 0, margin: 0.
-   • .o_control_panel — single exception: margin-bottom: 8px to separate it
-     visually from the sheet/list below. Otherwise flush.
-   • .o_form_sheet — keeps its own internal 24px padding (CONTENT padding for
-     field breathing, not LAYOUT spacing). */
-
-.o_form_view,
-.o_spreadsheet_dashboard_action {
-    background: transparent !important;
-    padding: var(--mcp-view-pad) !important;
-    margin: 0 !important;
+/* ── Form sheet ─────────────────────────────────────────────── */
+.o_form_view {
+    padding: var(--mcp-view-pad);
 }
-
-/* Spreadsheet Dashboard action — different root class but same form-style
-   layout (per user, 2026-05-01). Inner wrappers stay flush. */
-.o_spreadsheet_dashboard_action main.o_content {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-.o_form_view_container,
-.o_form_view .o_form_renderer,
-.o_form_view main.o_content,
-.o_form_view .o-mail-Chatter {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-/* Forms without a sheet (Document Layout, some settings dialogs) — no
-   sheet means no container to absorb Bootstrap's `.row` negative
-   margins (~-8px each side from --bs-gutter-x). The inner row leaks
-   outside the modal-body's padding box. Fix: zero the row's negative
-   margins; columns keep their built-in padding for gutter spacing. */
-.o_form_renderer.o_form_nosheet > .o_group.row,
-.o_form_renderer.o_form_nosheet .row {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-}
-
-/* Side-chatter container — same card chrome as the form sheet:
-   white surface, soft grey border, drop shadow + indigo aura. */
-.o_form_view .o-mail-ChatterContainer.o-aside {
-    background-color: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-sheet-border) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-sheet-shadow) !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden;             /* keep rounded corners on inner content */
-}
-/* Sheet-bg owns the card chrome (border + glow) so that the shadow
-   propagates fully on all four sides. We also FLIP the scroll axis:
-   instead of letting Odoo core scroll the whole sheet_bg (which carries
-   the statusbar with it), we lock sheet_bg's overflow and put the
-   scroll on .o_form_sheet alone. Statusbar stays put, only fields move. */
 .o_form_view .o_form_sheet_bg {
-    background-color: var(--mcp-surface) !important;
-    background-image: none !important;
-    border: 1px solid var(--mcp-sheet-border) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-sheet-shadow) !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    max-width: var(--mcp-form-max-w, 1200px);
-    margin-left: auto !important;
-    margin-right: auto !important;
-    /* Stop the whole bg from scrolling — child .o_form_sheet does it */
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
-    min-height: 0 !important;
-}
-.o_form_view .o_form_statusbar {
-    flex-shrink: 0 !important;               /* never shrinks, never scrolls */
-    flex-grow: 0 !important;
-    background-color: var(--mcp-cp-bg) !important;   /* same tint as CP & chatter top */
-    padding: 8px !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
-    border-top-left-radius: var(--mcp-r-md);
-    border-top-right-radius: var(--mcp-r-md);
-    align-items: center !important;          /* action buttons + status chevron share centreline */
-}
-
-/* Embedded x2many list (notebook tab inside a form) — break out of the
-   form sheet's 24px content padding so the table reaches the sheet's
-   inner edges. Other field widgets in the same tab keep their normal
-   width (they're inside .o_group containers, this rule only targets
-   the x2many list itself). */
-.o_form_view .o_form_sheet .o_field_x2many.o_list_view {
-    width: calc(100% + 48px) !important;
-    max-width: calc(100% + 48px) !important;
-    margin-left: -24px !important;
-    margin-right: -24px !important;
-}
-.o_form_view .o_form_sheet .o_field_x2many.o_list_view .o_list_renderer {
-    width: 100% !important;
-}
-
-/* Embedded x2many keeps Odoo's default table-layout: fixed + the inline
-   per-column widths (`style="width: Npx"`). Column-resize handles work
-   naturally because the browser respects those widths. */
-
-/* Empty filler rows Odoo injects after the "Add row" link — they're
-   `<tr><td colspan="N">​</td></tr>` with no class, just a non-breaking
-   space. Hide them. The "Add row" tr (class="d-print-none") stays
-   visible, the data rows (class includes o_data_row) stay visible. */
-.o_form_view .o_form_sheet .o_field_x2many.o_list_view .o_list_table > tbody > tr:not([class]) {
-    display: none !important;
-}
-
-/* "Add row / Add section / Add note / Catalog" link row — left-align
-   the cell so the links sit flush against the table edge instead of
-   centred under the data columns. */
-.o_form_view .o_form_sheet .o_field_x2many.o_list_view .o_field_x2many_list_row_add {
-    text-align: left !important;
-    padding-left: 12px !important;
-}
-
-/* Wizard steps (chevron strip) — match the height of the .btn action
-   buttons next to them (Bootstrap default ≈ 38px) and centre on the
-   statusbar's vertical midline. */
-.o_form_view .o_form_statusbar .o_field_statusbar {
-    align-self: center !important;
-}
-.o_form_view .o_form_statusbar .o_field_statusbar > .o_statusbar_status > .o_arrow_button,
-.o_form_view .o_form_statusbar .o_field_statusbar > .o_statusbar_status > .o_arrow_button:disabled,
-.o_form_view .o_form_statusbar .o_field_statusbar > .o_statusbar_status > .o_arrow_button.disabled {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    height: 38px !important;
-    line-height: 38px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    font-size: 12px !important;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-
-    /* White fill — keep Odoo's ::before chevron border (it draws the
-       outline ring along the clip-path edges). */
-    background-color: var(--mcp-surface) !important;
-    background-image: none !important;
-    color: var(--mcp-ink-2) !important;
-}
-
-/* Active step — same indigo wash as the control panel header */
-.o_form_view .o_form_statusbar .o_field_statusbar > .o_statusbar_status > .o_arrow_button.o_arrow_button_current,
-.o_form_view .o_form_statusbar .o_field_statusbar > .o_statusbar_status > .o_arrow_button.o_arrow_button_current:disabled {
-    background-color: var(--mcp-cp-bg) !important;
-    color: var(--mcp-accent) !important;
-}
-
-/* Kill the "..." dropdown-toggle stub buttons that bookend the strip.
-   Odoo renders them as overflow triggers; with our JS un-hider showing
-   every step, they're noise. Belt-and-braces hide using multiple
-   independent properties so Bootstrap's :disabled fill can't show. */
-.o_form_view .o_field_statusbar .o_statusbar_status .dropdown-toggle,
-.o_form_view .o_field_statusbar button.dropdown-toggle,
-.o_field_statusbar button.dropdown-toggle.o_arrow_button {
-    display: none !important;
-    visibility: hidden !important;
-    width: 0 !important;
-    min-width: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: 0 !important;
-    overflow: hidden !important;
-    pointer-events: none !important;
-}
-
-/* Form status indicator buttons (top-right of the CP):
-   - cloud-upload (save)   → indigo icon + indigo border, transparent bg
-   - X         (discard)   → cherry red icon + red border, transparent bg
-   Both share the same outlined treatment, only colour differs. */
-.o_form_status_indicator .o_form_button_save,
-.o_form_status_indicator .o_form_button_cancel {
-    background-color: transparent !important;
-    border-radius: var(--mcp-r-sm) !important;
-    /* Match the height/padding of other CP buttons (action-menus etc.) */
-    height: var(--mcp-cp-row-h) !important;
-    min-height: var(--mcp-cp-row-h) !important;
-    padding: 0 10px !important;
-    font-size: 14px !important;
-    line-height: 1 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition:
-        background-color var(--mcp-t-fast),
-        border-color var(--mcp-t-fast),
-        color var(--mcp-t-fast);
-
-    .fa, .oi { font-size: 14px !important; line-height: 1; }
-}
-
-/* Save (cloud) — indigo */
-.o_form_status_indicator .o_form_button_save,
-.o_form_status_indicator .o_form_button_save:focus {
-    color: var(--mcp-accent) !important;
-    border: 1px solid var(--mcp-accent) !important;
-}
-.o_form_status_indicator .o_form_button_save:hover {
-    color: var(--mcp-accent) !important;
-    border-color: var(--mcp-accent) !important;
-    background-color: var(--mcp-accent-soft) !important;
-}
-
-/* Cancel (X) — cherry red */
-.o_form_status_indicator .o_form_button_cancel,
-.o_form_status_indicator .o_form_button_cancel:focus {
-    color: var(--mcp-danger) !important;
-    border: 1px solid var(--mcp-danger) !important;
-}
-.o_form_status_indicator .o_form_button_cancel:hover {
-    color: var(--mcp-danger) !important;
-    border-color: var(--mcp-danger) !important;
-    background-color: var(--mcp-danger-soft) !important;
-}
-
-/* Chatter-top action strip — same tint as the form statusbar so the
-   two header strips read as siblings across the splitter. */
-.o_form_view .o-mail-Chatter-top {
-    background-color: var(--mcp-cp-bg) !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
-    border-top-left-radius: var(--mcp-r-md);
-    border-top-right-radius: var(--mcp-r-md);
-}
-
-/* Chatter-topbar action buttons — match the 38px height of the form
-   statusbar buttons. Strip Bootstrap `my-2` margin so the strip itself
-   stays compact; the buttons own their height directly. */
-.o_form_view .o-mail-Chatter-topbar .btn {
-    height: 38px !important;
-    min-height: 38px !important;
-    padding: 0 12px !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    line-height: 1 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-.o_form_view .o-mail-Chatter-topbar {
-    align-items: center !important;
-    padding: 8px !important;
+    background: transparent !important;
 }
 .o_form_view .o_form_sheet {
-    position: relative !important;
-    background: transparent !important;     /* sheet-bg owns the colour */
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 24px !important;                /* CONTENT padding — field breathing */
-    /* Take the scroll itself instead of letting it ride sheet_bg */
-    flex: 1 1 auto !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    min-height: 0 !important;
-}
-
-/* ── Labels ────────────────────────────────────────────────────
-   Match Odoo Enterprise's understated look — normal case, normal
-   tracking, mid-weight (500), 13px. We just tint with --mcp-ink-2 so
-   labels read a touch lighter than field values without screaming. */
-.o_form_view .o_form_label,
-.o_form_view label.o_form_label {
-    color: var(--mcp-ink-2) !important;
-    font-weight: 500 !important;
-    font-size: 13px !important;
-    text-transform: none !important;
-    letter-spacing: normal !important;
-    margin-bottom: 4px;
-}
-
-/* ── Inputs (view-scoped override of base widget) ────────────────
-   Excludes [type=checkbox]/[type=radio] — they keep their square
-   16×16 styling from widgets/boolean.scss (no padding, no
-   border-radius:0, no focus underline). */
-.o_form_view input.o_input:not([type="checkbox"]):not([type="radio"]),
-.o_form_view textarea.o_input,
-.o_form_view select.o_input,
-.o_form_view .o_field_widget input:not([type="checkbox"]):not([type="radio"]),
-.o_form_view .o_field_widget textarea,
-.o_form_view .o_field_widget select {
     background: var(--mcp-surface) !important;
-    border: none !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
-    box-shadow: none !important;
-    color: var(--mcp-ink) !important;
-    padding: 6px 10px !important;
-    transition: box-shadow var(--mcp-t-base);
-}
-.o_form_view input.o_input:not([type="checkbox"]):not([type="radio"]):focus,
-.o_form_view textarea.o_input:focus,
-.o_form_view select.o_input:focus,
-.o_form_view .o_field_widget input:not([type="checkbox"]):not([type="radio"]):focus,
-.o_form_view .o_field_widget textarea:focus,
-.o_form_view .o_field_widget select:focus {
-    background: #ffffff !important;
-    border: none !important;
-    box-shadow: inset 0 -1px 0 0 var(--mcp-accent) !important;
-    outline: none !important;
+    padding: 24px 28px !important;
 }
 
-/* ── Section separators ──────────────────────────────────────── */
-.o_form_view .o_horizontal_separator,
-.o_form_view h2,
-.o_form_view h3 {
-    color: var(--mcp-ink) !important;
-    border-bottom: 2px solid var(--mcp-accent) !important;
-    padding-bottom: 8px;
-    margin-bottom: 16px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: 13px !important;
-    font-weight: 600;
-}
-
-/* ── Notebook tabs ───────────────────────────────────────────── */
-.o_form_view .o_notebook .nav.nav-tabs {
-    border-bottom: 1px solid var(--mcp-rule-strong) !important;
-    margin-bottom: 16px;
-}
-.o_form_view .o_notebook .nav-item .nav-link {
-    color: var(--mcp-ink-2) !important;
-    background: transparent !important;
-    border: none !important;
-    border-bottom: 2px solid transparent !important;
-    padding: 8px 16px !important;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: 12px;
-    transition: color var(--mcp-t-base), border-color var(--mcp-t-base);
-}
-.o_form_view .o_notebook .nav-item .nav-link:hover {
-    color: var(--mcp-accent) !important;
-    border-bottom-color: var(--mcp-accent-soft) !important;
-}
-.o_form_view .o_notebook .nav-item .nav-link.active {
-    color: var(--mcp-accent) !important;
-    border-bottom-color: var(--mcp-accent) !important;
-    background: transparent !important;
-}
-
-/* ── Button box (smart/stat buttons row) ──────────────────────────
-   Odoo 19 uses .o-form-buttonbox (hyphen); keep .oe_button_box for compat.
-
-   Looks like a SEGMENTED GROUP: buttons share borders, no gaps,
-   only first/last carry the rounded corners. Hover raises z-index
-   so the active border outlines a single segment without lifting. */
-.o_form_view .o-form-buttonbox,
-.o_form_view .oe_button_box,
-.o-form-buttonbox {
-    display: inline-flex !important;
-    flex-wrap: wrap !important;
-    align-items: center !important;
-    align-content: center !important;
-    align-self: center !important;     /* center the GROUP in its parent (CP row) */
-    justify-self: center !important;
-    gap: 0 !important;
-    /* Vertical breathing in any parent (CP row, form sheet, settings header) */
-    margin: 6px 0 !important;
+/* ── Statusbar — HUD arrow segments ─────────────────────────── */
+.o_form_view .o_form_statusbar {
+    background: var(--mcp-surface) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
     padding: 0 !important;
-    overflow: visible !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
-    isolation: isolate;
-    border-radius: var(--mcp-r-base);
-    box-shadow: var(--mcp-shadow-xs);
-    background: #ffffff;
-}
+    overflow: hidden;
 
-/* When ButtonBox lives directly in the control panel (settings/wizard
-   forms), parent flex line gets explicit center alignment for it. */
-.o_control_panel .o-form-buttonbox,
-.o_control_panel_main .o-form-buttonbox,
-.o_control_panel_main_buttons + .o-form-buttonbox,
-.o_control_panel_main_buttons .o-form-buttonbox {
-    align-self: center !important;
-    margin: 4px 8px !important;
-}
+    .o_statusbar_status {
+        display: flex !important;
+        align-items: stretch !important;
+        gap: 0 !important;
 
-.o_form_view .o-form-buttonbox .oe_stat_button,
-.o_form_view .oe_button_box .oe_stat_button,
-.o-form-buttonbox .oe_stat_button {
-    display: inline-flex !important;
-    flex-direction: row !important;
-    align-items: center !important;     /* vertical center cross-axis */
-    justify-content: flex-start !important;
-    gap: 10px !important;
-    /* Width — equalised by resizer.js to the widest segment per group,
-       clamped between min and max. Falls back to min when JS not run. */
-    width: var(--mcp-stat-btn-w, var(--mcp-stat-btn-min-w)) !important;
-    min-width: var(--mcp-stat-btn-min-w) !important;
-    max-width: var(--mcp-stat-btn-max-w) !important;
-    height: 48px !important;            /* fixed height, no stretching */
-    min-height: 48px !important;
-    max-height: 48px !important;
-    padding: 0 14px !important;
-    background: #ffffff !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-right-width: 0 !important;
-    border-radius: 0 !important;
-    color: var(--mcp-ink) !important;
-    box-shadow: none !important;
-    /* Override Bootstrap .flex-grow-1 — expanding the button width
-       was distorting how content sat against the 48px height frame. */
-    flex-grow: 0 !important;
-    flex-shrink: 0 !important;
-    flex-basis: auto !important;
-    transition:
-        background var(--mcp-t-base),
-        color var(--mcp-t-base),
-        z-index 0s;
-    position: relative;
-    overflow: visible !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    transform: none !important;
-    text-align: left;
-    line-height: 1 !important;
-    vertical-align: middle !important;
+        .o_arrow_button,
+        button.btn {
+            flex: 1 1 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: 32px !important;
+            min-height: 32px !important;
+            padding: 0 16px !important;
+            font-family: var(--mcp-font-mono) !important;
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.14em !important;
+            text-transform: uppercase !important;
+            color: var(--mcp-ink-dim) !important;
+            background: var(--mcp-surface) !important;
+            border: 0 !important;
+            border-right: 1px solid var(--mcp-rule) !important;
+            border-radius: 0 !important;
+            transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
+            position: relative;
+            /* Arrow-tab shape */
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);
+            margin-right: -8px;
+            padding-left: 24px;
 
-    /* Force every direct child to center on the cross axis */
-    > * { align-self: center !important; }
-}
-
-/* Restore the trailing border on the last segment */
-.o_form_view .o-form-buttonbox .oe_stat_button:last-of-type,
-.o_form_view .oe_button_box .oe_stat_button:last-of-type,
-.o_form_view .o-form-buttonbox > *:last-child,
-.o-form-buttonbox > *:last-child {
-    border-right-width: 1px !important;
-}
-
-/* Rounded corners only on the outer ends of the group */
-.o_form_view .o-form-buttonbox > :first-child,
-.o_form_view .oe_button_box > :first-child,
-.o-form-buttonbox > :first-child {
-    border-top-left-radius: var(--mcp-r-base) !important;
-    border-bottom-left-radius: var(--mcp-r-base) !important;
-}
-.o_form_view .o-form-buttonbox > :last-child,
-.o_form_view .oe_button_box > :last-child,
-.o-form-buttonbox > :last-child {
-    border-top-right-radius: var(--mcp-r-base) !important;
-    border-bottom-right-radius: var(--mcp-r-base) !important;
-    border-right-width: 1px !important;
-}
-
-.o_form_view .o-form-buttonbox .oe_stat_button:hover,
-.o_form_view .oe_button_box .oe_stat_button:hover {
-    background: var(--mcp-accent-soft) !important;
-    color: var(--mcp-accent) !important;
-    z-index: 2;
-}
-
-.o_form_view .o-form-buttonbox .oe_stat_button:active,
-.o_form_view .oe_button_box .oe_stat_button:active {
-    background: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
-}
-
-/* Icon — borderless glyph centered in a 24×24 frame for click target. */
-.o_form_view .oe_stat_button > .fa,
-.o_form_view .oe_stat_button > .oi,
-.o_form_view .oe_stat_button > .o_button_icon,
-.o_form_view .oe_stat_button > i,
-.o_form_view .oe_stat_button > img {
-    flex-shrink: 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    align-self: center !important;
-    width: 24px;
-    height: 24px;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    color: var(--mcp-ink);
-    font-size: 16px !important;
-    line-height: 1 !important;
-    vertical-align: middle;
-    transition: color var(--mcp-t-base);
-}
-.o_form_view .oe_stat_button:hover > .fa,
-.o_form_view .oe_stat_button:hover > .oi,
-.o_form_view .oe_stat_button:hover > .o_button_icon,
-.o_form_view .oe_stat_button:hover > i,
-.o_form_view .oe_stat_button:hover > img { color: var(--mcp-accent); }
-.o_form_view .oe_stat_button:active > .fa,
-.o_form_view .oe_stat_button:active > .oi,
-.o_form_view .oe_stat_button:active > .o_button_icon,
-.o_form_view .oe_stat_button:active > i,
-.o_form_view .oe_stat_button:active > img { color: var(--mcp-paper); }
-
-/* Statinfo container. WATCH OUT: in Odoo 19, .o_stat_info is BOTH:
-     • a class on the value <span class="o_stat_info o_stat_value">51</span>
-     • a wrapper <div class="o_stat_info"> (when no statinfo widget)
-   We target ONLY div.o_stat_info as wrapper, never .o_stat_info bare. */
-.o_form_view .oe_stat_button .o_field_statinfo,
-.o_form_view .oe_stat_button > div.o_stat_info {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    justify-content: center !important;
-    align-self: center !important;
-    flex: 1 1 auto !important;          /* take remaining width for ellipsis */
-    margin: auto 0 !important;
-    gap: 1px;
-    line-height: 1 !important;
-    min-width: 0;                       /* enables shrinking + truncation */
-    max-width: 100%;
-    height: auto !important;
-    overflow: hidden !important;
-    text-align: left;
-}
-
-/* Value — works for both <span class="o_stat_value"> and
-   <span class="o_stat_info o_stat_value"> (Odoo 19 dual-purpose class). */
-.o_form_view .oe_stat_button .o_stat_value,
-.o_form_view .oe_stat_button span.o_stat_info {
-    display: block !important;
-    font-size: 17px !important;
-    font-weight: 700 !important;
-    line-height: 1.1 !important;
-    letter-spacing: -0.02em;
-    color: inherit !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    max-width: 100% !important;
-    align-self: stretch !important;     /* full width for ellipsis */
-}
-
-.o_form_view .oe_stat_button .o_stat_text {
-    display: block !important;
-    font-size: 9px !important;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: inherit !important;
-    opacity: 0.7;
-    line-height: 1 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    max-width: 100% !important;
-    align-self: stretch !important;
-}
-
-/* "More" dropdown trigger — same segment treatment, no icon badge */
-.o_form_view .o-form-buttonbox .o_button_more {
-    min-width: 64px !important;
-    height: 48px !important;
-    min-height: 48px !important;
-    max-height: 48px !important;
-    padding: 0 14px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 12px !important;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    background: #ffffff !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-left-width: 0 !important;
-    border-right-width: 0 !important;
-    border-radius: 0 !important;
-    color: var(--mcp-ink) !important;
-    box-shadow: none !important;
-    transition:
-        background var(--mcp-t-base),
-        color var(--mcp-t-base);
-
-    &:hover {
-        background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
-        z-index: 2;
-        position: relative;
+            &:first-child {
+                clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+                padding-left: 16px;
+            }
+            &:last-child {
+                border-right: 0 !important;
+                margin-right: 0;
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%);
+            }
+            &:hover { color: var(--mcp-ink-2) !important; background: var(--mcp-surface-2) !important; }
+            &[aria-pressed="true"],
+            &.btn-primary,
+            &.disabled[aria-pressed="true"] {
+                color: var(--mcp-surface) !important;
+                background: var(--mcp-accent) !important;
+                box-shadow:
+                    0 0 0 1px rgba(15, 82, 186, 0.30),
+                    0 0 4px rgba(15, 82, 186, 0.20) !important;
+            }
+        }
     }
 }
 
-/* ── Field widget sizing in this view ────────────────────────── */
-/* Base widget styles in widgets/*.scss; only context tweaks here.
-   Avatar inside an inline many2one_avatar field is small (matches the
-   field row height); the title-area avatar (.oe_title) is larger. */
-.o_form_view .o_field_many2one_avatar .o_avatar,
-.o_form_view .o_field_many2one_avatar_user .o_avatar,
-.o_form_view .o_field_many2one_avatar .o_m2o_avatar,
-.o_form_view .o_field_many2one_avatar_user .o_m2o_avatar {
-    --Avatar-size: 22px;
-    width: 22px !important;
-    height: 22px !important;
-}
-.o_form_view .o_form_sheet .oe_title .o_avatar { --Avatar-size: 40px; }
-.o_form_view .o_field_many2one          { width: 100%; }
+/* ── Smart buttons (button-box) ─────────────────────────────── */
+.o_form_view .oe_button_box {
+    display: flex !important;
+    gap: 1px !important;
+    margin: 0 0 20px 0 !important;
+    background: var(--mcp-rule);
+    border: 1px solid var(--mcp-rule-strong);
+    border-radius: 0 !important;
+    width: fit-content;
 
-/* ── Chatter ─────────────────────────────────────────────────── */
+    .oe_stat_button,
+    .o-form-buttonbox button.btn {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 2px !important;
+        min-width: 110px;
+        padding: 8px 14px !important;
+        background: var(--mcp-surface) !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        color: var(--mcp-ink) !important;
+        text-align: left !important;
+        transition: background var(--mcp-t-fast);
+
+        &:hover { background: var(--mcp-accent-soft) !important; }
+
+        .o_button_icon,
+        .o_stat_text { display: none !important; }
+        .o_stat_value,
+        .o_field_widget {
+            font-family: var(--mcp-font-mono) !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            color: var(--mcp-accent) !important;
+            line-height: 1 !important;
+        }
+        .o_stat_info {
+            font-size: 10px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.08em !important;
+            text-transform: uppercase !important;
+            color: var(--mcp-ink-3) !important;
+        }
+    }
+}
+
+/* ── Sheet title row + breadcrumb-style eyebrow ─────────────── */
+.o_form_view .oe_title h1,
+.o_form_view .oe_title .o_field_widget input {
+    font-family: var(--mcp-font-mono) !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: var(--mcp-ink) !important;
+    letter-spacing: -0.02em !important;
+    text-shadow: 0 0 16px rgba(15, 82, 186, 0.22);
+}
+.o_form_view .oe_title {
+    padding-bottom: 14px !important;
+    margin-bottom: 18px !important;
+    border-bottom: 1px solid var(--mcp-rule);
+}
+
+/* ── Field labels ───────────────────────────────────────────── */
+.o_form_view .o_form_label,
+.o_form_view label.o_form_label {
+    font-family: var(--mcp-font-mono) !important;
+    font-size: 9.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    color: var(--mcp-ink-3) !important;
+}
+.o_form_view .o_field_widget,
+.o_form_view .o_form_input {
+    color: var(--mcp-ink) !important;
+    font-weight: 500 !important;
+}
+.o_form_view .o_field_widget:not(:focus-within):not(.o_field_invalid) {
+    border-bottom: 1px dashed var(--mcp-rule) !important;
+}
+.o_form_view .o_field_many2one a,
+.o_form_view .o_field_email,
+.o_form_view .o_field_url {
+    color: var(--mcp-accent) !important;
+    text-shadow: 0 0 10px rgba(15, 82, 186, 0.18);
+    &:hover { color: var(--mcp-accent-2) !important; text-decoration: underline; }
+}
+.o_form_view .o_field_monetary,
+.o_form_view .o_field_float,
+.o_form_view .o_field_integer,
+.o_form_view .o_field_date,
+.o_form_view .o_field_datetime {
+    font-family: var(--mcp-font-mono) !important;
+    font-feature-settings: "tnum","ss01";
+}
+
+/* ── Notebook tabs ──────────────────────────────────────────── */
+.o_form_view .o_notebook {
+    margin-top: 8px;
+
+    .o_notebook_headers {
+        border-bottom: 1px solid var(--mcp-rule-strong) !important;
+        padding: 0 !important;
+        background: transparent !important;
+
+        .nav-item .nav-link {
+            display: inline-flex !important;
+            align-items: center !important;
+            height: 32px !important;
+            padding: 0 14px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.04em !important;
+            color: var(--mcp-ink-3) !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            position: relative;
+            transition: color var(--mcp-t-fast);
+
+            &:hover { color: var(--mcp-ink) !important; }
+            &.active {
+                color: var(--mcp-accent) !important;
+                background: transparent !important;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: 4px; right: 4px; bottom: -1px;
+                    height: 2px;
+                    background: var(--mcp-accent);
+                    box-shadow: 0 0 4px var(--mcp-accent-2);
+                }
+            }
+        }
+    }
+}
+
+/* ── One2many table inside notebook ─────────────────────────── */
+.o_form_view .o_field_x2many .o_list_renderer table.o_list_table {
+    border: 1px solid var(--mcp-rule) !important;
+    border-radius: 0 !important;
+
+    thead th {
+        background: var(--mcp-surface-3) !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 9.5px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.12em !important;
+        text-transform: uppercase !important;
+        color: var(--mcp-ink-3) !important;
+        padding: 8px 10px !important;
+        border-bottom: 1px solid var(--mcp-rule-strong) !important;
+    }
+    tbody td { padding: 8px 10px !important; border-bottom: 1px solid var(--mcp-rule) !important; }
+    tfoot td {
+        background: var(--mcp-surface-3) !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-weight: 600 !important;
+        border-top: 1px solid var(--mcp-rule-strong) !important;
+    }
+}
+
+/* ── Totals box (form footer) ───────────────────────────────── */
+.o_form_view .o_total {
+    min-width: 280px;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    background: var(--mcp-surface-2) !important;
+    border-radius: 0 !important;
+    /* HUD notch top-left */
+    clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+
+    .o_td_label { color: var(--mcp-ink-2) !important; }
+    .o_field_widget { font-family: var(--mcp-font-mono) !important; font-weight: 600 !important; }
+
+    .o_total_amount,
+    .o_total_total {
+        background: var(--mcp-accent) !important;
+        color: var(--mcp-surface) !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.04em !important;
+        box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+    }
+}
+
+/* ── Chatter (right rail) ───────────────────────────────────── */
 .o-mail-Chatter {
     background: var(--mcp-surface) !important;
-    border-left: 1px solid var(--mcp-rule) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+
+    .o-mail-Chatter-topbar {
+        border-bottom: 1px solid var(--mcp-rule) !important;
+    }
+    .o-mail-Chatter-topbar button {
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.06em !important;
+        text-transform: uppercase !important;
+        border: 1px solid var(--mcp-rule-strong) !important;
+        border-radius: 0 !important;
+        color: var(--mcp-ink-2) !important;
+
+        &:hover { color: var(--mcp-accent) !important; border-color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
+    }
+    .o-mail-Message-author { color: var(--mcp-ink) !important; font-weight: 600 !important; }
+    .o-mail-Message-date {
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 9.5px !important;
+        letter-spacing: 0.06em !important;
+        color: var(--mcp-ink-3) !important;
+    }
+    .o-mail-Message-tracking {
+        background: var(--mcp-surface-2) !important;
+        border-left: 2px solid var(--mcp-accent) !important;
+        border-radius: 0 !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 10px !important;
+        padding: 6px 8px !important;
+    }
 }

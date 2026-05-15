@@ -1,83 +1,147 @@
-/* MCP Works backend — top bar (GNOME Shell style, paper bg + indigo border) */
+/* MCP Works backend — Robot Theme · top navbar
+   White surface, electric-blue 1px border-bottom, subtle HUD accent
+   strip on top, animated horizontal scan, sharp 0-radius buttons. */
 
 .o_main_navbar {
-    background: var(--mcp-paper) !important;
-    /* Soft hairline like the other panels (control panel, sheet, chatter) */
-    border-bottom: 1px solid var(--mcp-rule) !important;
+    background: var(--mcp-surface) !important;
+    border-bottom: 1px solid var(--mcp-rule-strong) !important;
     color: var(--mcp-ink) !important;
     height: var(--mcp-navbar-height) !important;
     min-height: var(--mcp-navbar-height) !important;
     --o-navbar-height: var(--mcp-navbar-height);
-    box-shadow: var(--mcp-shadow-xs);
+    position: relative;
+
+    /* Animated horizontal scan — slow sweep, multiply blend */
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+            90deg,
+            transparent 0%,
+            var(--mcp-accent-soft) 50%,
+            transparent 100%
+        );
+        opacity: .5;
+        mix-blend-mode: screen;
+        animation: mcp-navbar-scan 6s linear infinite;
+        z-index: 0;
+    }
 
     a, .nav-link, .dropdown-toggle, button {
-        color: var(--mcp-ink) !important;
+        color: var(--mcp-ink-2) !important;
         background: transparent !important;
+        position: relative;
+        z-index: 2;
     }
     a:hover, .nav-link:hover, .dropdown-toggle:hover, button:hover {
         color: var(--mcp-accent) !important;
         background: var(--mcp-accent-soft) !important;
     }
 
-    /* Apps button — minimal circular icon, replaces heavy dropdown */
+    /* ── Apps button — sharp square, replaces heavy dropdown ────── */
     .o_navbar_apps_menu .dropdown-toggle,
     .o_navbar_apps_menu > .o-dropdown {
         position: relative;
-        margin: 4px 6px 4px 10px !important;
+        margin: 0 !important;
         padding: 0 !important;
-        width: 24px;
-        height: 24px;
-        border-radius: var(--mcp-r-pill) !important;
+        width: var(--mcp-navbar-height);
+        height: var(--mcp-navbar-height);
+        border-radius: 0 !important;
         background: transparent !important;
-        color: var(--mcp-ink) !important;
+        color: var(--mcp-ink-2) !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         font-size: 14px;
         line-height: 1;
-        transition: background var(--mcp-t-base), color var(--mcp-t-base), transform var(--mcp-t-base);
-        border: none !important;
+        border: 0 !important;
+        border-right: 1px solid var(--mcp-rule) !important;
         box-shadow: none !important;
+        transition:
+            background var(--mcp-t-base),
+            color var(--mcp-t-base);
     }
     .o_navbar_apps_menu .dropdown-toggle::after,
-    .o_navbar_apps_menu .dropdown-toggle::before { display: none !important; content: none !important; }
+    .o_navbar_apps_menu .dropdown-toggle::before {
+        display: none !important;
+        content: none !important;
+    }
     .o_navbar_apps_menu .dropdown-toggle:hover {
         background: var(--mcp-accent-soft) !important;
         color: var(--mcp-accent) !important;
-        transform: scale(1.05);
     }
     .o_navbar_apps_menu .dropdown-toggle[aria-expanded='true'],
     .o_navbar_apps_menu.show .dropdown-toggle {
         background: var(--mcp-accent) !important;
-        color: var(--mcp-paper) !important;
+        color: var(--mcp-surface) !important;
+    }
+    /* Active indicator strip — cyan underglow */
+    .o_navbar_apps_menu .dropdown-toggle[aria-expanded='true']::after,
+    .o_navbar_apps_menu.show .dropdown-toggle::after {
+        content: "" !important;
+        display: block !important;
+        position: absolute !important;
+        inset: auto 0 -2px 0 !important;
+        height: 2px !important;
+        background: var(--mcp-accent-2) !important;
+        box-shadow: 0 0 8px var(--mcp-accent-2);
     }
     .o_navbar_apps_menu .dropdown-toggle i.oi,
-    .o_navbar_apps_menu .dropdown-toggle .oi-apps { font-size: 16px !important; line-height: 1 !important; }
+    .o_navbar_apps_menu .dropdown-toggle .oi-apps {
+        font-size: 16px !important;
+        line-height: 1 !important;
+    }
 
-    /* Current app name — relocated to .mcp_breadcrumb_strip .mcp_app_brand
-       (see control_panel.xml + control_panel.scss). Original is hidden. */
+    /* App brand relocated to .mcp_breadcrumb_strip .mcp_app_brand */
     .o_menu_brand { display: none !important; }
 
-    /* Section dropdowns */
+    /* ── Section dropdowns — sharp, no rounding, accent underline ── */
     .o_menu_sections .dropdown-toggle,
     .o_menu_sections > * {
         font-size: 12px !important;
         font-weight: 500;
-        padding: 0 10px !important;
-        height: 28px;
-        line-height: 28px;
-        border-radius: var(--mcp-r-xs);
-        margin: 2px 1px;
+        letter-spacing: 0.01em;
+        padding: 0 14px !important;
+        height: var(--mcp-navbar-height);
+        line-height: var(--mcp-navbar-height);
+        border-radius: 0 !important;
+        margin: 0;
+        position: relative;
+    }
+    .o_menu_sections .dropdown-toggle.active,
+    .o_menu_sections .dropdown-toggle[aria-expanded='true'] {
+        color: var(--mcp-accent) !important;
+        background: var(--mcp-accent-mute) !important;
+    }
+    .o_menu_sections .dropdown-toggle.active::after,
+    .o_menu_sections .dropdown-toggle[aria-expanded='true']::after {
+        content: "";
+        position: absolute;
+        left: 6px; right: 6px; bottom: 0;
+        height: 2px;
+        background: var(--mcp-accent);
+        box-shadow: 0 -1px 6px var(--mcp-accent-glow);
     }
 
-    /* Systray (right side) */
+    /* ── Systray (right side) — JetBrains Mono for tighter HUD ──── */
     .o_menu_systray {
-        gap: 2px;
-        > * { min-height: 28px; display: flex; align-items: center; }
+        gap: 0;
+
+        > * { min-height: 30px; display: flex; align-items: center; }
+
         .dropdown-toggle, button, a {
             padding: 0 10px !important;
-            border-radius: var(--mcp-r-xs);
+            border-radius: 0 !important;
             font-size: 12px;
+            font-family: var(--mcp-font-mono);
+            letter-spacing: 0.04em;
         }
     }
+}
+
+@keyframes mcp-navbar-scan {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(100%);  }
 }

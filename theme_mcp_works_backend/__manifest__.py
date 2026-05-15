@@ -1,10 +1,11 @@
 # Copyright 2026 Rosen Vladimirov <vladimirov.rosen@gmail.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "Theme MCP Works — Backend (GNOME Shell style)",
-    "summary": "Independent GNOME Shell-styled Odoo CE backend — paper bg, "
-               "indigo accents, Activities pill, bottom Dash, paper buttons",
-    "version": "19.0.1.13.0",
+    "name": "Theme MCP Works — Backend (Robot style)",
+    "summary": "Independent hi-tech minimalist Odoo CE backend — robot "
+               "theme, electric sapphire accents, sharp corners, "
+               "light/dark mode, vertical Dash dock",
+    "version": "19.0.1.14.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],

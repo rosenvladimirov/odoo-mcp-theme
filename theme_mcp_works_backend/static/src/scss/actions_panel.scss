@@ -93,7 +93,7 @@
     position: fixed;
     inset: 0;
     z-index: calc(var(--mcp-z-actions) - 1);
-    background: rgba(44, 38, 32, 0.20);
+    background: var(--mcp-rule-strong);
     backdrop-filter: blur(2px);
     animation: mcp-fade-in 0.2s ease;
 }

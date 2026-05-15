@@ -1,101 +1,182 @@
-/* MCP Works backend — Settings form view (res.config.settings) */
+/* MCP Works backend — Robot Theme · Settings view
+   Sapphire section nav, sharp panels, monospace section labels,
+   accent toggle switches. */
 
-/* ── Settings wrapper ────────────────────────────────────────── */
-.o_settings {
-    background: transparent !important;
-    padding: 0 !important;
+.o_form_view.o_settings,
+.app-settings-block,
+.settings {
+    padding: var(--mcp-view-pad);
 }
 
-.o_settings .o_setting_container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    padding: 16px;
+/* ── Settings sidebar (section list) ────────────────────────── */
+.settings_tab,
+.o_setting_search_panel,
+.settings .o_settings_container .settings_tab {
+    background: var(--mcp-surface) !important;
+    border-right: 1px solid var(--mcp-rule-strong) !important;
+    padding: 12px 0 !important;
 }
 
-/* ── Settings tab sidebar ────────────────────────────────────── */
-.o_settings_tabs {
-    flex: 0 0 220px;
-}
-
-.o_settings_tabs .o_settings_tab,
-.o_settings_tabs .nav-link {
-    display: flex;
-    align-items: center;
+.settings_tab .tab,
+.o_settings_block_tab {
+    display: flex !important;
+    align-items: center !important;
     gap: 8px;
-    padding: 8px 12px !important;
-    border-radius: var(--mcp-r-sm) !important;
-    font-size: 13px;
-    font-weight: 500;
+    padding: 8px 14px !important;
     color: var(--mcp-ink-2) !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    width: 100%;
-    text-align: left;
+    font-family: var(--mcp-font-mono) !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.10em !important;
+    text-transform: uppercase !important;
+    border-radius: 0 !important;
+    border-left: 2px solid transparent;
     cursor: pointer;
     transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
 
-    &:hover { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent) !important; }
-    &.active { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent) !important; font-weight: 600; }
+    &:hover {
+        background: var(--mcp-accent-soft) !important;
+        color: var(--mcp-accent) !important;
+    }
+
+    &.selected,
+    &.o_active {
+        background: var(--mcp-accent-mute) !important;
+        color: var(--mcp-accent) !important;
+        border-left-color: var(--mcp-accent);
+        box-shadow: inset 0 0 12px rgba(15, 82, 186, 0.06);
+    }
+
+    img,
+    .o_image {
+        width: 16px;
+        height: 16px;
+        border-radius: 0 !important;
+    }
 }
 
-/* ── Settings content area ───────────────────────────────────── */
-.o_settings_content {
-    flex: 1 1 0;
-    min-width: 0;
+/* ── Settings content blocks ────────────────────────────────── */
+.settings_modules_container,
+.o_settings_container,
+.settings .o_settings_panel,
+.settings .o_setting_view {
+    background: var(--mcp-surface) !important;
 }
 
-/* ── Setting module header ───────────────────────────────────── */
-.o_settings_module_header,
-.o_settings_app_name {
-    padding: 12px 0 8px;
-    font-weight: 700;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--mcp-ink);
-    border-bottom: 2px solid var(--mcp-accent);
-    margin-bottom: 12px;
+.app_settings_block,
+.o_setting_box,
+.settings_block {
+    background: var(--mcp-surface) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+    padding: 16px 20px !important;
+    margin: 0 0 8px 0 !important;
+    box-shadow:
+        0 0 0 1px rgba(15, 82, 186, 0.06),
+        0 2px 12px -2px rgba(15, 82, 186, 0.12) !important;
 }
 
-/* ── Individual setting box ──────────────────────────────────── */
-.o_setting_box {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--mcp-rule);
+/* Block header (section eyebrow + title) */
+.settings_block h2,
+.o_form_view.o_settings h2 {
+    font-family: var(--mcp-font-mono) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    color: var(--mcp-accent) !important;
+    margin: 0 0 12px 0 !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid var(--mcp-rule) !important;
+    position: relative;
 
-    &:last-child { border-bottom: none; }
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0; bottom: -1px;
+        width: 80px;
+        height: 1px;
+        background: var(--mcp-accent);
+        box-shadow: 0 0 4px var(--mcp-accent-glow);
+    }
 }
 
-.o_setting_box .o_setting_left_pane {
-    flex-shrink: 0;
-    width: 32px;
-    display: flex;
-    justify-content: center;
-    padding-top: 2px;
+/* Setting row (label + control) */
+.o_setting_box,
+.o_setting_right_pane {
+    .o_form_label,
+    label {
+        font-family: var(--mcp-font-family) !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: var(--mcp-ink) !important;
+        letter-spacing: 0 !important;
+        text-transform: none !important;
+    }
+
+    .text-muted,
+    .o_form_field_descriptive {
+        color: var(--mcp-ink-3) !important;
+        font-size: 11.5px !important;
+        line-height: 1.5;
+    }
 }
 
-.o_setting_box .o_setting_right_pane { flex: 1 1 auto; min-width: 0; }
+/* ── Toggle switch (boolean field) ──────────────────────────── */
+.settings .o_field_widget.o_field_boolean,
+.o_setting_box .o_field_boolean {
+    .form-check-input,
+    input[type="checkbox"].o_switch {
+        width: 32px !important;
+        height: 18px !important;
+        background-color: var(--mcp-rule-strong) !important;
+        background-image: none !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        cursor: pointer;
+        position: relative;
+        transition: background-color var(--mcp-t-fast);
 
-.o_setting_box .o_setting_box_title {
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--mcp-ink);
-    margin-bottom: 2px;
+        &::after {
+            content: "";
+            position: absolute;
+            top: 2px; left: 2px;
+            width: 14px; height: 14px;
+            background: var(--mcp-surface);
+            transition: transform var(--mcp-t-fast);
+        }
+
+        &:checked {
+            background-color: var(--mcp-accent) !important;
+            box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+
+            &::after { transform: translateX(14px); }
+        }
+
+        &:focus { box-shadow: 0 0 0 2px var(--mcp-accent-soft) !important; }
+    }
 }
 
-.o_setting_box .o_setting_box_desc {
-    font-size: 12px;
-    color: var(--mcp-ink-3);
-    line-height: 1.4;
+/* ── Search (top of settings) ──────────────────────────────── */
+.settings .o_searchview,
+.settings .o_searchview_inputs {
+    background: var(--mcp-surface-2) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+
+    &:focus-within {
+        border-color: var(--mcp-accent) !important;
+        box-shadow: 0 0 0 2px var(--mcp-accent-soft), 0 0 6px rgba(15, 82, 186, 0.30) !important;
+    }
 }
 
-/* Enterprise badge */
-.o_setting_enterprise_icon {
-    font-size: 11px;
-    color: var(--mcp-accent);
-    margin-left: 4px;
+/* ── Upgrade/buy banners ───────────────────────────────────── */
+.o_setting_box .alert,
+.app_settings_block .alert {
+    background: var(--mcp-accent-soft) !important;
+    color: var(--mcp-accent) !important;
+    border: 1px solid var(--mcp-accent) !important;
+    border-radius: 0 !important;
+    font-size: 12px !important;
+    padding: 8px 12px !important;
 }

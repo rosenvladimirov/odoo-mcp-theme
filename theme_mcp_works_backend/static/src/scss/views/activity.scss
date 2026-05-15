@@ -1,250 +1,103 @@
-/* MCP Works backend — Activity view
-   Layout convention (canonical, see feedback memory):
-   • .o_activity_view.o_view_controller (root, disambiguated by the
-     o_view_controller class) → padding: var(--mcp-view-pad).
-   • main.o_content + inner .o_activity_view.h-100 → flush.
-   • Table inherits Bootstrap mb-5 (48px bottom margin) — strip it.
-   • table-bordered draws 1px greys on every cell — neutralise and
-     redraw with theme tokens. */
+/* MCP Works backend — Robot Theme · Activity view
+   Matrix-style grid (records × activity-types). Sharp cells with
+   sapphire activity counters, accent today column. */
 
-.o_activity_view.o_view_controller {
-    background: transparent !important;
-    padding: var(--mcp-view-pad) !important;
-    margin: 0 !important;
-}
-
-.o_activity_view.o_view_controller main.o_content,
-.o_activity_view.o_view_controller main.o_content > .o_activity_view {
-    padding: 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-}
-
-/* ── Table card ─────────────────────────────────────────────── */
-.o_activity_view.o_view_controller .o_activity_view_table {
-    margin: 8px 0 0 0 !important;            /* strip mb-5 */
+.o_activity_view {
+    padding: var(--mcp-view-pad);
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    overflow: hidden;
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+    overflow: auto;
+    box-shadow:
+        0 0 0 1px rgba(15, 82, 186, 0.06),
+        0 2px 12px -2px rgba(15, 82, 186, 0.12),
+        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
+}
+
+.o_activity_view table.o_activity_table {
     width: 100%;
-}
-
-/* Neutralise Bootstrap .table-bordered on inner cells */
-.o_activity_view .o_activity_view_table.table-bordered td,
-.o_activity_view .o_activity_view_table.table-bordered th {
-    border: 0 !important;
-}
-/* Redraw: only column separators (vertical) + thead bottom */
-.o_activity_view .o_activity_view_table thead th,
-.o_activity_view .o_activity_view_table tbody td,
-.o_activity_view .o_activity_view_table tfoot td {
-    border-right: 1px solid var(--mcp-rule) !important;
-}
-.o_activity_view .o_activity_view_table thead th:last-child,
-.o_activity_view .o_activity_view_table tbody td:last-child,
-.o_activity_view .o_activity_view_table tfoot td:last-child {
-    border-right: 0 !important;
-}
-.o_activity_view .o_activity_view_table thead th {
-    border-bottom: 1px solid var(--mcp-rule) !important;
-}
-.o_activity_view .o_activity_view_table tbody tr + tr td {
-    border-top: 1px solid var(--mcp-rule) !important;
-}
-
-/* Override Bootstrap `bg-view` cream → white surface */
-.o_activity_view .o_activity_view_table.bg-view {
-    background: var(--mcp-surface) !important;
-}
-.o_activity_view .o_activity_view_table tbody tr {
-    background: var(--mcp-surface) !important;
-}
-
-/* ── Activity type header cells (To-Do, Email, …) ───────────── */
-.o_activity_view .o_activity_type_cell {
-    background: var(--mcp-cp-bg) !important;
-    color: var(--mcp-ink) !important;
-    padding: 12px 16px !important;
-    vertical-align: top !important;
-}
-.o_activity_view .o_activity_type_cell > div:first-child > span {
-    font-weight: 600 !important;
+    border-collapse: collapse;
     font-size: 12px !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--mcp-ink) !important;
-}
 
-/* Progress bar inside header */
-.o_activity_view .o_activity_counter {
-    margin-top: 12px !important;
-    margin-bottom: 0 !important;
-    height: auto !important;
-    gap: 8px !important;
-}
-.o_activity_view .o_activity_counter .o_column_progress.progress {
-    height: 6px !important;
-    background: color-mix(in srgb, var(--mcp-rule) 70%, transparent) !important;
-    border-radius: var(--mcp-r-pill) !important;
-    overflow: hidden;
-    flex: 1 1 auto;
-}
-.o_activity_view .o_activity_counter .progress-bar {
-    border-radius: var(--mcp-r-pill) !important;
-    transition: width var(--mcp-t-base);
-}
-.o_activity_view .o_activity_counter .progress-bar.bg-success {
-    background: var(--mcp-accent) !important;     /* indigo not green */
-}
-.o_activity_view .o_activity_counter .progress-bar.bg-warning {
-    background: #d97706 !important;                /* amber */
-}
-.o_activity_view .o_activity_counter .progress-bar.bg-danger {
-    background: var(--mcp-danger) !important;      /* cherry */
-}
-.o_activity_view .o_activity_counter .o_animated_number {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--mcp-ink) !important;
-}
-.o_activity_view .o_activity_counter span.text-900 {
-    font-size: 11px;
-    color: var(--mcp-ink-3) !important;
-}
-.o_activity_view .o_activity_counter .o_column_progress_aggregated_on {
-    color: var(--mcp-ink-2) !important;
-}
-
-/* Settings cog cell (last header) */
-.o_activity_view .o_optional_columns_dropdown {
-    border: 0 !important;
-}
-.o_activity_view .o_optional_columns_dropdown_toggle {
-    color: var(--mcp-ink-2) !important;
-    transition: color var(--mcp-t-fast);
-    &:hover { color: var(--mcp-accent) !important; }
-}
-
-/* ── Activity record cell (left column: name + amount + badge) ─ */
-.o_activity_view .o_activity_record {
-    padding: 12px 14px !important;
-    background: var(--mcp-surface) !important;
-    transition: background var(--mcp-t-fast);
-    vertical-align: middle !important;
-
-    &:hover { background: var(--mcp-accent-soft) !important; }
-
-    .o_text_bold {
+    /* Header — activity types */
+    thead th {
+        background: var(--mcp-surface-3) !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 10px !important;
         font-weight: 600 !important;
-        color: var(--mcp-ink) !important;
-        font-size: 13px;
-    }
-    .text-muted {
-        color: var(--mcp-ink-2) !important;
-        font-size: 12px;
-    }
-    .o_field_monetary span {
-        font-weight: 500;
-        color: var(--mcp-ink) !important;
-        font-size: 12px;
-    }
-    /* State badge — match list-view badge styling */
-    .o_field_badge .badge {
-        background: transparent !important;
-        border: 1px solid currentColor !important;
-        font-weight: 500 !important;
-        font-size: 11px !important;
-        padding: 2px 8px !important;
-        border-radius: var(--mcp-r-pill) !important;
-    }
-    .o_field_badge.text-info .badge,
-    .o_field_badge .badge.text-bg-info {
-        color: var(--mcp-accent) !important;
-        background: var(--mcp-accent-soft) !important;
-    }
-}
+        letter-spacing: 0.12em !important;
+        text-transform: uppercase !important;
+        color: var(--mcp-ink-3) !important;
+        padding: 8px 10px !important;
+        border-bottom: 1px solid var(--mcp-rule-strong) !important;
+        text-align: center !important;
 
-/* ── Activity summary cell (planned: deadline + avatar) ──────── */
-.o_activity_view .o_activity_summary_cell {
-    background: var(--mcp-surface) !important;
-    transition: background var(--mcp-t-fast);
-    vertical-align: middle !important;
-    height: 100%;
-}
-.o_activity_view .o_activity_summary_cell.planned {
-    background: var(--mcp-accent-soft) !important;
-}
-.o_activity_view .o_activity_summary_cell.planned:hover {
-    background: color-mix(in srgb, var(--mcp-accent-soft) 80%, var(--mcp-accent) 20%) !important;
-}
-.o_activity_view .o-mail-ActivityCell-deadline {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--mcp-accent) !important;
-    font-variant-numeric: tabular-nums;
-}
-.o_activity_view .o-mail-Avatar img {
-    width: 24px;
-    height: 24px;
-    border-radius: 50% !important;
-    border: 1.5px solid var(--mcp-paper);
-}
+        &:first-child { text-align: left !important; }
 
-/* Activity-type label inside the planned cell (e.g. "To-Do") */
-.o_activity_view .o_activity_summary_cell.planned .position-absolute {
-    font-size: 11px !important;
-    font-weight: 600 !important;
-    color: var(--mcp-ink) !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-}
-
-/* Empty cell ( + icon to create) */
-.o_activity_view .o_activity_empty_cell {
-    background: var(--mcp-surface) !important;
-    color: var(--mcp-ink-3) !important;
-    transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
-
-    .fa-plus {
-        font-size: 14px;
-        opacity: 0.4;
-        transition: opacity var(--mcp-t-fast), color var(--mcp-t-fast), transform var(--mcp-t-fast);
-        display: flex;
-    }
-    &:hover {
-        background: var(--mcp-accent-soft) !important;
-        .fa-plus {
-            opacity: 1;
+        .o_activity_filter_button {
             color: var(--mcp-accent) !important;
-            transform: scale(1.15);
+            background: transparent;
         }
     }
-}
 
-/* ── Footer (Schedule activity link row) ────────────────────── */
-.o_activity_view .o_activity_view_table_footer {
-    background: var(--mcp-cp-bg) !important;
-}
-.o_activity_view .o_activity_view_table_footer td {
-    border-top: 1px solid var(--mcp-rule) !important;
-    padding: 12px 16px !important;
-}
-.o_activity_view .o_activity_view_table_footer .o_record_selector {
-    color: var(--mcp-accent) !important;
-    font-weight: 500;
-    text-decoration: none !important;
-    padding: 4px 8px !important;
-    border-radius: var(--mcp-r-sm);
-    transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
+    /* Body */
+    tbody {
+        tr { border-bottom: 1px solid var(--mcp-rule) !important; }
 
-    &:hover {
-        background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
-        text-decoration: none !important;
+        tr:hover {
+            background: var(--mcp-accent-soft) !important;
+            box-shadow: inset 2px 0 0 var(--mcp-accent);
+        }
+
+        td {
+            padding: 8px 10px !important;
+            border-right: 1px solid var(--mcp-rule) !important;
+            vertical-align: middle !important;
+
+            &:first-child {
+                font-weight: 500 !important;
+                color: var(--mcp-ink) !important;
+            }
+        }
+
+        /* Activity cell (with state dot) */
+        .o_activity_record,
+        .o_activity_summary_cell {
+            text-align: center;
+            cursor: pointer;
+            min-height: 32px;
+
+            .o_activity_summary {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 22px;
+                height: 22px;
+                font-family: var(--mcp-font-mono);
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--mcp-accent);
+                background: var(--mcp-accent-soft);
+                border: 1px solid var(--mcp-accent);
+                border-radius: 0;
+                box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+            }
+
+            /* Overdue / planned state colorways */
+            &.o_overdue .o_activity_summary { color: var(--mcp-danger); border-color: var(--mcp-danger); background: var(--mcp-danger-soft); box-shadow: none; }
+            &.o_today   .o_activity_summary { color: var(--mcp-warn);   border-color: var(--mcp-warn);   background: rgba(245,158,11,0.10); box-shadow: none; }
+            &.o_planned .o_activity_summary { color: var(--mcp-ok);     border-color: var(--mcp-ok);     background: rgba(16,185,129,0.10); box-shadow: none; }
+        }
     }
-    .fa-plus { color: var(--mcp-accent) !important; }
+
+    /* Footer totals */
+    tfoot td {
+        background: var(--mcp-surface-3) !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-weight: 700 !important;
+        color: var(--mcp-accent) !important;
+        padding: 8px 10px !important;
+        border-top: 1px solid var(--mcp-rule-strong) !important;
+        text-align: center !important;
+    }
 }

@@ -1,34 +1,71 @@
-// MCP Works backend — SCSS variables shared между всички backend bundles
-// Loaded в web._assets_primary_variables AFTER web/.../primary_variables.scss
+// MCP Works backend — Robot Theme · SCSS build-time variables
+// Shared between all backend bundles. Loaded in
+// web._assets_primary_variables AFTER web/.../primary_variables.scss.
+//
+// THEME: Hi-tech minimalist robot · electric blue · sharp corners
+// Light + Dark via tokens.scss (CSS custom properties).
 
-// ── Brand palette (mirror на frontend mcp-works) ──────────────────────────
-$mcp-paper:        #f6f0e3 !default;
-$mcp-paper-light:  #fbf7ee !default;
-$mcp-paper-deep:   #ece4d3 !default;
-$mcp-ink:          #2c2620 !default;
-$mcp-ink-2:        #5a5147 !default;
-$mcp-ink-3:        #6a6258 !default;
-$mcp-accent:       #4338ca !default;  // indigo
-$mcp-accent-dark:  #3730a3 !default;
-$mcp-accent-soft:  rgba(67, 56, 202, 0.08) !default;
-$mcp-accent-glow:  rgba(67, 56, 202, 0.18) !default;
-$mcp-rule:         rgba(44, 38, 32, 0.12) !default;
-$mcp-rule-strong:  rgba(44, 38, 32, 0.20) !default;
-$mcp-grid-color:   rgba(67, 56, 202, 0.16) !default;
-$mcp-grid-size:    56px !default;
+// ── Brand palette · LIGHT mode defaults (mirror of tokens.scss) ──────────
+$mcp-bg:           #ffffff !default;   // pure white
+$mcp-bg-2:         #f5f6f7 !default;
+$mcp-paper:        #ffffff !default;
+$mcp-paper-light:  #ffffff !default;
+$mcp-paper-deep:   #f5f6f7 !default;
 
-// Top bar (GNOME Shell style — paper bg, 32px tall)
-$mcp-topbar-height:        32px !default;
-$mcp-topbar-bg:            $mcp-paper !default;
-$mcp-topbar-border:        2px solid $mcp-accent !default;
+$mcp-surface:      #ffffff !default;
+$mcp-surface-2:    #fafafa !default;
+$mcp-surface-3:    #f0f1f3 !default;
 
-// Dash (bottom dock — GNOME style)
-$mcp-dash-height:          64px !default;
-$mcp-dash-bg:              rgba(246, 240, 227, 0.92) !default;
-$mcp-dash-border:           1.5px solid $mcp-accent !default;
-$mcp-dash-icon-size:       40px !default;
+$mcp-ink:          #0a1628 !default;
+$mcp-ink-2:        #334155 !default;
+$mcp-ink-3:        #64748b !default;
+$mcp-ink-dim:      #94a3b8 !default;
 
-// ── Override Odoo defaults ────────────────────────────────────────────────
+$mcp-accent:       #0F52BA !default;   // sapphire
+$mcp-accent-dark:  #0a3f8c !default;
+$mcp-accent-2:     #1e6fe0 !default;   // brighter sapphire highlight
+$mcp-accent-3:     #38bdf8 !default;   // sky sparkle
+$mcp-accent-soft:  rgba(15, 82, 186, 0.08) !default;
+$mcp-accent-glow:  rgba(15, 82, 186, 0.55) !default;
+$mcp-accent-mute:  rgba(15, 82, 186, 0.04) !default;
+
+$mcp-danger:       #dc2626 !default;
+$mcp-warn:         #f59e0b !default;
+$mcp-ok:           #10b981 !default;
+
+$mcp-rule:         rgba(165, 195, 225, 0.32) !default;   // light bluish gray — soft
+$mcp-rule-strong:  rgba(130, 165, 205, 0.40) !default;
+$mcp-grid-color:   rgba(15, 82, 186, 0.05) !default;
+$mcp-grid-size:    48px !default;
+$mcp-scan-color:   rgba(15, 82, 186, 0.05) !default;
+
+// ── Layout ──────────────────────────────────────────────────────────────
+// Top bar (Robot theme — slightly taller than GNOME for HUD breathing room)
+$mcp-topbar-height:        36px !default;
+$mcp-topbar-bg:            $mcp-surface !default;
+$mcp-topbar-border:        1px solid $mcp-rule-strong !default;
+
+// Dash dock (left edge — vertical column, GNOME Shell style)
+$mcp-dash-width:           54px !default;
+$mcp-dash-bg:              $mcp-surface !default;
+$mcp-dash-border:          1px solid $mcp-rule-strong !default;
+$mcp-dash-icon-size:       30px !default;
+
+// Breadcrumb strip + status line
+$mcp-bcstrip-height:       30px !default;
+$mcp-statusline-height:    24px !default;
+
+// ── Robot radii · everything sharp ──────────────────────────────────────
+// Set to 0 for industrial look. Bump to 2px for a tiny softening if needed.
+$mcp-r-xs:   0px !default;
+$mcp-r-sm:   0px !default;
+$mcp-r-base: 0px !default;
+$mcp-r-md:   0px !default;
+$mcp-r-lg:   0px !default;
+$mcp-r-xl:   0px !default;
+$mcp-r-pill: 0px !default;
+
+// ── Override Odoo core defaults ─────────────────────────────────────────
 $o-brand-odoo:             $mcp-accent;
 $o-brand-primary:           $mcp-accent;
 $o-brand-secondary:         $mcp-ink-2;
@@ -39,13 +76,28 @@ $o-enterprise-action-color: $mcp-accent;
 $o-navbar-height:          $mcp-topbar-height;
 $o-navbar-background:      $mcp-topbar-bg;
 $o-navbar-border-bottom:    $mcp-topbar-border;
-$o-navbar-entry-color:     $mcp-ink;
+$o-navbar-entry-color:     $mcp-ink-2;
 $o-navbar-entry-color--hover: $mcp-accent;
 $o-navbar-entry-bg--hover:    $mcp-accent-soft;
 $o-navbar-entry-color--active: $mcp-accent;
-$o-navbar-entry-bg--active:    $mcp-accent-soft;
-$o-navbar-brand-color:     $mcp-ink;
+$o-navbar-entry-bg--active:    $mcp-accent-mute;
+$o-navbar-brand-color:     $mcp-accent;
 
-// Body / view backgrounds
-$o-view-background-color:   $mcp-paper-light !default;
-$o-form-view-background-color: $mcp-paper-light !default;
+// Body / view backgrounds — steel paper, not white
+$o-view-background-color:        $mcp-bg !default;
+$o-form-view-background-color:   $mcp-surface !default;
+$o-webclient-background-color:   $mcp-bg !default;
+
+// Form sheet — flat white card on the steel-paper canvas
+$o-sheet-background-color:   $mcp-surface !default;
+$o-sheet-border-color:       $mcp-rule !default;
+
+// Border radii — pass through to Odoo's own components so they go sharp
+$o-border-radius:           $mcp-r-base !default;
+$o-border-radius-sm:        $mcp-r-xs !default;
+$o-border-radius-lg:        $mcp-r-md !default;
+
+// Buttons
+$o-btn-primary-bg:          $mcp-accent !default;
+$o-btn-primary-color:       #ffffff !default;
+$o-btn-primary-hover-bg:    $mcp-accent-dark !default;

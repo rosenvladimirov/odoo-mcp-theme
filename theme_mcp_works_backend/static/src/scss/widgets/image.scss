@@ -27,7 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(67, 56, 202, 0.08);
+    background: var(--mcp-accent-soft);
     border-radius: var(--mcp-r-base);
     opacity: 0;
     transition: opacity var(--mcp-t-base);

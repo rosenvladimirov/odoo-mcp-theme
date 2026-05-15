@@ -1,7 +1,9 @@
-/* MCP Works backend — workspace background (paper-cream + indigo grid mesh) */
+/* MCP Works backend — Robot Theme · workspace background + scrollbars
+   Replaces the old paper-cream layout. Adds a blueprint grid mesh in
+   electric blue, a global scanline overlay, and HUD corner brackets
+   on the action manager. */
 
-/* Thin scrollbars everywhere in the backend.
-   Firefox uses scrollbar-width/colour. WebKit uses pseudo-elements. */
+/* ── Thin, robot-style scrollbars everywhere ─────────────────────────── */
 .o_web_client,
 .o_web_client *,
 .o_web_client *::before,
@@ -9,45 +11,67 @@
     scrollbar-width: thin;
     scrollbar-color: var(--mcp-rule-strong) transparent;
 }
-.o_web_client *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-.o_web_client *::-webkit-scrollbar-track {
-    background: transparent;
-}
+.o_web_client *::-webkit-scrollbar { width: 6px; height: 6px; }
+.o_web_client *::-webkit-scrollbar-track { background: transparent; }
 .o_web_client *::-webkit-scrollbar-thumb {
     background: var(--mcp-rule-strong);
-    border-radius: 100px;
+    border-radius: 0;
     transition: background var(--mcp-t-fast);
 }
-.o_web_client *::-webkit-scrollbar-thumb:hover {
-    background: var(--mcp-accent);
-}
-.o_web_client *::-webkit-scrollbar-corner {
-    background: transparent;
-}
+.o_web_client *::-webkit-scrollbar-thumb:hover { background: var(--mcp-accent); }
+.o_web_client *::-webkit-scrollbar-corner { background: transparent; }
 
-
+/* ── Workspace canvas — steel paper + blueprint grid mesh ────────────── */
 .o_web_client,
 .o_main_content,
 .o_action_manager {
-    background-color: var(--mcp-paper-light) !important;
+    background-color: var(--mcp-bg) !important;
     background-image:
         linear-gradient(to right, var(--mcp-grid-color) 1px, transparent 1px),
         linear-gradient(to bottom, var(--mcp-grid-color) 1px, transparent 1px) !important;
     background-size: var(--mcp-grid-size) var(--mcp-grid-size) !important;
+    color: var(--mcp-ink);
 }
 
-/* Typography — Roboto (already bundled by Odoo core). System fallbacks
-   if for any reason the bundled face doesn't load.
+/* HUD corner brackets on the main action manager — subtle "viewport" frame */
+.o_action_manager { position: relative; }
+.o_action_manager::before,
+.o_action_manager::after {
+    content: "";
+    position: absolute;
+    width: 12px; height: 12px;
+    border: 1.5px solid var(--mcp-accent);
+    opacity: .55;
+    pointer-events: none;
+    z-index: 100;
+}
+.o_action_manager::before { top: 8px;    left: 8px;    border-right: 0; border-bottom: 0; }
+.o_action_manager::after  { bottom: 8px; right: 8px;   border-left: 0;  border-top: 0; }
 
-   IMPORTANT: do NOT force the font on `button` directly. Some Odoo
-   buttons are icon-only (`<button class="fa fa-trash-o">`) and rely
-   on font-family: 'FontAwesome' to render their glyph. Forcing Roboto
-   maps the FA glyph code to a non-existent Roboto codepoint → blank.
-   We set font on the root + form fields; buttons inherit text via
-   normal cascade, while FA's own rules keep icon-button glyphs alive. */
+/* ── Global scanline overlay — robot CRT texture, very subtle ────────── */
+.o_web_client::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99999;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0 3px,
+        var(--mcp-scan-color) 3px 4px
+    );
+    opacity: .5;
+    mix-blend-mode: multiply;
+}
+:root[data-mcp-mode="dark"] .o_web_client::after,
+[data-mcp-mode="dark"] .o_web_client::after {
+    mix-blend-mode: screen;
+    opacity: .7;
+}
+
+/* ── Typography — Space Grotesk for UI, JetBrains Mono for numbers ─────
+   IMPORTANT: do NOT force the font on `button` directly — Odoo's icon
+   buttons use font-family: 'FontAwesome' to render their glyph. */
 .o_web_client,
 .o_web_client input,
 .o_web_client select,
@@ -55,8 +79,69 @@
     font-family: var(--mcp-font-family) !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: var(--mcp-ink);
 }
-/* Restore Roboto on text buttons only — exclude any with FA/OI markers */
 .o_web_client button:not([class*="fa-"]):not([class*="oi-"]):not(.fa):not(.oi) {
     font-family: var(--mcp-font-family);
+}
+
+/* Mono for telemetry-flavored elements (numbers, timers, IDs, badges) */
+.o_pager_counter,
+.o_pager_value,
+.o_pager_limit,
+.o_field_monetary,
+.o_field_float,
+.o_field_integer,
+.o_breadcrumb_record_id,
+.mcp_mono,
+.o_searchview .o_facet_values {
+    font-family: var(--mcp-font-mono) !important;
+    font-feature-settings: "tnum","ss01";
+}
+
+/* ── Soft sapphire halo on panel surfaces ──────────────────────────────
+   Triple-stacked: 1px ring + close 12px + far 32px. Survives white-on-white
+   backgrounds without screaming. Applied to all the main panel-class
+   chrome containers that Odoo renders. */
+.o_form_sheet_bg .o_form_sheet,
+.o_form_view .o_form_sheet,
+.o_list_view,
+.o_list_renderer,
+.o_kanban_view .o_kanban_record,
+.o_kanban_group,
+.o-mail-Chatter,
+.o_searchview,
+.o_control_panel,
+.o_action_panel,
+.o_pivot,
+.o_graph_view,
+.o_calendar_view,
+.modal-content {
+    box-shadow:
+        0 0 0 1px rgba(15, 82, 186, 0.06),
+        0 2px 12px -2px rgba(15, 82, 186, 0.12),
+        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
+}
+
+/* ── Small accent glow on active interactive surfaces ───────────────── */
+.btn-primary,
+.o_cp_buttons .btn-primary,
+.o_cp_switch_buttons .btn.active,
+.o_searchview_facet_label,
+.o_form_statusbar .o_arrow_button.btn-primary,
+.o_form_statusbar .o_arrow_button[data-value][aria-pressed="true"] {
+    box-shadow:
+        0 0 0 1px rgba(15, 82, 186, 0.30),
+        0 0 4px rgba(15, 82, 186, 0.20) !important;
+}
+.btn-primary:hover {
+    box-shadow:
+        0 0 0 1px var(--mcp-accent-2),
+        0 0 6px rgba(15, 82, 186, 0.30) !important;
+}
+.o_kanban_record:hover {
+    box-shadow:
+        0 0 0 1px var(--mcp-accent),
+        0 0 6px rgba(15, 82, 186, 0.20),
+        0 4px 12px -4px rgba(15, 82, 186, 0.20) !important;
 }

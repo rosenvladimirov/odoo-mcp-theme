@@ -1,100 +1,151 @@
-/* MCP Works backend — CSS Custom Properties (runtime design tokens)
-   Loaded first in assets_backend; available to all SCSS and qweb expressions.
-   SCSS build-time vars live in variables.scss (primary_variables bundle). */
+/* MCP Works backend — Robot Theme · CSS Custom Properties
+   Loaded first in assets_backend; available to all SCSS and qweb.
+   SCSS build-time vars live in variables.scss.
 
-:root {
+   THEME: Hi-tech minimalist robot · electric blue · sharp corners
+   Toggle data-mcp-mode="light|dark" on <html> or <body> to switch. */
 
-    /* ── Palette ──────────────────────────────────────────────── */
-    --mcp-paper:         #f6f0e3;
-    --mcp-paper-light:   #fbf7ee;
-    --mcp-paper-deep:    #ece4d3;
-    --mcp-ink:           #2c2620;
-    --mcp-ink-2:         #5a5147;
-    --mcp-ink-3:         #6a6258;
-    --mcp-accent:        #4338ca;
-    --mcp-accent-dark:   #3730a3;
-    --mcp-accent-soft:   rgba(67, 56, 202, 0.08);
-    --mcp-accent-glow:   rgba(67, 56, 202, 0.18);
-    --mcp-danger:        #c41e3a;   /* cherry red — discard / destructive actions */
-    --mcp-danger-soft:   rgba(196, 30, 58, 0.10);
-    --mcp-rule:          rgba(44, 38, 32, 0.12);
-    --mcp-rule-strong:   rgba(44, 38, 32, 0.20);
-    --mcp-grid-color:    rgba(67, 56, 202, 0.16);
-    --mcp-grid-size:     56px;
+:root,
+:root[data-mcp-mode="light"] {
 
-    /* ── Border-radius scale ──────────────────────────────────── */
-    --mcp-r-xs:   2px;    /* subtle — menu items, badges         */
-    --mcp-r-sm:   3px;    /* inputs, small buttons, tags         */
-    --mcp-r-base: 4px;    /* default interactive elements        */
-    --mcp-r-md:   6px;    /* cards, modals, panels               */
-    --mcp-r-lg:   8px;    /* large cards, dock panel             */
-    --mcp-r-xl:   10px;   /* app icons, large tiles              */
-    --mcp-r-pill: 100px;  /* pills, rounded badges               */
+    /* ── Typography ─────────────────────────────────────────────
+       Space Grotesk for UI, JetBrains Mono for telemetry/numbers.
+       Bundle the fonts in /static/src/fonts/ and @font-face them
+       in fonts.scss; OR @import from Google in tokens.scss head. */
+    --mcp-font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Ubuntu, "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --mcp-font-mono:   "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-    /* ── Shadows ──────────────────────────────────────────────── */
-    --mcp-shadow-xs:          0 1px 3px rgba(67, 56, 202, 0.06);
-    --mcp-shadow-sm:          0 2px 8px rgba(0, 0, 0, 0.04);
-    --mcp-shadow-md:          0 4px 16px rgba(0, 0, 0, 0.06);
-    --mcp-shadow-card:        0 2px 6px rgba(0, 0, 0, 0.05);
-    --mcp-shadow-glow:        0 4px 12px rgba(67, 56, 202, 0.15);
-    --mcp-shadow-glow-strong: 0 4px 12px rgba(67, 56, 202, 0.30);
-    --mcp-shadow-modal:       0 16px 40px rgba(67, 56, 202, 0.22), 0 4px 12px rgba(0, 0, 0, 0.14);
-    --mcp-shadow-panel:       0 16px 48px rgba(67, 56, 202, 0.25), 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* ── Palette · LIGHT mode ───────────────────────────────── */
+    --mcp-bg:           #ffffff;   /* pure white */
+    --mcp-bg-2:         #f5f6f7;
+    --mcp-paper:        #ffffff;
+    --mcp-paper-light:  #ffffff;
+    --mcp-paper-deep:   #f5f6f7;
 
-    /* ── Transitions ──────────────────────────────────────────── */
-    --mcp-t-fast:   0.15s ease;
-    --mcp-t-base:   0.2s ease;
-    --mcp-t-slow:   0.25s ease;
-    --mcp-t-spring: 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --mcp-surface:         #ffffff;
+    --mcp-surface-raised:  #ffffff;
+    --mcp-surface-2:       #fafafa;
+    --mcp-surface-3:       #f0f1f3;
+    --mcp-surface-frosted: rgba(255, 255, 255, 0.85);
 
-    /* ── Z-index layers ───────────────────────────────────────── */
+    --mcp-ink:          #0a1628;   /* deep navy text */
+    --mcp-ink-2:        #334155;
+    --mcp-ink-3:        #64748b;
+    --mcp-ink-dim:      #94a3b8;
+
+    --mcp-accent:       #0F52BA;   /* sapphire */
+    --mcp-accent-dark:  #0a3f8c;
+    --mcp-accent-2:     #1e6fe0;   /* brighter sapphire highlight */
+    --mcp-accent-3:     #38bdf8;   /* sky sparkle */
+    --mcp-accent-soft:  rgba(15, 82, 186, 0.08);
+    --mcp-accent-glow:  rgba(15, 82, 186, 0.55);
+    --mcp-accent-mute:  rgba(15, 82, 186, 0.04);
+
+    --mcp-danger:       #dc2626;
+    --mcp-danger-soft:  rgba(220, 38, 38, 0.10);
+    --mcp-warn:         #f59e0b;
+    --mcp-ok:           #10b981;
+
+    --mcp-rule:         rgba(165, 195, 225, 0.32);   /* light bluish gray — soft */
+    --mcp-rule-strong:  rgba(130, 165, 205, 0.40);
+    --mcp-grid-color:   rgba(15, 82, 186, 0.05);
+    --mcp-grid-size:    48px;
+    --mcp-scan-color:   rgba(15, 82, 186, 0.05);
+
+    /* Control-panel & sheet backgrounds */
+    --mcp-cp-bg: color-mix(in srgb, var(--mcp-surface) 92%, var(--mcp-accent) 8%);
+    --mcp-cp-shadow:
+        0 1px 0 0 var(--mcp-rule),
+        0 0 0 1px var(--mcp-accent-soft);
+    --mcp-sheet-border: var(--mcp-rule);
+    --mcp-sheet-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px -6px rgba(15, 23, 42, 0.08);
+
+    /* ── Border-radius scale · ROBOT = SHARP ────────────────── */
+    --mcp-r-xs:   0px;
+    --mcp-r-sm:   0px;
+    --mcp-r-base: 0px;
+    --mcp-r-md:   0px;
+    --mcp-r-lg:   0px;
+    --mcp-r-xl:   0px;
+    --mcp-r-pill: 0px;
+    /* Cut-corner notch for "HUD panel" surfaces (use via clip-path) */
+    --mcp-notch:  6px;
+
+    /* ── Shadows · subtle, blue-cast ─────────────────────────── */
+    --mcp-shadow-xs:          0 1px 0 var(--mcp-rule);
+    --mcp-shadow-sm:          0 1px 2px rgba(15, 23, 42, 0.04);
+    --mcp-shadow-md:          0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px -6px rgba(15, 23, 42, 0.08);
+    --mcp-shadow-card:        0 1px 2px rgba(15, 23, 42, 0.04);
+    --mcp-shadow-glow:        0 0 0 1px rgba(15, 82, 186, 0.20), 0 0 16px rgba(15, 82, 186, 0.45), 0 8px 32px -8px rgba(15, 82, 186, 0.45);
+    --mcp-shadow-glow-strong: 0 0 0 1px var(--mcp-accent), 0 0 32px rgba(15, 82, 186, 0.75), 0 0 64px rgba(15, 82, 186, 0.50);
+    --mcp-shadow-modal:       0 0 0 1px var(--mcp-accent), 0 16px 48px -8px rgba(37, 99, 235, 0.30), 0 4px 12px rgba(0, 0, 0, 0.14);
+    --mcp-shadow-panel:       0 0 0 1px var(--mcp-accent-soft), 0 16px 48px -8px rgba(37, 99, 235, 0.20);
+
+    /* ── Transitions ─────────────────────────────────────────── */
+    --mcp-t-fast:   120ms cubic-bezier(.2,.6,.2,1);
+    --mcp-t-base:   180ms cubic-bezier(.2,.6,.2,1);
+    --mcp-t-slow:   260ms cubic-bezier(.2,.6,.2,1);
+    --mcp-t-spring: 240ms cubic-bezier(.34, 1.4, 0.64, 1);
+
+    /* ── Z-index ─────────────────────────────────────────────── */
     --mcp-z-actions:  1050;
     --mcp-z-backdrop: 9998;
-    --mcp-z-modal:    9999;     /* sits above Discuss / kanban / popovers */
+    --mcp-z-modal:    9999;
 
-    /* ── Typography ───────────────────────────────────────────────
-       Roboto is bundled by Odoo core (web/static/fonts/google/Roboto/)
-       and registered via web/static/fonts/fonts.scss in assets_backend.
-       We just reference it — no @import, no extra hosting. */
-    --mcp-font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Ubuntu, "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-
-    /* ── Surfaces (white card/sheet backgrounds) ─────────────── */
-    --mcp-surface:         #ffffff;   /* form sheets, list tables, kanban cards */
-    --mcp-surface-raised:  #ffffff;   /* modals, dropdowns, popovers            */
-    --mcp-surface-frosted: rgba(255, 255, 255, 0.30); /* frosted control panel  */
-
-    /* Control-panel surface — white with a very faint indigo wash (≈4%
-       of accent mixed into white). Tweak the percentage to dial the
-       tint up or down without touching individual selectors. */
-    --mcp-cp-bg: color-mix(in srgb, #ffffff 96%, var(--mcp-accent) 4%);
-
-    /* Control-panel shadow — soft drop + outward indigo glow halo. */
-    --mcp-cp-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.05),
-        0 0 24px rgba(67, 56, 202, 0.14);
-
-    /* Form-sheet card chrome — same treatment as the control panel. */
-    --mcp-sheet-border: var(--mcp-rule);
-    --mcp-sheet-shadow: var(--mcp-cp-shadow);
-
-    /* ── Layout ───────────────────────────────────────────────── */
-    --mcp-navbar-height: 32px;
-
-    /* Single control-panel row height — change here to resize all
-       CP rows (main_buttons, actions, searchview, switch_buttons,
-       action_menus) and their inner buttons in one go. */
+    /* ── Layout ──────────────────────────────────────────────── */
+    --mcp-navbar-height: 36px;
     --mcp-cp-row-h:      30px;
-
-    /* Outer padding applied uniformly to every top-level view root
-       (.o_form_view, .o_list_view, .o_kanban_view, .o_pivot_view,
-       .o_graph_view, .o_calendar_view, .o_activity_view, .o-mail-Discuss,
-       .o_spreadsheet_dashboard_action). One knob, all views move. */
     --mcp-view-pad:      8px;
-
-    /* Stat-button (smart-button) sizing.
-       --mcp-stat-btn-w is set per-buttonbox by resizer.js to the widest
-       measured segment, clamped to [min, max]. CSS default falls back
-       to min-w when JS hasn't run yet (e.g. SSR / first paint). */
     --mcp-stat-btn-min-w: 140px;
     --mcp-stat-btn-max-w: 240px;
+    --mcp-dash-width:    54px;
+    --mcp-bcstrip-h:     30px;
+    --mcp-status-h:      24px;
+}
+
+/* ── Palette · DARK mode ───────────────────────────────────────
+   Toggle by setting [data-mcp-mode="dark"] on <html> or <body>.
+   The whole token surface flips; selectors below stay untouched. */
+:root[data-mcp-mode="dark"],
+[data-mcp-mode="dark"] {
+    --mcp-bg:           #050a14;
+    --mcp-bg-2:         #08111f;
+    --mcp-paper:        #050a14;
+    --mcp-paper-light:  #0b1424;
+    --mcp-paper-deep:   #030713;
+
+    --mcp-surface:         #0b1424;
+    --mcp-surface-raised:  #0f1c30;
+    --mcp-surface-2:       #0f1c30;
+    --mcp-surface-3:       #142539;
+    --mcp-surface-frosted: rgba(11, 20, 36, 0.85);
+
+    --mcp-ink:          #e6edf7;
+    --mcp-ink-2:        #94a3b8;
+    --mcp-ink-3:        #6b7c95;
+    --mcp-ink-dim:      #475569;
+
+    --mcp-accent:       #3b82f6;
+    --mcp-accent-dark:  #2563eb;
+    --mcp-accent-2:     #22d3ee;
+    --mcp-accent-3:     #38bdf8;
+    --mcp-accent-soft:  rgba(59, 130, 246, 0.12);
+    --mcp-accent-glow:  rgba(59, 130, 246, 0.30);
+    --mcp-accent-mute:  rgba(59, 130, 246, 0.05);
+
+    --mcp-danger:       #f87171;
+    --mcp-danger-soft:  rgba(248, 113, 113, 0.10);
+    --mcp-warn:         #fbbf24;
+    --mcp-ok:           #34d399;
+
+    --mcp-rule:         rgba(120, 160, 210, 0.16);   /* cool bluish gray — soft */
+    --mcp-rule-strong:  rgba(140, 180, 220, 0.26);
+    --mcp-grid-color:   rgba(59, 130, 246, 0.08);
+    --mcp-scan-color:   rgba(59, 130, 246, 0.05);
+
+    --mcp-cp-bg: color-mix(in srgb, var(--mcp-surface) 88%, var(--mcp-accent) 12%);
+    --mcp-cp-shadow:
+        0 1px 0 0 var(--mcp-rule),
+        0 0 0 1px var(--mcp-accent-soft);
+    --mcp-sheet-shadow: 0 1px 2px rgba(0,0,0, 0.32), 0 8px 24px -8px rgba(0,0,0, 0.40);
 }

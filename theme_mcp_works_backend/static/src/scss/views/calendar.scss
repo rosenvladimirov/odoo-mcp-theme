@@ -1,406 +1,157 @@
-/* MCP Works backend — Calendar view
-   Layout convention (canonical, see feedback memory):
-   • .o_calendar_view (root) → padding: var(--mcp-view-pad).
-   • main.o_content → flush; .o_calendar_container becomes the card.
-   • .o_calendar_container is the d-grid wrapping header + toggler +
-     wrapper (renderer + sidebar). We promote it to the card chrome.
-   • FullCalendar (.fc-*) — default borders/bg are hard greys; we
-     override with theme tokens (--mcp-rule, --mcp-paper). */
+/* MCP Works backend — Robot Theme · Calendar view
+   Sharp sapphire grid, monospace HUD headers, sapphire today-marker,
+   accent event chips with subtle halo. */
 
 .o_calendar_view {
-    background: transparent !important;
-    padding: var(--mcp-view-pad) !important;
-    margin: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-.o_calendar_view main.o_content {
-    padding: 0 !important;
-    margin: 0 !important;
-    background: transparent !important;
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-/* ── Container card (header + toggler + wrapper) ─────────────── */
-/* Promote the d-grid container to the card surface so header,
-   sidebar toggler and wrapper share one piece of chrome. */
-.o_calendar_view .o_calendar_container {
+    padding: var(--mcp-view-pad);
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    overflow: hidden !important;             /* keep rounded corners clean */
-    margin: 8px 0 0 0 !important;
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-}
-/* Neutralise Bootstrap .bg-view (cream) on grid + sidebar — we
-   want one continuous surface. */
-.o_calendar_view .o_calendar_container.bg-view,
-.o_calendar_view .o_calendar_sidebar_container.bg-view {
-    background: transparent !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+    box-shadow:
+        0 0 0 1px rgba(15, 82, 186, 0.06),
+        0 2px 12px -2px rgba(15, 82, 186, 0.12),
+        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
 }
 
-/* ── Header (prev/next, scale, today, week label) ────────────── */
-.o_calendar_view .o_calendar_header {
-    background-color: var(--mcp-cp-bg) !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
+/* Top toolbar (prev/next, view picker, today) */
+.o_calendar_view .fc-toolbar,
+.o_calendar_view .fc-header-toolbar {
+    background: var(--mcp-surface-2) !important;
+    border-bottom: 1px solid var(--mcp-rule-strong) !important;
     padding: 8px 12px !important;
-    gap: 8px !important;
-}
-.o_calendar_view .o_calendar_header h5 {
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    color: var(--mcp-ink) !important;
-    text-transform: none !important;
-    letter-spacing: normal !important;
     margin: 0 !important;
-}
-.o_calendar_view .o_calendar_header .o_current_week {
-    background: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
-    font-weight: 500;
-    font-size: 11px;
-    padding: 2px 6px !important;
-}
-.o_calendar_view .o_calendar_header .btn {
-    border-color: var(--mcp-rule) !important;
-    background: var(--mcp-surface) !important;
-    color: var(--mcp-ink) !important;
-}
-.o_calendar_view .o_calendar_header .btn:hover {
-    border-color: var(--mcp-accent) !important;
-    color: var(--mcp-accent) !important;
-}
-.o_calendar_view .o_calendar_header .o_calendar_button_today {
-    background: var(--mcp-accent) !important;
-    border-color: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
-}
-.o_calendar_view .o_calendar_header .o_calendar_button_today:hover {
-    filter: brightness(0.92);
-    color: var(--mcp-paper) !important;
-}
 
-/* ── Sidebar toggler column (the panel-right button) ─────────── */
-.o_calendar_view .o_sidebar_toggler {
-    background: var(--mcp-cp-bg) !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
-}
-.o_calendar_view .o_sidebar_toggler .btn {
-    background: transparent !important;
-    border-color: var(--mcp-rule) !important;
-    color: var(--mcp-ink) !important;
-    &:hover { color: var(--mcp-accent) !important; border-color: var(--mcp-accent) !important; }
-}
-
-/* ── Calendar wrapper + renderer ─────────────────────────────── */
-.o_calendar_view .o_calendar_wrapper,
-.o_calendar_view .o_calendar_renderer {
-    background: transparent !important;
-}
-
-/* ── FullCalendar overrides (timegrid + daygrid) ─────────────── */
-.o_calendar_view .fc {
-    --fc-border-color: var(--mcp-rule);
-    --fc-page-bg-color: var(--mcp-surface);    /* white grid background */
-    --fc-neutral-bg-color: var(--mcp-surface);
-    --fc-list-event-hover-bg-color: var(--mcp-accent-soft);
-    --fc-today-bg-color: var(--mcp-surface);     /* keep workspace white */
-    --fc-now-indicator-color: var(--mcp-accent);
-    --fc-event-bg-color: var(--mcp-accent);
-    --fc-event-border-color: var(--mcp-accent);
-    --fc-event-text-color: var(--mcp-paper);
-    color: var(--mcp-ink);
-    background: var(--mcp-surface) !important;
-}
-.o_calendar_view .fc-view-harness,
-.o_calendar_view .fc-timegrid,
-.o_calendar_view .fc-timegrid-body,
-.o_calendar_view .fc-daygrid-body,
-.o_calendar_view .fc-scroller {
-    background: var(--mcp-surface) !important;
-}
-.o_calendar_view .fc-scrollgrid,
-.o_calendar_view .fc-scrollgrid td,
-.o_calendar_view .fc-scrollgrid th {
-    border-color: var(--mcp-rule) !important;
-}
-
-/* Day-of-week column headers */
-.o_calendar_view .fc-col-header-cell {
-    background: var(--mcp-cp-bg) !important;
-    border-color: var(--mcp-rule) !important;
-}
-.o_calendar_view .fc-col-header-cell-cushion {
-    color: var(--mcp-ink) !important;
-    font-weight: 500 !important;
-    font-size: 12px !important;
-    text-decoration: none !important;
-    padding: 6px 4px !important;
-    text-transform: none !important;
-}
-.o_calendar_view .o_cw_day_name {
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: 10px;
-    color: var(--mcp-ink-2);
-    margin-right: 4px;
-}
-.o_calendar_view .o_cw_day_number,
-.o_calendar_view .fc-day-number {
-    font-weight: 600;
-    color: var(--mcp-ink);
-}
-
-/* Today column header — keep cp-bg, only the indigo bottom border
-   + indigo digit mark "today". No accent fill in workspace. */
-.o_calendar_view .fc-day-today.fc-col-header-cell {
-    background: var(--mcp-cp-bg) !important;
-    border-bottom: 2px solid var(--mcp-accent) !important;
-}
-.o_calendar_view .fc-day-today .o_cw_day_number,
-.o_calendar_view .fc-day-today.fc-col-header-cell a {
-    color: var(--mcp-accent) !important;
-}
-
-/* All days → clean white surface (today gets accent-soft via fc var) */
-.o_calendar_view .fc-day:not(.fc-col-header-cell):not(.fc-day-today) {
-    background: var(--mcp-surface) !important;
-}
-/* Day cells & timegrid columns explicitly white so paper-cream
-   doesn't bleed through gaps */
-.o_calendar_view .fc-timegrid-col,
-.o_calendar_view .fc-daygrid-day,
-.o_calendar_view .fc-timegrid-col-bg,
-.o_calendar_view .fc-daygrid-day-frame,
-.o_calendar_view .fc-daygrid-day-bg {
-    background: var(--mcp-surface) !important;
-}
-/* Today / selected day in workspace stays WHITE — the only "today"
-   indicator lives in the column header (indigo bottom border + digit). */
-.o_calendar_view .fc-day-today.fc-timegrid-col,
-.o_calendar_view .fc-day-today.fc-daygrid-day,
-.o_calendar_view .fc-day-today .fc-timegrid-col-bg,
-.o_calendar_view .fc-day-today .fc-daygrid-day-bg,
-.o_calendar_view .fc-day-today .fc-daygrid-day-frame {
-    background: var(--mcp-surface) !important;
-}
-
-/* Time-grid axis (hour labels on the left) */
-.o_calendar_view .fc-timegrid-axis,
-.o_calendar_view .fc-timegrid-slot-label {
-    background: var(--mcp-cp-bg) !important;
-    border-color: var(--mcp-rule) !important;
-}
-.o_calendar_view .fc-timegrid-slot-label-cushion {
-    color: var(--mcp-ink-2) !important;
-    font-size: 11px !important;
-    padding: 2px 6px !important;
-}
-.o_calendar_view .fc-timegrid-axis-cushion {
-    color: var(--mcp-ink-3) !important;
-    font-size: 10px !important;
-    text-decoration: none !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-}
-
-/* Time-slot lanes — alternate hour bg for legibility */
-.o_calendar_view .fc-timegrid-slot {
-    height: 22px !important;
-    border-color: var(--mcp-rule) !important;
-}
-.o_calendar_view .fc-timegrid-slot-minor {
-    border-top-style: dotted !important;
-    border-top-color: color-mix(in srgb, var(--mcp-rule) 70%, transparent) !important;
-}
-
-/* Now indicator (red line in core → indigo for us) */
-.o_calendar_view .fc-timegrid-now-indicator-line,
-.o_calendar_view .fc-timegrid-now-indicator-arrow {
-    border-color: var(--mcp-accent) !important;
-}
-.o_calendar_view .o_calendar_time_indicator_now {
-    background: var(--mcp-accent) !important;
-}
-
-/* Divider between all-day & timegrid */
-.o_calendar_view .fc-timegrid-divider {
-    background: var(--mcp-cp-bg) !important;
-    border-color: var(--mcp-rule) !important;
-    height: 4px !important;
-}
-
-/* ── Events (chips) ──────────────────────────────────────────── */
-.o_calendar_view .fc-event {
-    border: none !important;
-    border-radius: var(--mcp-r-xs) !important;
-    background: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
-    font-size: 11px !important;
-    padding: 2px 6px !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-    cursor: pointer;
-    transition: filter var(--mcp-t-fast), transform var(--mcp-t-fast);
-
-    &:hover {
-        filter: brightness(0.92);
-        transform: translateY(-1px);
-        text-decoration: none !important;
+    .fc-toolbar-title {
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.12em !important;
+        text-transform: uppercase !important;
+        color: var(--mcp-ink) !important;
     }
 
-    .fc-event-main { padding: 0 !important; }
-}
-.o_calendar_view .fc-event.o_past_event { opacity: 0.7; }
-.o_calendar_view .o_event_title {
-    font-weight: 500 !important;
-    font-size: 11px !important;
-    line-height: 1.3 !important;
+    .fc-button,
+    button.fc-button {
+        background: transparent !important;
+        color: var(--mcp-ink-2) !important;
+        border: 1px solid var(--mcp-rule-strong) !important;
+        border-radius: 0 !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        padding: 4px 10px !important;
+        text-shadow: none !important;
+        box-shadow: none !important;
+
+        &:hover { color: var(--mcp-accent) !important; border-color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
+        &.fc-button-active,
+        &.fc-state-active {
+            background: var(--mcp-accent) !important;
+            border-color: var(--mcp-accent) !important;
+            color: var(--mcp-surface) !important;
+            box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+        }
+    }
 }
 
-/* ── Sidebar (datepicker + filter list) ──────────────────────── */
-/* Sidebar bg = paper-cream so the two inner cp-bg cards stand
-   out (white-with-indigo-wash on cream). */
-.o_calendar_view .o_calendar_sidebar_container {
-    border-left: 1px solid var(--mcp-rule) !important;
-    background: var(--mcp-paper) !important;
-}
-.o_calendar_view .o_calendar_sidebar { padding: 10px !important; }
+/* Day-header cells (Mon, Tue, …) */
+.o_calendar_view .fc-col-header-cell,
+.o_calendar_view .fc-day-header {
+    background: var(--mcp-surface-3) !important;
+    border-bottom: 1px solid var(--mcp-rule-strong) !important;
 
-/* Mini date picker — CP-style card (cp-bg + cp-shadow + rule) */
-.o_calendar_view .o_datetime_picker {
-    background-color: var(--mcp-cp-bg) !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    padding: 10px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
+    .fc-col-header-cell-cushion,
+    .fc-day-header-text {
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 10px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.14em !important;
+        text-transform: uppercase !important;
+        color: var(--mcp-ink-3) !important;
+        padding: 8px 10px !important;
+    }
 }
 
-/* Header row: [< prev] [month label — grows] [next >] — full width */
-.o_calendar_view .o_datetime_picker_header {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 4px !important;
-    margin-bottom: 8px !important;
-    width: 100% !important;
-}
-.o_calendar_view .o_datetime_picker_header .o_previous { order: 0 !important; }
-.o_calendar_view .o_datetime_picker_header .o_zoom_out  { order: 1 !important; flex: 1 1 auto !important; text-align: center !important; }
-.o_calendar_view .o_datetime_picker_header .o_next      { order: 2 !important; }
-
-.o_calendar_view .o_datetime_picker_header .btn {
-    background: transparent !important;
-    border: none !important;
-    color: var(--mcp-ink-2) !important;
-    padding: 4px 8px !important;
-    &:hover { color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
-}
-.o_calendar_view .o_datetime_picker_header .o_zoom_out strong {
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    color: var(--mcp-ink) !important;
-}
-.o_calendar_view .o_day_of_week_cell {
-    color: var(--mcp-ink-3) !important;
-    font-size: 10px !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-weight: 600 !important;
-    height: 24px !important;
-}
-.o_calendar_view .o_date_item_cell {
-    border-radius: var(--mcp-r-xs) !important;
-    font-size: 12px !important;
-    height: 28px !important;
-    transition: background var(--mcp-t-fast);
-    &:hover { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent) !important; }
-}
-.o_calendar_view .o_date_item_cell.o_today > div {
-    color: var(--mcp-accent) !important;
-}
-/* Selected day → circular indigo pill (matches today shape).
-   Odoo gives o_today an inner div with `w-75 rounded-circle`; for
-   o_selected (without o_today) we synthesize the same circle. */
-.o_calendar_view .o_date_item_cell.o_selected > div {
-    background: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
-    width: 28px !important;
-    height: 28px !important;
-    border-radius: 50% !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 auto !important;
-    line-height: 1 !important;
-}
-/* When today AND selected: indigo solid circle, paper text */
-.o_calendar_view .o_date_item_cell.o_today.o_selected > div {
-    background: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
-}
-
-/* Filter section — CP-style card (cp-bg + cp-shadow + rule) */
-.o_calendar_view .o_calendar_filter {
-    margin: 12px 0 0 0 !important;
-    padding: 10px !important;
-    background-color: var(--mcp-cp-bg) !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-}
-.o_calendar_view .o_calendar_filter_items_checkall {
-    border-bottom: 1px solid var(--mcp-rule) !important;
-    padding-bottom: 6px !important;
-    margin-bottom: 6px !important;
-}
-.o_calendar_view .o_cw_filter_label {
-    font-size: 12px !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--mcp-ink-2) !important;
-    font-weight: 600 !important;
-}
-.o_calendar_view .o_calendar_filter_item {
-    padding: 4px 6px !important;
-    border-radius: var(--mcp-r-xs) !important;
-    transition: background var(--mcp-t-fast);
-    &:hover { background: var(--mcp-accent-soft) !important; }
-}
-.o_calendar_view .o_cw_filter_title {
-    font-size: 12px !important;
-    color: var(--mcp-ink) !important;
-}
-
-/* ── Popover (event detail) ──────────────────────────────────── */
-.o_calendar_popover {
+/* Grid cells */
+.o_calendar_view .fc-day,
+.o_calendar_view .fc-daygrid-day {
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    padding: 12px 14px;
-    max-width: 280px;
-    z-index: var(--mcp-z-modal);
+    border-color: var(--mcp-rule) !important;
+
+    &:hover { background: var(--mcp-accent-mute) !important; }
+
+    .fc-daygrid-day-number,
+    .fc-day-number {
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        color: var(--mcp-ink-2) !important;
+        padding: 4px 6px !important;
+    }
 }
-.o_calendar_popover_date {
-    font-size: 11px;
-    color: var(--mcp-ink-3);
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+
+/* Today marker */
+.o_calendar_view .fc-day-today {
+    background: var(--mcp-accent-soft) !important;
+    box-shadow: inset 0 0 0 1px var(--mcp-accent), inset 0 0 12px rgba(15, 82, 186, 0.12);
+
+    .fc-daygrid-day-number {
+        color: var(--mcp-accent) !important;
+        font-weight: 700 !important;
+        text-shadow: 0 0 8px rgba(15, 82, 186, 0.30);
+    }
 }
-.o_calendar_popover_title {
-    font-weight: 600;
-    color: var(--mcp-ink);
-    font-size: 14px;
-    margin-bottom: 8px;
+
+/* Event chips */
+.o_calendar_view .fc-event,
+.o_calendar_view .o_event {
+    background: var(--mcp-accent) !important;
+    color: var(--mcp-surface) !important;
+    border: 0 !important;
+    border-left: 3px solid var(--mcp-accent-2) !important;
+    border-radius: 0 !important;
+    font-family: var(--mcp-font-family) !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    padding: 2px 6px !important;
+    box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+
+    &:hover {
+        box-shadow: 0 0 0 1px var(--mcp-accent-2), 0 0 8px rgba(15, 82, 186, 0.40) !important;
+    }
+
+    .fc-event-time {
+        font-family: var(--mcp-font-mono) !important;
+        font-feature-settings: "tnum","ss01";
+        font-weight: 600 !important;
+        opacity: 0.85;
+    }
+}
+
+/* Time-grid (week/day) hour rows */
+.o_calendar_view .fc-timegrid-slot,
+.o_calendar_view .fc-axis {
+    border-color: var(--mcp-rule) !important;
+
+    .fc-timegrid-slot-label-cushion,
+    .fc-axis-cushion {
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 9.5px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.06em !important;
+        color: var(--mcp-ink-3) !important;
+    }
+}
+
+/* Now-indicator (red line for "now") — switch to sapphire pulse */
+.o_calendar_view .fc-timegrid-now-indicator-line,
+.o_calendar_view .fc-now-indicator-line {
+    border-color: var(--mcp-accent) !important;
+    box-shadow: 0 0 8px var(--mcp-accent-glow);
+}
+.o_calendar_view .fc-timegrid-now-indicator-arrow {
+    border-left-color: var(--mcp-accent) !important;
+    border-right-color: var(--mcp-accent) !important;
 }

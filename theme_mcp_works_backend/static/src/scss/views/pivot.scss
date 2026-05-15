@@ -1,133 +1,102 @@
-/* MCP Works backend — Pivot view
-   Layout convention (canonical, see feedback memory):
-   • .o_pivot_view (root) → padding: 16px on all sides.
-   • main.o_content + anonymous div wrapper → flush.
-   • .o_pivot_buttons + .o_pivot inner — Odoo ships them with Bootstrap
-     mx-3/mt-2/mb-3 utilities. We strip those because root padding
-     already handles outer gutters. */
+/* MCP Works backend — Robot Theme · Pivot view
+   Sharp grid, monospace headers, sapphire totals, accent column-active. */
 
-.o_pivot_view {
-    background: transparent !important;
-    padding: var(--mcp-view-pad) !important;
-    margin: 0 !important;
-}
-/* Make the pivot view a column that fills remaining vertical space —
-   so .o_pivot can stretch to the bottom edge below the toolbar. */
-.o_pivot_view {
-    display: flex !important;
-    flex-direction: column !important;
-}
-.o_pivot_view main.o_content {
-    padding: 0 !important;
-    margin: 0 !important;
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-}
-.o_pivot_view main.o_content > div {
-    padding: 0 !important;
-    margin: 0 !important;
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-}
-.o_pivot_view .o_pivot {
-    margin: 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
-}
-
-/* Pivot toolbar — styled like the form statusbar (indigo-tinted card,
-   rounded top corners, hairline rule). Sits between CP and pivot table. */
-.o_pivot_view .o_pivot_buttons {
-    background-color: var(--mcp-cp-bg) !important;
-    padding: 8px !important;
-    margin: 8px 0 8px 0 !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    align-items: center !important;
-}
-
-/* Pivot panel — translucent white surface that stretches to fill the
-   remaining vertical space below the toolbar (smart-resizer driven
-   via flex parents above). Both axes scroll inside the panel. */
-.o_pivot_view .o_pivot {
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    width: 100%;
-    overflow: auto;
-    background: rgba(255, 255, 255, 0.55) !important;
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    border: 1px solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    padding: 12px !important;
-}
-.o_pivot > table {
+.o_pivot_view,
+.o_pivot {
+    padding: var(--mcp-view-pad);
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-    overflow: hidden;
-    box-shadow: var(--mcp-cp-shadow) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+    overflow: auto;
+    box-shadow:
+        0 0 0 1px rgba(15, 82, 186, 0.06),
+        0 2px 12px -2px rgba(15, 82, 186, 0.12),
+        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
+}
+
+.o_pivot table.o_pivot_table {
     width: 100%;
-    table-layout: auto;
-}
-
-/* ── Column / row headers ────────────────────────────────────── */
-.o_pivot thead th,
-.o_pivot .o_pivot_header_cell_opened,
-.o_pivot .o_pivot_header_cell_closed {
-    background: var(--mcp-cp-bg) !important;
-    color: var(--mcp-ink) !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
-    border-right: 1px solid var(--mcp-rule) !important;
-    padding: 8px 12px !important;
+    border-collapse: collapse;
     font-size: 12px !important;
-    font-weight: 500 !important;
-    text-transform: none;
-    letter-spacing: normal;
-    user-select: none;
-    white-space: nowrap;
+
+    /* All header cells — monospace caps */
+    thead th,
+    th.o_pivot_header_cell,
+    th.o_pivot_origin_row {
+        background: var(--mcp-surface-3) !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 10px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.12em !important;
+        text-transform: uppercase !important;
+        color: var(--mcp-ink-3) !important;
+        padding: 8px 12px !important;
+        border: 1px solid var(--mcp-rule-strong) !important;
+        text-align: left !important;
+        white-space: nowrap;
+
+        &.o_pivot_measure_row {
+            color: var(--mcp-accent) !important;
+            background: var(--mcp-accent-mute) !important;
+        }
+    }
+
+    /* Row labels (first column of body) */
+    tbody th {
+        background: var(--mcp-surface-2) !important;
+        font-family: var(--mcp-font-family) !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        color: var(--mcp-ink) !important;
+        padding: 8px 12px !important;
+        border: 1px solid var(--mcp-rule) !important;
+        letter-spacing: 0;
+        text-transform: none;
+        text-align: left !important;
+    }
+
+    /* Numeric body cells */
+    tbody td {
+        font-family: var(--mcp-font-mono) !important;
+        font-feature-settings: "tnum","ss01";
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        color: var(--mcp-ink) !important;
+        padding: 8px 12px !important;
+        border: 1px solid var(--mcp-rule) !important;
+        text-align: right !important;
+        background: var(--mcp-surface) !important;
+
+        &:hover { background: var(--mcp-accent-mute) !important; }
+    }
+
+    /* Total rows / cells — sapphire highlight */
+    tfoot td,
+    tfoot th,
+    tr.o_pivot_total,
+    tr.o_pivot_origin_row td,
+    td.o_pivot_total,
+    td.o_pivot_origin_row,
+    th.o_pivot_total {
+        background: var(--mcp-accent) !important;
+        color: var(--mcp-surface) !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.04em !important;
+        box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+    }
+
+    /* Variation columns (red/green delta indicators) */
+    .o_variation_negative { color: var(--mcp-danger) !important; }
+    .o_variation_positive { color: var(--mcp-ok) !important; }
+
+    /* Expand/collapse toggles in row labels */
+    .o_pivot_header_cell_closed,
+    .o_pivot_header_cell_opened {
+        cursor: pointer;
+        color: var(--mcp-accent) !important;
+
+        &:hover { background: var(--mcp-accent-soft) !important; }
+    }
 }
-
-/* Drilldown cursor */
-.o_pivot .o_pivot_header_cell_opened,
-.o_pivot .o_pivot_header_cell_closed {
-    cursor: pointer;
-    &:hover { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent) !important; }
-}
-
-/* ── Data cells ──────────────────────────────────────────────── */
-.o_pivot tbody td {
-    padding: 7px 12px !important;
-    border-right: 1px solid var(--mcp-rule) !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
-    color: var(--mcp-ink) !important;
-    text-align: right !important;
-    font-variant-numeric: tabular-nums;
-    font-size: 12px;
-    transition: background var(--mcp-t-fast);
-
-    &:hover { background: var(--mcp-accent-soft) !important; }
-}
-
-/* Row label cells */
-.o_pivot tbody .o_pivot_cell_value:first-child { text-align: left !important; }
-
-/* Total row */
-.o_pivot tfoot td,
-.o_pivot tr.o_pivot_total td {
-    background: var(--mcp-paper-deep) !important;
-    font-weight: 700;
-    border-top: 2px solid var(--mcp-accent) !important;
-    color: var(--mcp-ink) !important;
-}
-
-/* ── Controls ────────────────────────────────────────────────── */
-.o_pivot_buttons .btn { margin-right: 4px; }
