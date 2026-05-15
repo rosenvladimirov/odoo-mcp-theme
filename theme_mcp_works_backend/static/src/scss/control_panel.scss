@@ -124,6 +124,17 @@
     }
 }
 
+/* Odoo renders the breadcrumb TWICE: its native one in
+   .o_control_panel_breadcrumbs (next to the New button) AND the
+   relocated/styled copy inside .mcp_breadcrumb_strip.  Hide the
+   native duplicate only — the "Нов"/action buttons are siblings of
+   .o_breadcrumb (not inside it) so they stay.  (Rosen: дубликат
+   до бутона "Нов".) */
+.o_control_panel_breadcrumbs > .o_breadcrumb,
+.o_control_panel .o_control_panel_breadcrumbs > .o_breadcrumb {
+    display: none !important;
+}
+
 /* theme.css .control-panel = flat 38px strip, border-bottom only,
    NO halo (the halo belongs to data panels, not the CP bar). */
 .o_control_panel {
