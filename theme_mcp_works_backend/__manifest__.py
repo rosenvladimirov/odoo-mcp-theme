@@ -5,7 +5,7 @@
     "summary": "Independent hi-tech minimalist Odoo CE backend — robot "
                "theme, electric sapphire accents, sharp corners, "
                "light/dark mode, vertical Dash dock",
-    "version": "19.0.1.15.0",
+    "version": "19.0.1.16.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -24,6 +24,9 @@
             ),
         ],
         "web.assets_backend": [
+            # ── 0. Self-hosted webfonts (must precede token refs) ──────
+            "theme_mcp_works_backend/static/src/scss/fonts.scss",
+
             # ── 1. Runtime design tokens ───────────────────────────────
             "theme_mcp_works_backend/static/src/scss/tokens.scss",
 

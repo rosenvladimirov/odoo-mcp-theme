@@ -1,0 +1,81 @@
+/* MCP Works backend — Robot Theme · self-hosted webfonts (OFL)
+   Loaded FIRST in web.assets_backend so the @font-face rules exist
+   before tokens.scss / variables.scss reference the families.
+
+   Space Grotesk  — UI (Latin only; Cyrillic gracefully falls back
+                     through the --mcp-font-family stack, by design).
+   JetBrains Mono  — HUD / numerics / telemetry (Latin + Cyrillic).
+
+   Self-hosted (no external CDN @import) — try-shop is customer-facing;
+   keeps the theme offline-safe and privacy-clean.  @font-face src:url()
+   is NOT @import url() so it is bundle-safe. */
+
+/* ── Space Grotesk (UI) ───────────────────────────────────────── */
+@font-face {
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/theme_mcp_works_backend/static/src/fonts/space-grotesk-400.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/theme_mcp_works_backend/static/src/fonts/space-grotesk-500.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("/theme_mcp_works_backend/static/src/fonts/space-grotesk-600.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/theme_mcp_works_backend/static/src/fonts/space-grotesk-700.woff2") format("woff2");
+}
+
+/* ── JetBrains Mono (HUD / numerics) · Latin ──────────────────── */
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/theme_mcp_works_backend/static/src/fonts/jetbrains-mono-400.woff2") format("woff2");
+}
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/theme_mcp_works_backend/static/src/fonts/jetbrains-mono-500.woff2") format("woff2");
+}
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("/theme_mcp_works_backend/static/src/fonts/jetbrains-mono-600.woff2") format("woff2");
+}
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/theme_mcp_works_backend/static/src/fonts/jetbrains-mono-700.woff2") format("woff2");
+}
+
+/* ── JetBrains Mono · Cyrillic (mono codes/numerics in BG UI) ──── */
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/theme_mcp_works_backend/static/src/fonts/jetbrains-mono-cyrillic-400.woff2") format("woff2");
+    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
