@@ -95,6 +95,31 @@
         border-radius: 0 !important;
     }
 
+    /* Odoo's .o_breadcrumb is flex-md-column → inside the 30px strip
+       the crumbs stack vertically & collide with the app-brand tag
+       ("ПокупкаПокупка", not a path).  Force a single horizontal
+       trail with "/" separators (theme.css .bc-trail). */
+    .o_breadcrumb,
+    .o_breadcrumb .breadcrumb,
+    .breadcrumb {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        min-width: 0 !important;
+        overflow: hidden;
+    }
+    .o_breadcrumb .breadcrumb-item,
+    .breadcrumb .breadcrumb-item {
+        display: inline-flex !important;
+        align-items: center !important;
+        white-space: nowrap;
+        min-width: 0;
+    }
+
     /* breadcrumb trail (theme.css .bc-trail / .bc-sep / .bc-active) */
     .o_breadcrumb .breadcrumb-item a,
     .breadcrumb .breadcrumb-item a {
