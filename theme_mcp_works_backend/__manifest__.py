@@ -5,7 +5,7 @@
     "summary": "Independent hi-tech minimalist Odoo CE backend — robot "
                "theme, electric sapphire accents, sharp corners, "
                "light/dark mode, vertical Dash dock",
-    "version": "19.0.1.19.0",
+    "version": "19.0.1.20.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -90,6 +90,7 @@
             "theme_mcp_works_backend/static/src/webclient/actions_panel/actions_panel.js",
             "theme_mcp_works_backend/static/src/webclient/actions_panel/actions_panel.xml",
             "theme_mcp_works_backend/static/src/webclient/breadcrumb_strip/breadcrumb_strip.js",
+            "theme_mcp_works_backend/static/src/webclient/hud_corners/hud_corners.js",
             "theme_mcp_works_backend/static/src/webclient/control_panel/control_panel.xml",
             "theme_mcp_works_backend/static/src/webclient/show_desktop/show_desktop.js",
             "theme_mcp_works_backend/static/src/webclient/show_desktop/show_desktop.xml",
