@@ -1,6 +1,11 @@
 /* MCP Works backend — Robot Theme · Pivot view
    Sharp grid, monospace headers, sapphire totals, accent column-active. */
 
+/* pivot was rendering crushed/tiny in the corner — make it fill */
+.o_pivot_view {
+    width: 100% !important;
+    flex: 1 1 auto !important;
+}
 .o_pivot_view,
 .o_pivot {
     padding: var(--mcp-view-pad);

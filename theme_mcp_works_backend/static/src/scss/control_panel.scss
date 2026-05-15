@@ -254,10 +254,23 @@
     input::placeholder { color: var(--mcp-ink-dim) !important; }
 
     .o_searchview_icon,
-    .oi-search {
+    button.o_searchview_icon,
+    .o_searchview_icon.btn,
+    .oi-search,
+    .fa-search {
         color: var(--mcp-ink-3) !important;
         opacity: 0.7;
         font-size: 14px !important;
+        /* Rosen: "лупата обградена с бордер" — kill any inherited
+           button/border frame around the search magnifier. */
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        outline: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        width: auto !important;
     }
 }
 

@@ -52,11 +52,17 @@
     box-shadow: none !important;
     padding: 0 !important;
     overflow: hidden;
+    /* Odoo 19 collapses this flex bar to ~9px so the 32px arrow
+       segments get clipped to broken fragments — pin the height. */
+    min-height: 40px !important;
+    align-items: center !important;
 
     .o_statusbar_status {
         display: flex !important;
         align-items: stretch !important;
         gap: 0 !important;
+        min-height: 32px !important;
+        flex: 1 1 auto !important;
 
         .o_arrow_button,
         button.btn {

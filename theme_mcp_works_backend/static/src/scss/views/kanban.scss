@@ -7,6 +7,28 @@
     background: transparent !important;
 }
 
+/* Grouped renderer must fill the viewport width — Odoo's default
+   leaves fixed-width columns with a big empty right gutter (Rosen:
+   "не е нормално широка" / "групирането отвратително"). theme.css
+   .kanban-col = repeat(auto-fit, minmax(240px,1fr)) → stretch. */
+.o_kanban_renderer.o_kanban_grouped,
+.o_kanban_view .o_kanban_renderer.o_kanban_grouped {
+    display: flex !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    width: 100% !important;
+}
+/* Only OPEN columns stretch to fill the width; folded columns stay
+   narrow (Odoo rotates their title — they must NOT be ~415px wide). */
+.o_kanban_view .o_kanban_group:not(.o_column_folded):not(.o_kanban_group_folded) {
+    flex: 1 1 0 !important;
+}
+.o_kanban_view .o_kanban_group.o_column_folded,
+.o_kanban_view .o_kanban_group.o_kanban_group_folded {
+    flex: 0 0 auto !important;
+    min-width: 0 !important;
+}
+
 /* ── Kanban columns (grouped kanban) ────────────────────────── */
 .o_kanban_view .o_kanban_group {
     background: var(--mcp-surface-2) !important;
@@ -14,7 +36,7 @@
     border-radius: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    min-width: 280px;
+    min-width: 240px;
 
     .o_kanban_header {
         background: var(--mcp-surface) !important;
