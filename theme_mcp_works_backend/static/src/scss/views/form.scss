@@ -2,18 +2,46 @@
    Statusbar with HUD arrow segments, smart buttons row, sheet title,
    notebook tabs with sapphire underline, totals box with corner notch. */
 
-/* ── Form sheet ─────────────────────────────────────────────── */
+/* ── Form sheet — flush-left, full-bleed, full-height ───────────
+   theme.css .form-sheet sits at the left edge of the content
+   viewport (no Odoo auto-centering / max-width clamp) and stretches
+   to the bottom. (Fixes Rosen #3: sheet too far from left / far from
+   other panels / not down to the bottom.) */
 .o_form_view {
-    padding: var(--mcp-view-pad);
+    padding: var(--mcp-view-pad) !important;
 }
 .o_form_view .o_form_sheet_bg {
     background: transparent !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
 }
 .o_form_view .o_form_sheet {
+    position: relative;
     background: var(--mcp-surface) !important;
     border: 1px solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     padding: 24px 28px !important;
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    flex: 1 1 auto !important;
+    min-height: calc(100vh - var(--mcp-navbar-height) - 110px) !important;
+}
+/* HUD top-left corner bracket on the sheet (theme.css .form-sheet::before) */
+.o_form_view .o_form_sheet::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 12px;
+    height: 12px;
+    border: 1.5px solid var(--mcp-accent);
+    border-right: 0;
+    border-bottom: 0;
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 /* ── Statusbar — HUD arrow segments ─────────────────────────── */
@@ -21,6 +49,7 @@
     background: var(--mcp-surface) !important;
     border: 1px solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
+    box-shadow: none !important;
     padding: 0 !important;
     overflow: hidden;
 
@@ -217,7 +246,22 @@
     }
 }
 
-/* ── One2many table inside notebook ─────────────────────────── */
+/* ── One2many list inside a form (Rosen #2: "tragic") ───────────
+   The nested renderer must NOT inherit the page-list panel halo /
+   double border (that comes from layout.scss .o_list_renderer). It
+   is content inside the sheet, not a standalone panel — flatten it
+   and match theme.css .o2m-table exactly. */
+.o_form_view .o_field_x2many .o_list_renderer,
+.o_form_view .o_field_x2many .o_list_view {
+    box-shadow: none !important;
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+}
+.o_form_view .o_field_x2many .o_list_renderer {
+    max-width: none !important;
+    width: 100% !important;
+}
 .o_form_view .o_field_x2many .o_list_renderer table.o_list_table {
     border: 1px solid var(--mcp-rule) !important;
     border-radius: 0 !important;
@@ -233,13 +277,37 @@
         padding: 8px 10px !important;
         border-bottom: 1px solid var(--mcp-rule-strong) !important;
     }
-    tbody td { padding: 8px 10px !important; border-bottom: 1px solid var(--mcp-rule) !important; }
+    tbody td {
+        padding: 8px 10px !important;
+        color: var(--mcp-ink) !important;
+        border-bottom: 1px solid var(--mcp-rule) !important;
+    }
+    tbody tr:hover td { background: var(--mcp-accent-soft) !important; }
+    tbody tr:last-child td { border-bottom: 0 !important; }
     tfoot td {
         background: var(--mcp-surface-3) !important;
         font-family: var(--mcp-font-mono) !important;
         font-weight: 600 !important;
+        text-align: right !important;
         border-top: 1px solid var(--mcp-rule-strong) !important;
     }
+}
+/* "Add a line" row — HUD mono accent action */
+.o_form_view .o_field_x2many .o_field_x2many_list_row_add a,
+.o_form_view .o_field_x2many .o_list_record_add a {
+    display: inline-flex !important;
+    align-items: center !important;
+    height: 26px !important;
+    padding: 0 10px !important;
+    font-family: var(--mcp-font-mono) !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: var(--mcp-accent) !important;
+    text-decoration: none !important;
+
+    &:hover { background: var(--mcp-accent-soft) !important; }
 }
 
 /* ── Totals box (form footer) ───────────────────────────────── */

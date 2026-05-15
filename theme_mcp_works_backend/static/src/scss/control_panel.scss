@@ -9,78 +9,151 @@
    the raw ~100px brand icon renders unclamped → oversized header +
    stray corner artifact.  Robot styling: slim sharp bar, clamped
    icon, sapphire mono brand + breadcrumb trail. */
+/* Exact match to theme.css .breadcrumb-strip (lines 451-559):
+   30px strip, pad 0 16px 0 18px, gap 10px, leading › chevron,
+   sapphire ::after gradient underline, and the .mcp_app_brand as a
+   NOTCHED HUD TAG via clip-path — this is the visible cut-corner
+   accent (Rosen: "акцентът с отрязаните ъгълчета да се вижда"). */
 .mcp_breadcrumb_strip {
     display: flex !important;
     align-items: center !important;
-    gap: 8px;
+    gap: 10px !important;
     min-height: var(--mcp-bcstrip-h) !important;
-    padding: 0 !important;
-    margin: 0 0 4px 0 !important;
-    background: transparent !important;
+    height: var(--mcp-bcstrip-h) !important;
+    padding: 0 16px 0 18px !important;
+    margin: 0 !important;
+    background: var(--mcp-surface) !important;
     border: 0 !important;
     border-bottom: 1px solid var(--mcp-rule) !important;
     box-shadow: none !important;
-    overflow: hidden;
+    position: relative;
+    font-size: 12px !important;
+    overflow: visible;
 
+    /* leading › chevron (theme.css .bc-steps) */
+    &::before {
+        content: "\203A";
+        color: var(--mcp-accent);
+        font-size: 16px;
+        line-height: 1;
+        flex: 0 0 auto;
+    }
+
+    /* sapphire gradient underline (theme.css .breadcrumb-strip::after) */
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 1px;
+        background: linear-gradient(
+            to right,
+            transparent 0%,
+            var(--mcp-accent-glow) 8%,
+            var(--mcp-accent) 50%,
+            var(--mcp-accent-glow) 92%,
+            transparent 100%
+        );
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    /* the app-brand = notched sapphire HUD tag (cut corner accent) */
     .mcp_app_brand,
     .mcp_breadcrumb_steps {
         display: inline-flex !important;
         align-items: center !important;
-        gap: 6px;
+        gap: 6px !important;
+        height: 22px !important;
+        padding: 0 14px 0 10px !important;
         text-decoration: none !important;
         outline: 0 !important;
         border: 0 !important;
         box-shadow: none !important;
         color: var(--mcp-accent) !important;
+        background: var(--mcp-accent-soft) !important;
+        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%);
         font-family: var(--mcp-font-mono) !important;
-        font-size: 11px !important;
+        font-size: 10px !important;
         font-weight: 700 !important;
-        letter-spacing: 0.10em !important;
+        letter-spacing: 0.14em !important;
         text-transform: uppercase !important;
         line-height: 1 !important;
         white-space: nowrap;
+        flex: 0 0 auto;
 
-        &:hover { color: var(--mcp-accent-2) !important; }
+        &:hover { background: var(--mcp-accent) !important; color: var(--mcp-surface) !important; }
         &:focus, &:focus-visible { outline: 0 !important; box-shadow: none !important; }
     }
 
     .mcp_app_brand_icon {
-        width: 18px !important;
-        height: 18px !important;
-        min-width: 18px !important;
+        width: 16px !important;
+        height: 16px !important;
+        min-width: 16px !important;
         object-fit: contain !important;
         border-radius: 0 !important;
     }
 
-    .o_breadcrumb,
-    .breadcrumb,
-    .o_breadcrumb_item,
-    .o_back_button {
-        font-family: var(--mcp-font-mono) !important;
+    /* breadcrumb trail (theme.css .bc-trail / .bc-sep / .bc-active) */
+    .o_breadcrumb .breadcrumb-item a,
+    .breadcrumb .breadcrumb-item a {
+        color: var(--mcp-accent) !important;
+        font-family: var(--mcp-font-family) !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        letter-spacing: 0;
+        &:hover { color: var(--mcp-accent-2) !important; }
+    }
+    .o_breadcrumb .breadcrumb-item + .breadcrumb-item::before,
+    .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+        content: "/" !important;
+        color: var(--mcp-ink-dim) !important;
         font-size: 11px !important;
-        color: var(--mcp-ink-2) !important;
-        letter-spacing: 0.04em;
+        padding: 0 6px !important;
+    }
+    .o_breadcrumb .breadcrumb-item.active,
+    .o_breadcrumb .breadcrumb-item.active span,
+    .breadcrumb .breadcrumb-item.active {
+        color: var(--mcp-ink) !important;
+        font-family: var(--mcp-font-family) !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0;
     }
 }
 
+/* theme.css .control-panel = flat 38px strip, border-bottom only,
+   NO halo (the halo belongs to data panels, not the CP bar). */
 .o_control_panel {
     background: var(--mcp-surface) !important;
     border: 0 !important;
     border-bottom: 1px solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
-    box-shadow:
-        0 0 0 1px rgba(15, 82, 186, 0.06),
-        0 2px 12px -2px rgba(15, 82, 186, 0.12),
-        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
-    margin: 0 0 8px 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    min-height: 38px !important;
     padding: 0 12px !important;
 }
 
-.o_control_panel_main { background: transparent !important; padding: 6px 0 !important; }
+.o_control_panel_main {
+    background: transparent !important;
+    padding: 0 !important;
+    min-height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+}
 
 /* ── Action buttons ──────────────────────────────────────────── */
 .o_control_panel .btn.btn-primary,
 .o_control_panel_main_buttons .btn.btn-primary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    height: 26px !important;
+    min-height: 26px !important;
     background: var(--mcp-accent) !important;
     color: var(--mcp-surface) !important;
     border: 1px solid var(--mcp-accent) !important;
@@ -88,7 +161,7 @@
     font-weight: 600 !important;
     letter-spacing: 0.02em !important;
     text-transform: uppercase !important;
-    padding: 4px 12px !important;
+    padding: 0 12px !important;
     box-shadow:
         0 0 0 1px rgba(15, 82, 186, 0.30),
         0 0 4px rgba(15, 82, 186, 0.20) !important;
@@ -102,14 +175,20 @@
     }
 }
 
-.o_control_panel .btn:not(.btn-primary) {
+.o_control_panel .btn:not(.btn-primary):not(.o_optional_columns_dropdown_toggle) {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    height: 26px !important;
+    min-height: 26px !important;
     color: var(--mcp-ink-2) !important;
     background: transparent !important;
     border: 1px solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     font-weight: 600 !important;
     letter-spacing: 0.02em !important;
-    padding: 4px 12px !important;
+    padding: 0 12px !important;
 
     &:hover {
         color: var(--mcp-accent) !important;
@@ -118,13 +197,44 @@
     }
 }
 
+/* ── Icon buttons — cog / optional-columns / action-menus / switcher
+   theme.css .cp-icon-btn = 26×26, no border, no padding, transparent,
+   ink-3, hover accent-soft. (Fixes Rosen #1: "options button huge".) */
+.o_control_panel .o_cp_action_menus .dropdown-toggle,
+.o_control_panel .o_cp_action_menus > .dropdown > button,
+.o_control_panel .o_cp_action_menus button.dropdown-toggle,
+.o_optional_columns_dropdown_toggle,
+.o_optional_columns_dropdown .dropdown-toggle,
+.o_list_buttons .o_optional_columns_dropdown_toggle {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 26px !important;
+    height: 26px !important;
+    min-height: 26px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: var(--mcp-ink-3) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    &:hover {
+        background: var(--mcp-accent-soft) !important;
+        color: var(--mcp-accent) !important;
+    }
+    &::after,
+    &::before { display: none !important; content: none !important; }
+    .fa, .oi { font-size: 13px !important; line-height: 1 !important; }
+}
+
 /* ── Search bar ──────────────────────────────────────────────── */
 .o_searchview {
     background: var(--mcp-surface-2) !important;
     border: 1px solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     padding: 0 8px !important;
-    min-height: var(--mcp-cp-row-h) !important;
+    min-height: 26px !important;
     transition: border-color var(--mcp-t-fast), box-shadow var(--mcp-t-fast);
 
     &:focus-within {

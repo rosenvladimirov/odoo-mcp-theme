@@ -14,6 +14,10 @@
     margin-right: 0 !important;
     min-width: 320px !important;       /* mirrors MIN_SHEET_PX in JS */
 }
+/* Chatter-form branch: sheet must also reach the bottom (Rosen #3). */
+.o_form_renderer:has(.mcp_form_splitter) > .o_form_sheet_bg .o_form_sheet {
+    min-height: calc(100vh - var(--mcp-navbar-height) - 110px) !important;
+}
 /* Chatter docked to the right edge — override core's fixed-width rule */
 .o_form_renderer:has(.mcp_form_splitter) > .o-mail-ChatterContainer.o-aside {
     width: auto !important;            /* let flex govern, not core's calc() */
