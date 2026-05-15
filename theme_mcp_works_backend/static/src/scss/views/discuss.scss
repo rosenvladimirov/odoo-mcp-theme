@@ -8,14 +8,25 @@
 }
 
 /* ── Sidebar (channels rail) ────────────────────────────────── */
-.o-mail-DiscussSidebar,
-.o-mail-DiscussSidebarChannel {
+.o-mail-DiscussSidebar {
     background: var(--mcp-surface) !important;
     border-right: 1px solid var(--mcp-rule-strong) !important;
 }
 
+/* Odoo 19: the channel item is a <button class="...btn...rounded-2">.
+   The theme's generic .btn rule otherwise gives it a heavy 1px ink
+   border + rounding — neutralise so the rail stays flat & sharp. */
+.o-mail-DiscussSidebarChannel.btn,
+.o-mail-DiscussSidebarChannel {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
 .o-mail-DiscussSidebar-category,
-.o-mail-DiscussSidebarCategoryHeader {
+.o-mail-DiscussSidebarCategoryHeader,
+.o-mail-DiscussSidebarCategory,
+.o-mail-DiscussSidebarCategory-title {
     background: var(--mcp-surface-3) !important;
     color: var(--mcp-ink-3) !important;
     font-family: var(--mcp-font-mono) !important;
@@ -54,7 +65,21 @@
         }
     }
 
-    .o-mail-DiscussSidebarChannel-name { font-weight: 500 !important; }
+    /* Odoo 19 name node = .o-mail-DiscussSidebarChannel-itemName,
+       carries opacity-75 (dimmed) until hover — force full ink. */
+    .o-mail-DiscussSidebarChannel-name,
+    .o-mail-DiscussSidebarChannel-itemName {
+        font-weight: 500 !important;
+        opacity: 1 !important;
+    }
+
+    /* Sidebar channel/thread avatar — sharp, not rounded-2 */
+    img,
+    [name="threadAvatar"],
+    [name="threadAvatar"] img,
+    .o_avatar {
+        border-radius: 0 !important;
+    }
     .o-mail-DiscussSidebarChannel-counter,
     .o-mail-Counter {
         background: var(--mcp-accent) !important;
