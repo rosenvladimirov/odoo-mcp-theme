@@ -301,3 +301,13 @@
     padding-left: 8px;
     border-left: 1px solid var(--mcp-rule-strong);
 }
+
+/* ── Kill residual Bootstrap .btn-group rounding (O19 wraps the
+   view-switcher / pager in a .btn-group whose first/last child keep
+   $btn-border-radius — the only computed radius leak left). ─────── */
+.o_control_panel .btn-group,
+.o_control_panel .btn-group > .btn,
+.o_cp_switch_buttons .btn-group,
+.o_pager .btn-group {
+    border-radius: 0 !important;
+}
