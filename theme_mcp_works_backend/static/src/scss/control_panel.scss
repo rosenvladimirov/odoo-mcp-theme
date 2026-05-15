@@ -3,6 +3,66 @@
    facet chips with HUD arrow tag, view-switcher with sapphire fill,
    pager with monospace numerics. */
 
+/* ── App-brand strip (legacy-injected; navbar hides .o_menu_brand) ──
+   breadcrumb_strip.js injects .mcp_breadcrumb_strip > .mcp_app_brand
+   > img.mcp_app_brand_icon into .o_control_panel.  Without this block
+   the raw ~100px brand icon renders unclamped → oversized header +
+   stray corner artifact.  Robot styling: slim sharp bar, clamped
+   icon, sapphire mono brand + breadcrumb trail. */
+.mcp_breadcrumb_strip {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px;
+    min-height: var(--mcp-bcstrip-h) !important;
+    padding: 0 !important;
+    margin: 0 0 4px 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--mcp-rule) !important;
+    box-shadow: none !important;
+    overflow: hidden;
+
+    .mcp_app_brand,
+    .mcp_breadcrumb_steps {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px;
+        text-decoration: none !important;
+        outline: 0 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        color: var(--mcp-accent) !important;
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.10em !important;
+        text-transform: uppercase !important;
+        line-height: 1 !important;
+        white-space: nowrap;
+
+        &:hover { color: var(--mcp-accent-2) !important; }
+        &:focus, &:focus-visible { outline: 0 !important; box-shadow: none !important; }
+    }
+
+    .mcp_app_brand_icon {
+        width: 18px !important;
+        height: 18px !important;
+        min-width: 18px !important;
+        object-fit: contain !important;
+        border-radius: 0 !important;
+    }
+
+    .o_breadcrumb,
+    .breadcrumb,
+    .o_breadcrumb_item,
+    .o_back_button {
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 11px !important;
+        color: var(--mcp-ink-2) !important;
+        letter-spacing: 0.04em;
+    }
+}
+
 .o_control_panel {
     background: var(--mcp-surface) !important;
     border: 0 !important;
@@ -96,6 +156,10 @@
     display: inline-flex !important;
     align-items: stretch !important;
     height: 18px !important;
+    /* override Odoo 19 Bootstrap utilities .rounded-2 .bg-200 */
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
     font-family: var(--mcp-font-mono) !important;
     font-size: 10px !important;
     font-weight: 500 !important;
