@@ -22,7 +22,8 @@
     height: var(--mcp-bcstrip-h) !important;
     padding: 0 16px 0 18px !important;
     margin: 0 !important;
-    background: var(--mcp-surface) !important;
+    /* breadcrumb path 100% transparent (Rosen) */
+    background: transparent !important;
     border: 0 !important;
     border-bottom: 1px solid var(--mcp-rule) !important;
     box-shadow: none !important;
