@@ -288,8 +288,12 @@
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     padding: 0 var(--mcp-sp-8) !important;
+    /* min-height only — a rigid height clamped the box and the
+       Filters/Group-By/Favorites dropdown (anchored to .o_searchview)
+       opened too high, overlapping the bar. Natural box → menu drops
+       BELOW the field again; the facet keeps its own var(--mcp-btn-h)
+       height + center via flex (Rosen). */
     min-height: var(--mcp-btn-h) !important;
-    height: var(--mcp-btn-h) !important;
     display: inline-flex !important;
     align-items: center !important;
     transition: border-color var(--mcp-t-fast), box-shadow var(--mcp-t-fast);
