@@ -179,12 +179,13 @@
 /* theme.css .control-panel = flat 38px strip, border-bottom only,
    NO halo (the halo belongs to data panels, not the CP bar). */
 .o_control_panel {
-    /* control buttons panel = white (Rosen). */
+    /* control buttons panel = solid white + thin border + glow (Rosen). */
     background: #ffffff !important;
-    border: 0 !important;
-    border-bottom: 1px solid var(--mcp-rule-strong) !important;
+    border: 1px solid var(--mcp-rule) !important;
     border-radius: 0 !important;
-    box-shadow: none !important;
+    box-shadow:
+        0 2px 14px -3px rgba(15, 82, 186, 0.18),
+        0 8px 28px -12px rgba(15, 82, 186, 0.14) !important;
     margin: 0 !important;
     min-height: 38px !important;
     padding: 0 12px !important;
