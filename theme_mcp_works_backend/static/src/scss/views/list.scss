@@ -217,19 +217,15 @@
 .o_dashboard.o_view_controller > .o_dashboard,
 .o_action > .o_purchase_dashboard {
     position: relative;
-    /* Rosen: no blue, no border, glow-only. LEFT must align with the
-       control panel / list (left:8) — was left:16 (extra margin-left
-       8 + padding-left 8) → "избутани надясно повече от колкото
-       трябва". Zero the LEFT margin & padding; keep 8px breathing
-       room top/right/bottom. */
+    /* Rosen: panel fully invisible — 100% transparent, no border,
+       NO glow shadow (tiles carry all the visuals). LEFT aligned to
+       the control panel / list (left:8). */
     background: transparent !important;
     border: 0 !important;
     border-radius: 0 !important;
     padding: 8px 8px 8px 0 !important;
     margin: 8px 8px 8px 0 !important;
-    box-shadow:
-        0 2px 14px -3px rgba(15, 82, 186, 0.20),
-        0 10px 36px -14px rgba(15, 82, 186, 0.16) !important;
+    box-shadow: none !important;
     gap: 8px !important;
 }
 /* Sapphire gradient line goes on each BUTTON/tile, NOT under the
