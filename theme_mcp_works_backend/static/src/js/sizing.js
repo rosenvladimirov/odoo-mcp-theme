@@ -56,3 +56,42 @@ export function getModalTop(gap = 8) {
 export function getCSSVar(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
+
+/**
+ * Button-size calculator.
+ *
+ * Give it a button height (px) and a type; get the width (px) back.
+ *   - "square"      → width === height                 (icon-only buttons)
+ *   - "rectangular" → width === round(height × ratio)   (labelled buttons)
+ *
+ * The rectangular ratio defaults to the `--mcp-btn-rect-ratio` token
+ * (falls back to 2.75) so the proportion stays themeable without code.
+ *
+ * @param {number|string} height  button height in px
+ * @param {"square"|"rectangular"} [type="rectangular"]
+ * @param {number} [ratio]  override the rectangular width/height ratio
+ * @returns {number} width in px (integer; 0 for a non-positive height)
+ */
+export function computeButtonWidth(height, type = "rectangular", ratio) {
+    const h = parseFloat(height) || 0;
+    if (h <= 0) return 0;
+    if (type === "square") return Math.round(h);
+    if (ratio == null) {
+        const tok = parseFloat(getCSSVar("--mcp-btn-rect-ratio"));
+        ratio = Number.isFinite(tok) && tok > 0 ? tok : 2.75;
+    }
+    return Math.round(h * ratio);
+}
+
+/**
+ * Classify a button element: "square" when it is icon-only (has an
+ * icon/glyph and no visible text label), otherwise "rectangular".
+ * @param {Element} el
+ * @returns {"square"|"rectangular"}
+ */
+export function classifyButton(el) {
+    if (!el) return "rectangular";
+    const text = (el.textContent || "").replace(/\s+/g, "");
+    const hasIcon = !!el.querySelector(".fa, .oi, i, svg, img");
+    return hasIcon && text.length === 0 ? "square" : "rectangular";
+}

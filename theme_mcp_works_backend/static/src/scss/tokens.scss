@@ -97,6 +97,9 @@
 
     /* ── Layout ──────────────────────────────────────────────── */
     --mcp-navbar-height: 36px;
+    /* Rectangular button width/height ratio — consumed by the JS size
+       calculator (sizing.js computeButtonWidth). Tune freely. */
+    --mcp-btn-rect-ratio: 2.75;
     --mcp-cp-row-h:      30px;
     --mcp-view-pad:      8px;
     --mcp-stat-btn-min-w: 140px;

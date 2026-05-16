@@ -5,7 +5,7 @@
     "summary": "Independent hi-tech minimalist Odoo CE backend — robot "
                "theme, electric sapphire accents, sharp corners, "
                "light/dark mode, vertical Dash dock",
-    "version": "19.0.1.51.0",
+    "version": "19.0.1.52.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -83,6 +83,7 @@
             # ── 7. JS utilities ────────────────────────────────────────
             "theme_mcp_works_backend/static/src/js/sizing.js",
             "theme_mcp_works_backend/static/src/js/resizer.js",
+            "theme_mcp_works_backend/static/src/js/button_sizing.js",
 
             # ── 8. OWL components ──────────────────────────────────────
             "theme_mcp_works_backend/static/src/webclient/dash/dash.js",
