@@ -209,10 +209,14 @@
    look "резнати с ножица, не като прототипа".  theme.css wants a
    single notched strip container with flat hairline-separated
    cells. */
+/* Panel: NO cut (Rosen: "не искам да режеш пане") — flat rectangle
+   + sapphire bottom gradient like the prototype ("синята преливка
+   като в оригинала", theme.css line 469). */
 .o_purchase_dashboard,
 .o_sale_dashboard,
 .o_dashboard.o_view_controller > .o_dashboard,
 .o_action > .o_purchase_dashboard {
+    position: relative;
     background: var(--mcp-rule) !important;
     border: 1px solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
@@ -221,13 +225,33 @@
     box-shadow:
         0 0 0 1px rgba(15, 82, 186, 0.06),
         0 2px 12px -2px rgba(15, 82, 186, 0.12) !important;
-    /* subtle symmetric HUD notch — top-right + bottom-left 10px */
-    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)) !important;
     gap: 1px !important;
-    overflow: hidden;
+}
+.o_purchase_dashboard::after,
+.o_sale_dashboard::after,
+.o_action > .o_purchase_dashboard::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        var(--mcp-accent-glow) 8%,
+        var(--mcp-accent) 50%,
+        var(--mcp-accent-glow) 92%,
+        transparent 100%
+    );
+    opacity: 0.65;
+    pointer-events: none;
+    z-index: 2;
 }
 
-/* Flat HUD stat tiles — kill the inherited heavy .btn ink border */
+/* Tiles: flat (as before) + the HUD notch goes HERE, not the panel
+   (Rosen: "иконите ... ги срежи"). Big prominent number restored
+   (Rosen: "цифрите много малки, преди по хубави"). */
 .o_purchase_dashboard .btn,
 .o_purchase_dashboard .purchase-dashboard-card,
 .o_sale_dashboard .btn,
@@ -236,7 +260,7 @@ a.purchase-dashboard-card.btn {
     border: 0 !important;
     border-radius: 0 !important;
     background: var(--mcp-surface) !important;
-    box-shadow: 0 0 0 1px var(--mcp-rule) !important;   /* hairline grid */
+    box-shadow: 0 0 0 1px var(--mcp-rule) !important;
     margin: 0 !important;
     padding: 14px 18px 16px !important;
     color: var(--mcp-ink) !important;
@@ -245,8 +269,10 @@ a.purchase-dashboard-card.btn {
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
-    gap: 4px !important;
+    gap: 2px !important;
     min-height: 0 !important;
+    /* HUD cut-corner on each tile (top-right 8px) */
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%) !important;
 
     &:hover {
         background: var(--mcp-accent-soft) !important;
@@ -254,17 +280,23 @@ a.purchase-dashboard-card.btn {
         color: var(--mcp-accent) !important;
     }
 
-    /* big number */
-    h1, h2, h3, h4, .h1, .h2, .h3, .display-4, .o_value, b, strong, [class*="value"] {
+    /* big number — Odoo wraps the KPI value in <div class="fs-N">
+       <span>N</span></div>; restore a prominent mono value. */
+    h1, h2, h3, h4, .h1, .h2, .h3, .h4, .display-4, .o_value,
+    .fs-1, .fs-2, .fs-3, .fs-4,
+    .fs-1 span, .fs-2 span, .fs-3 span, .fs-4 span,
+    b, strong, [class*="value"], [class*="kpi"] {
         font-family: var(--mcp-font-mono) !important;
         font-feature-settings: "tnum","ss01";
+        font-size: 28px !important;
         font-weight: 700 !important;
         color: var(--mcp-ink) !important;
         letter-spacing: 0 !important;
-        line-height: 1.1 !important;
+        line-height: 1.05 !important;
     }
-    /* label */
-    small, .text-muted, .o_label, span:last-child, [class*="label"] {
+    /* label — only real label classes (NOT span:last-child, which
+       greedily caught the number's <span> and shrank it). */
+    small, .text-muted, .o_label, [class*="label"] {
         font-family: var(--mcp-font-mono) !important;
         font-size: 9.5px !important;
         font-weight: 500 !important;
