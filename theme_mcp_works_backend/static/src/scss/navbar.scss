@@ -3,8 +3,9 @@
    strip on top, animated horizontal scan, sharp 0-radius buttons. */
 
 .o_main_navbar {
-    /* same bg as the list-view header (Rosen) */
-    background: var(--mcp-surface-3) !important;
+    /* distinctly darker steel so it doesn't blend with the canvas
+       (#e7ebf1) / list-header (#e9edf3) (Rosen: "слива се ... потъмни"). */
+    background: #c8d2df !important;
     border-bottom: 1px solid var(--mcp-rule-strong) !important;
     color: var(--mcp-ink) !important;
     height: var(--mcp-navbar-height) !important;
