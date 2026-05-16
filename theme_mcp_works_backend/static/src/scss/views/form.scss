@@ -316,28 +316,51 @@
     &:hover { background: var(--mcp-accent-soft) !important; }
 }
 
-/* ── Totals box (form footer) ───────────────────────────────── */
+/* ── Totals box (form footer) ───────────────────────────────────
+   Odoo 19: NOT .o_total — it's the .oe_subtotal_footer inner-group
+   wrapping the tax_totals widget .o_field_account-tax-total.  Make
+   it the theme.css notched HUD .form-totals-box. */
+.o_form_view .oe_subtotal_footer,
 .o_form_view .o_total {
-    min-width: 280px;
+    min-width: 300px;
     border: 1px solid var(--mcp-rule-strong) !important;
     background: var(--mcp-surface-2) !important;
     border-radius: 0 !important;
-    /* HUD notch top-left */
-    clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+    padding: 10px 14px !important;
+    /* HUD notch top-left (theme.css .form-totals-box) */
+    clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
 
-    .o_td_label { color: var(--mcp-ink-2) !important; }
-    .o_field_widget { font-family: var(--mcp-font-mono) !important; font-weight: 600 !important; }
+    .o_td_label,
+    .oe_subtotal_footer_separator,
+    label,
+    .o_form_label { color: var(--mcp-ink-2) !important; font-weight: 500 !important; }
 
-    .o_total_amount,
-    .o_total_total {
-        background: var(--mcp-accent) !important;
-        color: var(--mcp-surface) !important;
+    .o_field_widget,
+    .o_field_monetary,
+    [name="amount_untaxed"],
+    [name="amount_tax"],
+    [name="amount_total"],
+    .o_field_account-tax-total {
         font-family: var(--mcp-font-mono) !important;
-        font-weight: 700 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.04em !important;
-        box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+        font-feature-settings: "tnum","ss01";
+        font-weight: 600 !important;
+        color: var(--mcp-ink) !important;
     }
+}
+/* Grand-total line — sapphire HUD bar */
+.o_form_view .oe_subtotal_footer .o_total,
+.o_form_view .oe_subtotal_footer tr:last-child,
+.o_form_view .o_field_account-tax-total .o_total,
+.o_form_view .o_total .o_total_amount,
+.o_form_view .o_total .o_total_total {
+    background: var(--mcp-accent) !important;
+    color: var(--mcp-surface) !important;
+    font-family: var(--mcp-font-mono) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+
+    * { color: var(--mcp-surface) !important; }
 }
 
 /* ── Chatter (right rail) ───────────────────────────────────── */
