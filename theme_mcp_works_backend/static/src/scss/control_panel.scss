@@ -216,16 +216,16 @@
     letter-spacing: 0.02em !important;
     text-transform: uppercase !important;
     padding: 0 var(--mcp-sp-12) !important;
-    box-shadow:
-        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30),
-        0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
+    /* No spread/glow ring — it rendered OUTSIDE the box and made
+       "Нов" look taller than "Качване" at equal height (Rosen:
+       "височините пак се различават"). Same 1px border as the
+       secondary buttons → identical border-box footprint. */
+    box-shadow: none !important;
 
     &:hover {
         background: var(--mcp-accent-2) !important;
         border-color: var(--mcp-accent-2) !important;
-        box-shadow:
-            0 0 0 var(--mcp-sp-1) var(--mcp-accent-2),
-            0 0 var(--mcp-sp-6) var(--mcp-accent-a30) !important;
+        box-shadow: none !important;
     }
 }
 
@@ -514,11 +514,21 @@
     display: inline-flex !important;
     align-items: center !important;
 }
-.o_control_panel .o_searchview,
-.o_control_panel .o_searchview_icon {
+/* The search widget keeps ONE outer frame (its own .o_searchview
+   block: rule-strong border, accent+glow only on :focus-within).
+   Every INNER element is frameless so only the widget frame shows
+   (Rosen: "целият видгет търсене да има рамка; рамката около лупата
+   махни; не на фокус glow-ът да изчезва"). Specificity ≥ the CP
+   .btn:not(.btn-primary) rule so the magnifier loses its border. */
+.o_control_panel .o_searchview .o_searchview_icon,
+.o_control_panel .o_searchview .o_searchview_icon.btn,
+.o_control_panel .o_searchview button.o_searchview_icon,
+.o_control_panel .o_searchview .o_searchview_icon.btn.btn-secondary,
+.o_control_panel .o_searchview .o_searchview_input {
     background: transparent !important;
     border: 0 !important;
     box-shadow: none !important;
+    outline: 0 !important;
 }
 
 /* Search toggler — a clean borderless square in EVERY state; kill the
@@ -530,9 +540,22 @@
 .o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret:focus,
 .o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret:focus-visible,
 .o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret.focus {
+    /* perfect borderless square, every state (Rosen: "не е квадратен") */
+    box-sizing: border-box !important;
+    width: var(--mcp-btn-h) !important;
+    min-width: var(--mcp-btn-h) !important;
+    height: var(--mcp-btn-h) !important;
+    min-height: var(--mcp-btn-h) !important;
+    padding: 0 !important;
+    border: 0 !important;
     border-color: var(--mcp-toggler-border) !important;
+    border-radius: 0 !important;
     outline: none !important;
     box-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
 }
 
 /* ── Unify EVERY control-panel action button to one box/baseline ──
