@@ -599,3 +599,29 @@
     box-shadow: none !important;
     outline: 0 !important;
 }
+
+/* Facet "✕" remove = perfect borderless square (Bootstrap .px-2/.py-0
+   made it oblong). (0,5,0) selector beats the utilities + CP .btn
+   rule. Matches the toggler square. (Rosen: "o_facet_remove ... не е
+   квадратно".) All-token. */
+.o_control_panel .o_searchview .o_facet_remove,
+.o_control_panel .o_searchview .o_facet_remove.btn,
+.o_control_panel .o_searchview .o_facet_remove.btn.btn-link,
+.o_control_panel .o_searchview .o_facet_remove.btn.btn-link:hover,
+.o_control_panel .o_searchview .o_facet_remove.btn.btn-link:focus {
+    box-sizing: border-box !important;
+    width: var(--mcp-btn-h) !important;
+    min-width: var(--mcp-btn-h) !important;
+    height: var(--mcp-btn-h) !important;
+    min-height: var(--mcp-btn-h) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+}
