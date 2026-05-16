@@ -228,8 +228,9 @@
     box-shadow: none !important;
     gap: 8px !important;
 }
-/* Sapphire gradient line goes on each BUTTON/tile, NOT under the
-   panel (Rosen: "не под панела ... а на бутоните"). */
+/* No blue line (Rosen: "махни синята преливка не ми харесва").
+   ::after = the crease border on the dog-ear's LONG (diagonal)
+   side — a crisp 2px line along the fold hypotenuse. */
 .o_purchase_dashboard .btn::after,
 .o_purchase_dashboard .purchase-dashboard-card::after,
 .o_sale_dashboard .btn::after,
@@ -237,21 +238,23 @@
 a.purchase-dashboard-card.btn::after {
     content: "";
     position: absolute;
-    left: 50%;
+    left: 0;
     bottom: 0;
-    width: 56%;
-    height: 2px;
-    transform: translateX(-50%);
-    /* short, centred; bright in the middle, lightening to the ends */
+    width: 16px;
+    height: 16px;
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
     background: linear-gradient(
-        to right,
-        transparent 0%,
-        var(--mcp-accent-soft) 16%,
-        var(--mcp-accent) 50%,
-        var(--mcp-accent-soft) 84%,
-        transparent 100%
+        45deg,
+        transparent calc(50% - 1px),
+        var(--mcp-rule-strong) calc(50% - 1px),
+        var(--mcp-rule-strong) calc(50% + 1px),
+        transparent calc(50% + 1px)
     );
-    opacity: 0.85;
+    transform-origin: bottom left;
+    transition:
+        transform 0.30s cubic-bezier(.2, .6, .2, 1),
+        opacity 0.30s ease;
+    opacity: 1;
     pointer-events: none;
     z-index: 2;
 }
@@ -315,8 +318,9 @@ a.purchase-dashboard-card.btn {
         border: 0 !important;
         color: var(--mcp-accent) !important;
     }
-    /* unfold the paper corner on hover */
-    &:hover::before {
+    /* unfold the paper corner (flap + crease border) on hover */
+    &:hover::before,
+    &:hover::after {
         transform: scale(0);
         opacity: 0;
     }
