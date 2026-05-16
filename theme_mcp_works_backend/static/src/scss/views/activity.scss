@@ -5,31 +5,31 @@
 .o_activity_view {
     padding: var(--mcp-view-pad);
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     overflow: auto;
     box-shadow:
-        0 0 0 1px rgba(15, 82, 186, 0.06),
-        0 2px 12px -2px rgba(15, 82, 186, 0.12),
-        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
+        0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12),
+        0 var(--mcp-sp-8) var(--mcp-sp-32) calc(-1 * var(--mcp-sp-12)) var(--mcp-accent-a18) !important;
 }
 
 .o_activity_view table.o_activity_table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 12px !important;
+    font-size: var(--mcp-sp-12) !important;
 
     /* Header — activity types */
     thead th {
         background: var(--mcp-surface-3) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: 10px !important;
+        font-size: var(--mcp-sp-10) !important;
         font-weight: 600 !important;
         letter-spacing: 0.12em !important;
         text-transform: uppercase !important;
         color: var(--mcp-ink-3) !important;
-        padding: 8px 10px !important;
-        border-bottom: 1px solid var(--mcp-rule-strong) !important;
+        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
+        border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
         text-align: center !important;
 
         &:first-child { text-align: left !important; }
@@ -42,16 +42,16 @@
 
     /* Body */
     tbody {
-        tr { border-bottom: 1px solid var(--mcp-rule) !important; }
+        tr { border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important; }
 
         tr:hover {
             background: var(--mcp-accent-soft) !important;
-            box-shadow: inset 2px 0 0 var(--mcp-accent);
+            box-shadow: inset var(--mcp-sp-2) 0 0 var(--mcp-accent);
         }
 
         td {
-            padding: 8px 10px !important;
-            border-right: 1px solid var(--mcp-rule) !important;
+            padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
+            border-right: var(--mcp-sp-1) solid var(--mcp-rule) !important;
             vertical-align: middle !important;
 
             &:first-child {
@@ -65,28 +65,28 @@
         .o_activity_summary_cell {
             text-align: center;
             cursor: pointer;
-            min-height: 32px;
+            min-height: var(--mcp-sp-32);
 
             .o_activity_summary {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                width: 22px;
-                height: 22px;
+                width: var(--mcp-sp-22);
+                height: var(--mcp-sp-22);
                 font-family: var(--mcp-font-mono);
-                font-size: 11px;
+                font-size: var(--mcp-sp-11);
                 font-weight: 700;
                 color: var(--mcp-accent);
                 background: var(--mcp-accent-soft);
-                border: 1px solid var(--mcp-accent);
+                border: var(--mcp-sp-1) solid var(--mcp-accent);
                 border-radius: 0;
-                box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+                box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
             }
 
             /* Overdue / planned state colorways */
             &.o_overdue .o_activity_summary { color: var(--mcp-danger); border-color: var(--mcp-danger); background: var(--mcp-danger-soft); box-shadow: none; }
-            &.o_today   .o_activity_summary { color: var(--mcp-warn);   border-color: var(--mcp-warn);   background: rgba(245,158,11,0.10); box-shadow: none; }
-            &.o_planned .o_activity_summary { color: var(--mcp-ok);     border-color: var(--mcp-ok);     background: rgba(16,185,129,0.10); box-shadow: none; }
+            &.o_today   .o_activity_summary { color: var(--mcp-warn);   border-color: var(--mcp-warn);   background: var(--mcp-warn-a10); box-shadow: none; }
+            &.o_planned .o_activity_summary { color: var(--mcp-ok);     border-color: var(--mcp-ok);     background: var(--mcp-ok-a10); box-shadow: none; }
         }
     }
 
@@ -96,8 +96,8 @@
         font-family: var(--mcp-font-mono) !important;
         font-weight: 700 !important;
         color: var(--mcp-accent) !important;
-        padding: 8px 10px !important;
-        border-top: 1px solid var(--mcp-rule-strong) !important;
+        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
+        border-top: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
         text-align: center !important;
     }
 }

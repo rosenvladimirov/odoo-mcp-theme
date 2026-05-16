@@ -5,19 +5,19 @@
 .o_status_bar_buttons {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--mcp-sp-4);
     flex-wrap: wrap;
 }
 
 .o_field_state_selection .btn,
 .o_field_state_selection .o_status_button {
-    padding: 3px 12px !important;
-    font-size: 11px !important;
+    padding: var(--mcp-sp-3) var(--mcp-sp-12) !important;
+    font-size: var(--mcp-sp-11) !important;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     border-radius: var(--mcp-r-pill) !important;
-    border: 1.5px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-bw-1-5) solid var(--mcp-rule-strong) !important;
     background: transparent !important;
     color: var(--mcp-ink-2) !important;
     box-shadow: none !important;
@@ -45,7 +45,7 @@
 .o_badge_selection,
 .o_field_badge_selection {
     display: inline-flex;
-    gap: 4px;
+    gap: var(--mcp-sp-4);
     flex-wrap: wrap;
     align-items: center;
 }
@@ -53,15 +53,15 @@
 .o_badge_selection .badge,
 .o_field_badge_selection .badge {
     cursor: pointer;
-    border: 1.5px solid transparent !important;
+    border: var(--mcp-bw-1-5) solid transparent !important;
     border-radius: var(--mcp-r-sm) !important;
-    font-size: 11px !important;
+    font-size: var(--mcp-sp-11) !important;
     font-weight: 500;
-    padding: 3px 8px !important;
+    padding: var(--mcp-sp-3) var(--mcp-sp-8) !important;
     transition: all var(--mcp-t-fast);
     opacity: 0.65;
 
-    &:hover  { opacity: 0.90; transform: translateY(-1px); }
+    &:hover  { opacity: 0.90; transform: translateY(calc(-1 * var(--mcp-sp-1))); }
     &.active,
     &.o_badge_active { opacity: 1; border-color: currentColor !important; }
 }

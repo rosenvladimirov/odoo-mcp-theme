@@ -10,19 +10,19 @@
 .o_pivot {
     padding: var(--mcp-view-pad);
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     overflow: auto;
     box-shadow:
-        0 0 0 1px rgba(15, 82, 186, 0.06),
-        0 2px 12px -2px rgba(15, 82, 186, 0.12),
-        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
+        0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12),
+        0 var(--mcp-sp-8) var(--mcp-sp-32) calc(-1 * var(--mcp-sp-12)) var(--mcp-accent-a18) !important;
 }
 
 .o_pivot table.o_pivot_table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 12px !important;
+    font-size: var(--mcp-sp-12) !important;
 
     /* All header cells — monospace caps */
     thead th,
@@ -30,13 +30,13 @@
     th.o_pivot_origin_row {
         background: var(--mcp-surface-3) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: 10px !important;
+        font-size: var(--mcp-sp-10) !important;
         font-weight: 600 !important;
         letter-spacing: 0.12em !important;
         text-transform: uppercase !important;
         color: var(--mcp-ink-3) !important;
-        padding: 8px 12px !important;
-        border: 1px solid var(--mcp-rule-strong) !important;
+        padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
+        border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
         text-align: left !important;
         white-space: nowrap;
 
@@ -50,11 +50,11 @@
     tbody th {
         background: var(--mcp-surface-2) !important;
         font-family: var(--mcp-font-family) !important;
-        font-size: 12px !important;
+        font-size: var(--mcp-sp-12) !important;
         font-weight: 500 !important;
         color: var(--mcp-ink) !important;
-        padding: 8px 12px !important;
-        border: 1px solid var(--mcp-rule) !important;
+        padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
+        border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
         letter-spacing: 0;
         text-transform: none;
         text-align: left !important;
@@ -64,11 +64,11 @@
     tbody td {
         font-family: var(--mcp-font-mono) !important;
         font-feature-settings: "tnum","ss01";
-        font-size: 12px !important;
+        font-size: var(--mcp-sp-12) !important;
         font-weight: 500 !important;
         color: var(--mcp-ink) !important;
-        padding: 8px 12px !important;
-        border: 1px solid var(--mcp-rule) !important;
+        padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
+        border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
         text-align: right !important;
         background: var(--mcp-surface) !important;
 
@@ -89,7 +89,7 @@
         font-weight: 700 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.04em !important;
-        box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+        box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
     }
 
     /* Variation columns (red/green delta indicators) */

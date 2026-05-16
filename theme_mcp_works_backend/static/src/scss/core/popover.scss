@@ -7,14 +7,14 @@
     /* Elegant soft border + glow shadow — match the autocomplete
        dropdown (.o-autocomplete--dropdown-menu / .ui-autocomplete),
        not the harsh 1.5px sapphire modal frame (Rosen). */
-    border: 1px solid var(--mcp-rule) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: var(--mcp-r-md) !important;
     box-shadow:
-        0 0 0 1px var(--mcp-accent-soft),
-        0 10px 30px -10px rgba(15, 82, 186, 0.30) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-soft),
+        0 var(--mcp-sp-10) var(--mcp-sp-30) calc(-1 * var(--mcp-sp-10)) var(--mcp-accent-a30) !important;
     padding: 0;
     max-width: var(--mcp-popover-max-w, 320px);
-    max-height: var(--mcp-content-h, calc(100vh - 64px));
+    max-height: var(--mcp-content-h, calc(100vh - var(--mcp-sp-64)));
     overflow: auto;
     z-index: var(--mcp-z-modal);
     animation: mcp-pop-in 0.15s cubic-bezier(0.34, 1.4, 0.64, 1) both;
@@ -35,11 +35,11 @@
 .o-popover-header,
 .o_popover .popover-header {
     background: var(--mcp-paper) !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: var(--mcp-r-md) var(--mcp-r-md) 0 0 !important;
-    padding: 8px 12px !important;
+    padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
     font-weight: 600;
-    font-size: 12px;
+    font-size: var(--mcp-sp-12);
     color: var(--mcp-ink) !important;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -48,8 +48,8 @@
 /* Body */
 .o-popover-body,
 .o_popover .popover-body {
-    padding: 10px 12px !important;
-    font-size: 13px;
+    padding: var(--mcp-sp-10) var(--mcp-sp-12) !important;
+    font-size: var(--mcp-sp-13);
     color: var(--mcp-ink) !important;
     background: var(--mcp-paper-light) !important;
     border-radius: 0 0 var(--mcp-r-md) var(--mcp-r-md);

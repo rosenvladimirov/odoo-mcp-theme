@@ -20,24 +20,24 @@
 .o_form_view .o_form_sheet {
     position: relative;
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
-    padding: 24px 28px !important;
+    padding: var(--mcp-sp-24) var(--mcp-sp-28) !important;
     max-width: none !important;
     width: 100% !important;
     margin: 0 !important;
     flex: 1 1 auto !important;
-    min-height: calc(100vh - var(--mcp-navbar-height) - 110px) !important;
+    min-height: calc(100vh - var(--mcp-navbar-height) - var(--mcp-sp-110)) !important;
 }
 /* HUD top-left corner bracket on the sheet (theme.css .form-sheet::before) */
 .o_form_view .o_form_sheet::before {
     content: "";
     position: absolute;
-    top: 8px;
-    left: 8px;
-    width: 12px;
-    height: 12px;
-    border: 1.5px solid var(--mcp-accent);
+    top: var(--mcp-sp-8);
+    left: var(--mcp-sp-8);
+    width: var(--mcp-sp-12);
+    height: var(--mcp-sp-12);
+    border: var(--mcp-bw-1-5) solid var(--mcp-accent);
     border-right: 0;
     border-bottom: 0;
     opacity: 0.5;
@@ -47,21 +47,21 @@
 /* ── Statusbar — HUD arrow segments ─────────────────────────── */
 .o_form_view .o_form_statusbar {
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     padding: 0 !important;
     overflow: hidden;
     /* Odoo 19 collapses this flex bar to ~9px so the 32px arrow
        segments get clipped to broken fragments — pin the height. */
-    min-height: 40px !important;
+    min-height: var(--mcp-sp-40) !important;
     align-items: center !important;
 
     .o_statusbar_status {
         display: flex !important;
         align-items: stretch !important;
         gap: 0 !important;
-        min-height: 32px !important;
+        min-height: var(--mcp-sp-32) !important;
         flex: 1 1 auto !important;
 
         .o_arrow_button,
@@ -70,34 +70,34 @@
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            height: 32px !important;
-            min-height: 32px !important;
-            padding: 0 16px !important;
+            height: var(--mcp-sp-32) !important;
+            min-height: var(--mcp-sp-32) !important;
+            padding: 0 var(--mcp-sp-16) !important;
             font-family: var(--mcp-font-mono) !important;
-            font-size: 11px !important;
+            font-size: var(--mcp-sp-11) !important;
             font-weight: 600 !important;
             letter-spacing: 0.14em !important;
             text-transform: uppercase !important;
             color: var(--mcp-ink-dim) !important;
             background: var(--mcp-surface) !important;
             border: 0 !important;
-            border-right: 1px solid var(--mcp-rule) !important;
+            border-right: var(--mcp-sp-1) solid var(--mcp-rule) !important;
             border-radius: 0 !important;
             transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
             position: relative;
             /* Arrow-tab shape */
-            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);
-            margin-right: -8px;
-            padding-left: 24px;
+            clip-path: polygon(0 0, calc(100% - var(--mcp-sp-12)) 0, 100% 50%, calc(100% - var(--mcp-sp-12)) 100%, 0 100%, var(--mcp-sp-12) 50%);
+            margin-right: calc(-1 * var(--mcp-sp-8));
+            padding-left: var(--mcp-sp-24);
 
             &:first-child {
-                clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
-                padding-left: 16px;
+                clip-path: polygon(0 0, calc(100% - var(--mcp-sp-12)) 0, 100% 50%, calc(100% - var(--mcp-sp-12)) 100%, 0 100%);
+                padding-left: var(--mcp-sp-16);
             }
             &:last-child {
                 border-right: 0 !important;
                 margin-right: 0;
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--mcp-sp-12) 50%);
             }
             &:hover { color: var(--mcp-ink-2) !important; background: var(--mcp-surface-2) !important; }
             &[aria-pressed="true"],
@@ -106,8 +106,8 @@
                 color: var(--mcp-surface) !important;
                 background: var(--mcp-accent) !important;
                 box-shadow:
-                    0 0 0 1px rgba(15, 82, 186, 0.30),
-                    0 0 4px rgba(15, 82, 186, 0.20) !important;
+                    0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30),
+                    0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
             }
         }
     }
@@ -116,10 +116,10 @@
 /* ── Smart buttons (button-box) ─────────────────────────────── */
 .o_form_view .oe_button_box {
     display: flex !important;
-    gap: 1px !important;
-    margin: 0 0 20px 0 !important;
+    gap: var(--mcp-sp-1) !important;
+    margin: 0 0 var(--mcp-sp-20) 0 !important;
     background: var(--mcp-rule);
-    border: 1px solid var(--mcp-rule-strong);
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
     border-radius: 0 !important;
     width: fit-content;
 
@@ -128,9 +128,9 @@
         display: flex !important;
         flex-direction: column !important;
         align-items: flex-start !important;
-        gap: 2px !important;
-        min-width: 110px;
-        padding: 8px 14px !important;
+        gap: var(--mcp-sp-2) !important;
+        min-width: var(--mcp-sp-110);
+        padding: var(--mcp-sp-8) var(--mcp-sp-14) !important;
         background: var(--mcp-surface) !important;
         border: 0 !important;
         border-radius: 0 !important;
@@ -145,13 +145,13 @@
         .o_stat_value,
         .o_field_widget {
             font-family: var(--mcp-font-mono) !important;
-            font-size: 16px !important;
+            font-size: var(--mcp-sp-16) !important;
             font-weight: 700 !important;
             color: var(--mcp-accent) !important;
             line-height: 1 !important;
         }
         .o_stat_info {
-            font-size: 10px !important;
+            font-size: var(--mcp-sp-10) !important;
             font-weight: 600 !important;
             letter-spacing: 0.08em !important;
             text-transform: uppercase !important;
@@ -164,23 +164,23 @@
 .o_form_view .oe_title h1,
 .o_form_view .oe_title .o_field_widget input {
     font-family: var(--mcp-font-mono) !important;
-    font-size: 28px !important;
+    font-size: var(--mcp-sp-28) !important;
     font-weight: 700 !important;
     color: var(--mcp-ink) !important;
     letter-spacing: -0.02em !important;
-    text-shadow: 0 0 16px rgba(15, 82, 186, 0.22);
+    text-shadow: 0 0 var(--mcp-sp-16) var(--mcp-accent-a22);
 }
 .o_form_view .oe_title {
-    padding-bottom: 14px !important;
-    margin-bottom: 18px !important;
-    border-bottom: 1px solid var(--mcp-rule);
+    padding-bottom: var(--mcp-sp-14) !important;
+    margin-bottom: var(--mcp-sp-18) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule);
 }
 
 /* ── Field labels ───────────────────────────────────────────── */
 .o_form_view .o_form_label,
 .o_form_view label.o_form_label {
     font-family: var(--mcp-font-mono) !important;
-    font-size: 9.5px !important;
+    font-size: var(--mcp-sp-9-5) !important;
     font-weight: 600 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
@@ -192,13 +192,13 @@
     font-weight: 500 !important;
 }
 .o_form_view .o_field_widget:not(:focus-within):not(.o_field_invalid) {
-    border-bottom: 1px dashed var(--mcp-rule) !important;
+    border-bottom: var(--mcp-sp-1) dashed var(--mcp-rule) !important;
 }
 .o_form_view .o_field_many2one a,
 .o_form_view .o_field_email,
 .o_form_view .o_field_url {
     color: var(--mcp-accent) !important;
-    text-shadow: 0 0 10px rgba(15, 82, 186, 0.18);
+    text-shadow: 0 0 var(--mcp-sp-10) var(--mcp-accent-a18);
     &:hover { color: var(--mcp-accent-2) !important; text-decoration: underline; }
 }
 .o_form_view .o_field_monetary,
@@ -212,19 +212,19 @@
 
 /* ── Notebook tabs ──────────────────────────────────────────── */
 .o_form_view .o_notebook {
-    margin-top: 8px;
+    margin-top: var(--mcp-sp-8);
 
     .o_notebook_headers {
-        border-bottom: 1px solid var(--mcp-rule-strong) !important;
+        border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
         padding: 0 !important;
         background: transparent !important;
 
         .nav-item .nav-link {
             display: inline-flex !important;
             align-items: center !important;
-            height: 32px !important;
-            padding: 0 14px !important;
-            font-size: 12px !important;
+            height: var(--mcp-sp-32) !important;
+            padding: 0 var(--mcp-sp-14) !important;
+            font-size: var(--mcp-sp-12) !important;
             font-weight: 600 !important;
             letter-spacing: 0.04em !important;
             color: var(--mcp-ink-3) !important;
@@ -242,10 +242,10 @@
                 &::after {
                     content: "";
                     position: absolute;
-                    left: 4px; right: 4px; bottom: -1px;
-                    height: 2px;
+                    left: var(--mcp-sp-4); right: var(--mcp-sp-4); bottom: calc(-1 * var(--mcp-sp-1));
+                    height: var(--mcp-sp-2);
                     background: var(--mcp-accent);
-                    box-shadow: 0 0 4px var(--mcp-accent-2);
+                    box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-2);
                 }
             }
         }
@@ -269,24 +269,24 @@
     width: 100% !important;
 }
 .o_form_view .o_field_x2many .o_list_renderer table.o_list_table {
-    border: 1px solid var(--mcp-rule) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: 0 !important;
 
     thead th {
         background: var(--mcp-surface-3) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: 9.5px !important;
+        font-size: var(--mcp-sp-9-5) !important;
         font-weight: 600 !important;
         letter-spacing: 0.12em !important;
         text-transform: uppercase !important;
         color: var(--mcp-ink-3) !important;
-        padding: 8px 10px !important;
-        border-bottom: 1px solid var(--mcp-rule-strong) !important;
+        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
+        border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     }
     tbody td {
-        padding: 8px 10px !important;
+        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
         color: var(--mcp-ink) !important;
-        border-bottom: 1px solid var(--mcp-rule) !important;
+        border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     }
     tbody tr:hover td { background: var(--mcp-accent-soft) !important; }
     tbody tr:last-child td { border-bottom: 0 !important; }
@@ -295,7 +295,7 @@
         font-family: var(--mcp-font-mono) !important;
         font-weight: 600 !important;
         text-align: right !important;
-        border-top: 1px solid var(--mcp-rule-strong) !important;
+        border-top: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     }
 }
 /* "Add a line" row — HUD mono accent action */
@@ -303,10 +303,10 @@
 .o_form_view .o_field_x2many .o_list_record_add a {
     display: inline-flex !important;
     align-items: center !important;
-    height: 26px !important;
-    padding: 0 10px !important;
+    height: var(--mcp-sp-26) !important;
+    padding: 0 var(--mcp-sp-10) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: 10px !important;
+    font-size: var(--mcp-sp-10) !important;
     font-weight: 600 !important;
     letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
@@ -322,13 +322,13 @@
    it the theme.css notched HUD .form-totals-box. */
 .o_form_view .oe_subtotal_footer,
 .o_form_view .o_total {
-    min-width: 300px;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    min-width: var(--mcp-sp-300);
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     background: var(--mcp-surface-2) !important;
     border-radius: 0 !important;
-    padding: 10px 14px !important;
+    padding: var(--mcp-sp-10) var(--mcp-sp-14) !important;
     /* HUD notch top-left (theme.css .form-totals-box) */
-    clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
+    clip-path: polygon(var(--mcp-sp-10) 0, 100% 0, 100% 100%, 0 100%, 0 var(--mcp-sp-10));
 
     .o_td_label,
     .oe_subtotal_footer_separator,
@@ -358,7 +358,7 @@
     font-family: var(--mcp-font-mono) !important;
     font-weight: 700 !important;
     letter-spacing: 0.04em !important;
-    box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+    box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
 
     * { color: var(--mcp-surface) !important; }
 }
@@ -366,18 +366,18 @@
 /* ── Chatter (right rail) ───────────────────────────────────── */
 .o-mail-Chatter {
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
 
     .o-mail-Chatter-topbar {
-        border-bottom: 1px solid var(--mcp-rule) !important;
+        border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     }
     .o-mail-Chatter-topbar button {
-        font-size: 11px !important;
+        font-size: var(--mcp-sp-11) !important;
         font-weight: 600 !important;
         letter-spacing: 0.06em !important;
         text-transform: uppercase !important;
-        border: 1px solid var(--mcp-rule-strong) !important;
+        border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
         border-radius: 0 !important;
         color: var(--mcp-ink-2) !important;
 
@@ -386,16 +386,16 @@
     .o-mail-Message-author { color: var(--mcp-ink) !important; font-weight: 600 !important; }
     .o-mail-Message-date {
         font-family: var(--mcp-font-mono) !important;
-        font-size: 9.5px !important;
+        font-size: var(--mcp-sp-9-5) !important;
         letter-spacing: 0.06em !important;
         color: var(--mcp-ink-3) !important;
     }
     .o-mail-Message-tracking {
         background: var(--mcp-surface-2) !important;
-        border-left: 2px solid var(--mcp-accent) !important;
+        border-left: var(--mcp-sp-2) solid var(--mcp-accent) !important;
         border-radius: 0 !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: 10px !important;
-        padding: 6px 8px !important;
+        font-size: var(--mcp-sp-10) !important;
+        padding: var(--mcp-sp-6) var(--mcp-sp-8) !important;
     }
 }

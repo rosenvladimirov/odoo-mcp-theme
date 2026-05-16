@@ -12,22 +12,22 @@
     max-width: none !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    min-width: 320px !important;       /* mirrors MIN_SHEET_PX in JS */
+    min-width: var(--mcp-sp-320) !important;       /* mirrors MIN_SHEET_PX in JS */
 }
 /* Chatter-form branch: sheet must also reach the bottom (Rosen #3). */
 .o_form_renderer:has(.mcp_form_splitter) > .o_form_sheet_bg .o_form_sheet {
-    min-height: calc(100vh - var(--mcp-navbar-height) - 110px) !important;
+    min-height: calc(100vh - var(--mcp-navbar-height) - var(--mcp-sp-110)) !important;
 }
 /* Chatter docked to the right edge — override core's fixed-width rule */
 .o_form_renderer:has(.mcp_form_splitter) > .o-mail-ChatterContainer.o-aside {
     width: auto !important;            /* let flex govern, not core's calc() */
     max-width: none !important;
     margin-right: 0 !important;
-    min-width: 585px !important;       /* mirrors MIN_CHATTER_PX in JS — natural message-bubble width */
+    min-width: var(--mcp-sp-585) !important;       /* mirrors MIN_CHATTER_PX in JS — natural message-bubble width */
 }
 
 .mcp_form_splitter {
-    flex: 0 0 8px;
+    flex: 0 0 var(--mcp-sp-8);
     align-self: stretch;
     position: relative;
     background: transparent;
@@ -42,7 +42,7 @@
         top: 12%;
         bottom: 12%;
         left: 50%;
-        width: 1px;
+        width: var(--mcp-sp-1);
         background: var(--mcp-rule);
         transition: width var(--mcp-t-base), background var(--mcp-t-base);
     }
@@ -55,14 +55,14 @@
         transform: translate(-50%, -50%);
         display: inline-flex;
         align-items: center;
-        gap: 4px;
-        padding: 4px 8px;
+        gap: var(--mcp-sp-4);
+        padding: var(--mcp-sp-4) var(--mcp-sp-8);
         border-radius: var(--mcp-r-pill);
-        background: #ffffff;
+        background: var(--mcp-bg);
         color: var(--mcp-accent);
-        font-size: 10px;
+        font-size: var(--mcp-sp-10);
         line-height: 1;
-        box-shadow: var(--mcp-shadow-sm), 0 0 0 1px var(--mcp-rule);
+        box-shadow: var(--mcp-shadow-sm), 0 0 0 var(--mcp-sp-1) var(--mcp-rule);
         opacity: 0;
         pointer-events: none;
         transition: opacity var(--mcp-t-base), transform var(--mcp-t-spring);
@@ -73,7 +73,7 @@
         background: var(--mcp-accent-soft);
 
         &::before {
-            width: 2px;
+            width: var(--mcp-sp-2);
             background: var(--mcp-accent);
         }
 
@@ -87,7 +87,7 @@
         background: var(--mcp-accent-soft);
 
         &::before {
-            width: 2px;
+            width: var(--mcp-sp-2);
             background: var(--mcp-accent);
         }
 
@@ -101,7 +101,7 @@
         outline: none;
         background: var(--mcp-accent-soft);
 
-        &::before { width: 2px; background: var(--mcp-accent); }
+        &::before { width: var(--mcp-sp-2); background: var(--mcp-accent); }
         .mcp_form_splitter_arrows { opacity: 1; }
     }
 

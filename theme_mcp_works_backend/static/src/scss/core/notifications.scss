@@ -3,14 +3,14 @@
 /* ── Container ───────────────────────────────────────────────── */
 .o_notification_manager {
     position: fixed;
-    bottom: 16px;
-    right: 16px;
+    bottom: var(--mcp-sp-16);
+    right: var(--mcp-sp-16);
     z-index: var(--mcp-z-modal);
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    max-width: 360px;
-    width: calc(100vw - 32px);
+    gap: var(--mcp-sp-8);
+    max-width: var(--mcp-sp-360);
+    width: calc(100vw - var(--mcp-sp-32));
     pointer-events: none;
 }
 
@@ -19,18 +19,18 @@
     pointer-events: auto;
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-    padding: 12px 14px;
+    gap: var(--mcp-sp-10);
+    padding: var(--mcp-sp-12) var(--mcp-sp-14);
     background: var(--mcp-paper-light) !important;
-    border: 1.5px solid var(--mcp-rule-strong) !important;
-    border-left-width: 4px !important;
+    border: var(--mcp-bw-1-5) solid var(--mcp-rule-strong) !important;
+    border-left-width: var(--mcp-sp-4) !important;
     border-radius: var(--mcp-r-md) !important;
     box-shadow: var(--mcp-shadow-modal) !important;
     animation: mcp-notif-in 0.25s cubic-bezier(0.34, 1.4, 0.64, 1) both;
 }
 
 @keyframes mcp-notif-in {
-    from { opacity: 0; transform: translateX(16px) scale(0.95); }
+    from { opacity: 0; transform: translateX(var(--mcp-sp-16)) scale(0.95); }
     to   { opacity: 1; transform: translateX(0) scale(1); }
 }
 
@@ -39,44 +39,44 @@
     animation: mcp-notif-out 0.2s ease both;
 }
 @keyframes mcp-notif-out {
-    from { opacity: 1; transform: translateX(0); max-height: 200px; margin-bottom: 0; }
-    to   { opacity: 0; transform: translateX(16px); max-height: 0; margin-bottom: -8px; }
+    from { opacity: 1; transform: translateX(0); max-height: var(--mcp-sp-200); margin-bottom: 0; }
+    to   { opacity: 0; transform: translateX(var(--mcp-sp-16)); max-height: 0; margin-bottom: calc(-1 * var(--mcp-sp-8)); }
 }
 
 /* ── Type colors (left border) ───────────────────────────────── */
 .o_notification.bg-success,
-.o_notification[class*="success"] { border-left-color: #22c55e !important; }
+.o_notification[class*="success"] { border-left-color: var(--mcp-c-green) !important; }
 .o_notification.bg-danger,
 .o_notification[class*="danger"],
-.o_notification[class*="error"]   { border-left-color: #ef4444 !important; }
+.o_notification[class*="error"]   { border-left-color: var(--mcp-c-red) !important; }
 .o_notification.bg-warning,
-.o_notification[class*="warning"] { border-left-color: #f59e0b !important; }
+.o_notification[class*="warning"] { border-left-color: var(--mcp-warn) !important; }
 .o_notification.bg-info,
 .o_notification[class*="info"]    { border-left-color: var(--mcp-accent) !important; }
 
 /* ── Icon ────────────────────────────────────────────────────── */
 .o_notification_icon,
 .o_notification .fa {
-    font-size: 16px;
+    font-size: var(--mcp-sp-16);
     flex-shrink: 0;
-    margin-top: 1px;
+    margin-top: var(--mcp-sp-1);
 }
-.o_notification.bg-success .o_notification_icon { color: #22c55e; }
-.o_notification.bg-danger  .o_notification_icon { color: #ef4444; }
-.o_notification.bg-warning .o_notification_icon { color: #f59e0b; }
+.o_notification.bg-success .o_notification_icon { color: var(--mcp-c-green); }
+.o_notification.bg-danger  .o_notification_icon { color: var(--mcp-c-red); }
+.o_notification.bg-warning .o_notification_icon { color: var(--mcp-warn); }
 .o_notification.bg-info    .o_notification_icon { color: var(--mcp-accent); }
 
 /* ── Content ─────────────────────────────────────────────────── */
 .o_notification_content { flex: 1 1 auto; min-width: 0; }
 .o_notification_title {
     font-weight: 600;
-    font-size: 13px;
+    font-size: var(--mcp-sp-13);
     color: var(--mcp-ink);
-    margin-bottom: 2px;
+    margin-bottom: var(--mcp-sp-2);
 }
 .o_notification_body,
 .o_notification_message {
-    font-size: 12px;
+    font-size: var(--mcp-sp-12);
     color: var(--mcp-ink-2);
     line-height: 1.4;
 }
@@ -88,8 +88,8 @@
     border: none !important;
     box-shadow: none !important;
     color: var(--mcp-ink-3) !important;
-    padding: 2px 4px !important;
-    font-size: 14px !important;
+    padding: var(--mcp-sp-2) var(--mcp-sp-4) !important;
+    font-size: var(--mcp-sp-14) !important;
     border-radius: var(--mcp-r-xs) !important;
     opacity: 0.55;
     cursor: pointer;
@@ -102,7 +102,7 @@
 /* ── Buttons row ─────────────────────────────────────────────── */
 .o_notification_buttons {
     display: flex;
-    gap: 6px;
-    margin-top: 8px;
+    gap: var(--mcp-sp-6);
+    margin-top: var(--mcp-sp-8);
     flex-wrap: wrap;
 }

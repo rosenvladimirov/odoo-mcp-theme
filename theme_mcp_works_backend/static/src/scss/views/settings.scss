@@ -13,24 +13,24 @@
 .o_setting_search_panel,
 .settings .o_settings_container .settings_tab {
     background: var(--mcp-surface) !important;
-    border-right: 1px solid var(--mcp-rule-strong) !important;
-    padding: 12px 0 !important;
+    border-right: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    padding: var(--mcp-sp-12) 0 !important;
 }
 
 .settings_tab .tab,
 .o_settings_block_tab {
     display: flex !important;
     align-items: center !important;
-    gap: 8px;
-    padding: 8px 14px !important;
+    gap: var(--mcp-sp-8);
+    padding: var(--mcp-sp-8) var(--mcp-sp-14) !important;
     color: var(--mcp-ink-2) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: 11px !important;
+    font-size: var(--mcp-sp-11) !important;
     font-weight: 600 !important;
     letter-spacing: 0.10em !important;
     text-transform: uppercase !important;
     border-radius: 0 !important;
-    border-left: 2px solid transparent;
+    border-left: var(--mcp-sp-2) solid transparent;
     cursor: pointer;
     transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
 
@@ -44,13 +44,13 @@
         background: var(--mcp-accent-mute) !important;
         color: var(--mcp-accent) !important;
         border-left-color: var(--mcp-accent);
-        box-shadow: inset 0 0 12px rgba(15, 82, 186, 0.06);
+        box-shadow: inset 0 0 var(--mcp-sp-12) var(--mcp-accent-a06);
     }
 
     img,
     .o_image {
-        width: 16px;
-        height: 16px;
+        width: var(--mcp-sp-16);
+        height: var(--mcp-sp-16);
         border-radius: 0 !important;
     }
 }
@@ -67,37 +67,37 @@
 .o_setting_box,
 .settings_block {
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
-    padding: 16px 20px !important;
-    margin: 0 0 8px 0 !important;
+    padding: var(--mcp-sp-16) var(--mcp-sp-20) !important;
+    margin: 0 0 var(--mcp-sp-8) 0 !important;
     box-shadow:
-        0 0 0 1px rgba(15, 82, 186, 0.06),
-        0 2px 12px -2px rgba(15, 82, 186, 0.12) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
+        0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12) !important;
 }
 
 /* Block header (section eyebrow + title) */
 .settings_block h2,
 .o_form_view.o_settings h2 {
     font-family: var(--mcp-font-mono) !important;
-    font-size: 11px !important;
+    font-size: var(--mcp-sp-11) !important;
     font-weight: 700 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
     color: var(--mcp-accent) !important;
-    margin: 0 0 12px 0 !important;
-    padding-bottom: 8px !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
+    margin: 0 0 var(--mcp-sp-12) 0 !important;
+    padding-bottom: var(--mcp-sp-8) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     position: relative;
 
     &::after {
         content: "";
         position: absolute;
-        left: 0; bottom: -1px;
-        width: 80px;
-        height: 1px;
+        left: 0; bottom: calc(-1 * var(--mcp-sp-1));
+        width: var(--mcp-sp-80);
+        height: var(--mcp-sp-1);
         background: var(--mcp-accent);
-        box-shadow: 0 0 4px var(--mcp-accent-glow);
+        box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-glow);
     }
 }
 
@@ -107,7 +107,7 @@
     .o_form_label,
     label {
         font-family: var(--mcp-font-family) !important;
-        font-size: 13px !important;
+        font-size: var(--mcp-sp-13) !important;
         font-weight: 600 !important;
         color: var(--mcp-ink) !important;
         letter-spacing: 0 !important;
@@ -117,7 +117,7 @@
     .text-muted,
     .o_form_field_descriptive {
         color: var(--mcp-ink-3) !important;
-        font-size: 11.5px !important;
+        font-size: var(--mcp-sp-11-5) !important;
         line-height: 1.5;
     }
 }
@@ -127,8 +127,8 @@
 .o_setting_box .o_field_boolean {
     .form-check-input,
     input[type="checkbox"].o_switch {
-        width: 32px !important;
-        height: 18px !important;
+        width: var(--mcp-sp-32) !important;
+        height: var(--mcp-sp-18) !important;
         background-color: var(--mcp-rule-strong) !important;
         background-image: none !important;
         border: 0 !important;
@@ -140,20 +140,20 @@
         &::after {
             content: "";
             position: absolute;
-            top: 2px; left: 2px;
-            width: 14px; height: 14px;
+            top: var(--mcp-sp-2); left: var(--mcp-sp-2);
+            width: var(--mcp-sp-14); height: var(--mcp-sp-14);
             background: var(--mcp-surface);
             transition: transform var(--mcp-t-fast);
         }
 
         &:checked {
             background-color: var(--mcp-accent) !important;
-            box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+            box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
 
-            &::after { transform: translateX(14px); }
+            &::after { transform: translateX(var(--mcp-sp-14)); }
         }
 
-        &:focus { box-shadow: 0 0 0 2px var(--mcp-accent-soft) !important; }
+        &:focus { box-shadow: 0 0 0 var(--mcp-sp-2) var(--mcp-accent-soft) !important; }
     }
 }
 
@@ -161,12 +161,12 @@
 .settings .o_searchview,
 .settings .o_searchview_inputs {
     background: var(--mcp-surface-2) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
 
     &:focus-within {
         border-color: var(--mcp-accent) !important;
-        box-shadow: 0 0 0 2px var(--mcp-accent-soft), 0 0 6px rgba(15, 82, 186, 0.30) !important;
+        box-shadow: 0 0 0 var(--mcp-sp-2) var(--mcp-accent-soft), 0 0 var(--mcp-sp-6) var(--mcp-accent-a30) !important;
     }
 }
 
@@ -175,8 +175,8 @@
 .app_settings_block .alert {
     background: var(--mcp-accent-soft) !important;
     color: var(--mcp-accent) !important;
-    border: 1px solid var(--mcp-accent) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
     border-radius: 0 !important;
-    font-size: 12px !important;
-    padding: 8px 12px !important;
+    font-size: var(--mcp-sp-12) !important;
+    padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
 }

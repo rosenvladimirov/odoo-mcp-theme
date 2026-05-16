@@ -9,14 +9,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: var(--mcp-sp-36);
+    height: var(--mcp-sp-36);
     background: transparent;
     border: none;
     border-radius: var(--mcp-r-md);
     cursor: pointer;
     color: var(--o-navbar-color, var(--mcp-ink));
-    font-size: 18px;
+    font-size: var(--mcp-sp-18);
     padding: 0;
     flex-shrink: 0;
     transition: background var(--mcp-t-fast), color var(--mcp-t-fast), transform var(--mcp-t-fast);

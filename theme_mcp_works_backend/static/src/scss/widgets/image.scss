@@ -8,7 +8,7 @@
 }
 
 .o_field_image img {
-    border: 1.5px solid var(--mcp-rule-strong);
+    border: var(--mcp-bw-1-5) solid var(--mcp-rule-strong);
     border-radius: var(--mcp-r-base);
     object-fit: cover;
     display: block;
@@ -32,7 +32,7 @@
     opacity: 0;
     transition: opacity var(--mcp-t-base);
     cursor: pointer;
-    font-size: 18px;
+    font-size: var(--mcp-sp-18);
     color: var(--mcp-accent);
 }
 .o_field_image:hover .o_select_file_button,
@@ -41,16 +41,16 @@
 /* Clear / remove image button */
 .o_field_image .o_clear_file_button {
     position: absolute;
-    top: 4px;
-    right: 4px;
-    width: 20px;
-    height: 20px;
+    top: var(--mcp-sp-4);
+    right: var(--mcp-sp-4);
+    width: var(--mcp-sp-20);
+    height: var(--mcp-sp-20);
     border-radius: var(--mcp-r-pill);
     background: var(--mcp-ink) !important;
     color: var(--mcp-paper) !important;
     border: none !important;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.25) !important;
-    font-size: 10px !important;
+    box-shadow: 0 var(--mcp-sp-1) var(--mcp-sp-4) var(--mcp-shadow-a25) !important;
+    font-size: var(--mcp-sp-10) !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,7 +67,7 @@
 
 /* ── PDF viewer field ────────────────────────────────────────── */
 .o_field_pdf_viewer {
-    border: 1.5px solid var(--mcp-rule-strong);
+    border: var(--mcp-bw-1-5) solid var(--mcp-rule-strong);
     border-radius: var(--mcp-r-base);
     overflow: hidden;
     background: var(--mcp-paper-deep);

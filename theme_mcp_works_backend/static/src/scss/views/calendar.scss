@@ -5,25 +5,25 @@
 .o_calendar_view {
     padding: var(--mcp-view-pad);
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     box-shadow:
-        0 0 0 1px rgba(15, 82, 186, 0.06),
-        0 2px 12px -2px rgba(15, 82, 186, 0.12),
-        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
+        0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12),
+        0 var(--mcp-sp-8) var(--mcp-sp-32) calc(-1 * var(--mcp-sp-12)) var(--mcp-accent-a18) !important;
 }
 
 /* Top toolbar (prev/next, view picker, today) */
 .o_calendar_view .fc-toolbar,
 .o_calendar_view .fc-header-toolbar {
     background: var(--mcp-surface-2) !important;
-    border-bottom: 1px solid var(--mcp-rule-strong) !important;
-    padding: 8px 12px !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
     margin: 0 !important;
 
     .fc-toolbar-title {
         font-family: var(--mcp-font-mono) !important;
-        font-size: 14px !important;
+        font-size: var(--mcp-sp-14) !important;
         font-weight: 700 !important;
         letter-spacing: 0.12em !important;
         text-transform: uppercase !important;
@@ -34,14 +34,14 @@
     button.fc-button {
         background: transparent !important;
         color: var(--mcp-ink-2) !important;
-        border: 1px solid var(--mcp-rule-strong) !important;
+        border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
         border-radius: 0 !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: 11px !important;
+        font-size: var(--mcp-sp-11) !important;
         font-weight: 600 !important;
         letter-spacing: 0.08em !important;
         text-transform: uppercase !important;
-        padding: 4px 10px !important;
+        padding: var(--mcp-sp-4) var(--mcp-sp-10) !important;
         text-shadow: none !important;
         box-shadow: none !important;
 
@@ -51,7 +51,7 @@
             background: var(--mcp-accent) !important;
             border-color: var(--mcp-accent) !important;
             color: var(--mcp-surface) !important;
-            box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+            box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
         }
     }
 }
@@ -60,17 +60,17 @@
 .o_calendar_view .fc-col-header-cell,
 .o_calendar_view .fc-day-header {
     background: var(--mcp-surface-3) !important;
-    border-bottom: 1px solid var(--mcp-rule-strong) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
 
     .fc-col-header-cell-cushion,
     .fc-day-header-text {
         font-family: var(--mcp-font-mono) !important;
-        font-size: 10px !important;
+        font-size: var(--mcp-sp-10) !important;
         font-weight: 600 !important;
         letter-spacing: 0.14em !important;
         text-transform: uppercase !important;
         color: var(--mcp-ink-3) !important;
-        padding: 8px 10px !important;
+        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
     }
 }
 
@@ -85,22 +85,22 @@
     .fc-daygrid-day-number,
     .fc-day-number {
         font-family: var(--mcp-font-mono) !important;
-        font-size: 11px !important;
+        font-size: var(--mcp-sp-11) !important;
         font-weight: 600 !important;
         color: var(--mcp-ink-2) !important;
-        padding: 4px 6px !important;
+        padding: var(--mcp-sp-4) var(--mcp-sp-6) !important;
     }
 }
 
 /* Today marker */
 .o_calendar_view .fc-day-today {
     background: var(--mcp-accent-soft) !important;
-    box-shadow: inset 0 0 0 1px var(--mcp-accent), inset 0 0 12px rgba(15, 82, 186, 0.12);
+    box-shadow: inset 0 0 0 var(--mcp-sp-1) var(--mcp-accent), inset 0 0 var(--mcp-sp-12) var(--mcp-accent-a12);
 
     .fc-daygrid-day-number {
         color: var(--mcp-accent) !important;
         font-weight: 700 !important;
-        text-shadow: 0 0 8px rgba(15, 82, 186, 0.30);
+        text-shadow: 0 0 var(--mcp-sp-8) var(--mcp-accent-a30);
     }
 }
 
@@ -110,16 +110,16 @@
     background: var(--mcp-accent) !important;
     color: var(--mcp-surface) !important;
     border: 0 !important;
-    border-left: 3px solid var(--mcp-accent-2) !important;
+    border-left: var(--mcp-sp-3) solid var(--mcp-accent-2) !important;
     border-radius: 0 !important;
     font-family: var(--mcp-font-family) !important;
-    font-size: 11px !important;
+    font-size: var(--mcp-sp-11) !important;
     font-weight: 500 !important;
-    padding: 2px 6px !important;
-    box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+    padding: var(--mcp-sp-2) var(--mcp-sp-6) !important;
+    box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
 
     &:hover {
-        box-shadow: 0 0 0 1px var(--mcp-accent-2), 0 0 8px rgba(15, 82, 186, 0.40) !important;
+        box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-2), 0 0 var(--mcp-sp-8) var(--mcp-accent-a40) !important;
     }
 
     .fc-event-time {
@@ -138,7 +138,7 @@
     .fc-timegrid-slot-label-cushion,
     .fc-axis-cushion {
         font-family: var(--mcp-font-mono) !important;
-        font-size: 9.5px !important;
+        font-size: var(--mcp-sp-9-5) !important;
         font-weight: 500 !important;
         letter-spacing: 0.06em !important;
         color: var(--mcp-ink-3) !important;
@@ -149,7 +149,7 @@
 .o_calendar_view .fc-timegrid-now-indicator-line,
 .o_calendar_view .fc-now-indicator-line {
     border-color: var(--mcp-accent) !important;
-    box-shadow: 0 0 8px var(--mcp-accent-glow);
+    box-shadow: 0 0 var(--mcp-sp-8) var(--mcp-accent-glow);
 }
 .o_calendar_view .fc-timegrid-now-indicator-arrow {
     border-left-color: var(--mcp-accent) !important;

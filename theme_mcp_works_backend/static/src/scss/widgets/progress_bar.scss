@@ -3,14 +3,14 @@
 .o_field_progress_bar {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--mcp-sp-8);
     width: 100%;
 }
 
 /* Bootstrap progress wrapper */
 .o_field_progress_bar .progress {
     flex: 1 1 auto;
-    height: 6px !important;
+    height: var(--mcp-sp-6) !important;
     border-radius: var(--mcp-r-pill) !important;
     background: var(--mcp-rule) !important;
     overflow: hidden;
@@ -23,17 +23,17 @@
 }
 
 /* Danger threshold (> 100% or overdue) */
-.o_field_progress_bar .progress-bar.bg-danger  { background: #ef4444 !important; }
-.o_field_progress_bar .progress-bar.bg-warning { background: #f59e0b !important; }
-.o_field_progress_bar .progress-bar.bg-success { background: #22c55e !important; }
+.o_field_progress_bar .progress-bar.bg-danger  { background: var(--mcp-c-red) !important; }
+.o_field_progress_bar .progress-bar.bg-warning { background: var(--mcp-warn) !important; }
+.o_field_progress_bar .progress-bar.bg-success { background: var(--mcp-c-green) !important; }
 
 /* Numeric label */
 .o_field_progress_bar .o_progress_value {
     flex-shrink: 0;
-    font-size: 11px;
+    font-size: var(--mcp-sp-11);
     font-weight: 600;
     color: var(--mcp-ink-2);
-    min-width: 32px;
+    min-width: var(--mcp-sp-32);
     text-align: right;
     font-variant-numeric: tabular-nums;
 }

@@ -5,17 +5,17 @@
 .o_graph_view {
     padding: var(--mcp-view-pad);
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     box-shadow:
-        0 0 0 1px rgba(15, 82, 186, 0.06),
-        0 2px 12px -2px rgba(15, 82, 186, 0.12),
-        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
+        0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12),
+        0 var(--mcp-sp-8) var(--mcp-sp-32) calc(-1 * var(--mcp-sp-12)) var(--mcp-accent-a18) !important;
 }
 
 .o_graph_view .o_graph_renderer,
 .o_graph_view .o_graph_container {
-    padding: 12px 16px !important;
+    padding: var(--mcp-sp-12) var(--mcp-sp-16) !important;
     background: transparent !important;
 }
 
@@ -29,13 +29,13 @@
 body > .chartjs-tooltip {
     background: var(--mcp-ink) !important;
     color: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-accent) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
     border-radius: 0 !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: 10px !important;
+    font-size: var(--mcp-sp-10) !important;
     letter-spacing: 0.06em !important;
-    padding: 6px 10px !important;
-    box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+    padding: var(--mcp-sp-6) var(--mcp-sp-10) !important;
+    box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
 }
 
 /* Legend (top of chart) */
@@ -44,22 +44,22 @@ body > .chartjs-tooltip {
 .o_graph_view ul.chartjs-legend {
     display: flex !important;
     flex-wrap: wrap;
-    gap: 6px;
-    padding: 8px 16px !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
+    gap: var(--mcp-sp-6);
+    padding: var(--mcp-sp-8) var(--mcp-sp-16) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     background: var(--mcp-surface-2) !important;
 
     li,
     .o_graph_legend_item {
         display: inline-flex !important;
         align-items: center;
-        gap: 6px;
-        padding: 2px 8px !important;
+        gap: var(--mcp-sp-6);
+        padding: var(--mcp-sp-2) var(--mcp-sp-8) !important;
         background: transparent;
-        border: 1px solid var(--mcp-rule-strong);
+        border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
         border-radius: 0;
         font-family: var(--mcp-font-mono) !important;
-        font-size: 10px !important;
+        font-size: var(--mcp-sp-10) !important;
         font-weight: 500 !important;
         letter-spacing: 0.06em !important;
         text-transform: uppercase !important;
@@ -73,7 +73,7 @@ body > .chartjs-tooltip {
 /* Mode toolbar (bar/line/pie) */
 .o_graph_view .o_graph_button_group {
     display: inline-flex !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
 
     .btn {
@@ -81,30 +81,30 @@ body > .chartjs-tooltip {
         color: var(--mcp-ink-2) !important;
         border: 0 !important;
         border-radius: 0 !important;
-        padding: 4px 10px !important;
+        padding: var(--mcp-sp-4) var(--mcp-sp-10) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: 10px !important;
+        font-size: var(--mcp-sp-10) !important;
         letter-spacing: 0.08em !important;
         text-transform: uppercase !important;
 
-        & + .btn { border-left: 1px solid var(--mcp-rule-strong) !important; }
+        & + .btn { border-left: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important; }
         &:hover { color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
         &.active,
         &[aria-pressed="true"] {
             background: var(--mcp-accent) !important;
             color: var(--mcp-surface) !important;
-            box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+            box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
         }
     }
 }
 
 /* Empty / no-data state */
 .o_graph_view .o_view_nocontent {
-    padding: 48px !important;
+    padding: var(--mcp-sp-48) !important;
     text-align: center;
     color: var(--mcp-ink-3);
     font-family: var(--mcp-font-mono);
-    font-size: 11px;
+    font-size: var(--mcp-sp-11);
     letter-spacing: 0.12em;
     text-transform: uppercase;
 }

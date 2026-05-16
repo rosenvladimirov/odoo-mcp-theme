@@ -7,12 +7,12 @@
 button.btn,
 .btn-secondary {
     background: transparent !important;
-    border: 1.5px solid var(--mcp-ink) !important;
+    border: var(--mcp-bw-1-5) solid var(--mcp-ink) !important;
     color: var(--mcp-ink) !important;
     border-radius: var(--mcp-r-sm) !important;
-    padding: 6px 14px !important;
+    padding: var(--mcp-sp-6) var(--mcp-sp-14) !important;
     font-weight: 500 !important;
-    font-size: 13px !important;
+    font-size: var(--mcp-sp-13) !important;
     transition: all var(--mcp-t-base) !important;
     box-shadow: none !important;
 }
@@ -23,7 +23,7 @@ button.btn:hover,
     border-color: var(--mcp-accent) !important;
     color: var(--mcp-accent) !important;
     box-shadow: none !important;
-    transform: translateY(-1px);
+    transform: translateY(calc(-1 * var(--mcp-sp-1)));
 }
 
 /* ── Primary ─────────────────────────────────────────────────── */
@@ -58,8 +58,8 @@ button.o_form_button_save {
 }
 
 /* ── Size variants ───────────────────────────────────────────── */
-.btn-sm { padding: 4px 10px !important;  font-size: 12px !important; }
-.btn-lg { padding: 8px 18px !important;  font-size: 14px !important; }
+.btn-sm { padding: var(--mcp-sp-4) var(--mcp-sp-10) !important;  font-size: var(--mcp-sp-12) !important; }
+.btn-lg { padding: var(--mcp-sp-8) var(--mcp-sp-18) !important;  font-size: var(--mcp-sp-14) !important; }
 
 /* ── Disabled ────────────────────────────────────────────────── */
 .btn:disabled,

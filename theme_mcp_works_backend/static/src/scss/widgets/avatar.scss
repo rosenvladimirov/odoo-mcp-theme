@@ -1,7 +1,7 @@
 /* MCP Works backend — Avatar widget (.o_avatar)
    Used by: many2one_avatar, many2many_tags_avatar, user/partner fields */
 
-:root { --Avatar-size: 20px; }
+:root { --Avatar-size: var(--mcp-sp-20); }
 
 /* Base avatar — image or letter */
 .o_avatar,
@@ -26,17 +26,17 @@
     justify-content: center;
     font-size: calc(var(--Avatar-size) * 0.45);
     font-weight: 600;
-    border: 1px solid var(--mcp-accent-soft);
+    border: var(--mcp-sp-1) solid var(--mcp-accent-soft);
 }
 
 /* ── Size presets ─────────────────────────────────────────────── */
-.o_avatar_sm  { --Avatar-size: 16px; }
-.o_avatar_md  { --Avatar-size: 24px; }
-.o_avatar_lg  { --Avatar-size: 32px; }
-.o_avatar_xl  { --Avatar-size: 48px; }
+.o_avatar_sm  { --Avatar-size: var(--mcp-sp-16); }
+.o_avatar_md  { --Avatar-size: var(--mcp-sp-24); }
+.o_avatar_lg  { --Avatar-size: var(--mcp-sp-32); }
+.o_avatar_xl  { --Avatar-size: var(--mcp-sp-48); }
 
 /* ── Component-context overrides (not view-scoped) ───────────── */
 /* Navbar systray / chatter — these are chrome, not views */
-.o_menu_systray .o_avatar     { --Avatar-size: 24px; }
-.o-mail-Chatter .o_avatar     { --Avatar-size: 32px; }
+.o_menu_systray .o_avatar     { --Avatar-size: var(--mcp-sp-24); }
+.o-mail-Chatter .o_avatar     { --Avatar-size: var(--mcp-sp-32); }
 /* View-scoped sizes live in views/list.scss + views/form.scss */

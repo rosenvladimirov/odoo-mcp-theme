@@ -8,17 +8,17 @@
               (crisp at any DPR, no rotated-rectangle artifacts).
 */
 .o_checkbox {
-    --mcp-cbx-size: 16px;
+    --mcp-cbx-size: var(--mcp-sp-16);
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: var(--mcp-cbx-size);
     height: var(--mcp-cbx-size);
-    border: 1.5px solid var(--mcp-rule-strong);
+    border: var(--mcp-bw-1-5) solid var(--mcp-rule-strong);
     border-radius: var(--mcp-r-xs);
     background: var(--mcp-paper-light);
-    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+    box-shadow: inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a06);
     cursor: pointer;
     flex-shrink: 0;
     position: relative;
@@ -42,15 +42,15 @@
     &:hover:not(:has(input:checked)):not(.o_checkbox_checked) {
         border-color: var(--mcp-accent);
         background: var(--mcp-accent-soft);
-        box-shadow: inset 0 1px 2px var(--mcp-accent-soft);
+        box-shadow: inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-accent-soft);
     }
 
     /* Keyboard focus halo */
     &:has(input:focus-visible),
     &:focus-within {
         box-shadow:
-            inset 0 1px 2px rgba(15, 23, 42, 0.06),
-            0 0 0 3px var(--mcp-accent-glow);
+            inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a06),
+            0 0 0 var(--mcp-sp-3) var(--mcp-accent-glow);
         border-color: var(--mcp-accent);
         outline: none;
     }
@@ -82,8 +82,8 @@
         background: var(--mcp-accent);
         border-color: var(--mcp-accent);
         box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.18),
-            0 1px 2px rgba(15, 82, 186, 0.25);
+            inset 0 var(--mcp-sp-1) 0 var(--mcp-white-a18),
+            0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-accent-a25);
 
         &::after {
             opacity: 1;
@@ -120,9 +120,9 @@
 
 /* Sizing variants — set on parent or inline */
 .o_field_widget[name="active"] .o_checkbox,
-.o_form_view .o_checkbox          { --mcp-cbx-size: 18px; }
-.o_list_view .o_checkbox          { --mcp-cbx-size: 16px; }
-.o_kanban_view .o_checkbox        { --mcp-cbx-size: 16px; }
+.o_form_view .o_checkbox          { --mcp-cbx-size: var(--mcp-sp-18); }
+.o_list_view .o_checkbox          { --mcp-cbx-size: var(--mcp-sp-16); }
+.o_kanban_view .o_checkbox        { --mcp-cbx-size: var(--mcp-sp-16); }
 
 /* ── Native checkbox fallback (readonly cells, no wrapper) ─────
    When Odoo renders a bare <input type="checkbox"> without the
@@ -140,15 +140,15 @@ input[type="checkbox"].form-check-input,
     -webkit-appearance: none;
     flex: 0 0 auto !important;
     display: inline-block !important;
-    width: 16px !important;
-    height: 16px !important;
-    min-width: 16px;
-    max-width: 16px;
+    width: var(--mcp-sp-16) !important;
+    height: var(--mcp-sp-16) !important;
+    min-width: var(--mcp-sp-16);
+    max-width: var(--mcp-sp-16);
     aspect-ratio: 1 / 1;
-    border: 1.5px solid var(--mcp-rule-strong);
+    border: var(--mcp-bw-1-5) solid var(--mcp-rule-strong);
     border-radius: var(--mcp-r-xs);
     background: var(--mcp-paper-light);
-    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+    box-shadow: inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a06);
     cursor: pointer;
     position: relative;
     margin: 0;
@@ -168,16 +168,16 @@ input[type="checkbox"].form-check-input,
         outline: none;
         border-color: var(--mcp-accent);
         box-shadow:
-            inset 0 1px 2px rgba(15, 23, 42, 0.06),
-            0 0 0 3px var(--mcp-accent-glow);
+            inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a06),
+            0 0 0 var(--mcp-sp-3) var(--mcp-accent-glow);
     }
 
     &:checked {
         background: var(--mcp-accent);
         border-color: var(--mcp-accent);
         box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.18),
-            0 1px 2px rgba(15, 82, 186, 0.25);
+            inset 0 var(--mcp-sp-1) 0 var(--mcp-white-a18),
+            0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-accent-a25);
 
         &::after {
             content: "";

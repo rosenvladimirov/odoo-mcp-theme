@@ -8,17 +8,17 @@
 .modal-content {
     background: var(--mcp-surface) !important;       /* content = white */
     border-radius: var(--mcp-r-md) !important;
-    border: 1px solid var(--mcp-rule) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     box-shadow: var(--mcp-shadow-modal) !important;
-    max-height: calc(var(--mcp-vp-h, 100vh) - 32px);
+    max-height: calc(var(--mcp-vp-h, 100vh) - var(--mcp-sp-32));
     overflow: hidden !important;                     /* keep rounded corners clean */
 }
 .modal-header {
     background-color: var(--mcp-cp-bg) !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     box-shadow: var(--mcp-cp-shadow) !important;
     border-radius: var(--mcp-r-md) var(--mcp-r-md) 0 0 !important;
-    padding: 12px 16px !important;
+    padding: var(--mcp-sp-12) var(--mcp-sp-16) !important;
     position: relative;
     z-index: 1;                                       /* shadow paints over body */
 }
@@ -27,7 +27,7 @@
     font-weight: 600 !important;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    font-size: 14px !important;
+    font-size: var(--mcp-sp-14) !important;
 }
 .modal-header .btn-close {
     color: var(--mcp-ink-2) !important;
@@ -36,15 +36,15 @@
 }
 .modal-body {
     background: var(--mcp-surface) !important;
-    max-height: calc(var(--mcp-vp-h, 100vh) - 200px);
+    max-height: calc(var(--mcp-vp-h, 100vh) - var(--mcp-sp-200));
     overflow-y: auto;
-    padding: 16px !important;
+    padding: var(--mcp-sp-16) !important;
 }
 .modal-footer {
     background: var(--mcp-surface) !important;
-    border-top: 1px solid var(--mcp-rule) !important;
-    padding: 12px 16px !important;
-    gap: 8px !important;
+    border-top: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+    padding: var(--mcp-sp-12) var(--mcp-sp-16) !important;
+    gap: var(--mcp-sp-8) !important;
 }
 
 /* ── Dropdowns ───────────────────────────────────────────────── */
@@ -54,16 +54,16 @@
 .o-dropdown--menu {
     /* Same indigo-tinted white as the control panel header */
     background: var(--mcp-cp-bg) !important;
-    border: 1px solid var(--mcp-rule) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: var(--mcp-r-md) !important;
     box-shadow: var(--mcp-cp-shadow) !important;
-    padding: 4px !important;
+    padding: var(--mcp-sp-4) !important;
 }
 .dropdown-item {
     color: var(--mcp-ink) !important;
     border-radius: var(--mcp-r-xs);
-    padding: 6px 12px !important;
-    font-size: 13px !important;
+    padding: var(--mcp-sp-6) var(--mcp-sp-12) !important;
+    font-size: var(--mcp-sp-13) !important;
     transition: all var(--mcp-t-fast);
 }
 .dropdown-item:hover,
@@ -76,7 +76,7 @@
 /* ── Notifications ───────────────────────────────────────────── */
 .o_notification {
     border-radius: var(--mcp-r-md) !important;
-    border-left-width: 4px !important;
+    border-left-width: var(--mcp-sp-4) !important;
 }
 
 /* ── Tooltips ────────────────────────────────────────────────── */

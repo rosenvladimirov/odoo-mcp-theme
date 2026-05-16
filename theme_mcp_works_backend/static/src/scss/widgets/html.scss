@@ -9,22 +9,22 @@
 /* Odoo 19 uses the Composer / odoo-editor */
 .o_field_html .odoo-editor-editable,
 .o_field_html .o_editable {
-    min-height: 120px;
-    padding: 10px 14px;
-    border: 1px solid var(--mcp-rule-strong);
+    min-height: var(--mcp-sp-120);
+    padding: var(--mcp-sp-10) var(--mcp-sp-14);
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
     border-radius: var(--mcp-r-sm);
     background: var(--mcp-surface);
     color: var(--mcp-ink);
-    font-size: 13px;
+    font-size: var(--mcp-sp-13);
     line-height: 1.6;
     transition: border-color var(--mcp-t-base), box-shadow var(--mcp-t-base);
     outline: none;
 
     &:focus,
     &[contenteditable="true"]:focus {
-        background: #ffffff !important;
+        background: var(--mcp-bg) !important;
         border-color: transparent !important;
-        box-shadow: inset 0 -1px 0 0 var(--mcp-accent) !important;
+        box-shadow: inset 0 calc(-1 * var(--mcp-sp-1)) 0 0 var(--mcp-accent) !important;
         outline: none !important;
     }
 }
@@ -35,10 +35,10 @@
 .oe-toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 2px;
-    padding: 4px 6px;
+    gap: var(--mcp-sp-2);
+    padding: var(--mcp-sp-4) var(--mcp-sp-6);
     background: var(--mcp-paper);
-    border: 1px solid var(--mcp-rule-strong);
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
     border-bottom: none;
     border-radius: var(--mcp-r-sm) var(--mcp-r-sm) 0 0;
 
@@ -47,9 +47,9 @@
         border: none !important;
         box-shadow: none !important;
         color: var(--mcp-ink-2) !important;
-        padding: 3px 6px !important;
+        padding: var(--mcp-sp-3) var(--mcp-sp-6) !important;
         border-radius: var(--mcp-r-xs) !important;
-        font-size: 12px !important;
+        font-size: var(--mcp-sp-12) !important;
         font-weight: normal !important;
         height: auto !important;
         transform: none !important;
@@ -62,7 +62,7 @@
         }
     }
 
-    .separator { width: 1px; background: var(--mcp-rule); margin: 3px 2px; align-self: stretch; }
+    .separator { width: var(--mcp-sp-1); background: var(--mcp-rule); margin: var(--mcp-sp-3) var(--mcp-sp-2); align-self: stretch; }
 }
 
 /* When toolbar is present, connect to editor */
@@ -82,5 +82,5 @@
 
     h1, h2, h3, h4 { color: var(--mcp-ink); }
     a { color: var(--mcp-accent); }
-    blockquote { border-left: 3px solid var(--mcp-accent); padding-left: 12px; color: var(--mcp-ink-2); }
+    blockquote { border-left: var(--mcp-sp-3) solid var(--mcp-accent); padding-left: var(--mcp-sp-12); color: var(--mcp-ink-2); }
 }

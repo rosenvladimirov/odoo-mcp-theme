@@ -8,9 +8,9 @@
     position: fixed;
     inset: 0;
     z-index: var(--mcp-z-backdrop);
-    background: rgba(5, 10, 20, 0.45);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    background: var(--mcp-scrim-a45);
+    backdrop-filter: blur(var(--mcp-sp-2));
+    -webkit-backdrop-filter: blur(var(--mcp-sp-2));
     animation: mcp-backdrop-in 0.18s ease both;
 }
 @keyframes mcp-backdrop-in {
@@ -21,28 +21,28 @@
 /* ── Modal panel — sharp HUD frame ──────────────────────────── */
 .mcp_dash_modal {
     position: fixed;
-    top: calc(var(--mcp-navbar-height) + 16px);
-    left: 16px;
+    top: calc(var(--mcp-navbar-height) + var(--mcp-sp-16));
+    left: var(--mcp-sp-16);
     z-index: var(--mcp-z-modal);
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    padding: 8px 10px 10px;
-    width: 80px;
+    gap: var(--mcp-sp-6);
+    padding: var(--mcp-sp-8) var(--mcp-sp-10) var(--mcp-sp-10);
+    width: var(--mcp-sp-80);
     background: var(--mcp-surface);
-    border: 1px solid var(--mcp-rule-strong);
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
     box-shadow: var(--mcp-shadow-modal);
-    max-height: var(--mcp-modal-max-h, calc(100vh - 72px));
+    max-height: var(--mcp-modal-max-h, calc(100vh - var(--mcp-sp-72)));
     user-select: none;
     overflow: visible;
     /* Only the BOTTOM-LEFT corner notched (Rosen: "трябва само
        долния ляв"). */
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    clip-path: polygon(0 0, 100% 0, 100% 100%, var(--mcp-sp-8) 100%, 0 calc(100% - var(--mcp-sp-8)));
 
     /* Hidden by default */
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-8px);
+    transform: translateY(calc(-1 * var(--mcp-sp-8)));
     transition:
         opacity var(--mcp-t-fast),
         transform var(--mcp-t-fast),
@@ -55,8 +55,8 @@
         inset: 0;
         background: repeating-linear-gradient(
             0deg,
-            transparent 0 3px,
-            var(--mcp-scan-color) 3px 4px
+            transparent 0 var(--mcp-sp-3),
+            var(--mcp-scan-color) var(--mcp-sp-3) var(--mcp-sp-4)
         );
         opacity: .8;
         pointer-events: none;
@@ -73,7 +73,7 @@
     animation: mcp-modal-appear 0.22s cubic-bezier(.2,.6,.2,1) both;
 }
 @keyframes mcp-modal-appear {
-    from { opacity: 0; transform: translateY(-8px); }
+    from { opacity: 0; transform: translateY(calc(-1 * var(--mcp-sp-8))); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -87,21 +87,21 @@
     }
 }
 @keyframes mcp-item-in {
-    from { opacity: 0; transform: translateY(4px); }
+    from { opacity: 0; transform: translateY(var(--mcp-sp-4)); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── Scrollable apps container ──────────────────────────────── */
 .mcp_dash_apps_scroll {
-    max-height: calc(var(--mcp-modal-max-h, calc(100vh - 72px)) - 88px);
+    max-height: calc(var(--mcp-modal-max-h, calc(100vh - var(--mcp-sp-72))) - var(--mcp-sp-88));
     flex: 0 0 auto;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 2px 0;
+    gap: var(--mcp-sp-4);
+    padding: var(--mcp-sp-2) 0;
     width: 100%;
     &::-webkit-scrollbar { display: none; }
 }
@@ -109,7 +109,7 @@
 /* ── Scroll arrows ──────────────────────────────────────────── */
 .mcp_dash_scroll_btn {
     width: 100%;
-    height: 22px;
+    height: var(--mcp-sp-22);
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -119,15 +119,15 @@
     border: none;
     border-radius: 0;
     cursor: pointer;
-    font-size: 10px;
+    font-size: var(--mcp-sp-10);
     transition: background var(--mcp-t-fast);
     &:hover { background: var(--mcp-accent-glow); }
 }
 
 /* ── App items — sharp tile with HUD active marker ──────────── */
 .mcp_dash_item {
-    width: 54px;
-    height: 54px;
+    width: var(--mcp-sp-54);
+    height: var(--mcp-sp-54);
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
@@ -144,10 +144,10 @@
     white-space: nowrap;
     color: var(--mcp-ink-2);
 }
-.mcp_dash_item:hover { transform: translateY(-2px); }
+.mcp_dash_item:hover { transform: translateY(calc(-1 * var(--mcp-sp-2))); }
 .mcp_dash_item img {
-    width: 38px;
-    height: 38px;
+    width: var(--mcp-sp-38);
+    height: var(--mcp-sp-38);
     flex-shrink: 0;
     border-radius: 0;
     object-fit: cover;
@@ -160,8 +160,8 @@
     border-color: var(--mcp-accent);
 }
 .mcp_dash_item .o_app_letter {
-    width: 38px;
-    height: 38px;
+    width: var(--mcp-sp-38);
+    height: var(--mcp-sp-38);
     flex-shrink: 0;
     border-radius: 0;
     background: var(--mcp-surface-2);
@@ -172,7 +172,7 @@
     justify-content: center;
     font-family: var(--mcp-font-mono);
     font-weight: 700;
-    font-size: 14px;
+    font-size: var(--mcp-sp-14);
     letter-spacing: 0.02em;
     transition: background var(--mcp-t-base), border-color var(--mcp-t-base), color var(--mcp-t-base);
 }
@@ -186,10 +186,10 @@
 .mcp_dash_item.is-active::before {
     content: "";
     position: absolute;
-    left: 0; top: 8px; bottom: 8px;
-    width: 3px;
+    left: 0; top: var(--mcp-sp-8); bottom: var(--mcp-sp-8);
+    width: var(--mcp-sp-3);
     background: var(--mcp-accent-2);
-    box-shadow: 0 0 6px var(--mcp-accent-2);
+    box-shadow: 0 0 var(--mcp-sp-6) var(--mcp-accent-2);
 }
 .mcp_dash_item.is-active img,
 .mcp_dash_item.is-active .o_app_letter {
@@ -200,7 +200,7 @@
 
 /* ── Labels (list mode) ─────────────────────────────────────── */
 .mcp_dash_label {
-    font-size: 12px;
+    font-size: var(--mcp-sp-12);
     font-weight: 500;
     color: var(--mcp-ink);
     overflow: hidden;
@@ -212,16 +212,16 @@
 
 /* ── Separator — accent gradient hairline ───────────────────── */
 .mcp_dash_separator {
-    width: 32px;
-    height: 1px;
+    width: var(--mcp-sp-32);
+    height: var(--mcp-sp-1);
     background: var(--mcp-rule-strong);
-    margin: 2px 0;
+    margin: var(--mcp-sp-2) 0;
     flex-shrink: 0;
 }
 .mcp_dash_sep_full {
-    width: calc(100% + 20px) !important;
-    margin-left: -10px;
-    margin-right: -10px;
+    width: calc(100% + var(--mcp-sp-20)) !important;
+    margin-left: calc(-1 * var(--mcp-sp-10));
+    margin-right: calc(-1 * var(--mcp-sp-10));
     background: linear-gradient(
         90deg,
         transparent,
@@ -236,17 +236,17 @@
     position: relative;
     flex-shrink: 0;
     width: 100%;
-    min-height: 28px;
+    min-height: var(--mcp-sp-28);
     display: flex;
     align-items: center;
-    padding-right: 32px;
+    padding-right: var(--mcp-sp-32);
 }
 .mcp_dash_header_title {
     flex: 1 1 auto;
     min-width: 0;
-    padding: 0 4px 0 2px;
+    padding: 0 var(--mcp-sp-4) 0 var(--mcp-sp-2);
     font-family: var(--mcp-font-mono);
-    font-size: 10px;
+    font-size: var(--mcp-sp-10);
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -264,7 +264,7 @@
     position: absolute;
     right: 0; top: 50%;
     transform: translateY(-50%);
-    width: 28px; height: 28px;
+    width: var(--mcp-sp-28); height: var(--mcp-sp-28);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -273,75 +273,75 @@
     border-radius: 0;
     color: var(--mcp-accent);
     cursor: pointer;
-    font-size: 11px;
+    font-size: var(--mcp-sp-11);
     transition: background var(--mcp-t-fast);
     &:hover { background: var(--mcp-accent-soft); }
 }
 
 /* ── Grid pager ─────────────────────────────────────────────── */
-.mcp_dash_pager { display: flex; align-items: center; gap: 2px; flex-shrink: 0; margin-right: 4px; }
+.mcp_dash_pager { display: flex; align-items: center; gap: var(--mcp-sp-2); flex-shrink: 0; margin-right: var(--mcp-sp-4); }
 .mcp_dash_pager_btn {
-    width: 22px; height: 22px;
+    width: var(--mcp-sp-22); height: var(--mcp-sp-22);
     display: flex; align-items: center; justify-content: center;
     background: transparent; border: none; border-radius: 0;
     color: var(--mcp-accent); cursor: pointer;
-    font-size: 10px; padding: 0;
+    font-size: var(--mcp-sp-10); padding: 0;
     transition: background var(--mcp-t-fast);
     &:hover:not(:disabled) { background: var(--mcp-accent-soft); }
     &:disabled { opacity: 0.35; cursor: default; }
 }
 .mcp_dash_pager_label {
     font-family: var(--mcp-font-mono);
-    font-size: 10px;
+    font-size: var(--mcp-sp-10);
     font-weight: 500;
     color: var(--mcp-ink-2);
-    min-width: 28px;
+    min-width: var(--mcp-sp-28);
     text-align: center;
     letter-spacing: 0.06em;
 }
 
 /* ── Modes ──────────────────────────────────────────────────── */
 .mcp_dash_modal.is-compact {
-    width: 80px;
+    width: var(--mcp-sp-80);
     align-items: center;
 }
 .mcp_dash_modal.is-list {
-    width: 240px;
+    width: var(--mcp-sp-240);
     align-items: flex-start;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: var(--mcp-sp-12);
+    padding-right: var(--mcp-sp-12);
 }
 .mcp_dash_modal.is-list .mcp_dash_item {
-    width: 212px;
-    height: 40px;
+    width: var(--mcp-sp-212);
+    height: var(--mcp-sp-40);
     justify-content: flex-start;
     border-radius: 0;
-    padding: 0 8px;
-    gap: 10px;
+    padding: 0 var(--mcp-sp-8);
+    gap: var(--mcp-sp-10);
 }
-.mcp_dash_modal.is-list .mcp_dash_item:hover { transform: translateX(2px); }
+.mcp_dash_modal.is-list .mcp_dash_item:hover { transform: translateX(var(--mcp-sp-2)); }
 .mcp_dash_modal.is-list .mcp_dash_item img,
 .mcp_dash_modal.is-list .mcp_dash_item .o_app_letter {
-    width: 26px; height: 26px; font-size: 11px;
+    width: var(--mcp-sp-26); height: var(--mcp-sp-26); font-size: var(--mcp-sp-11);
 }
-.mcp_dash_modal.is-list .mcp_dash_scroll_btn { width: 212px; }
-.mcp_dash_modal.is-list .mcp_dash_separator  { width: 212px; }
+.mcp_dash_modal.is-list .mcp_dash_scroll_btn { width: var(--mcp-sp-212); }
+.mcp_dash_modal.is-list .mcp_dash_separator  { width: var(--mcp-sp-212); }
 
 .mcp_dash_modal.is-grid {
     width: var(--mcp-dash-grid-w, 720px);
-    max-width: calc(100vw - 32px);
+    max-width: calc(100vw - var(--mcp-sp-32));
     left: 50%;
     transform: translateX(-50%);
     /* Only the BOTTOM-LEFT corner notched (Rosen: "трябва само
        долния ляв"). */
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    clip-path: polygon(0 0, 100% 0, 100% 100%, var(--mcp-sp-8) 100%, 0 calc(100% - var(--mcp-sp-8)));
 }
 .mcp_dash_modal.is-grid.is-open {
     transform: translateX(-50%) translateY(0);
     animation: mcp-modal-appear-grid 0.22s cubic-bezier(.2,.6,.2,1) both;
 }
 @keyframes mcp-modal-appear-grid {
-    from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+    from { opacity: 0; transform: translateX(-50%) translateY(calc(-1 * var(--mcp-sp-8))); }
     to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 .mcp_dash_modal.is-grid .mcp_dash_apps_scroll {
@@ -349,16 +349,16 @@
     grid-template-columns: repeat(var(--mcp-dash-grid-cols, 5), 1fr);
     gap: 0;
     background: var(--mcp-surface);
-    max-height: #{"min(420px, calc(var(--mcp-modal-max-h, 100vh) - 88px))"};
+    max-height: #{"min(420px, calc(var(--mcp-modal-max-h, 100vh) - var(--mcp-sp-88)))"};
     padding: 0;
     width: 100%;
 }
 .mcp_dash_modal.is-grid .mcp_dash_item {
     flex-direction: column;
     width: 100%;
-    height: 80px;
+    height: var(--mcp-sp-80);
     border-radius: 0;
-    padding: 10px;
+    padding: var(--mcp-sp-10);
     justify-content: center;
     align-items: center;
     gap: 0;
@@ -370,30 +370,30 @@
 }
 .mcp_dash_modal.is-grid .mcp_dash_item img,
 .mcp_dash_modal.is-grid .mcp_dash_item .o_app_letter {
-    width: 48px; height: 48px;
+    width: var(--mcp-sp-48); height: var(--mcp-sp-48);
     border-radius: 0;
-    font-size: 18px;
+    font-size: var(--mcp-sp-18);
 }
 
 /* ── Compact name bubble — HUD tag style ────────────────────── */
 .mcp_dash_name_bubble {
     position: absolute;
-    left: calc(100% + 8px);
+    left: calc(100% + var(--mcp-sp-8));
     background: var(--mcp-ink);
     color: var(--mcp-surface);
-    padding: 4px 10px;
+    padding: var(--mcp-sp-4) var(--mcp-sp-10);
     border-radius: 0;
     font-family: var(--mcp-font-mono);
-    font-size: 10px;
+    font-size: var(--mcp-sp-10);
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     white-space: nowrap;
     pointer-events: none;
-    box-shadow: 0 2px 8px rgba(5, 10, 20, 0.45);
+    box-shadow: 0 var(--mcp-sp-2) var(--mcp-sp-8) var(--mcp-scrim-a45);
     z-index: 1;
     transform: translateY(-50%);
     /* Notched left edge — arrow tag */
-    clip-path: polygon(4px 0, 100% 0, 100% 100%, 4px 100%, 0 50%);
-    padding-left: 14px;
+    clip-path: polygon(var(--mcp-sp-4) 0, 100% 0, 100% 100%, var(--mcp-sp-4) 100%, 0 50%);
+    padding-left: var(--mcp-sp-14);
 }

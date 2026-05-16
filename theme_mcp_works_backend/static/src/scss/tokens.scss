@@ -198,6 +198,30 @@
     --mcp-c-purple: #a855f7;
     --mcp-c-pink:   #ec4899;
     --mcp-c-slate:  #6b7280;
+    /* Deep status text + tints (badges / flashes) */
+    --mcp-c-emerald-deep: #065f46;
+    --mcp-c-red-deep:     #991b1b;
+    --mcp-c-amber-deep:   #92400e;
+    --mcp-c-green-deep:   #16a34a;
+    --mcp-c-red-200:      #fca5a5;
+    /* Status fills at 0.10 alpha + misc scrims */
+    --mcp-ok-a08:       rgba(16, 185, 129, 0.08);
+    --mcp-ok-a10:       rgba(16, 185, 129, 0.10);
+    --mcp-danger-a10:   rgba(220, 38, 38, 0.10);
+    --mcp-warn-a08:     rgba(245, 158, 11, 0.08);
+    --mcp-warn-a10:     rgba(245, 158, 11, 0.10);
+    --mcp-accent-a40:   rgba(15, 82, 186, 0.40);
+    --mcp-scrim-a45:    rgba(5, 10, 20, 0.45);
+    --mcp-shadow-a25:   rgba(0, 0, 0, 0.25);
+    /* Long-tail one-off sizes */
+    --mcp-sp-11-5:  11.5px;
+    --mcp-sp-12-5:  12.5px;
+    --mcp-sp-120:   120px;
+    --mcp-sp-160:   160px;
+    --mcp-sp-300:   300px;
+    --mcp-sp-360:   360px;
+    --mcp-sp-585:   585px;
+    --mcp-sp-2000:  2000px;
 }
 
 /* ── Palette · DARK mode ───────────────────────────────────────

@@ -10,11 +10,11 @@
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 0 2px !important;
+    padding: 0 var(--mcp-sp-2) !important;
     height: auto !important;
     transform: none !important;
     cursor: pointer;
-    font-size: 16px;
+    font-size: var(--mcp-sp-16);
     line-height: 1;
     transition: color var(--mcp-t-fast), transform var(--mcp-t-fast);
 }
@@ -28,18 +28,18 @@
 /* On state — filled heart */
 .o_field_boolean_favorite .fa-heart,
 .o_field_boolean_favorite .fa-star {
-    color: #ef4444 !important;
+    color: var(--mcp-c-red) !important;
 }
 
 /* Hover — anticipation color */
 .o_field_boolean_favorite button:hover .fa-heart-o,
 .o_field_boolean_favorite button:hover .fa-star-o {
-    color: #fca5a5 !important;
+    color: var(--mcp-c-red-200) !important;
     transform: scale(1.15);
 }
 .o_field_boolean_favorite button:hover .fa-heart,
 .o_field_boolean_favorite button:hover .fa-star {
-    color: #dc2626 !important;
+    color: var(--mcp-danger) !important;
     transform: scale(1.15);
 }
 

@@ -15,7 +15,7 @@
 .o_kanban_view .o_kanban_renderer.o_kanban_grouped {
     display: flex !important;
     align-items: stretch !important;
-    gap: 12px !important;
+    gap: var(--mcp-sp-12) !important;
     width: 100% !important;
 }
 /* Only OPEN columns stretch to fill the width; folded columns stay
@@ -32,32 +32,32 @@
 /* ── Kanban columns (grouped kanban) ────────────────────────── */
 .o_kanban_view .o_kanban_group {
     background: var(--mcp-surface-2) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     display: flex !important;
     flex-direction: column !important;
-    min-width: 240px;
+    min-width: var(--mcp-sp-240);
 
     .o_kanban_header {
         background: var(--mcp-surface) !important;
-        border-bottom: 1px solid var(--mcp-rule-strong) !important;
-        padding: 8px 12px !important;
+        border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+        padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
         position: relative;
 
         &::before {
             content: "";
             position: absolute;
             inset: 0 auto 0 0;
-            width: 3px;
+            width: var(--mcp-sp-3);
             background: var(--mcp-accent);
             opacity: 0.6;
-            box-shadow: 0 0 6px var(--mcp-accent-glow);
+            box-shadow: 0 0 var(--mcp-sp-6) var(--mcp-accent-glow);
         }
 
         .o_kanban_header_title,
         .o_column_title {
             font-family: var(--mcp-font-mono) !important;
-            font-size: 11px !important;
+            font-size: var(--mcp-sp-11) !important;
             font-weight: 700 !important;
             letter-spacing: 0.12em !important;
             text-transform: uppercase !important;
@@ -68,16 +68,16 @@
         .o_column_count {
             display: inline-flex;
             align-items: center;
-            height: 18px;
-            padding: 0 8px;
+            height: var(--mcp-sp-18);
+            padding: 0 var(--mcp-sp-8);
             background: var(--mcp-accent-soft);
             color: var(--mcp-accent);
             font-family: var(--mcp-font-mono);
-            font-size: 10px;
+            font-size: var(--mcp-sp-10);
             font-weight: 700;
             letter-spacing: 0.04em;
             border-radius: 0;
-            box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+            box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
         }
     }
 }
@@ -86,9 +86,9 @@
 .o_kanban_view .o_kanban_record:not(.o_kanban_ghost):not(.o_kanban_demo),
 .o_kanban_view .o_kanban_card {
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
-    padding: 10px 12px !important;
+    padding: var(--mcp-sp-10) var(--mcp-sp-12) !important;
     position: relative;
     cursor: pointer;
     transition:
@@ -99,19 +99,19 @@
 
     &:hover {
         border-color: var(--mcp-accent) !important;
-        transform: translateY(-2px);
+        transform: translateY(calc(-1 * var(--mcp-sp-2)));
         box-shadow:
-            0 0 0 1px var(--mcp-accent),
-            0 0 6px rgba(15, 82, 186, 0.20),
-            0 4px 12px -4px rgba(15, 82, 186, 0.20) !important;
+            0 0 0 var(--mcp-sp-1) var(--mcp-accent),
+            0 0 var(--mcp-sp-6) var(--mcp-accent-a20),
+            0 var(--mcp-sp-4) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-4)) var(--mcp-accent-a20) !important;
 
         &::before {
             content: "";
             position: absolute;
             inset: 0 auto 0 0;
-            width: 2px;
+            width: var(--mcp-sp-2);
             background: var(--mcp-accent);
-            box-shadow: 0 0 4px var(--mcp-accent-glow);
+            box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-glow);
         }
     }
 
@@ -119,16 +119,16 @@
     .o_kanban_record_title,
     .oe_kanban_text strong:first-child {
         font-family: var(--mcp-font-mono) !important;
-        font-size: 11px !important;
+        font-size: var(--mcp-sp-11) !important;
         font-weight: 700 !important;
         color: var(--mcp-accent) !important;
         letter-spacing: 0.02em !important;
-        text-shadow: 0 0 10px rgba(15, 82, 186, 0.18);
+        text-shadow: 0 0 var(--mcp-sp-10) var(--mcp-accent-a18);
     }
 
     /* Card body text */
     .o_kanban_record_subtitle {
-        font-size: 13px !important;
+        font-size: var(--mcp-sp-13) !important;
         font-weight: 500 !important;
         color: var(--mcp-ink) !important;
     }
@@ -139,9 +139,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 8px;
+        gap: var(--mcp-sp-8);
         font-family: var(--mcp-font-mono);
-        font-size: 10px;
+        font-size: var(--mcp-sp-10);
         color: var(--mcp-ink-3);
         letter-spacing: 0.04em;
     }
@@ -149,12 +149,12 @@
     /* Priority widget — sharp bars instead of stars */
     .o_priority {
         display: inline-flex !important;
-        gap: 2px !important;
+        gap: var(--mcp-sp-2) !important;
 
         a.o_priority_star,
         .o_priority_star {
-            width: 8px !important;
-            height: 8px !important;
+            width: var(--mcp-sp-8) !important;
+            height: var(--mcp-sp-8) !important;
             display: inline-block !important;
             background: var(--mcp-rule-strong) !important;
             color: transparent !important;
@@ -174,28 +174,28 @@
     /* Avatar (assignee) */
     .o_field_widget.o_field_avatar,
     .o_kanban_image_inner_pic {
-        width: 18px !important;
-        height: 18px !important;
+        width: var(--mcp-sp-18) !important;
+        height: var(--mcp-sp-18) !important;
         border-radius: 0 !important;
-        border: 1px solid var(--mcp-rule-strong);
+        border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
     }
 }
 
 /* ── Kanban view background — no card, full-bleed columns ──── */
 .o_kanban_view .o_kanban_renderer {
     background: transparent !important;
-    gap: 12px;
+    gap: var(--mcp-sp-12);
 }
 
 /* ── Quick-create / "+" column add ──────────────────────────── */
 .o_kanban_view .o_kanban_quick_add,
 .o_kanban_view .o_kanban_quick_create {
     background: var(--mcp-surface) !important;
-    border: 1px dashed var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) dashed var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     color: var(--mcp-ink-3) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: 11px !important;
+    font-size: var(--mcp-sp-11) !important;
     letter-spacing: 0.06em !important;
     text-transform: uppercase !important;
 

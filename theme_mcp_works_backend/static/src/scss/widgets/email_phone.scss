@@ -6,7 +6,7 @@
 .o_field_url {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--mcp-sp-4);
     min-width: 0;
 }
 
@@ -31,8 +31,8 @@
     border: none !important;
     box-shadow: none !important;
     color: var(--mcp-ink-3) !important;
-    padding: 2px 4px !important;
-    font-size: 12px !important;
+    padding: var(--mcp-sp-2) var(--mcp-sp-4) !important;
+    font-size: var(--mcp-sp-12) !important;
     border-radius: var(--mcp-r-xs) !important;
     opacity: 0;
     transition: opacity var(--mcp-t-fast), color var(--mcp-t-fast);
@@ -50,4 +50,4 @@ tr:hover .o_field_copy { opacity: 0.55; }
 
 /* Copied confirmation flash */
 .o_field_copy.o_copied,
-.o_field_copy[data-copied] { color: #16a34a !important; opacity: 1 !important; }
+.o_field_copy[data-copied] { color: var(--mcp-c-green-deep) !important; opacity: 1 !important; }

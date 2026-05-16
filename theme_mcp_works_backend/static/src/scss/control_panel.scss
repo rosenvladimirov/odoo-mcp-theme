@@ -17,25 +17,25 @@
 .mcp_breadcrumb_strip {
     display: flex !important;
     align-items: center !important;
-    gap: 10px !important;
+    gap: var(--mcp-sp-10) !important;
     min-height: var(--mcp-bcstrip-h) !important;
     height: var(--mcp-bcstrip-h) !important;
-    padding: 0 16px 0 18px !important;
+    padding: 0 var(--mcp-sp-16) 0 var(--mcp-sp-18) !important;
     margin: 0 !important;
     /* breadcrumb path 100% transparent (Rosen) */
     background: transparent !important;
     border: 0 !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     box-shadow: none !important;
     position: relative;
-    font-size: 12px !important;
+    font-size: var(--mcp-sp-12) !important;
     overflow: visible;
 
     /* leading › chevron (theme.css .bc-steps) */
     &::before {
         content: "\203A";
         color: var(--mcp-accent);
-        font-size: 16px;
+        font-size: var(--mcp-sp-16);
         line-height: 1;
         flex: 0 0 auto;
     }
@@ -46,8 +46,8 @@
         position: absolute;
         left: 0;
         right: 0;
-        bottom: -1px;
-        height: 1px;
+        bottom: calc(-1 * var(--mcp-sp-1));
+        height: var(--mcp-sp-1);
         background: linear-gradient(
             to right,
             transparent 0%,
@@ -65,18 +65,18 @@
     .mcp_breadcrumb_steps {
         display: inline-flex !important;
         align-items: center !important;
-        gap: 6px !important;
-        height: 22px !important;
-        padding: 0 14px 0 10px !important;
+        gap: var(--mcp-sp-6) !important;
+        height: var(--mcp-sp-22) !important;
+        padding: 0 var(--mcp-sp-14) 0 var(--mcp-sp-10) !important;
         text-decoration: none !important;
         outline: 0 !important;
         border: 0 !important;
         box-shadow: none !important;
         color: var(--mcp-accent) !important;
         background: var(--mcp-accent-soft) !important;
-        clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%);
+        clip-path: polygon(0 0, calc(100% - var(--mcp-sp-6)) 0, 100% 50%, calc(100% - var(--mcp-sp-6)) 100%, 0 100%);
         font-family: var(--mcp-font-mono) !important;
-        font-size: 10px !important;
+        font-size: var(--mcp-sp-10) !important;
         font-weight: 700 !important;
         letter-spacing: 0.14em !important;
         text-transform: uppercase !important;
@@ -89,9 +89,9 @@
     }
 
     .mcp_app_brand_icon {
-        width: 16px !important;
-        height: 16px !important;
-        min-width: 16px !important;
+        width: var(--mcp-sp-16) !important;
+        height: var(--mcp-sp-16) !important;
+        min-width: var(--mcp-sp-16) !important;
         object-fit: contain !important;
         border-radius: 0 !important;
     }
@@ -126,7 +126,7 @@
     .breadcrumb .breadcrumb-item a {
         color: var(--mcp-accent) !important;
         font-family: var(--mcp-font-family) !important;
-        font-size: 12px !important;
+        font-size: var(--mcp-sp-12) !important;
         font-weight: 500 !important;
         text-decoration: none !important;
         letter-spacing: 0;
@@ -141,13 +141,13 @@
     .o_breadcrumb .o_last_breadcrumb_item::before {
         content: "/" !important;
         color: var(--mcp-ink-dim) !important;
-        font-size: 11px !important;
-        padding: 0 6px !important;
+        font-size: var(--mcp-sp-11) !important;
+        padding: 0 var(--mcp-sp-6) !important;
         display: inline-block !important;
         flex: 0 0 auto !important;
     }
     /* breathing space between the notched app-brand tag and the trail */
-    .o_breadcrumb { margin-left: 4px !important; }
+    .o_breadcrumb { margin-left: var(--mcp-sp-4) !important; }
     .o_breadcrumb .breadcrumb-item.active,
     .o_breadcrumb .breadcrumb-item.active span,
     .breadcrumb .breadcrumb-item.active,
@@ -156,7 +156,7 @@
     .breadcrumb .o_last_breadcrumb_item {
         color: var(--mcp-ink) !important;
         font-family: var(--mcp-font-family) !important;
-        font-size: 13px !important;
+        font-size: var(--mcp-sp-13) !important;
         font-weight: 600 !important;
         letter-spacing: 0;
         /* last breadcrumb element fully transparent (Rosen) */
@@ -180,21 +180,21 @@
    NO halo (the halo belongs to data panels, not the CP bar). */
 .o_control_panel {
     /* control buttons panel = solid white + thin border + glow (Rosen). */
-    background: #ffffff !important;
-    border: 1px solid var(--mcp-rule) !important;
+    background: var(--mcp-bg) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: 0 !important;
     box-shadow:
-        0 2px 14px -3px rgba(15, 82, 186, 0.18),
-        0 8px 28px -12px rgba(15, 82, 186, 0.14) !important;
-    margin: 0 0 6px 0 !important;
-    min-height: 38px !important;
-    padding: 8px !important;
+        0 var(--mcp-sp-2) var(--mcp-sp-14) calc(-1 * var(--mcp-sp-3)) var(--mcp-accent-a18),
+        0 var(--mcp-sp-8) var(--mcp-sp-28) calc(-1 * var(--mcp-sp-12)) rgba(15, 82, 186, 0.14) !important;
+    margin: 0 0 var(--mcp-sp-6) 0 !important;
+    min-height: var(--mcp-sp-38) !important;
+    padding: var(--mcp-sp-8) !important;
 }
 
 .o_control_panel_main {
     background: transparent !important;
     padding: 0 !important;
-    min-height: 38px !important;
+    min-height: var(--mcp-sp-38) !important;
     display: flex !important;
     align-items: center !important;
 }
@@ -205,27 +205,27 @@
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 6px !important;
-    height: 26px !important;
-    min-height: 26px !important;
+    gap: var(--mcp-sp-6) !important;
+    height: var(--mcp-sp-26) !important;
+    min-height: var(--mcp-sp-26) !important;
     background: var(--mcp-accent) !important;
     color: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-accent) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
     border-radius: 0 !important;
     font-weight: 600 !important;
     letter-spacing: 0.02em !important;
     text-transform: uppercase !important;
-    padding: 0 12px !important;
+    padding: 0 var(--mcp-sp-12) !important;
     box-shadow:
-        0 0 0 1px rgba(15, 82, 186, 0.30),
-        0 0 4px rgba(15, 82, 186, 0.20) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30),
+        0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
 
     &:hover {
         background: var(--mcp-accent-2) !important;
         border-color: var(--mcp-accent-2) !important;
         box-shadow:
-            0 0 0 1px var(--mcp-accent-2),
-            0 0 6px rgba(15, 82, 186, 0.30) !important;
+            0 0 0 var(--mcp-sp-1) var(--mcp-accent-2),
+            0 0 var(--mcp-sp-6) var(--mcp-accent-a30) !important;
     }
 }
 
@@ -233,16 +233,16 @@
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 6px !important;
-    height: 26px !important;
-    min-height: 26px !important;
+    gap: var(--mcp-sp-6) !important;
+    height: var(--mcp-sp-26) !important;
+    min-height: var(--mcp-sp-26) !important;
     color: var(--mcp-ink-2) !important;
     background: transparent !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     font-weight: 600 !important;
     letter-spacing: 0.02em !important;
-    padding: 0 12px !important;
+    padding: 0 var(--mcp-sp-12) !important;
 
     &:hover {
         color: var(--mcp-accent) !important;
@@ -263,9 +263,9 @@
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 26px !important;
-    height: 26px !important;
-    min-height: 26px !important;
+    width: var(--mcp-sp-26) !important;
+    height: var(--mcp-sp-26) !important;
+    min-height: var(--mcp-sp-26) !important;
     padding: 0 !important;
     border: 0 !important;
     background: transparent !important;
@@ -279,30 +279,30 @@
     }
     &::after,
     &::before { display: none !important; content: none !important; }
-    .fa, .oi { font-size: 13px !important; line-height: 1 !important; }
+    .fa, .oi { font-size: var(--mcp-sp-13) !important; line-height: 1 !important; }
 }
 
 /* ── Search bar ──────────────────────────────────────────────── */
 .o_searchview {
     background: var(--mcp-surface-2) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
-    padding: 0 8px !important;
-    min-height: 26px !important;
+    padding: 0 var(--mcp-sp-8) !important;
+    min-height: var(--mcp-sp-26) !important;
     transition: border-color var(--mcp-t-fast), box-shadow var(--mcp-t-fast);
 
     &:focus-within {
         border-color: var(--mcp-accent) !important;
         box-shadow:
-            0 0 0 2px var(--mcp-accent-soft),
-            0 0 8px rgba(15, 82, 186, 0.30) !important;
+            0 0 0 var(--mcp-sp-2) var(--mcp-accent-soft),
+            0 0 var(--mcp-sp-8) var(--mcp-accent-a30) !important;
     }
 
     input {
         color: var(--mcp-ink) !important;
         background: transparent !important;
         font-family: var(--mcp-font-family) !important;
-        font-size: 12px !important;
+        font-size: var(--mcp-sp-12) !important;
         font-weight: 500 !important;
     }
     input::placeholder { color: var(--mcp-ink-dim) !important; }
@@ -314,7 +314,7 @@
     .fa-search {
         color: var(--mcp-ink-3) !important;
         opacity: 0.7;
-        font-size: 14px !important;
+        font-size: var(--mcp-sp-14) !important;
         /* Rosen: "лупата обградена с бордер" — kill any inherited
            button/border frame around the search magnifier. */
         border: 0 !important;
@@ -332,17 +332,17 @@
 .o_searchview .o_searchview_facet {
     display: inline-flex !important;
     align-items: stretch !important;
-    height: 18px !important;
+    height: var(--mcp-sp-18) !important;
     /* override Odoo 19 Bootstrap utilities .rounded-2 .bg-200 */
     border: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: 10px !important;
+    font-size: var(--mcp-sp-10) !important;
     font-weight: 500 !important;
     letter-spacing: 0.04em !important;
     overflow: hidden;
-    margin-right: 4px;
+    margin-right: var(--mcp-sp-4);
 
     .o_searchview_facet_label,
     .o_searchview_facet_label.btn {
@@ -350,28 +350,28 @@
         color: var(--mcp-surface) !important;
         border: 0 !important;
         border-radius: 0 !important;
-        padding: 0 6px !important;
+        padding: 0 var(--mcp-sp-6) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: 9.5px !important;
+        font-size: var(--mcp-sp-9-5) !important;
         font-weight: 600 !important;
         letter-spacing: 0.06em !important;
         text-transform: uppercase !important;
-        line-height: 18px !important;
-        height: 18px !important;
+        line-height: var(--mcp-sp-18) !important;
+        height: var(--mcp-sp-18) !important;
         display: inline-flex !important;
         align-items: center !important;
-        box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+        box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
     }
 
     .o_facet_values {
         background: var(--mcp-accent-soft) !important;
         color: var(--mcp-accent) !important;
-        border: 1px solid var(--mcp-accent) !important;
+        border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
         border-left: 0 !important;
         border-radius: 0 !important;
-        padding: 0 8px !important;
-        height: 18px !important;
-        line-height: 16px !important;
+        padding: 0 var(--mcp-sp-8) !important;
+        height: var(--mcp-sp-18) !important;
+        line-height: var(--mcp-sp-16) !important;
     }
 }
 
@@ -382,9 +382,9 @@
     border-radius: 0 !important;
     display: inline-flex !important;
     align-items: center !important;
-    gap: 6px;
+    gap: var(--mcp-sp-6);
     font-family: var(--mcp-font-mono) !important;
-    font-size: 11px !important;
+    font-size: var(--mcp-sp-11) !important;
     letter-spacing: 0.06em !important;
 }
 .o_pager_counter,
@@ -397,10 +397,10 @@
 .o_pager button,
 .o_pager_previous,
 .o_pager_next {
-    width: 22px !important;
-    height: 22px !important;
+    width: var(--mcp-sp-22) !important;
+    height: var(--mcp-sp-22) !important;
     padding: 0 !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     background: transparent !important;
     color: var(--mcp-ink-2) !important;
     border-radius: 0 !important;
@@ -419,14 +419,14 @@
 /* ── View switcher ───────────────────────────────────────────── */
 .o_cp_switch_buttons {
     display: inline-flex !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
-    margin-left: 8px;
+    margin-left: var(--mcp-sp-8);
 
     .btn,
     .o_switch_view {
-        width: 26px !important;
-        height: 26px !important;
+        width: var(--mcp-sp-26) !important;
+        height: var(--mcp-sp-26) !important;
         padding: 0 !important;
         margin: 0 !important;
         background: transparent !important;
@@ -439,7 +439,7 @@
         position: relative;
 
         & + .btn,
-        & + .o_switch_view { border-left: 1px solid var(--mcp-rule-strong) !important; }
+        & + .o_switch_view { border-left: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important; }
 
         &:hover {
             background: var(--mcp-accent-soft) !important;
@@ -452,20 +452,20 @@
             background: var(--mcp-accent) !important;
             color: var(--mcp-surface) !important;
             box-shadow:
-                0 0 0 1px rgba(15, 82, 186, 0.30),
-                0 0 4px rgba(15, 82, 186, 0.20) !important;
+                0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30),
+                0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
 
             &::after {
                 content: "";
                 position: absolute;
-                inset: auto 0 -2px 0;
-                height: 2px;
+                inset: auto 0 calc(-1 * var(--mcp-sp-2)) 0;
+                height: var(--mcp-sp-2);
                 background: var(--mcp-accent-2);
-                box-shadow: 0 0 4px var(--mcp-accent-2);
+                box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-2);
             }
         }
 
-        .fa, .oi { font-size: 13px !important; line-height: 1 !important; }
+        .fa, .oi { font-size: var(--mcp-sp-13) !important; line-height: 1 !important; }
     }
 }
 
@@ -474,9 +474,9 @@
 .o_cp_switch_buttons  + .o_cp_pager,
 .o_cp_action_menus    + .o_cp_switch_buttons,
 .o_cp_switch_buttons  + .o_cp_action_menus {
-    margin-left: 8px;
-    padding-left: 8px;
-    border-left: 1px solid var(--mcp-rule-strong);
+    margin-left: var(--mcp-sp-8);
+    padding-left: var(--mcp-sp-8);
+    border-left: var(--mcp-sp-1) solid var(--mcp-rule-strong);
 }
 
 /* ── Kill residual Bootstrap .btn-group rounding (O19 wraps the

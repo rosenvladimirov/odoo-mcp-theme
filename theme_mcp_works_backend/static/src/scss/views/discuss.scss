@@ -10,7 +10,7 @@
 /* ── Sidebar (channels rail) ────────────────────────────────── */
 .o-mail-DiscussSidebar {
     background: var(--mcp-surface) !important;
-    border-right: 1px solid var(--mcp-rule-strong) !important;
+    border-right: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
 }
 
 /* Odoo 19: the channel item is a <button class="...btn...rounded-2">.
@@ -30,16 +30,16 @@
     background: var(--mcp-surface-3) !important;
     color: var(--mcp-ink-3) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: 10px !important;
+    font-size: var(--mcp-sp-10) !important;
     font-weight: 600 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
-    padding: 6px 12px !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
+    padding: var(--mcp-sp-6) var(--mcp-sp-12) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
 }
 
 .o-mail-DiscussSidebarChannel {
-    padding: 6px 12px !important;
+    padding: var(--mcp-sp-6) var(--mcp-sp-12) !important;
     border-radius: 0 !important;
     color: var(--mcp-ink-2) !important;
     transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
@@ -58,10 +58,10 @@
         &::before {
             content: "";
             position: absolute;
-            inset: 6px auto 6px 0;
-            width: 2px;
+            inset: var(--mcp-sp-6) auto var(--mcp-sp-6) 0;
+            width: var(--mcp-sp-2);
             background: var(--mcp-accent);
-            box-shadow: 0 0 4px var(--mcp-accent-glow);
+            box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-glow);
         }
     }
 
@@ -85,14 +85,14 @@
         background: var(--mcp-accent) !important;
         color: var(--mcp-surface) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: 9px !important;
+        font-size: var(--mcp-sp-9) !important;
         font-weight: 700 !important;
         letter-spacing: 0.04em !important;
         border-radius: 0 !important;
-        padding: 1px 6px !important;
-        min-width: 14px;
+        padding: var(--mcp-sp-1) var(--mcp-sp-6) !important;
+        min-width: var(--mcp-sp-14);
         text-align: center;
-        box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+        box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
     }
 }
 
@@ -105,7 +105,7 @@
 .o-mail-Thread-empty {
     color: var(--mcp-ink-3) !important;
     font-family: var(--mcp-font-mono);
-    font-size: 11px;
+    font-size: var(--mcp-sp-11);
     letter-spacing: 0.12em;
     text-transform: uppercase;
 }
@@ -114,10 +114,10 @@
 .o-mail-Discuss-threadName,
 .o-mail-Thread-header {
     background: var(--mcp-surface-2) !important;
-    border-bottom: 1px solid var(--mcp-rule-strong) !important;
-    padding: 10px 16px !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    padding: var(--mcp-sp-10) var(--mcp-sp-16) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: 13px !important;
+    font-size: var(--mcp-sp-13) !important;
     font-weight: 700 !important;
     letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
@@ -126,8 +126,8 @@
 
 /* Messages */
 .o-mail-Message {
-    padding: 10px 16px !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
+    padding: var(--mcp-sp-10) var(--mcp-sp-16) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     transition: background var(--mcp-t-fast);
 
     &:hover { background: var(--mcp-surface-2) !important; }
@@ -138,54 +138,54 @@
     }
     .o-mail-Message-date {
         font-family: var(--mcp-font-mono) !important;
-        font-size: 9.5px !important;
+        font-size: var(--mcp-sp-9-5) !important;
         letter-spacing: 0.06em !important;
         color: var(--mcp-ink-3) !important;
     }
     .o-mail-Message-body {
         color: var(--mcp-ink-2) !important;
-        font-size: 13px !important;
+        font-size: var(--mcp-sp-13) !important;
         line-height: 1.55 !important;
     }
     .o-mail-Message-avatar {
         border-radius: 0 !important;
-        border: 1px solid var(--mcp-rule-strong);
+        border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
     }
 }
 
 /* Composer (bottom textbox) */
 .o-mail-Composer {
     background: var(--mcp-surface) !important;
-    border-top: 1px solid var(--mcp-rule-strong) !important;
-    padding: 8px 12px !important;
+    border-top: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
 
     .o-mail-Composer-input,
     textarea {
         background: var(--mcp-surface-2) !important;
-        border: 1px solid var(--mcp-rule-strong) !important;
+        border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
         border-radius: 0 !important;
         color: var(--mcp-ink) !important;
         font-family: var(--mcp-font-family) !important;
-        padding: 8px 10px !important;
+        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
 
         &:focus {
             outline: 0;
             border-color: var(--mcp-accent) !important;
-            box-shadow: 0 0 0 2px var(--mcp-accent-soft), 0 0 6px rgba(15, 82, 186, 0.30);
+            box-shadow: 0 0 0 var(--mcp-sp-2) var(--mcp-accent-soft), 0 0 var(--mcp-sp-6) var(--mcp-accent-a30);
         }
     }
     button.o-mail-Composer-send,
     .btn-primary {
         background: var(--mcp-accent) !important;
         color: var(--mcp-surface) !important;
-        border: 1px solid var(--mcp-accent) !important;
+        border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
         border-radius: 0 !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: 11px !important;
+        font-size: var(--mcp-sp-11) !important;
         font-weight: 600 !important;
         letter-spacing: 0.08em !important;
         text-transform: uppercase !important;
-        padding: 4px 12px !important;
-        box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20) !important;
+        padding: var(--mcp-sp-4) var(--mcp-sp-12) !important;
+        box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
     }
 }

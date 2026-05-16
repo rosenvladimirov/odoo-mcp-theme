@@ -21,9 +21,9 @@ select.o_input {
     /* On focus: only a thin indigo underline drawn via inset box-shadow
        (no border, no halo, no ring). */
     &:focus {
-        background: #ffffff !important;
+        background: var(--mcp-bg) !important;
         border: none !important;
-        box-shadow: inset 0 -1px 0 0 var(--mcp-accent) !important;
+        box-shadow: inset 0 calc(-1 * var(--mcp-sp-1)) 0 0 var(--mcp-accent) !important;
         outline: none !important;
     }
 }

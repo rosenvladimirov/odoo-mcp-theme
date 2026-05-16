@@ -11,7 +11,7 @@
     scrollbar-width: thin;
     scrollbar-color: var(--mcp-rule-strong) transparent;
 }
-.o_web_client *::-webkit-scrollbar { width: 6px; height: 6px; }
+.o_web_client *::-webkit-scrollbar { width: var(--mcp-sp-6); height: var(--mcp-sp-6); }
 .o_web_client *::-webkit-scrollbar-track { background: transparent; }
 .o_web_client *::-webkit-scrollbar-thumb {
     background: var(--mcp-rule-strong);
@@ -30,8 +30,8 @@
 .o_web_client {
     background-color: var(--mcp-bg) !important;
     background-image:
-        linear-gradient(to right, var(--mcp-grid-color) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--mcp-grid-color) 1px, transparent 1px) !important;
+        linear-gradient(to right, var(--mcp-grid-color) var(--mcp-sp-1), transparent var(--mcp-sp-1)),
+        linear-gradient(to bottom, var(--mcp-grid-color) var(--mcp-sp-1), transparent var(--mcp-sp-1)) !important;
     background-size: var(--mcp-grid-size) var(--mcp-grid-size) !important;
     color: var(--mcp-ink);
 }
@@ -49,17 +49,17 @@
 .o_action_manager { position: relative; }
 .o_action_manager > .mcp_hud_corner {
     position: absolute;
-    width: 14px;
-    height: 14px;
-    border: 1.5px solid var(--mcp-accent);
+    width: var(--mcp-sp-14);
+    height: var(--mcp-sp-14);
+    border: var(--mcp-bw-1-5) solid var(--mcp-accent);
     opacity: 0.7;
     pointer-events: none;
     z-index: 50;
 }
-.o_action_manager > .mcp_hud_corner.mcp_hud_tl { top: 12px;    left: 12px;  border-right: 0; border-bottom: 0; }
-.o_action_manager > .mcp_hud_corner.mcp_hud_tr { top: 12px;    right: 12px; border-left: 0;  border-bottom: 0; }
-.o_action_manager > .mcp_hud_corner.mcp_hud_bl { bottom: 12px; left: 12px;  border-right: 0; border-top: 0; }
-.o_action_manager > .mcp_hud_corner.mcp_hud_br { bottom: 12px; right: 12px; border-left: 0;  border-top: 0; }
+.o_action_manager > .mcp_hud_corner.mcp_hud_tl { top: var(--mcp-sp-12);    left: var(--mcp-sp-12);  border-right: 0; border-bottom: 0; }
+.o_action_manager > .mcp_hud_corner.mcp_hud_tr { top: var(--mcp-sp-12);    right: var(--mcp-sp-12); border-left: 0;  border-bottom: 0; }
+.o_action_manager > .mcp_hud_corner.mcp_hud_bl { bottom: var(--mcp-sp-12); left: var(--mcp-sp-12);  border-right: 0; border-top: 0; }
+.o_action_manager > .mcp_hud_corner.mcp_hud_br { bottom: var(--mcp-sp-12); right: var(--mcp-sp-12); border-left: 0;  border-top: 0; }
 
 /* ── Global scanline overlay — robot CRT texture, very subtle ────────── */
 .o_web_client::after {
@@ -70,8 +70,8 @@
     z-index: 99999;
     background: repeating-linear-gradient(
         0deg,
-        transparent 0 3px,
-        var(--mcp-scan-color) 3px 4px
+        transparent 0 var(--mcp-sp-3),
+        var(--mcp-scan-color) var(--mcp-sp-3) var(--mcp-sp-4)
     );
     opacity: .5;
     mix-blend-mode: multiply;
@@ -127,9 +127,9 @@
 .o_calendar_view,
 .modal-content {
     box-shadow:
-        0 0 0 1px rgba(15, 82, 186, 0.06),
-        0 2px 12px -2px rgba(15, 82, 186, 0.12),
-        0 8px 32px -12px rgba(15, 82, 186, 0.18) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
+        0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12),
+        0 var(--mcp-sp-8) var(--mcp-sp-32) calc(-1 * var(--mcp-sp-12)) var(--mcp-accent-a18) !important;
 }
 
 /* ── Small accent glow on active interactive surfaces ───────────────── */
@@ -140,17 +140,17 @@
 .o_form_statusbar .o_arrow_button.btn-primary,
 .o_form_statusbar .o_arrow_button[data-value][aria-pressed="true"] {
     box-shadow:
-        0 0 0 1px rgba(15, 82, 186, 0.30),
-        0 0 4px rgba(15, 82, 186, 0.20) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30),
+        0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
 }
 .btn-primary:hover {
     box-shadow:
-        0 0 0 1px var(--mcp-accent-2),
-        0 0 6px rgba(15, 82, 186, 0.30) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-2),
+        0 0 var(--mcp-sp-6) var(--mcp-accent-a30) !important;
 }
 .o_kanban_record:hover {
     box-shadow:
-        0 0 0 1px var(--mcp-accent),
-        0 0 6px rgba(15, 82, 186, 0.20),
-        0 4px 12px -4px rgba(15, 82, 186, 0.20) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent),
+        0 0 var(--mcp-sp-6) var(--mcp-accent-a20),
+        0 var(--mcp-sp-4) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-4)) var(--mcp-accent-a20) !important;
 }

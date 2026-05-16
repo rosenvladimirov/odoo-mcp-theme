@@ -3,7 +3,7 @@
 .o_field_many2one {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--mcp-sp-4);
     min-width: 0;
 }
 
@@ -13,9 +13,9 @@
     background: transparent !important;
     border: none !important;
     color: var(--mcp-accent) !important;
-    padding: 2px 4px !important;
+    padding: var(--mcp-sp-2) var(--mcp-sp-4) !important;
     border-radius: var(--mcp-r-xs) !important;
-    font-size: 12px !important;
+    font-size: var(--mcp-sp-12) !important;
     opacity: 0.55;
     transition: opacity var(--mcp-t-fast), color var(--mcp-t-fast);
     box-shadow: none !important;
@@ -26,8 +26,8 @@
 
 /* Avatar variant (partner image + name) */
 .o_m2o_avatar {
-    width: 20px;
-    height: 20px;
+    width: var(--mcp-sp-20);
+    height: var(--mcp-sp-20);
     border-radius: var(--mcp-r-pill) !important;
     object-fit: cover;
     flex-shrink: 0;
@@ -36,7 +36,7 @@
 /* Autocomplete dropdown */
 .o_field_many2one .dropdown-menu,
 .o_field_widget .ui-autocomplete {
-    max-height: 280px;
+    max-height: var(--mcp-sp-280);
     overflow-y: auto;
 }
 
@@ -47,7 +47,7 @@
 .o_field_many2one .o_input_dropdown input:focus {
     box-shadow: none !important;
     border-color: transparent !important;
-    background: #ffffff !important;
+    background: var(--mcp-bg) !important;
 }
 
 /* View-scoped width lives in views/form.scss */

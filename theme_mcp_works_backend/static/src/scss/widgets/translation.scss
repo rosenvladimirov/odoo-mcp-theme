@@ -5,7 +5,7 @@
 .o_translation_button {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
+    gap: var(--mcp-sp-3);
     flex-shrink: 0;
 }
 
@@ -15,8 +15,8 @@
     border: none !important;
     box-shadow: none !important;
     color: var(--mcp-ink-3) !important;
-    padding: 0 4px !important;
-    font-size: 12px !important;
+    padding: 0 var(--mcp-sp-4) !important;
+    font-size: var(--mcp-sp-12) !important;
     height: auto !important;
     transform: none !important;
     opacity: 0.55;
@@ -27,15 +27,15 @@
 
 /* Language code badge next to field */
 .o_field_translate .o_field_translate_lang {
-    font-size: 9px;
+    font-size: var(--mcp-sp-9);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--mcp-ink-3);
     background: var(--mcp-paper-deep);
-    border: 1px solid var(--mcp-rule);
+    border: var(--mcp-sp-1) solid var(--mcp-rule);
     border-radius: var(--mcp-r-xs);
-    padding: 1px 4px;
+    padding: var(--mcp-sp-1) var(--mcp-sp-4);
     line-height: 1.4;
 }
 
@@ -43,22 +43,22 @@
 .o_translation_dialog .o_field_translate_row {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--mcp-rule);
+    gap: var(--mcp-sp-8);
+    padding: var(--mcp-sp-8) 0;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule);
 
     &:last-child { border-bottom: none; }
 }
 
 .o_translation_dialog .o_field_translate_lang_label {
     flex-shrink: 0;
-    width: 48px;
-    font-size: 10px;
+    width: var(--mcp-sp-48);
+    font-size: var(--mcp-sp-10);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--mcp-ink-3);
-    padding-top: 6px;
+    padding-top: var(--mcp-sp-6);
 }
 
 .o_translation_dialog .o_field_translate_input {

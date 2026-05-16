@@ -5,9 +5,9 @@
 .o_main_navbar {
     /* white surface + bottom hairline + downward glow shadow
        (Rosen: "нав менюто бяло с бордер отдолу и гроу сянка отдолу"). */
-    background: #ffffff !important;
-    border-bottom: 1px solid var(--mcp-rule) !important;
-    box-shadow: 0 4px 16px -6px rgba(15, 82, 186, 0.20) !important;
+    background: var(--mcp-bg) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+    box-shadow: 0 var(--mcp-sp-4) var(--mcp-sp-16) calc(-1 * var(--mcp-sp-6)) var(--mcp-accent-a20) !important;
     color: var(--mcp-ink) !important;
     height: var(--mcp-navbar-height) !important;
     min-height: var(--mcp-navbar-height) !important;
@@ -57,10 +57,10 @@
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        font-size: 14px;
+        font-size: var(--mcp-sp-14);
         line-height: 1;
         border: 0 !important;
-        border-right: 1px solid var(--mcp-rule) !important;
+        border-right: var(--mcp-sp-1) solid var(--mcp-rule) !important;
         box-shadow: none !important;
         transition:
             background var(--mcp-t-base),
@@ -86,14 +86,14 @@
         content: "" !important;
         display: block !important;
         position: absolute !important;
-        inset: auto 0 -2px 0 !important;
-        height: 2px !important;
+        inset: auto 0 calc(-1 * var(--mcp-sp-2)) 0 !important;
+        height: var(--mcp-sp-2) !important;
         background: var(--mcp-accent-2) !important;
-        box-shadow: 0 0 8px var(--mcp-accent-2);
+        box-shadow: 0 0 var(--mcp-sp-8) var(--mcp-accent-2);
     }
     .o_navbar_apps_menu .dropdown-toggle i.oi,
     .o_navbar_apps_menu .dropdown-toggle .oi-apps {
-        font-size: 16px !important;
+        font-size: var(--mcp-sp-16) !important;
         line-height: 1 !important;
     }
 
@@ -103,10 +103,10 @@
     /* ── Section dropdowns — sharp, no rounding, accent underline ── */
     .o_menu_sections .dropdown-toggle,
     .o_menu_sections > * {
-        font-size: 12px !important;
+        font-size: var(--mcp-sp-12) !important;
         font-weight: 500;
         letter-spacing: 0.01em;
-        padding: 0 14px !important;
+        padding: 0 var(--mcp-sp-14) !important;
         height: var(--mcp-navbar-height);
         line-height: var(--mcp-navbar-height);
         border-radius: 0 !important;
@@ -122,22 +122,22 @@
     .o_menu_sections .dropdown-toggle[aria-expanded='true']::after {
         content: "";
         position: absolute;
-        left: 6px; right: 6px; bottom: 0;
-        height: 2px;
+        left: var(--mcp-sp-6); right: var(--mcp-sp-6); bottom: 0;
+        height: var(--mcp-sp-2);
         background: var(--mcp-accent);
-        box-shadow: 0 -1px 6px var(--mcp-accent-glow);
+        box-shadow: 0 calc(-1 * var(--mcp-sp-1)) var(--mcp-sp-6) var(--mcp-accent-glow);
     }
 
     /* ── Systray (right side) — JetBrains Mono for tighter HUD ──── */
     .o_menu_systray {
         gap: 0;
 
-        > * { min-height: 30px; display: flex; align-items: center; }
+        > * { min-height: var(--mcp-sp-30); display: flex; align-items: center; }
 
         .dropdown-toggle, button, a {
-            padding: 0 10px !important;
+            padding: 0 var(--mcp-sp-10) !important;
             border-radius: 0 !important;
-            font-size: 12px;
+            font-size: var(--mcp-sp-12);
             font-family: var(--mcp-font-mono);
             letter-spacing: 0.04em;
         }

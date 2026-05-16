@@ -5,15 +5,15 @@
 .badge.o_tag {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 2px 8px !important;
+    gap: var(--mcp-sp-4);
+    padding: var(--mcp-sp-2) var(--mcp-sp-8) !important;
     border-radius: var(--mcp-r-sm) !important;
-    font-size: 11px !important;
+    font-size: var(--mcp-sp-11) !important;
     font-weight: 500;
     line-height: 1.4;
     background: var(--mcp-accent-soft) !important;
     color: var(--mcp-accent) !important;
-    border: 1px solid var(--mcp-accent-soft) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-accent-soft) !important;
     transition: background var(--mcp-t-fast), border-color var(--mcp-t-fast);
 
     &:hover { background: var(--mcp-accent-glow) !important; }
@@ -22,12 +22,12 @@
 /* Delete cross on tag */
 .o_tag .o_delete,
 .o_tag .o_tag_badge_delete {
-    font-size: 10px;
+    font-size: var(--mcp-sp-10);
     opacity: 0.55;
     cursor: pointer;
     transition: opacity var(--mcp-t-fast);
     line-height: 1;
-    padding: 0 1px;
+    padding: 0 var(--mcp-sp-1);
 
     &:hover { opacity: 1; }
 }
@@ -42,9 +42,9 @@
 .o_field_tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: var(--mcp-sp-4);
     align-items: center;
-    min-height: 28px;
+    min-height: var(--mcp-sp-28);
 }
 
 /* View-scoped constraints live in views/list.scss */

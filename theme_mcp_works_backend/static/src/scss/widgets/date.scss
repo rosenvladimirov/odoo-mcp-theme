@@ -5,7 +5,7 @@
 .o_field_datetime {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: var(--mcp-sp-4);
     min-width: 0;
     position: relative;
 }
@@ -20,9 +20,9 @@
     border: none !important;
     box-shadow: none !important;
     color: var(--mcp-ink-2) !important;
-    padding: 0 4px !important;
+    padding: 0 var(--mcp-sp-4) !important;
     height: auto !important;
-    font-size: 13px !important;
+    font-size: var(--mcp-sp-13) !important;
     opacity: 0.55;
     transition: opacity var(--mcp-t-fast), color var(--mcp-t-fast);
     transform: none !important;
@@ -34,10 +34,10 @@
 .o_datepicker,
 .bootstrap-datetimepicker-widget {
     background: var(--mcp-paper-light) !important;
-    border: 1.5px solid var(--mcp-accent) !important;
+    border: var(--mcp-bw-1-5) solid var(--mcp-accent) !important;
     border-radius: var(--mcp-r-md) !important;
     box-shadow: var(--mcp-shadow-modal) !important;
-    padding: 8px !important;
+    padding: var(--mcp-sp-8) !important;
 
     table th,
     .picker-switch,

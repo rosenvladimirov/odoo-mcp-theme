@@ -8,7 +8,7 @@
 
 .o_list_view .o_list_renderer {
     background: var(--mcp-surface) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     overflow: hidden;
 }
@@ -16,7 +16,7 @@
 .o_list_view table.o_list_table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 12px !important;
+    font-size: var(--mcp-sp-12) !important;
     border-radius: 0 !important;
 
     /* Sticky header — monospace caps */
@@ -29,13 +29,13 @@
             background: var(--mcp-surface-3) !important;
             text-align: left !important;
             font-family: var(--mcp-font-mono) !important;
-            font-size: 10px !important;
+            font-size: var(--mcp-sp-10) !important;
             font-weight: 600 !important;
             letter-spacing: 0.12em !important;
             text-transform: uppercase !important;
             color: var(--mcp-ink-3) !important;
-            padding: 8px 10px !important;
-            border-bottom: 1px solid var(--mcp-rule-strong) !important;
+            padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
+            border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
             white-space: nowrap;
 
             &.o_list_number,
@@ -51,24 +51,24 @@
     /* Body rows */
     tbody {
         tr {
-            border-bottom: 1px solid var(--mcp-rule) !important;
+            border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
             cursor: pointer;
             transition: background var(--mcp-t-fast);
             position: relative;
 
             &:hover {
                 background: var(--mcp-accent-soft) !important;
-                box-shadow: inset 2px 0 0 var(--mcp-accent), inset 0 0 16px rgba(15, 82, 186, 0.08);
+                box-shadow: inset var(--mcp-sp-2) 0 0 var(--mcp-accent), inset 0 0 var(--mcp-sp-16) var(--mcp-accent-a08);
             }
 
             &.o_list_record_selected,
             &.o_data_row_selected {
                 background: var(--mcp-accent-mute) !important;
-                box-shadow: inset 2px 0 0 var(--mcp-accent);
+                box-shadow: inset var(--mcp-sp-2) 0 0 var(--mcp-accent);
             }
 
             td {
-                padding: 9px 10px !important;
+                padding: var(--mcp-sp-9) var(--mcp-sp-10) !important;
                 color: var(--mcp-ink) !important;
                 vertical-align: middle !important;
                 border-radius: 0 !important;
@@ -96,7 +96,7 @@
                 &.o_list_field_datetime {
                     font-family: var(--mcp-font-mono) !important;
                     color: var(--mcp-ink-2) !important;
-                    font-size: 11.5px !important;
+                    font-size: var(--mcp-sp-11-5) !important;
                 }
             }
         }
@@ -108,17 +108,17 @@
        покрит ... светъл бекграунд"). */
     tfoot {
         background: var(--mcp-surface-3) !important;
-        border-top: 1px solid var(--mcp-rule-strong) !important;
+        border-top: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
 
         tr { background: var(--mcp-surface-3) !important; }
 
         td {
-            padding: 9px 10px !important;
+            padding: var(--mcp-sp-9) var(--mcp-sp-10) !important;
             background: var(--mcp-surface-3) !important;
             font-family: var(--mcp-font-mono) !important;
             font-weight: 600 !important;
             color: var(--mcp-ink) !important;
-            border-top: 1px solid var(--mcp-rule-strong) !important;
+            border-top: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
 
             &.o_list_number,
             &.o_list_field_monetary,
@@ -133,14 +133,14 @@
 .o_list_view .o_field_badge {
     display: inline-flex !important;
     align-items: center !important;
-    height: 18px !important;
-    padding: 0 8px !important;
+    height: var(--mcp-sp-18) !important;
+    padding: 0 var(--mcp-sp-8) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: 9.5px !important;
+    font-size: var(--mcp-sp-9-5) !important;
     font-weight: 600 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     color: var(--mcp-ink-3) !important;
     background: var(--mcp-surface-2) !important;
@@ -150,7 +150,7 @@
     &.o_status_green {
         color: var(--mcp-ok) !important;
         border-color: var(--mcp-ok) !important;
-        background: rgba(16, 185, 129, 0.08) !important;
+        background: var(--mcp-ok-a08) !important;
     }
     &.bg-primary,
     &.text-bg-primary,
@@ -158,14 +158,14 @@
         color: var(--mcp-accent) !important;
         border-color: var(--mcp-accent) !important;
         background: var(--mcp-accent-soft) !important;
-        box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+        box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
     }
     &.bg-warning,
     &.text-bg-warning,
     &.o_status_orange {
         color: var(--mcp-warn) !important;
         border-color: var(--mcp-warn) !important;
-        background: rgba(245, 158, 11, 0.08) !important;
+        background: var(--mcp-warn-a08) !important;
     }
     &.bg-danger,
     &.text-bg-danger,
@@ -180,12 +180,12 @@
 .o_list_view .o_group_header {
     background: var(--mcp-surface-3) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: 10px !important;
+    font-size: var(--mcp-sp-10) !important;
     font-weight: 700 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
     color: var(--mcp-accent) !important;
-    border-bottom: 1px solid var(--mcp-rule-strong) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
 }
 
 /* ── Selection bar (when rows checked) ──────────────────────── */
@@ -193,20 +193,20 @@
     background: var(--mcp-accent) !important;
     color: var(--mcp-surface) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: 11px !important;
+    font-size: var(--mcp-sp-11) !important;
     letter-spacing: 0.06em !important;
     border-radius: 0 !important;
-    box-shadow: 0 0 0 1px rgba(15, 82, 186, 0.30), 0 0 4px rgba(15, 82, 186, 0.20);
+    box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
 
     button {
         color: var(--mcp-surface) !important;
-        border: 1px solid rgba(255,255,255,0.4) !important;
+        border: var(--mcp-sp-1) solid var(--mcp-white-a40) !important;
         border-radius: 0 !important;
         font-weight: 600 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.02em !important;
 
-        &:hover { background: rgba(255,255,255,0.18) !important; }
+        &:hover { background: var(--mcp-white-a18) !important; }
     }
 }
 
@@ -230,13 +230,13 @@
        Rosen forbids ("o_control_panel пак има мрежа").  Opaque white
        covers the grid; no border, no glow (tiles carry the visuals).
        LEFT aligned to the control panel / list (left:8). */
-    background: #ffffff !important;
+    background: var(--mcp-bg) !important;
     border: 0 !important;
     border-radius: 0 !important;
-    padding: 8px 8px 8px 0 !important;
-    margin: 8px 8px 8px 0 !important;
+    padding: var(--mcp-sp-8) var(--mcp-sp-8) var(--mcp-sp-8) 0 !important;
+    margin: var(--mcp-sp-8) var(--mcp-sp-8) var(--mcp-sp-8) 0 !important;
     box-shadow: none !important;
-    gap: 8px !important;
+    gap: var(--mcp-sp-8) !important;
 }
 
 /* The button-GROUP wrappers (rows/cols/grid cells) — transparent &
@@ -252,7 +252,7 @@
     box-shadow: none !important;
 }
 .o_purchase_dashboard .grid {
-    gap: 12px !important;
+    gap: var(--mcp-sp-12) !important;
 }
 /* No blue line (Rosen: "махни синята преливка не ми харесва").
    ::after = the crease border on the dog-ear's LONG (diagonal)
@@ -266,15 +266,15 @@ a.purchase-dashboard-card.btn::after {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 16px;
-    height: 16px;
+    width: var(--mcp-sp-16);
+    height: var(--mcp-sp-16);
     clip-path: polygon(0 0, 0 100%, 100% 100%);
     background: linear-gradient(
         45deg,
-        transparent calc(50% - 1px),
-        var(--mcp-rule-strong) calc(50% - 1px),
-        var(--mcp-rule-strong) calc(50% + 1px),
-        transparent calc(50% + 1px)
+        transparent calc(50% - var(--mcp-sp-1)),
+        var(--mcp-rule-strong) calc(50% - var(--mcp-sp-1)),
+        var(--mcp-rule-strong) calc(50% + var(--mcp-sp-1)),
+        transparent calc(50% + var(--mcp-sp-1))
     );
     transform-origin: bottom left;
     transition:
@@ -298,20 +298,20 @@ a.purchase-dashboard-card.btn {
     border-radius: 0 !important;
     /* big buttons = solid white (Rosen; overrides Bootstrap
        bg-secondary-subtle / bg-warning-subtle / bg-100). */
-    background: #ffffff !important;
+    background: var(--mcp-bg) !important;
     /* gentle sapphire glow so the tiles stand out (Rosen) */
     box-shadow:
-        0 0 0 1px var(--mcp-rule),
-        0 3px 12px -5px rgba(15, 82, 186, 0.22) !important;
+        0 0 0 var(--mcp-sp-1) var(--mcp-rule),
+        0 var(--mcp-sp-3) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-5)) var(--mcp-accent-a22) !important;
     margin: 0 !important;
-    padding: 14px 18px 16px !important;
+    padding: var(--mcp-sp-14) var(--mcp-sp-18) var(--mcp-sp-16) !important;
     color: var(--mcp-ink) !important;
     text-transform: none !important;
     letter-spacing: 0 !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
-    gap: 2px !important;
+    gap: var(--mcp-sp-2) !important;
     min-height: 0 !important;
     /* Bottom-left "page-fold" dog-ear (Rosen: ъгълче със сгъвка на
        листче, разгъва се при hover).  Drawn as a ::before triangle —
@@ -323,8 +323,8 @@ a.purchase-dashboard-card.btn {
         position: absolute;
         left: 0;
         bottom: 0;
-        width: 16px;
-        height: 16px;
+        width: var(--mcp-sp-16);
+        height: var(--mcp-sp-16);
         background: linear-gradient(
             135deg,
             var(--mcp-paper-deep) 0%,
@@ -332,7 +332,7 @@ a.purchase-dashboard-card.btn {
             var(--mcp-surface) 100%
         );
         clip-path: polygon(0 0, 0 100%, 100% 100%);
-        box-shadow: -1px -1px 3px rgba(15, 23, 42, 0.14);
+        box-shadow: calc(-1 * var(--mcp-sp-1)) calc(-1 * var(--mcp-sp-1)) var(--mcp-sp-3) rgba(15, 23, 42, 0.14);
         transform-origin: bottom left;
         transition:
             transform 0.30s cubic-bezier(.2, .6, .2, 1),
@@ -361,7 +361,7 @@ a.purchase-dashboard-card.btn {
     b, strong, [class*="value"], [class*="kpi"] {
         font-family: var(--mcp-font-mono) !important;
         font-feature-settings: "tnum","ss01";
-        font-size: 28px !important;
+        font-size: var(--mcp-sp-28) !important;
         font-weight: 700 !important;
         color: var(--mcp-ink) !important;
         letter-spacing: 0 !important;
@@ -371,7 +371,7 @@ a.purchase-dashboard-card.btn {
        greedily caught the number's <span> and shrank it). */
     small, .text-muted, .o_label, [class*="label"] {
         font-family: var(--mcp-font-mono) !important;
-        font-size: 9.5px !important;
+        font-size: var(--mcp-sp-9-5) !important;
         font-weight: 500 !important;
         letter-spacing: 0.16em !important;
         text-transform: uppercase !important;
