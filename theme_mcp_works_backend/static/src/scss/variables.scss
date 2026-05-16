@@ -6,15 +6,15 @@
 // Light + Dark via tokens.scss (CSS custom properties).
 
 // ── Brand palette · LIGHT mode defaults (mirror of tokens.scss) ──────────
-$mcp-bg:           #ffffff !default;   // pure white
-$mcp-bg-2:         #f5f6f7 !default;
-$mcp-paper:        #ffffff !default;
-$mcp-paper-light:  #ffffff !default;
-$mcp-paper-deep:   #f5f6f7 !default;
+$mcp-bg:           #e7ebf1 !default;   // cool steel canvas (not white)
+$mcp-bg-2:         #dde3eb !default;
+$mcp-paper:        #f8fafc !default;
+$mcp-paper-light:  #fdfdfe !default;
+$mcp-paper-deep:   #eef1f5 !default;
 
-$mcp-surface:      #ffffff !default;
-$mcp-surface-2:    #fafafa !default;
-$mcp-surface-3:    #f0f1f3 !default;
+$mcp-surface:      #f8fafc !default;
+$mcp-surface-2:    #f1f4f8 !default;
+$mcp-surface-3:    #e9edf3 !default;
 
 $mcp-ink:          #0a1628 !default;
 $mcp-ink-2:        #334155 !default;
