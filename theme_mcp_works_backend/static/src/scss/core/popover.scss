@@ -4,9 +4,14 @@
 .o-popover,
 .o_popover {
     background: var(--mcp-paper-light) !important;
-    border: 1.5px solid var(--mcp-accent) !important;
+    /* Elegant soft border + glow shadow — match the autocomplete
+       dropdown (.o-autocomplete--dropdown-menu / .ui-autocomplete),
+       not the harsh 1.5px sapphire modal frame (Rosen). */
+    border: 1px solid var(--mcp-rule) !important;
     border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-shadow-modal) !important;
+    box-shadow:
+        0 0 0 1px var(--mcp-accent-soft),
+        0 10px 30px -10px rgba(15, 82, 186, 0.30) !important;
     padding: 0;
     max-width: var(--mcp-popover-max-w, 320px);
     max-height: var(--mcp-content-h, calc(100vh - 64px));
@@ -23,7 +28,7 @@
 /* Arrow */
 .o-popover .o-popover-arrow::before,
 .o_popover .popover-arrow::before {
-    border-color: var(--mcp-accent) transparent transparent transparent;
+    border-color: var(--mcp-rule) transparent transparent transparent;
 }
 
 /* Header */

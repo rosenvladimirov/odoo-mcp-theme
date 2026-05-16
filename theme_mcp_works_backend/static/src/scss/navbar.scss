@@ -3,11 +3,11 @@
    strip on top, animated horizontal scan, sharp 0-radius buttons. */
 
 .o_main_navbar {
-    /* distinctly darker steel so it doesn't blend with the canvas
-       (#e7ebf1) / list-header (#e9edf3) (Rosen: "слива се ... потъмни"). */
-    background: #c8d2df !important;
-    /* gentle hairline, not the aggressive rule-strong (Rosen) */
+    /* white surface + bottom hairline + downward glow shadow
+       (Rosen: "нав менюто бяло с бордер отдолу и гроу сянка отдолу"). */
+    background: #ffffff !important;
     border-bottom: 1px solid var(--mcp-rule) !important;
+    box-shadow: 0 4px 16px -6px rgba(15, 82, 186, 0.20) !important;
     color: var(--mcp-ink) !important;
     height: var(--mcp-navbar-height) !important;
     min-height: var(--mcp-navbar-height) !important;

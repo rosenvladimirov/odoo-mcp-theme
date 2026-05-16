@@ -225,10 +225,12 @@
 .o_dashboard.o_view_controller > .o_dashboard,
 .o_action > .o_purchase_dashboard {
     position: relative;
-    /* Rosen: panel fully invisible — 100% transparent, no border,
-       NO glow shadow (tiles carry all the visuals). LEFT aligned to
-       the control panel / list (left:8). */
-    background: transparent !important;
+    /* Panel = solid white (opaque).  A transparent panel over the
+       gridded .o_web_client backdrop = unavoidable grid bleed, which
+       Rosen forbids ("o_control_panel пак има мрежа").  Opaque white
+       covers the grid; no border, no glow (tiles carry the visuals).
+       LEFT aligned to the control panel / list (left:8). */
+    background: #ffffff !important;
     border: 0 !important;
     border-radius: 0 !important;
     padding: 8px 8px 8px 0 !important;
