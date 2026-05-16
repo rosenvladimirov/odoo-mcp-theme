@@ -42,7 +42,6 @@
   pre.pet.bob{animation:bob 1.7s ease-in-out infinite}
   pre.pet.breathe{animation:breathe 3.6s ease-in-out infinite;opacity:.9}
   pre.pet.sick{filter:hue-rotate(58deg) saturate(.75)}
-  pre.pet.dead{filter:grayscale(1) brightness(.78)}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
   @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
   .px{display:inline-block}
@@ -87,14 +86,6 @@
   button:disabled{opacity:.3;cursor:not-allowed;border-color:var(--dim);color:var(--dim)}
   button:disabled:active{background:transparent;color:var(--dim)}
   .footer{font-size:11px;color:var(--dim);margin-top:12px}
-  .over{
-    position:absolute;inset:0;background:var(--bg);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:8px;opacity:0;pointer-events:none;transition:.3s;
-  }
-  .over.show{opacity:.97;pointer-events:auto}
-  .over .big{font-size:13px;color:var(--dim);white-space:pre;text-align:center;line-height:1.5}
-  .over button{margin-top:8px;padding:8px 18px}
 </style>
 </head>
 <body>
@@ -105,10 +96,6 @@
     <div class="speech" id="speech"></div>
     <pre class="pet" id="pet"></pre>
     <div class="deco zzz" id="zzz">z &nbsp;Z</div>
-    <div class="over" id="over">
-      <div class="big" id="overTxt"></div>
-      <button id="restart">[ ново яйце ]</button>
-    </div>
   </div>
 
   <div class="status" id="status">чука се отвътре...</div>
@@ -203,7 +190,7 @@ function freshState(){
     name: NAMES[(Math.random()*NAMES.length)|0],
     born: Date.now(), last: Date.now(),
     hunger:80, happy:80, energy:80, clean:90, health:100,
-    sleeping:false, hatched:false, dead:false, deathReason:""
+    sleeping:false, hatched:false
   };
 }
 function load(){
@@ -218,7 +205,7 @@ const el = id => document.getElementById(id);
 const E = {
   pet:el("pet"), stage:el("stage"), speech:el("speech"), status:el("status"),
   age:el("age"), name:el("pname"), zzz:el("zzz"),
-  over:el("over"), overTxt:el("overTxt"), barsBox:el("barsBox"), btnSleep:el("btnSleep"),
+  barsBox:el("barsBox"), btnSleep:el("btnSleep"),
 };
 
 const clamp = v => Math.max(0, Math.min(MAX, v));
@@ -227,7 +214,7 @@ function tick(){
   const now = Date.now();
   const mins = (now - S.last)/60000;
   S.last = now;
-  if (S.dead || !S.hatched || mins <= 0){ render(); return; }
+  if (!S.hatched || mins <= 0){ render(); return; }
 
   if (S.sleeping){
     S.energy = clamp(S.energy + SLEEP_REGEN*mins);
@@ -246,15 +233,7 @@ function tick(){
   if (neglected>0) S.health = clamp(S.health - neglected*0.8*mins);
   else if (S.hunger>45 && S.happy>45 && S.clean>40) S.health = clamp(S.health + 0.4*mins);
 
-  if (S.health<=0){ S.dead=true; S.sleeping=false; S.deathReason=deathReason(); save(); }
   save(); render();
-}
-
-function deathReason(){
-  if (S.hunger<=0) return "от глад";
-  if (S.clean<=5)  return "от мръсотия";
-  if (S.energy<=0) return "от изтощение";
-  return "от тъга";
 }
 
 function ageText(){
@@ -265,7 +244,6 @@ function ageText(){
 }
 
 function mood(){
-  if (S.dead) return { f:"idle", s:S.name+" почина "+S.deathReason };
   if (!S.hatched) return { f:"egg", s:"чука се отвътре... натисни го!" };
   if (S.sleeping) return { f:"sleep", s:S.name+" спи..." };
   if (S.health<30) return { f:"sad", s:S.name+" е болен! дай лек" };
@@ -297,10 +275,10 @@ function render(){
   const m = mood();
   E.pet.innerHTML = renderPet(m.f);
   E.pet.className = "pet " +
-    (S.dead ? "dead" : S.sleeping ? "breathe" : "bob") +
-    (!S.dead && S.health<30 && S.hatched && !S.sleeping ? " sick" : "");
+    (S.sleeping ? "breathe" : "bob") +
+    (S.health<30 && S.hatched && !S.sleeping ? " sick" : "");
   E.status.textContent = m.s;
-  E.zzz.classList.toggle("show", S.sleeping && !S.dead);
+  E.zzz.classList.toggle("show", S.sleeping);
 
   E.barsBox.innerHTML =
     barLine("глад",  S.hunger) +
@@ -314,15 +292,9 @@ function render(){
   document.querySelectorAll(".pad button").forEach(b=>{
     const a=b.dataset.a;
     if (a==="reset"){ b.disabled=false; return; }
-    if (a==="heal"){ b.disabled = S.dead || !S.hatched; return; }
-    b.disabled = S.dead || !S.hatched || (S.sleeping && a!=="sleep");
+    if (a==="heal"){ b.disabled = !S.hatched; return; }
+    b.disabled = !S.hatched || (S.sleeping && a!=="sleep");
   });
-
-  E.over.classList.toggle("show", S.dead);
-  if (S.dead){
-    E.overTxt.textContent =
-      S.name+" почина "+S.deathReason+"\nдоживя "+ageText()+"\nгрижи се по-добре за следващия";
-  }
 }
 
 let speechT;
@@ -356,22 +328,18 @@ document.querySelector(".pad").addEventListener("click", e=>{
   const btn=e.target.closest("button"); if(!btn)return;
   const a=btn.dataset.a;
   if (a==="reset"){ actions.reset(); return; }
-  if (S.dead) return;
   if (!S.hatched){ say("първо ме излюпи"); return; }
   if (S.sleeping && a!=="sleep" && a!=="heal"){ say("шшт... спя"); return; }
   actions[a](); save(); render();
 });
 
 E.pet.addEventListener("click", ()=>{
-  if (S.dead) return;
   if (!S.hatched){ hatch(); return; }
   if (S.sleeping){ say("шшт..."); return; }
   S.happy = clamp(S.happy+6);
   const r=["хи-хи :)","гъдел!","обичам те <3","още!"];
   say(r[(Math.random()*r.length)|0]); save(); render();
 });
-
-el("restart").addEventListener("click", ()=>actions.reset());
 
 tick();
 setInterval(tick, 1000);
