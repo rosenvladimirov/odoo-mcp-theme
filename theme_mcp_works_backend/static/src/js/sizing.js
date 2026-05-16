@@ -92,6 +92,12 @@ export function computeButtonWidth(height, type = "rectangular", ratio) {
 export function classifyButton(el) {
     if (!el) return "rectangular";
     const text = (el.textContent || "").replace(/\s+/g, "");
-    const hasIcon = !!el.querySelector(".fa, .oi, i, svg, img");
-    return hasIcon && text.length === 0 ? "square" : "rectangular";
+    /* The glyph may be a CHILD (<i class="fa">) OR a font-icon class
+       ON the button itself (<button class="oi oi-close">) — the
+       latter is how Odoo renders .o_facet_remove, view switchers,
+       etc.  Detect both, else they get mis-classed rectangular and
+       pick up the wide min-width (Rosen). */
+    const selfIcon = el.matches('.fa, .oi, [class*="fa-"], [class*="oi-"]');
+    const childIcon = !!el.querySelector(".fa, .oi, i, svg, img");
+    return (selfIcon || childIcon) && text.length === 0 ? "square" : "rectangular";
 }

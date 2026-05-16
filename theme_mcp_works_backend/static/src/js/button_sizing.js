@@ -72,6 +72,9 @@ const EXCLUDE =
     ".oe_stat_button, .o-form-buttonbox .btn," +
     ".purchase-dashboard-card, .o_sale_dashboard .btn, .o_dashboard_card," +
     ".dropdown-toggle-split, .o_optional_columns_dropdown_toggle," +
+    /* facet ✕ — owned entirely by the CSS square rule; JS must NOT
+       inject min-width here (Rosen: "махни го"). */
+    ".o_facet_remove," +
     "[data-mcp-no-size]";
 
 function sizeOne(btn, H) {
