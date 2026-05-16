@@ -488,3 +488,42 @@
 .o_pager .btn-group {
     border-radius: 0 !important;
 }
+
+/* ── Button-GROUP wrappers — transparent, borderless, even height ──
+   The buttons are all 26 (JS calculator), but their GROUP wrappers
+   carried a 1px border (→ 28px) and a filled surface, so the row
+   looked uneven and "not transparent" (Rosen: groups have a border /
+   не са прозрачни като o_cp_switch_buttons, o_searchview_icon;
+   "различни са височините").  Strip bg/border/shadow off the
+   wrappers ONLY — the buttons keep their own border. */
+.o_control_panel .o_cp_switch_buttons,
+.o_control_panel .o_pager,
+.o_control_panel .btn-group {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    min-height: var(--mcp-btn-h) !important;
+    height: var(--mcp-btn-h) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+.o_control_panel .o_searchview,
+.o_control_panel .o_searchview_icon {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Search toggler — a clean borderless square in EVERY state; kill the
+   focus border/ring (Rosen: "като се фокусира o_searchview_dropdown
+   _toggler").  Specificity prefixed with .o_control_panel + .btn so
+   it beats the generic CP icon-button border rule on :focus. */
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret,
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret:hover,
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret:focus,
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret:focus-visible,
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret.focus {
+    border-color: var(--mcp-toggler-border) !important;
+    outline: none !important;
+    box-shadow: none !important;
+}

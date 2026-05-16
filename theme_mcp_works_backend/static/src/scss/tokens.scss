@@ -103,6 +103,8 @@
        measured from .o_list_button_add at runtime. Tune freely. */
     --mcp-btn-h: 26px;
     --mcp-btn-rect-ratio: 2.75;
+    /* Search dropdown toggler border (kept transparent — no focus ring) */
+    --mcp-toggler-border: transparent;
     --mcp-cp-row-h:      30px;
     --mcp-view-pad:      8px;
     --mcp-stat-btn-min-w: 140px;
