@@ -35,8 +35,9 @@
     max-height: var(--mcp-modal-max-h, calc(100vh - 72px));
     user-select: none;
     overflow: visible;
-    /* Cut top-right notch — HUD panel signature */
-    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+    /* Only the BOTTOM-LEFT corner notched (Rosen: "трябва само
+       долния ляв"). */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px));
 
     /* Hidden by default */
     opacity: 0;
@@ -331,8 +332,9 @@
     max-width: calc(100vw - 32px);
     left: 50%;
     transform: translateX(-50%);
-    /* Top-left + bottom-right HUD notches */
-    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+    /* Only the BOTTOM-LEFT corner notched (Rosen: "трябва само
+       долния ляв"). */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px));
 }
 .mcp_dash_modal.is-grid.is-open {
     transform: translateX(-50%) translateY(0);
