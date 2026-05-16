@@ -236,6 +236,22 @@
     box-shadow: none !important;
     gap: 8px !important;
 }
+
+/* The button-GROUP wrappers (rows/cols/grid cells) — transparent &
+   borderless, a bit more gap between the buttons.  NOT the buttons
+   themselves (.purchase-dashboard-card stays white). (Rosen.) */
+.o_purchase_dashboard .row,
+.o_purchase_dashboard .col-12,
+.o_purchase_dashboard [class*="col-lg-"],
+.o_purchase_dashboard [class*="g-col"],
+.o_purchase_dashboard .grid {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+.o_purchase_dashboard .grid {
+    gap: 12px !important;
+}
 /* No blue line (Rosen: "махни синята преливка не ми харесва").
    ::after = the crease border on the dog-ear's LONG (diagonal)
    side — a crisp 2px line along the fold hypotenuse. */
