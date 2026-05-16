@@ -150,12 +150,18 @@
     .o_breadcrumb { margin-left: 4px !important; }
     .o_breadcrumb .breadcrumb-item.active,
     .o_breadcrumb .breadcrumb-item.active span,
-    .breadcrumb .breadcrumb-item.active {
+    .breadcrumb .breadcrumb-item.active,
+    .o_breadcrumb .o_last_breadcrumb_item,
+    .o_breadcrumb .o_last_breadcrumb_item *,
+    .breadcrumb .o_last_breadcrumb_item {
         color: var(--mcp-ink) !important;
         font-family: var(--mcp-font-family) !important;
         font-size: 13px !important;
         font-weight: 600 !important;
         letter-spacing: 0;
+        /* last breadcrumb element fully transparent (Rosen) */
+        background: transparent !important;
+        box-shadow: none !important;
     }
 }
 
@@ -173,9 +179,8 @@
 /* theme.css .control-panel = flat 38px strip, border-bottom only,
    NO halo (the halo belongs to data panels, not the CP bar). */
 .o_control_panel {
-    /* takes the old steel canvas tone (Rosen swap: screen light,
-       controls panel = previous bg). */
-    background: #e7ebf1 !important;
+    /* control buttons panel = white (Rosen). */
+    background: #ffffff !important;
     border: 0 !important;
     border-bottom: 1px solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
