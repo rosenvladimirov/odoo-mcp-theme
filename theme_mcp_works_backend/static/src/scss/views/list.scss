@@ -102,8 +102,16 @@
         }
     }
 
-    /* Totals (tfoot) — monospace strip */
+    /* Totals (tfoot) — monospace strip. The tfoot row often has
+       fewer <td>s than columns → set the light bg on tfoot/tr too
+       so the WHOLE footer band is covered (Rosen: "не е целия
+       покрит ... светъл бекграунд"). */
     tfoot {
+        background: var(--mcp-surface-3) !important;
+        border-top: 1px solid var(--mcp-rule-strong) !important;
+
+        tr { background: var(--mcp-surface-3) !important; }
+
         td {
             padding: 9px 10px !important;
             background: var(--mcp-surface-3) !important;
