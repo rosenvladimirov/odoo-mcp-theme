@@ -150,8 +150,8 @@
     flex-shrink: 0;
     border-radius: 0;
     object-fit: cover;
-    border: 1px solid var(--mcp-rule-strong);
-    filter: saturate(0.6) brightness(.95);
+    border: none;
+    filter: saturate(0.9) brightness(1);
     transition: filter var(--mcp-t-base), border-color var(--mcp-t-base);
 }
 .mcp_dash_item:hover img {
@@ -164,7 +164,7 @@
     flex-shrink: 0;
     border-radius: 0;
     background: var(--mcp-surface-2);
-    border: 1px solid var(--mcp-rule-strong);
+    border: none;
     color: var(--mcp-ink-2);
     display: flex;
     align-items: center;
@@ -345,8 +345,8 @@
 .mcp_dash_modal.is-grid .mcp_dash_apps_scroll {
     display: grid !important;
     grid-template-columns: repeat(var(--mcp-dash-grid-cols, 5), 1fr);
-    gap: 1px;
-    background: var(--mcp-rule);
+    gap: 0;
+    background: var(--mcp-surface);
     max-height: #{"min(420px, calc(var(--mcp-modal-max-h, 100vh) - 88px))"};
     padding: 0;
     width: 100%;
