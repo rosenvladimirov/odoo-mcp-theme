@@ -172,7 +172,9 @@
 /* theme.css .control-panel = flat 38px strip, border-bottom only,
    NO halo (the halo belongs to data panels, not the CP bar). */
 .o_control_panel {
-    background: var(--mcp-surface) !important;
+    /* takes the old steel canvas tone (Rosen swap: screen light,
+       controls panel = previous bg). */
+    background: #e7ebf1 !important;
     border: 0 !important;
     border-bottom: 1px solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;

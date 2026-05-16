@@ -278,7 +278,8 @@ a.purchase-dashboard-card.btn {
     position: relative !important;
     border: 0 !important;
     border-radius: 0 !important;
-    background: var(--mcp-surface) !important;
+    /* tiles take the old steel canvas tone (Rosen swap). */
+    background: #e7ebf1 !important;
     /* gentle sapphire glow so the tiles stand out (Rosen) */
     box-shadow:
         0 0 0 1px var(--mcp-rule),
