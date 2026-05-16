@@ -112,6 +112,92 @@
     --mcp-dash-width:    54px;
     --mcp-bcstrip-h:     30px;
     --mcp-status-h:      24px;
+
+    /* ── Spacing scale ───────────────────────────────────────────
+       Every literal px used across the theme, named so the whole
+       look is retuned from here (Rosen: "всичко на променливи,
+       нищо в директни пиксели").  Values are EXACT — referencing
+       these is a pure refactor (identical computed output). */
+    --mcp-sp-1:    1px;
+    --mcp-sp-2:    2px;
+    --mcp-sp-3:    3px;
+    --mcp-sp-4:    4px;
+    --mcp-sp-5:    5px;
+    --mcp-sp-6:    6px;
+    --mcp-sp-8:    8px;
+    --mcp-sp-9:    9px;
+    --mcp-sp-9-5:  9.5px;
+    --mcp-sp-10:   10px;
+    --mcp-sp-11:   11px;
+    --mcp-sp-12:   12px;
+    --mcp-sp-13:   13px;
+    --mcp-sp-14:   14px;
+    --mcp-sp-16:   16px;
+    --mcp-sp-18:   18px;
+    --mcp-sp-20:   20px;
+    --mcp-sp-22:   22px;
+    --mcp-sp-24:   24px;
+    --mcp-sp-26:   26px;
+    --mcp-sp-28:   28px;
+    --mcp-sp-30:   30px;
+    --mcp-sp-32:   32px;
+    --mcp-sp-36:   36px;
+    --mcp-sp-38:   38px;
+    --mcp-sp-40:   40px;
+    --mcp-sp-48:   48px;
+    --mcp-sp-54:   54px;
+    --mcp-sp-64:   64px;
+    --mcp-sp-72:   72px;
+    --mcp-sp-80:   80px;
+    /* Larger one-off dimensions (panel/menu widths etc.) */
+    --mcp-sp-88:   88px;
+    --mcp-sp-110:  110px;
+    --mcp-sp-200:  200px;
+    --mcp-sp-212:  212px;
+    --mcp-sp-240:  240px;
+    --mcp-sp-280:  280px;
+    --mcp-sp-320:  320px;
+
+    /* ── Border widths ───────────────────────────────────────── */
+    --mcp-bw-1:    1px;
+    --mcp-bw-1-5:  1.5px;
+    --mcp-bw-2:    2px;
+
+    /* ── Accent (sapphire #0F52BA) at fixed alphas ──────────────
+       The glow/halo family used everywhere as rgba(15,82,186,α). */
+    --mcp-accent-a04: rgba(15, 82, 186, 0.04);
+    --mcp-accent-a05: rgba(15, 82, 186, 0.05);
+    --mcp-accent-a06: rgba(15, 82, 186, 0.06);
+    --mcp-accent-a08: rgba(15, 82, 186, 0.08);
+    --mcp-accent-a12: rgba(15, 82, 186, 0.12);
+    --mcp-accent-a18: rgba(15, 82, 186, 0.18);
+    --mcp-accent-a20: rgba(15, 82, 186, 0.20);
+    --mcp-accent-a22: rgba(15, 82, 186, 0.22);
+    --mcp-accent-a25: rgba(15, 82, 186, 0.25);
+    --mcp-accent-a30: rgba(15, 82, 186, 0.30);
+    --mcp-accent-a45: rgba(15, 82, 186, 0.45);
+    --mcp-accent-a55: rgba(15, 82, 186, 0.55);
+    /* Ink (#0f172a) shadow family */
+    --mcp-ink-a04: rgba(15, 23, 42, 0.04);
+    --mcp-ink-a06: rgba(15, 23, 42, 0.06);
+    --mcp-ink-a08: rgba(15, 23, 42, 0.08);
+    /* White overlays */
+    --mcp-white-a18: rgba(255, 255, 255, 0.18);
+    --mcp-white-a40: rgba(255, 255, 255, 0.40);
+
+    /* ── Semantic status / chip palette ─────────────────────────
+       Used by priority, state-selection, tags, badges, progress. */
+    --mcp-c-red:    #ef4444;
+    --mcp-c-rose:   #e11d48;
+    --mcp-c-orange: #f97316;
+    --mcp-c-amber:  #eab308;
+    --mcp-c-green:  #22c55e;
+    --mcp-c-teal:   #14b8a6;
+    --mcp-c-sky:    #38bdf8;
+    --mcp-c-indigo: #6366f1;
+    --mcp-c-purple: #a855f7;
+    --mcp-c-pink:   #ec4899;
+    --mcp-c-slate:  #6b7280;
 }
 
 /* ── Palette · DARK mode ───────────────────────────────────────
