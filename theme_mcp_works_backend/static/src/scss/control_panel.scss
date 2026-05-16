@@ -288,7 +288,10 @@
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     padding: 0 var(--mcp-sp-8) !important;
-    min-height: var(--mcp-sp-26) !important;
+    min-height: var(--mcp-btn-h) !important;
+    height: var(--mcp-btn-h) !important;
+    display: inline-flex !important;
+    align-items: center !important;
     transition: border-color var(--mcp-t-fast), box-shadow var(--mcp-t-fast);
 
     &:focus-within {
@@ -332,7 +335,9 @@
 .o_searchview .o_searchview_facet {
     display: inline-flex !important;
     align-items: stretch !important;
-    height: var(--mcp-sp-18) !important;
+    /* fill the search row (was sp-18 ≈ half → "наполовина", Rosen) */
+    height: var(--mcp-btn-h) !important;
+    align-self: center !important;
     /* override Odoo 19 Bootstrap utilities .rounded-2 .bg-200 */
     border: 0 !important;
     border-radius: 0 !important;
@@ -356,8 +361,8 @@
         font-weight: 600 !important;
         letter-spacing: 0.06em !important;
         text-transform: uppercase !important;
-        line-height: var(--mcp-sp-18) !important;
-        height: var(--mcp-sp-18) !important;
+        line-height: 1 !important;
+        height: var(--mcp-btn-h) !important;
         display: inline-flex !important;
         align-items: center !important;
         box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
@@ -370,8 +375,10 @@
         border-left: 0 !important;
         border-radius: 0 !important;
         padding: 0 var(--mcp-sp-8) !important;
-        height: var(--mcp-sp-18) !important;
-        line-height: var(--mcp-sp-16) !important;
+        height: var(--mcp-btn-h) !important;
+        line-height: 1 !important;
+        display: inline-flex !important;
+        align-items: center !important;
     }
 }
 
@@ -526,4 +533,30 @@
     border-color: var(--mcp-toggler-border) !important;
     outline: none !important;
     box-shadow: none !important;
+}
+
+/* ── Unify EVERY control-panel action button to one box/baseline ──
+   "Нов" (.btn-primary) and "Качване" (.o_list_button_upload, secondary)
+   sat at different heights/baselines because the primary (0,3,0) and
+   secondary (0,4,0) blocks + button_sizing.js diverged.  This rule —
+   last in the file, ≥ their specificity — forces an identical box so
+   they share height AND vertical position (Rosen: "Качване по-нисък
+   от Нов"). All-token, no literals. */
+.o_control_panel .btn.btn-primary,
+.o_control_panel .btn.btn-secondary,
+.o_control_panel .o_list_button_add,
+.o_control_panel .o_list_button_upload,
+.o_control_panel .btn:not(.btn-primary):not(.o_optional_columns_dropdown_toggle),
+.o_control_panel_main_buttons .btn {
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: var(--mcp-btn-h) !important;
+    min-height: var(--mcp-btn-h) !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    align-self: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
