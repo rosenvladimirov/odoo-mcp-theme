@@ -583,3 +583,19 @@
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
+
+/* Honour Odoo's explicit .border-0 on CP buttons — the broad
+   .o_control_panel .btn:not(.btn-primary):not(...) (0,4,0 !important)
+   rule was forcing a 1px border onto buttons Odoo marked borderless
+   ("d-print-none btn border-0 p-0"). This (0,5,0) selector wins and
+   keeps them frameless (Rosen). All-token. */
+.o_control_panel .btn.border-0,
+.o_control_panel .btn.border-0:hover,
+.o_control_panel .btn.border-0:focus,
+.o_control_panel .btn.border-0:focus-visible,
+.o_control_panel .btn.border-0:not(.btn-primary):not(.o_optional_columns_dropdown_toggle) {
+    border: 0 !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+}
