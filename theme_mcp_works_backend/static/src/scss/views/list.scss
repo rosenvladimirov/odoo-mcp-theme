@@ -237,19 +237,21 @@
 a.purchase-dashboard-card.btn::after {
     content: "";
     position: absolute;
-    left: 0;
-    right: 0;
+    left: 50%;
     bottom: 0;
+    width: 56%;
     height: 2px;
+    transform: translateX(-50%);
+    /* short, centred; bright in the middle, lightening to the ends */
     background: linear-gradient(
         to right,
         transparent 0%,
-        var(--mcp-accent-glow) 8%,
+        var(--mcp-accent-soft) 16%,
         var(--mcp-accent) 50%,
-        var(--mcp-accent-glow) 92%,
+        var(--mcp-accent-soft) 84%,
         transparent 100%
     );
-    opacity: 0.7;
+    opacity: 0.85;
     pointer-events: none;
     z-index: 2;
 }
@@ -266,7 +268,10 @@ a.purchase-dashboard-card.btn {
     border: 0 !important;
     border-radius: 0 !important;
     background: var(--mcp-surface) !important;
-    box-shadow: 0 0 0 1px var(--mcp-rule) !important;
+    /* gentle sapphire glow so the tiles stand out (Rosen) */
+    box-shadow:
+        0 0 0 1px var(--mcp-rule),
+        0 3px 12px -5px rgba(15, 82, 186, 0.22) !important;
     margin: 0 !important;
     padding: 14px 18px 16px !important;
     color: var(--mcp-ink) !important;
@@ -277,13 +282,43 @@ a.purchase-dashboard-card.btn {
     align-items: flex-start !important;
     gap: 2px !important;
     min-height: 0 !important;
-    /* HUD cut-corner on each tile — BOTTOM-LEFT 8px (Rosen) */
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px)) !important;
+    /* Bottom-left "page-fold" dog-ear (Rosen: ъгълче със сгъвка на
+       листче, разгъва се при hover).  Drawn as a ::before triangle —
+       NO clip-path on the tile so the flap isn't clipped away. */
+    overflow: visible !important;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 16px;
+        height: 16px;
+        background: linear-gradient(
+            135deg,
+            var(--mcp-paper-deep) 0%,
+            var(--mcp-surface-3) 55%,
+            var(--mcp-surface) 100%
+        );
+        clip-path: polygon(0 0, 0 100%, 100% 100%);
+        box-shadow: -1px -1px 3px rgba(15, 23, 42, 0.14);
+        transform-origin: bottom left;
+        transition:
+            transform 0.30s cubic-bezier(.2, .6, .2, 1),
+            opacity 0.30s ease;
+        z-index: 1;
+        pointer-events: none;
+    }
 
     &:hover {
         background: var(--mcp-accent-soft) !important;
         border: 0 !important;
         color: var(--mcp-accent) !important;
+    }
+    /* unfold the paper corner on hover */
+    &:hover::before {
+        transform: scale(0);
+        opacity: 0;
     }
 
     /* big number — Odoo wraps the KPI value in <div class="fs-N">
