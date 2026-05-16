@@ -278,8 +278,9 @@ a.purchase-dashboard-card.btn {
     position: relative !important;
     border: 0 !important;
     border-radius: 0 !important;
-    /* tiles take the old steel canvas tone (Rosen swap). */
-    background: #e7ebf1 !important;
+    /* big buttons = solid white (Rosen; overrides Bootstrap
+       bg-secondary-subtle / bg-warning-subtle / bg-100). */
+    background: #ffffff !important;
     /* gentle sapphire glow so the tiles stand out (Rosen) */
     box-shadow:
         0 0 0 1px var(--mcp-rule),
