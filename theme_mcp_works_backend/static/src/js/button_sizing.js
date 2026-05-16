@@ -3,12 +3,18 @@
 /* MCP Works backend — Robot Theme · uniform button sizing.
  *
  * Every backend button is sized through the shared size calculator
- * (sizing.js → computeButtonWidth): measure its rendered height,
+ * (sizing.js → computeButtonWidth): measure ONE canonical height,
  * classify square (icon-only) vs rectangular (labelled), then
- *   - rectangular → min-width = calc(height) so short buttons share a
- *     consistent proportion (labels longer than that still grow — a
- *     min-width never clips);
+ *   - rectangular → min-width = a consistent proportion (labels longer
+ *     than that still grow — a min-width never clips);
  *   - square      → width = height = a perfect HUD square.
+ *
+ * The calculator's results are published ONCE as CSS custom
+ * properties on :root (--mcp-btn-h-live / --mcp-btn-w-rect /
+ * --mcp-btn-w-sq); every button's inline style only ever references
+ * var(--mcp-…) — NO raw px is written anywhere (Rosen: "всичко на
+ * променливи, нищо в директни пиксели"). Retune via --mcp-btn-h /
+ * --mcp-btn-rect-ratio and it propagates.
  *
  * Idempotent (each button stamped with its current h:type — unchanged
  * buttons are skipped), rAF-throttled, re-runs on Odoo action swaps.
@@ -17,12 +23,13 @@
 
 import { computeButtonWidth, classifyButton, getCSSVar } from "@theme_mcp_works_backend/js/sizing";
 
+const ROOT = document.documentElement;
+
 /* Canonical button height: every managed button is normalised to ONE
  * height so the toolbar reads as a single row of equal chips.  The
  * reference is the control-panel "New" button (.o_list_button_add);
  * fall back to a primary CP button, then the --mcp-btn-h token, then
- * 26 (Rosen: "височината е същата като o_list_button_add, останалите
- * бутони също имат тази височина"). */
+ * 26 (Rosen: "височината е същата като o_list_button_add"). */
 function baseButtonHeight() {
     const ref =
         document.querySelector(".o_list_button_add") ||
@@ -33,6 +40,21 @@ function baseButtonHeight() {
     }
     const tok = parseFloat(getCSSVar("--mcp-btn-h"));
     return Number.isFinite(tok) && tok > 0 ? tok : 26;
+}
+
+/* Publish the calculator's px results as :root variables (the ONLY
+ * place a px number lives — single tunable source). Returns false
+ * when nothing usable could be computed. */
+let lastH = 0;
+function publishVars(H) {
+    if (H <= 0) return false;
+    if (H !== lastH) {
+        ROOT.style.setProperty("--mcp-btn-h-live", H + "px");
+        ROOT.style.setProperty("--mcp-btn-w-sq", computeButtonWidth(H, "square") + "px");
+        ROOT.style.setProperty("--mcp-btn-w-rect", computeButtonWidth(H, "rectangular") + "px");
+        lastH = H;
+    }
+    return true;
 }
 
 /* Always-square buttons (icon togglers) regardless of classifyButton. */
@@ -55,31 +77,29 @@ const EXCLUDE =
 function sizeOne(btn, H) {
     if (btn.matches(EXCLUDE) || btn.closest("[data-mcp-no-size]")) return;
     if (!btn.offsetParent) return;                       // hidden — skip
-    if (H <= 0) return;
     const type = btn.matches(FORCE_SQUARE) ? "square" : classifyButton(btn);
     const stamp = H + ":" + type;
     if (btn.dataset.mcpBtnSized === stamp) return;        // already current
-    const w = computeButtonWidth(H, type);
-    if (w <= 0) return;
-    /* Uniform height for every managed button so the row is even. */
-    btn.style.setProperty("height", H + "px", "important");
-    btn.style.setProperty("min-height", H + "px", "important");
+    /* Reference the published :root vars — never a raw px (Rosen). */
+    btn.style.setProperty("height", "var(--mcp-btn-h-live)", "important");
+    btn.style.setProperty("min-height", "var(--mcp-btn-h-live)", "important");
     if (type === "square") {
-        btn.style.setProperty("width", w + "px", "important");
-        btn.style.setProperty("min-width", w + "px", "important");
+        btn.style.setProperty("width", "var(--mcp-btn-w-sq)", "important");
+        btn.style.setProperty("min-width", "var(--mcp-btn-w-sq)", "important");
         btn.style.setProperty("padding-left", "0", "important");
         btn.style.setProperty("padding-right", "0", "important");
         btn.style.setProperty("display", "inline-flex", "important");
         btn.style.setProperty("align-items", "center", "important");
         btn.style.setProperty("justify-content", "center", "important");
     } else {
-        btn.style.setProperty("min-width", w + "px", "important");
+        btn.style.setProperty("min-width", "var(--mcp-btn-w-rect)", "important");
     }
     btn.dataset.mcpBtnSized = stamp;
 }
 
 function processAll() {
     const H = baseButtonHeight();
+    if (!publishVars(H)) return;
     document.querySelectorAll(MANAGED).forEach((b) => sizeOne(b, H));
 }
 

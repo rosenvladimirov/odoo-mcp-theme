@@ -103,6 +103,13 @@
        measured from .o_list_button_add at runtime. Tune freely. */
     --mcp-btn-h: 26px;
     --mcp-btn-rect-ratio: 2.75;
+    /* Calculator outputs — CSS-only defaults (the formula in pure
+       tokens); button_sizing.js overrides --mcp-btn-*-live/-w-* at
+       runtime with the px-precise measured values. No raw px lives
+       on the buttons, only here. */
+    --mcp-btn-h-live: var(--mcp-btn-h);
+    --mcp-btn-w-sq:   var(--mcp-btn-h);
+    --mcp-btn-w-rect: calc(var(--mcp-btn-h) * var(--mcp-btn-rect-ratio));
     /* Search dropdown toggler border (kept transparent — no focus ring) */
     --mcp-toggler-border: transparent;
     --mcp-cp-row-h:      30px;
