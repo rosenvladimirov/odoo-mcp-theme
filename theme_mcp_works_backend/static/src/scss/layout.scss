@@ -21,16 +21,24 @@
 .o_web_client *::-webkit-scrollbar-thumb:hover { background: var(--mcp-accent); }
 .o_web_client *::-webkit-scrollbar-corner { background: transparent; }
 
-/* ── Workspace canvas — steel paper + blueprint grid mesh ────────────── */
-.o_web_client,
-.o_main_content,
-.o_action_manager {
+/* ── Workspace canvas — blueprint grid mesh ─────────────────────────────
+   The grid lives ONLY on .o_web_client (the main background).  Every
+   other layer (main content / action manager) is transparent so the
+   grid shows through ONLY the empty canvas — opaque panels (control
+   panel, tiles, sheets, lists) cover it.  (Rosen: "само на ОСНОВНИЯ
+   БЕКГРАУНД - o_web_client, на никой друг".) */
+.o_web_client {
     background-color: var(--mcp-bg) !important;
     background-image:
         linear-gradient(to right, var(--mcp-grid-color) 1px, transparent 1px),
         linear-gradient(to bottom, var(--mcp-grid-color) 1px, transparent 1px) !important;
     background-size: var(--mcp-grid-size) var(--mcp-grid-size) !important;
     color: var(--mcp-ink);
+}
+.o_main_content,
+.o_action_manager {
+    background-color: transparent !important;
+    background-image: none !important;
 }
 
 /* HUD corner brackets framing the content viewport — 4 corners,
