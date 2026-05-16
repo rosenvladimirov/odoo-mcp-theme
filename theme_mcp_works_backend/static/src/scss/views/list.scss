@@ -201,3 +201,75 @@
         &:hover { background: rgba(255,255,255,0.18) !important; }
     }
 }
+
+/* ── Dashboard KPI strip (theme.css .stat-strip / .stat) ─────────
+   Odoo renders the per-app KPI boxes (.o_purchase_dashboard etc.)
+   as <a class="btn ...-dashboard-card">.  Without a rule they
+   inherit widgets/buttons.scss's heavy 1.5px ink .btn border →
+   look "резнати с ножица, не като прототипа".  theme.css wants a
+   single notched strip container with flat hairline-separated
+   cells. */
+.o_purchase_dashboard,
+.o_sale_dashboard,
+.o_dashboard.o_view_controller > .o_dashboard,
+.o_action > .o_purchase_dashboard {
+    background: var(--mcp-rule) !important;
+    border: 1px solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: var(--mcp-view-pad) var(--mcp-view-pad) 0 !important;
+    box-shadow:
+        0 0 0 1px rgba(15, 82, 186, 0.06),
+        0 2px 12px -2px rgba(15, 82, 186, 0.12) !important;
+    /* subtle symmetric HUD notch — top-right + bottom-left 10px */
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)) !important;
+    gap: 1px !important;
+    overflow: hidden;
+}
+
+/* Flat HUD stat tiles — kill the inherited heavy .btn ink border */
+.o_purchase_dashboard .btn,
+.o_purchase_dashboard .purchase-dashboard-card,
+.o_sale_dashboard .btn,
+.o_dashboard .o_dashboard_card,
+a.purchase-dashboard-card.btn {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--mcp-surface) !important;
+    box-shadow: 0 0 0 1px var(--mcp-rule) !important;   /* hairline grid */
+    margin: 0 !important;
+    padding: 14px 18px 16px !important;
+    color: var(--mcp-ink) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    min-height: 0 !important;
+
+    &:hover {
+        background: var(--mcp-accent-soft) !important;
+        border: 0 !important;
+        color: var(--mcp-accent) !important;
+    }
+
+    /* big number */
+    h1, h2, h3, h4, .h1, .h2, .h3, .display-4, .o_value, b, strong, [class*="value"] {
+        font-family: var(--mcp-font-mono) !important;
+        font-feature-settings: "tnum","ss01";
+        font-weight: 700 !important;
+        color: var(--mcp-ink) !important;
+        letter-spacing: 0 !important;
+        line-height: 1.1 !important;
+    }
+    /* label */
+    small, .text-muted, .o_label, span:last-child, [class*="label"] {
+        font-family: var(--mcp-font-mono) !important;
+        font-size: 9.5px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.16em !important;
+        text-transform: uppercase !important;
+        color: var(--mcp-ink-3) !important;
+    }
+}
