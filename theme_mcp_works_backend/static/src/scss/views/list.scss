@@ -217,15 +217,17 @@
 .o_dashboard.o_view_controller > .o_dashboard,
 .o_action > .o_purchase_dashboard {
     position: relative;
-    background: var(--mcp-rule) !important;
-    border: 1px solid var(--mcp-rule-strong) !important;
+    /* Rosen: no blue, no border, only a glow shadow + padding +
+       uniform 8px margin (was flush bottom / too far inward). */
+    background: transparent !important;
+    border: 0 !important;
     border-radius: 0 !important;
-    padding: 0 !important;
-    margin: var(--mcp-view-pad) var(--mcp-view-pad) 0 !important;
+    padding: 8px !important;
+    margin: 8px !important;
     box-shadow:
-        0 0 0 1px rgba(15, 82, 186, 0.06),
-        0 2px 12px -2px rgba(15, 82, 186, 0.12) !important;
-    gap: 1px !important;
+        0 2px 14px -3px rgba(15, 82, 186, 0.20),
+        0 10px 36px -14px rgba(15, 82, 186, 0.16) !important;
+    gap: 8px !important;
 }
 .o_purchase_dashboard::after,
 .o_sale_dashboard::after,
@@ -271,8 +273,8 @@ a.purchase-dashboard-card.btn {
     align-items: flex-start !important;
     gap: 2px !important;
     min-height: 0 !important;
-    /* HUD cut-corner on each tile (top-right 8px) */
-    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%) !important;
+    /* HUD cut-corner on each tile — BOTTOM-LEFT 8px (Rosen) */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px)) !important;
 
     &:hover {
         background: var(--mcp-accent-soft) !important;
