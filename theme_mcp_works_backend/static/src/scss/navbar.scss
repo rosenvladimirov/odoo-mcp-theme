@@ -6,7 +6,8 @@
     /* distinctly darker steel so it doesn't blend with the canvas
        (#e7ebf1) / list-header (#e9edf3) (Rosen: "слива се ... потъмни"). */
     background: #c8d2df !important;
-    border-bottom: 1px solid var(--mcp-rule-strong) !important;
+    /* gentle hairline, not the aggressive rule-strong (Rosen) */
+    border-bottom: 1px solid var(--mcp-rule) !important;
     color: var(--mcp-ink) !important;
     height: var(--mcp-navbar-height) !important;
     min-height: var(--mcp-navbar-height) !important;
