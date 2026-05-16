@@ -131,13 +131,22 @@
         letter-spacing: 0;
         &:hover { color: var(--mcp-accent-2) !important; }
     }
+    /* Separators. Odoo 19: the record crumb is .o_last_breadcrumb_item
+       — a SIBLING after <ol class="breadcrumb">, NOT a .breadcrumb-item
+       inside it — so the "/" must also go before it (Rosen: "няма
+       разделител" between list and record). */
     .o_breadcrumb .breadcrumb-item + .breadcrumb-item::before,
-    .breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    .breadcrumb .breadcrumb-item + .breadcrumb-item::before,
+    .o_breadcrumb .o_last_breadcrumb_item::before {
         content: "/" !important;
         color: var(--mcp-ink-dim) !important;
         font-size: 11px !important;
         padding: 0 6px !important;
+        display: inline-block !important;
+        flex: 0 0 auto !important;
     }
+    /* breathing space between the notched app-brand tag and the trail */
+    .o_breadcrumb { margin-left: 4px !important; }
     .o_breadcrumb .breadcrumb-item.active,
     .o_breadcrumb .breadcrumb-item.active span,
     .breadcrumb .breadcrumb-item.active {
