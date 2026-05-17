@@ -476,35 +476,48 @@
     background: var(--mcp-accent-soft) !important;
 }
 
-/* Editable o2m row — match the ORIGINAL exactly. The original's
-   uniformity comes from a UNIFORM CELL padding (8px 4.8px) + Odoo's
-   own inline edit height — NOT from forcing input heights. Our
-   per-widget scss (many2one 20px, tags min-h 28px, monetary 5/6,
-   state 3/12) added DIVERGENT heights so rows looked distorted; the
-   earlier fix over-corrected by zeroing input padding (Rosen: "няма
-   падинг"). So: (a) give the editable cell the original 8px/4.8px
-   padding (overrides the leaked frozen list.scss td 8px/16px —
-   .o_data_cell is form-scoped, standalone list untouched);
-   (b) neutralise ONLY the per-widget fixed/min heights so every
-   cell falls back to the same line — WITHOUT touching input padding
-   or fighting Odoo's native inline edit height. */
+/* Editable o2m row — the INPUT fills the row, and the row height ==
+   the button height (Rosen: "реда много голяма а импутите малки; в
+   оригинала импут полетата са височки колкото реда, същата височина
+   на бутоните"). Earlier tries left the control at its small
+   intrinsic size inside a tall cell → dead space. Pin the whole row
+   chain (cell → widget wrapper → input/select) to var(--mcp-btn-h)
+   — the SAME approved button-height token used by the list
+   header/footer — with the text vertically centred via
+   line-height (a "padded" look WITHOUT zeroing real padding, which
+   Rosen rejected). Form-scoped: the frozen standalone list screen
+   never matches (.o_form_view). Checkbox/radio keep their own
+   square widget styling. */
 .o_form_view .o_field_x2many .o_data_row .o_data_cell,
 .o_form_view .o_field_x2many tbody td.o_data_cell {
+    height: var(--mcp-btn-h) !important;
+    padding: 0 var(--mcp-list-cell-pad-x-sm) !important;
     vertical-align: middle !important;
-    padding: var(--mcp-list-cell-pad-y) var(--mcp-list-cell-pad-x-sm) !important;
 }
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget,
-.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget * {
-    min-height: 0 !important;
-}
-.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget > div,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_many2one,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_many2one_selection,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_input_dropdown,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o-autocomplete,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_tags,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_many2many_tags {
-    height: auto !important;
-    line-height: var(--mcp-list-line-height) !important;
+    height: var(--mcp-btn-h) !important;
+    min-height: var(--mcp-btn-h) !important;
+    display: flex !important;
+    align-items: center !important;
+    line-height: 1 !important;
+}
+.o_form_view .o_field_x2many .o_data_row .o_data_cell
+    input:not([type="checkbox"]):not([type="radio"]),
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_input,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell textarea.o_input,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell select {
+    height: var(--mcp-btn-h) !important;
+    min-height: var(--mcp-btn-h) !important;
+    line-height: var(--mcp-btn-h) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 /* ── Totals box (form footer) ───────────────────────────────────
