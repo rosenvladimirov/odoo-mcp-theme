@@ -298,9 +298,11 @@
     border: 0 !important;
     box-shadow: none !important;
 }
-/* No forced gap — let Odoo's native .gap-1/.gap-lg-4 control card
-   spacing exactly like the prototype (a hard 12px pushed everything
-   apart, Rosen: "разбутаха се нещата"). */
+/* Air between the KPI cards = exactly 6px (Rosen: "въздуха между
+   тях увеличи до 6пиксела"). */
+.o_purchase_dashboard .grid {
+    gap: var(--mcp-sp-6) !important;
+}
 /* No blue line (Rosen: "махни синята преливка не ми харесва").
    ::after = the crease border on the dog-ear's LONG (diagonal)
    side — a crisp 2px line along the fold hypotenuse. */
@@ -351,7 +353,7 @@ a.purchase-dashboard-card.btn {
         0 0 0 var(--mcp-sp-1) var(--mcp-rule),
         0 var(--mcp-sp-3) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-5)) var(--mcp-accent-a22) !important;
     margin: 0 !important;
-    padding: var(--mcp-sp-14) var(--mcp-sp-18) var(--mcp-sp-16) !important;
+    padding: var(--mcp-sp-12) var(--mcp-sp-16) var(--mcp-sp-14) !important;
     color: var(--mcp-ink) !important;
     text-transform: none !important;
     letter-spacing: 0 !important;
@@ -408,7 +410,7 @@ a.purchase-dashboard-card.btn {
     b, strong, [class*="value"], [class*="kpi"] {
         font-family: var(--mcp-font-mono) !important;
         font-feature-settings: "tnum","ss01";
-        font-size: var(--mcp-sp-28) !important;
+        font-size: var(--mcp-sp-24) !important;
         font-weight: 700 !important;
         color: var(--mcp-ink) !important;
         letter-spacing: 0 !important;
@@ -476,7 +478,7 @@ a.purchase-dashboard-card.btn {
 }
 .o_purchase_dashboard .purchase-dashboard-card.bg-100,
 .o_purchase_dashboard .purchase-dashboard-card.o_no_hover {
-    background: var(--mcp-surface) !important;
+    background: var(--mcp-bg) !important;
     color: var(--mcp-ink-2) !important;
 }
 /* tint the big number to the card's state colour too (original
