@@ -126,15 +126,21 @@
        fewer <td>s than columns → set the light bg on tfoot/tr too
        so the WHOLE footer band is covered (Rosen: "не е целия
        покрит ... светъл бекграунд"). */
+    /* Footer band — same row height as the header (var(--mcp-btn-h)),
+       but a slightly-off white DIFFERENT from the header's surface-3
+       (Rosen: "с височината на хедъра ... леко тъмно бял, не като
+       хедъра"). Whole band covered (tfoot/tr/td). */
     tfoot {
-        background: var(--mcp-surface-3) !important;
+        background: var(--mcp-surface) !important;
         border-top: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
 
-        tr { background: var(--mcp-surface-3) !important; }
+        tr { background: var(--mcp-surface) !important; }
 
         td {
-            padding: var(--mcp-list-cell-pad-y) var(--mcp-list-table-pad-x) !important;
-            background: var(--mcp-surface-3) !important;
+            height: var(--mcp-btn-h) !important;
+            padding: 0 var(--mcp-list-table-pad-x) !important;
+            vertical-align: middle !important;
+            background: var(--mcp-surface) !important;
             font-family: var(--mcp-font-mono) !important;
             font-weight: 600 !important;
             color: var(--mcp-ink) !important;
