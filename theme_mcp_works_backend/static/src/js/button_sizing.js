@@ -93,6 +93,10 @@ const EXCLUDE =
        original — leave them Odoo-native. FORM-SCOPED so the frozen
        standalone list's button-calc stays 100% untouched. */
     ".o_form_view .o_data_cell .btn," +
+    /* "Add a line / Каталог" footer-row buttons — compact mono
+       actions styled in form.scss; the 33px rect sizing made the
+       add-row too tall (Rosen). */
+    ".o_form_view .o_field_x2many_list_row_add .btn," +
     "[data-mcp-no-size]";
 
 function sizeOne(btn, H) {

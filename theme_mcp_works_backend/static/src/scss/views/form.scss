@@ -437,13 +437,31 @@
         border-top: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     }
 }
-/* "Add a line" row — HUD mono accent action */
+/* "Add a line" footer row — HUD mono accent actions. The td had a
+   background and the "Каталог" .btn was force-sized by
+   button_sizing.js (33px rect) → the whole row was too tall (Rosen:
+   "тази част е много висока, прозрачен бекграунд, по-малки букви").
+   Transparent td, compact height, small mono caps for BOTH the
+   anchors AND the Каталог button (also excluded from the button
+   -calc in button_sizing.js). */
+.o_form_view .o_field_x2many .o_field_x2many_list_row_add,
+.o_form_view .o_field_x2many tr:has(> .o_field_x2many_list_row_add) {
+    background: transparent !important;
+    padding: var(--mcp-sp-2) var(--mcp-list-cell-pad-x-sm) !important;
+    height: auto !important;
+}
 .o_form_view .o_field_x2many .o_field_x2many_list_row_add a,
-.o_form_view .o_field_x2many .o_list_record_add a {
+.o_form_view .o_field_x2many .o_list_record_add a,
+.o_form_view .o_field_x2many .o_field_x2many_list_row_add .btn {
     display: inline-flex !important;
     align-items: center !important;
     height: var(--mcp-sp-26) !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
     padding: 0 var(--mcp-sp-10) !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
     font-family: var(--mcp-font-mono) !important;
     font-size: var(--mcp-sp-10) !important;
     font-weight: 600 !important;
