@@ -209,7 +209,9 @@
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: 0 !important;
     color: var(--mcp-ink-2) !important;
-    background: transparent !important;
+    /* pure opaque white, like the inactive chevrons (Rosen: "и на
+       бутоните от секцията") */
+    background: var(--mcp-bg) !important;
 
     &:hover {
         color: var(--mcp-accent) !important;
