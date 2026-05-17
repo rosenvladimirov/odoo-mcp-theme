@@ -344,69 +344,34 @@
     background: transparent !important;
     padding: 0 !important;
 }
-/* Contain the fixed-layout o2m table INSIDE its renderer instead of
-   letting it burst out of the tab-pane (Rosen: "разпъва много извън
-   tab-pane / o_field_one2many / o_field_x2many"). Flex items default
-   min-width:auto → a ~1380px fixed table forces every ancestor
-   wider; min-width:0 + max-width:100% lets them shrink, and the
-   .table-responsive renderer scrolls the wide table within itself.
-   OUTER containers only — the frozen table internals stay untouched
-   (per the list-freeze rule, form-context container sizing). */
+/* The fixed-layout ~1092px o2m table must not force the flex
+   .o_form_sheet wider (flex items default min-width:auto). Only the
+   min-width:0 / max-width:100% floor — NO custom width/margin: the
+   bleed and table sizing are 100% Odoo-native, exactly like the
+   original standard theme (Rosen: pasted original metrics, "ориентирай
+   се по нея"). OUTER containers only; frozen table internals stay
+   untouched per the list-freeze rule. */
 .o_form_view .o_field_one2many,
 .o_form_view .o_field_x2many,
 .o_form_view .o_field_x2many.o_list_view,
 .o_form_view .o_field_x2many .o_list_view {
     min-width: 0 !important;
     max-width: 100% !important;
-    width: 100% !important;
 }
-/* The x2many box CLIPS — nothing escapes the field (note:
-   .o_field_x2many IS the .o_list_view element, combined classes). */
-.o_form_view .o_field_one2many,
-.o_form_view .o_field_x2many.o_list_view {
-    overflow: hidden !important;
-}
-/* The order-line o2m list bleeds FULL-WIDTH to the .o_form_sheet
-   border, ignoring the sheet's H padding (Rosen: "до границите на
-   o_form_sheet като пренебрегне зададения падинг"). Exactly cancels
-   --mcp-form-sheet-pad-x; only this field bleeds — title/groups/note
-   keep the sheet inset. */
-.o_form_view .o_form_sheet .o_notebook .tab-pane .o_field_widget.o_field_one2many {
-    margin-left: calc(-1 * var(--mcp-form-sheet-pad-x)) !important;
-    margin-right: calc(-1 * var(--mcp-form-sheet-pad-x)) !important;
-    width: calc(100% + 2 * var(--mcp-form-sheet-pad-x)) !important;
-    max-width: calc(100% + 2 * var(--mcp-form-sheet-pad-x)) !important;
-}
-/* …and the .table-responsive renderer is the ONE scroll box: a plain
-   block that scrolls the wide fixed table horizontally inside the
-   field (Rosen: "нещо е извън").
-
-   Odoo core puts `margin: var(--ListRenderer-margin-x)` (= -16px) on
-   the renderer; inside our full-bleed field that shifts it 16px left
-   → 16px AIR on the right (Rosen: "продължава да има въздух"). Kill
-   the offset via the token itself (no raw-px hack — that margin IS a
-   variable), so the renderer sits flush border-to-border on the sheet
-   and the JS resizer's table width then fills with no gap. Form
-   context only — the standalone frozen list screen never matches. */
+/* The renderer's full-bleed to the sheet border is Odoo's NATIVE
+   mechanism: `margin: var(--ListRenderer-margin-x)` (= -16px) cancels
+   the sheet's 16px H padding so the list reaches the sheet border —
+   exactly what the original does. We do NOT override that margin (the
+   earlier custom full-bleed + margin:0 + JS width-pin triple-fought
+   it, dumping all table-layout:fixed slack into the trailing
+   .o_list_button column → it ballooned = the "air"). Keep ONLY the
+   header-layout token mirror so the embedded header (not .o_list_view,
+   so list.scss:16-17 never reach it) lays out at the original/normal
+   proportions. Form context only — frozen list screen untouched. */
 .o_form_view .o_field_x2many .o_list_renderer,
 .o_form_view .o_field_x2many .o_list_renderer.table-responsive {
-    --ListRenderer-margin-x: 0 !important;
-    /* The embedded renderer is NOT .o_list_view, so list.scss:16-17
-       (which drives Odoo's own header layout to the normal/original
-       proportions) never reaches it → core's compact x2many header.
-       Mirror the exact frozen-list tokens here so the form header
-       lays out identically to "normal" (Rosen: "хедъра по-нисък от
-       нормалното"). Tokens only — list.scss untouched. */
     --ListRenderer-table-padding-x: var(--mcp-list-table-pad-x) !important;
     --ListRenderer-thead-padding-y: var(--mcp-list-thead-pad-y) !important;
-    display: block !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    overflow-x: auto !important;
-    overflow-y: visible !important;
 }
 .o_form_view .o_field_x2many .o_list_renderer table.o_list_table {
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;

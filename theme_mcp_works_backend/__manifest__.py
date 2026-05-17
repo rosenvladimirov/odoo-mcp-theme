@@ -5,7 +5,7 @@
     "summary": "Independent hi-tech minimalist Odoo CE backend — robot "
                "theme, electric sapphire accents, sharp corners, "
                "light/dark mode, vertical Dash dock",
-    "version": "19.0.1.98.0",
+    "version": "19.0.1.99.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -84,7 +84,9 @@
             "theme_mcp_works_backend/static/src/js/sizing.js",
             "theme_mcp_works_backend/static/src/js/resizer.js",
             "theme_mcp_works_backend/static/src/js/button_sizing.js",
-            "theme_mcp_works_backend/static/src/js/form_o2m_fill.js",
+            # form_o2m_fill.js removed 19.0.1.99.0 — the embedded o2m
+            # table is now 100% Odoo-native (matches original metrics);
+            # no JS width-pin (it ballooned the .o_list_button column).
 
             # ── 8. OWL components ──────────────────────────────────────
             "theme_mcp_works_backend/static/src/webclient/dash/dash.js",
