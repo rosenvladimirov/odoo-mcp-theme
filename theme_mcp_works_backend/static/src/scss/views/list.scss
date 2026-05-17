@@ -157,17 +157,21 @@
 .o_list_view .o_field_state_selection .o_status,
 .o_list_view .o_field_widget .o_badge,
 .o_list_view .o_field_badge {
+    /* clean soft rounded pill like the original prototype's
+       .badge.rounded-pill — no heavy border/box (Rosen circled the
+       boxy bordered badge as an error). Tinted bg + colour tokens
+       kept (no new colours). */
     display: inline-flex !important;
     align-items: center !important;
     height: var(--mcp-sp-18) !important;
     padding: 0 var(--mcp-sp-8) !important;
-    font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-9-5) !important;
+    font-family: var(--mcp-font-family) !important;
+    font-size: var(--mcp-sp-11) !important;
     font-weight: 600 !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
-    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-    border-radius: 0 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    border: 0 !important;
+    border-radius: var(--mcp-r-badge) !important;
     color: var(--mcp-ink-3) !important;
     background: var(--mcp-surface-2) !important;
 
@@ -182,9 +186,7 @@
     &.text-bg-primary,
     &.o_status_blue {
         color: var(--mcp-accent) !important;
-        border-color: var(--mcp-accent) !important;
         background: var(--mcp-accent-soft) !important;
-        box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
     }
     &.bg-warning,
     &.text-bg-warning,
@@ -452,18 +454,39 @@ a.purchase-dashboard-card.btn {
     margin: 0 !important;
 }
 
-/* Narrow utility columns — match the prototype EXACTLY (per column),
-   not a blanket 4px (that made the selector th 28px and the priority
-   cell shoved it into the left corner, Rosen):
-   · selector/controller th  → padding-left 16px, padding-right 4px
-     (original: 40px wide)
-   · priority cell           → padding 0 0.3rem (original: 4.8px) */
+/* Narrow utility columns. The selector column is a FIXED ~28px in
+   our layout (Odoo's table-layout:fixed), so the original's 16px
+   left padding clipped the 16px checkbox down to a sliver (Rosen
+   circled it). Use tight padding that always fits the checkbox in
+   the fixed column; priority cell → 0.3rem like the prototype. */
 .o_list_view table.o_list_table thead th.o_list_record_selector,
 .o_list_view table.o_list_table thead th.o_list_controller,
 .o_list_view table.o_list_table tbody td.o_list_record_selector,
 .o_list_view table.o_list_table tfoot td.o_list_record_selector {
-    padding-left: var(--mcp-list-table-pad-x) !important;
+    padding-left: var(--mcp-sp-6) !important;
     padding-right: var(--mcp-sp-4) !important;
+    overflow: visible !important;
+}
+/* Force the list selector checkbox to a real 16x16 box and centre
+   it — never let the cell/flex squeeze it to a sliver (Rosen). */
+.o_list_view table.o_list_table .o_list_record_selector .o-checkbox,
+.o_list_view table.o_list_table .o_list_record_selector .form-check {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-width: var(--mcp-sp-16) !important;
+}
+.o_list_view table.o_list_table .o_list_record_selector input.form-check-input,
+.o_list_view table.o_list_table .o_list_record_selector input[type="checkbox"] {
+    flex: 0 0 auto !important;
+    display: inline-block !important;
+    width: var(--mcp-sp-16) !important;
+    height: var(--mcp-sp-16) !important;
+    min-width: var(--mcp-sp-16) !important;
+    max-width: var(--mcp-sp-16) !important;
+    margin: 0 !important;
 }
 .o_list_view table.o_list_table thead th.o_priority_cell,
 .o_list_view table.o_list_table thead th.o_list_actions_header,
