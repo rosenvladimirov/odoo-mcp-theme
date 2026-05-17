@@ -298,9 +298,9 @@
     border: 0 !important;
     box-shadow: none !important;
 }
-.o_purchase_dashboard .grid {
-    gap: var(--mcp-sp-12) !important;
-}
+/* No forced gap — let Odoo's native .gap-1/.gap-lg-4 control card
+   spacing exactly like the prototype (a hard 12px pushed everything
+   apart, Rosen: "разбутаха се нещата"). */
 /* No blue line (Rosen: "махни синята преливка не ми харесва").
    ::after = the crease border on the dog-ear's LONG (diagonal)
    side — a crisp 2px line along the fold hypotenuse. */
@@ -424,7 +424,56 @@ a.purchase-dashboard-card.btn {
         text-transform: uppercase !important;
         color: var(--mcp-ink-3) !important;
     }
+
+    /* The .fs-N div holds the primary count AND a .ps-4 secondary
+       (★ starred-count). The big-number rule blew BOTH up → looked
+       like the digit was doubled (Rosen: "двойно оказване на
+       цифрите"). Keep .ps-4 small & muted. */
+    .fs-1 .ps-4, .fs-2 .ps-4, .fs-3 .ps-4, .fs-4 .ps-4,
+    .fs-1 .ps-4 span, .fs-2 .ps-4 span, .fs-3 .ps-4 span, .fs-4 .ps-4 span,
+    .ps-4 .o_priority_star {
+        font-family: var(--mcp-font-family) !important;
+        font-size: var(--mcp-sp-12) !important;
+        font-weight: 500 !important;
+        color: var(--mcp-ink-3) !important;
+        line-height: 1 !important;
+        letter-spacing: 0 !important;
+    }
 }
+
+/* Per-card colour DECORATION — map the prototype's Bootstrap subtle
+   classes to OUR soft theme tokens (Rosen: "в оригинала има
+   декорация с цветове, искам нашите цветове"). (0,3,0) beats the
+   base white. */
+.o_purchase_dashboard .purchase-dashboard-card.bg-info-subtle {
+    background: var(--mcp-accent-soft) !important;
+    color: var(--mcp-accent) !important;
+}
+.o_purchase_dashboard .purchase-dashboard-card.bg-warning-subtle {
+    background: var(--mcp-warn-a08) !important;
+    color: var(--mcp-warn) !important;
+}
+.o_purchase_dashboard .purchase-dashboard-card.bg-danger-subtle {
+    background: var(--mcp-danger-soft) !important;
+    color: var(--mcp-danger) !important;
+}
+.o_purchase_dashboard .purchase-dashboard-card.bg-secondary-subtle {
+    background: var(--mcp-surface-2) !important;
+    color: var(--mcp-ink-2) !important;
+}
+.o_purchase_dashboard .purchase-dashboard-card.bg-100,
+.o_purchase_dashboard .purchase-dashboard-card.o_no_hover {
+    background: var(--mcp-surface) !important;
+    color: var(--mcp-ink-2) !important;
+}
+/* tint the big number to the card's state colour too (original
+   text-*-emphasis); (0,4,0) beats the ink big-number rule. */
+.o_purchase_dashboard .purchase-dashboard-card.bg-info-subtle [class*="fs-"] span,
+.o_purchase_dashboard .purchase-dashboard-card.bg-info-subtle [class*="fs-"] { color: var(--mcp-accent) !important; }
+.o_purchase_dashboard .purchase-dashboard-card.bg-warning-subtle [class*="fs-"] span,
+.o_purchase_dashboard .purchase-dashboard-card.bg-warning-subtle [class*="fs-"] { color: var(--mcp-warn) !important; }
+.o_purchase_dashboard .purchase-dashboard-card.bg-danger-subtle [class*="fs-"] span,
+.o_purchase_dashboard .purchase-dashboard-card.bg-danger-subtle [class*="fs-"] { color: var(--mcp-danger) !important; }
 
 /* List-header optional-columns gear — a small icon button that fits
    the short sticky header cell (button_sizing no longer force-squares
