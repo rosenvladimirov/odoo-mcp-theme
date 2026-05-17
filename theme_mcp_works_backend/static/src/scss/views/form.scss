@@ -136,7 +136,8 @@
             &[aria-checked="true"] {
                 color: var(--mcp-accent) !important;
                 background: var(--mcp-accent-soft) !important;
-                border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
+                /* light border like the buttons (Rosen), not accent */
+                border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
                 box-shadow: none !important;
             }
         }
