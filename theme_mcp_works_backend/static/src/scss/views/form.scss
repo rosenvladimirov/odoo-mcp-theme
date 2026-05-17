@@ -699,6 +699,14 @@
 
     * { color: var(--mcp-accent) !important; }
 }
+/* Odoo puts inline font-size:1.3em on the grand-total amount → it
+   reads bigger than the other rows. Equalise it (Rosen: "трябва да
+   са равни"). !important beats the inline style. */
+.o_form_view .oe_subtotal_footer tr:last-child [name="amount_total"],
+.o_form_view .oe_subtotal_footer .oe_subtotal_footer_separator,
+.o_form_view .o_total .o_total_amount {
+    font-size: var(--mcp-list-font-size) !important;
+}
 
 /* ── Chatter (right rail) ───────────────────────────────────── */
 .o-mail-Chatter {
