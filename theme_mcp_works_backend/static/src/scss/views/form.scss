@@ -255,6 +255,15 @@
 .o_form_status_indicator_buttons {
     align-items: center !important;
 }
+/* Form CP breadcrumb row — all three sections vertically centred.
+   Odoo sets .o_breadcrumb align-self:stretch and
+   .o_form_status_indicator align-self-md-end, so "Нов" (centred)
+   sat higher than the other two (Rosen: "първата секция е леко
+   по-високо"). Scoped via :has(.o_form_status_indicator) → FORM
+   control panels only; the frozen list-screen CP never matches. */
+.o_control_panel_breadcrumbs:has(.o_form_status_indicator) > * {
+    align-self: center !important;
+}
 .o_form_status_indicator_buttons .btn.border-0:hover,
 .o_control_panel .o_form_status_indicator_buttons .btn.border-0:hover {
     box-shadow: var(--mcp-shadow-md) !important;
