@@ -265,7 +265,7 @@
     }
 
     .o_notebook_headers {
-        border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+        /* no bottom rule under the tabs (Rosen: "махни го") */
         padding: 0 !important;
         background: transparent !important;
 
