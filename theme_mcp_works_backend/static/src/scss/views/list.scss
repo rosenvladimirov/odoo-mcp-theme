@@ -11,12 +11,20 @@
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     overflow: hidden;
+    /* Drive Odoo's own ListRenderer layout vars to the original
+       prototype's proportions (Rosen — sizes only, not colours). */
+    --ListRenderer-table-padding-x: var(--mcp-list-table-pad-x) !important;
+    --ListRenderer-thead-padding-y: var(--mcp-list-thead-pad-y) !important;
 }
 
 .o_list_view table.o_list_table {
     width: 100%;
     border-collapse: collapse;
-    font-size: var(--mcp-sp-12) !important;
+    table-layout: fixed;
+    /* original proportions: 0.875rem / line-height 1.5 / tabular-nums */
+    font-size: var(--mcp-list-font-size) !important;
+    line-height: var(--mcp-list-line-height) !important;
+    font-variant-numeric: tabular-nums;
     border-radius: 0 !important;
 
     /* Sticky header — monospace caps */
@@ -34,7 +42,7 @@
             letter-spacing: 0.12em !important;
             text-transform: uppercase !important;
             color: var(--mcp-ink-3) !important;
-            padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
+            padding: var(--mcp-list-thead-pad-y) var(--mcp-list-table-pad-x) !important;
             border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
             white-space: nowrap;
 
@@ -68,7 +76,7 @@
             }
 
             td {
-                padding: var(--mcp-sp-9) var(--mcp-sp-10) !important;
+                padding: var(--mcp-list-cell-pad-y) var(--mcp-list-table-pad-x) !important;
                 color: var(--mcp-ink) !important;
                 vertical-align: middle !important;
                 border-radius: 0 !important;
@@ -113,7 +121,7 @@
         tr { background: var(--mcp-surface-3) !important; }
 
         td {
-            padding: var(--mcp-sp-9) var(--mcp-sp-10) !important;
+            padding: var(--mcp-list-cell-pad-y) var(--mcp-list-table-pad-x) !important;
             background: var(--mcp-surface-3) !important;
             font-family: var(--mcp-font-mono) !important;
             font-weight: 600 !important;

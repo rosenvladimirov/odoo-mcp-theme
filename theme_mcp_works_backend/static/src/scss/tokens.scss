@@ -114,6 +114,15 @@
         + 2 * var(--mcp-bw-1)
     );
     --mcp-btn-rect-ratio: 2.75;
+    /* List-table proportions — mirror the original prototype's
+       .o_list_table / --ListRenderer-* (Rosen: "същите пропорции,
+       не пипаш цветовете"). em/rem so the row rhythm scales with
+       font-size, identical density to the original. */
+    --mcp-list-font-size:    0.875rem;  /* 14px @ root 16 */
+    --mcp-list-line-height:  1.5;       /* → 21px */
+    --mcp-list-table-pad-x:  1rem;      /* 16px (--ListRenderer-table-padding-x) */
+    --mcp-list-thead-pad-y:  0.5rem;    /* 8px  (--ListRenderer-thead-padding-y) */
+    --mcp-list-cell-pad-y:   0.5rem;    /* 8px  row vertical rhythm */
     /* Calculator outputs — CSS-only defaults (the formula in pure
        tokens); button_sizing.js overrides --mcp-btn-*-live/-w-* at
        runtime with the px-precise measured values. No raw px lives
