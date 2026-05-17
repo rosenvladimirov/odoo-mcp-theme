@@ -706,6 +706,14 @@
 .o_form_view .oe_subtotal_footer .oe_subtotal_footer_separator,
 .o_form_view .o_total .o_total_amount {
     font-size: var(--mcp-list-font-size) !important;
+    /* right-aligned text drifts left from trailing tracking / extra
+       box spacing — the other rows have none, so the total looked
+       shifted (Rosen: "леко е изместено наляво"). Zero them so the
+       right edge lines up with the rest. */
+    letter-spacing: 0 !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+    text-align: right !important;
 }
 
 /* ── Chatter (right rail) ───────────────────────────────────── */
