@@ -85,6 +85,14 @@ const EXCLUDE =
     /* facet ✕ — owned entirely by the CSS square rule; JS must NOT
        inject min-width here (Rosen: "махни го"). */
     ".o_facet_remove," +
+    /* In-row object buttons inside a FORM's embedded o2m list (e.g.
+       the forecast-report .btn.btn-link with <i class="o_button_icon
+       fa">). The original/standard theme leaves these at Odoo's
+       intrinsic size; squaring them to 33² mutated the cell and the
+       icon went missing (Rosen: "в нашето липсва иконата"). Match the
+       original — leave them Odoo-native. FORM-SCOPED so the frozen
+       standalone list's button-calc stays 100% untouched. */
+    ".o_form_view .o_data_cell .btn," +
     "[data-mcp-no-size]";
 
 function sizeOne(btn, H) {
