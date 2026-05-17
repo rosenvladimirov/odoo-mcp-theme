@@ -36,11 +36,17 @@
         th {
             background: var(--mcp-surface-3) !important;
             text-align: left !important;
-            font-family: var(--mcp-font-mono) !important;
-            font-size: var(--mcp-sp-10) !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.12em !important;
-            text-transform: uppercase !important;
+            /* match the original prototype <th>: 0.875rem / 500 /
+               line-height 1.5 / sans / no uppercase / no tracking /
+               tabular-nums (Rosen: "нашето не е добре"). Colours
+               (bg/ink/border) deliberately untouched. */
+            font-family: var(--mcp-font-family) !important;
+            font-size: var(--mcp-list-font-size) !important;
+            font-weight: 500 !important;
+            line-height: var(--mcp-list-line-height) !important;
+            letter-spacing: 0 !important;
+            text-transform: none !important;
+            font-variant-numeric: tabular-nums;
             color: var(--mcp-ink-3) !important;
             padding: var(--mcp-list-thead-pad-y) var(--mcp-list-table-pad-x) !important;
             border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
@@ -49,9 +55,10 @@
             &.o_list_number,
             &.o_list_field_monetary,
             &.o_list_field_float,
-            &.o_list_field_integer {
+            &.o_list_field_integer,
+            &.o_list_number_th {
                 text-align: right !important;
-                font-family: var(--mcp-font-mono) !important;
+                font-family: var(--mcp-font-family) !important;
             }
         }
     }
