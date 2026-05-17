@@ -48,7 +48,12 @@
             text-transform: none !important;
             font-variant-numeric: tabular-nums;
             color: var(--mcp-ink-3) !important;
-            padding: var(--mcp-list-thead-pad-y) var(--mcp-list-table-pad-x) !important;
+            /* header row aligned to the button height (Rosen:
+               "изравни с височината на бутоните") — fixed box,
+               zero vertical padding, content vertically centred. */
+            height: var(--mcp-btn-h) !important;
+            padding: 0 var(--mcp-list-table-pad-x) !important;
+            vertical-align: middle !important;
             border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
             white-space: nowrap;
 
