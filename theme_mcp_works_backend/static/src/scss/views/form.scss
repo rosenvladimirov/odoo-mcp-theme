@@ -540,6 +540,36 @@
     padding-left: var(--mcp-sp-1) !important;
     padding-right: var(--mcp-sp-1) !important;
 }
+/* many2one dropdown caret + external-link icon — vertically centre
+   them in the btn-h row. Odoo absolutely-positions the caret with a
+   fixed top, so forcing the row to btn-h left it stuck at the top
+   (Rosen: "иконката е в горния край, трябва в средата"). Cover both
+   the absolute (caret) and flex-child (external btn) cases. */
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_input_dropdown {
+    position: relative !important;
+}
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_dropdown_button {
+    position: absolute !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+}
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_external_button,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_many2one_selection > button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: center !important;
+}
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_external_button > .oi,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_external_button > .fa,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_dropdown_button > .oi,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_dropdown_button::after {
+    line-height: 1 !important;
+    vertical-align: middle !important;
+}
 
 /* ── Totals box (form footer) ───────────────────────────────────
    Odoo 19: NOT .o_total — it's the .oe_subtotal_footer inner-group
