@@ -415,7 +415,8 @@
         color: var(--mcp-ink) !important;
         border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     }
-    tbody tr:hover td { background: var(--mcp-accent-soft) !important; }
+    /* hover/focus row: NO blue fill — handled by the muted-blue
+       bottom-rule block below (Rosen). */
     tbody tr:last-child td { border-bottom: 0 !important; }
     /* Footer band — 1:1 mirror of the frozen list tfoot
        (list.scss:133-145): same row height as the header, a slightly
@@ -587,6 +588,30 @@
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_dropdown_button::after {
     line-height: 1 !important;
     vertical-align: middle !important;
+}
+
+/* Focused / hovered / selected editable row — NO blue fill. Just a
+   muted-blue bottom rule (Rosen: "не ни трябва син бекграунд, само
+   долна бордер линия в притъпено синьо"). Overrides the leaked
+   frozen list.scss hover/selected bg + inset accent bars AND Odoo
+   core's selected-row background. Form-scoped — the standalone
+   frozen list screen keeps its own row styling. */
+.o_form_view .o_field_x2many .o_data_row:hover,
+.o_form_view .o_field_x2many .o_data_row.o_selected_row,
+.o_form_view .o_field_x2many .o_data_row.o_data_row_selected,
+.o_form_view .o_field_x2many .o_data_row.o_list_record_selected,
+.o_form_view .o_field_x2many .o_data_row:focus-within {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.o_form_view .o_field_x2many .o_data_row:hover > td,
+.o_form_view .o_field_x2many .o_data_row.o_selected_row > td,
+.o_form_view .o_field_x2many .o_data_row.o_data_row_selected > td,
+.o_form_view .o_field_x2many .o_data_row.o_list_record_selected > td,
+.o_form_view .o_field_x2many .o_data_row:focus-within > td {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-accent-a40) !important;
 }
 
 /* ── Totals box (form footer) ───────────────────────────────────
