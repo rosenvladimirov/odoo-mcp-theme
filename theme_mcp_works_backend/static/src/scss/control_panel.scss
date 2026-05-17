@@ -544,21 +544,39 @@
 .o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret:focus,
 .o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret:focus-visible,
 .o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret.focus {
-    /* perfect borderless square, every state (Rosen: "не е квадратен") */
+    /* perfect square WITH the square-button border (Rosen: "този
+       бутон също няма бордер ... иконата разместена"); no focus glow */
     box-sizing: border-box !important;
     width: var(--mcp-btn-h) !important;
     min-width: var(--mcp-btn-h) !important;
     height: var(--mcp-btn-h) !important;
     min-height: var(--mcp-btn-h) !important;
     padding: 0 !important;
-    border: 0 !important;
-    border-color: var(--mcp-toggler-border) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-toggler-border) !important;
     border-radius: 0 !important;
     outline: none !important;
     box-shadow: none !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
+    flex: 0 0 auto !important;
+}
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret:hover {
+    border-color: var(--mcp-accent) !important;
+    background: var(--mcp-accent-soft) !important;
+    color: var(--mcp-accent) !important;
+}
+/* Centre the caret glyph — o-dropdown-caret's ::after/icon sat off
+   to one side (Rosen: "разместена иконата в средата"). */
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret::after,
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret::before,
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret > i,
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret > .oi,
+.o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret > .fa {
+    position: static !important;
+    margin: 0 !important;
+    inset: auto !important;
+    transform: none !important;
     flex: 0 0 auto !important;
 }
 

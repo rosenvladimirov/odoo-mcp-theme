@@ -122,7 +122,7 @@
     --mcp-btn-w-sq:   var(--mcp-btn-h);
     --mcp-btn-w-rect: calc(var(--mcp-btn-h) * var(--mcp-btn-rect-ratio));
     /* Search dropdown toggler border (kept transparent — no focus ring) */
-    --mcp-toggler-border: transparent;
+    --mcp-toggler-border: var(--mcp-rule-strong);
     --mcp-cp-row-h:      30px;
     --mcp-view-pad:      8px;
     --mcp-stat-btn-min-w: 140px;
