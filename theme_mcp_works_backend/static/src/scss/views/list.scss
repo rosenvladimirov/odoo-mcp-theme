@@ -452,17 +452,22 @@ a.purchase-dashboard-card.btn {
     margin: 0 !important;
 }
 
-/* Narrow utility columns (checkbox selector / priority / controller /
-   actions header) must NOT get the data-column 16px table-padding-x —
-   it widened the selector th to 52px vs the original's 40px ("странен
-   падинг от ляво", Rosen). Tight ~4px like the prototype. */
+/* Narrow utility columns — match the prototype EXACTLY (per column),
+   not a blanket 4px (that made the selector th 28px and the priority
+   cell shoved it into the left corner, Rosen):
+   · selector/controller th  → padding-left 16px, padding-right 4px
+     (original: 40px wide)
+   · priority cell           → padding 0 0.3rem (original: 4.8px) */
 .o_list_view table.o_list_table thead th.o_list_record_selector,
 .o_list_view table.o_list_table thead th.o_list_controller,
+.o_list_view table.o_list_table tbody td.o_list_record_selector,
+.o_list_view table.o_list_table tfoot td.o_list_record_selector {
+    padding-left: var(--mcp-list-table-pad-x) !important;
+    padding-right: var(--mcp-sp-4) !important;
+}
 .o_list_view table.o_list_table thead th.o_priority_cell,
 .o_list_view table.o_list_table thead th.o_list_actions_header,
-.o_list_view table.o_list_table tbody td.o_list_record_selector,
-.o_list_view table.o_list_table tbody td.o_priority_cell,
-.o_list_view table.o_list_table tfoot td.o_list_record_selector {
-    padding-left: var(--mcp-sp-4) !important;
-    padding-right: var(--mcp-sp-4) !important;
+.o_list_view table.o_list_table tbody td.o_priority_cell {
+    padding-left: var(--mcp-list-cell-pad-x-sm) !important;
+    padding-right: var(--mcp-list-cell-pad-x-sm) !important;
 }
