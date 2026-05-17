@@ -230,6 +230,17 @@
         width: 100% !important;
     }
 
+    /* Kill the core/Bootstrap white background on the tabs <ul.nav>
+       (Rosen: ".o_notebook .nav { background-color: white }" → махни
+       го) — override to transparent like the rest of the strip. */
+    .nav,
+    .nav-tabs,
+    .o_notebook_headers .nav,
+    .o_notebook_headers .nav-tabs {
+        background-color: transparent !important;
+        background: transparent !important;
+    }
+
     .o_notebook_headers {
         border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
         padding: 0 !important;
