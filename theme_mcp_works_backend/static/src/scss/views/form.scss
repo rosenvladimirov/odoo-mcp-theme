@@ -104,6 +104,10 @@
             border-radius: 0 !important;
             transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
             position: relative;
+            /* light grow shadow — box-shadow is clipped by clip-path
+               on a chevron, so use drop-shadow (follows the shape);
+               Rosen: "лек гроу-сянка на всички бутони". */
+            filter: drop-shadow(0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a08));
             /* Arrow-tab shape */
             clip-path: polygon(0 0, calc(100% - var(--mcp-sp-12)) 0, 100% 50%, calc(100% - var(--mcp-sp-12)) 100%, 0 100%, var(--mcp-sp-12) 50%);
             /* positive gap so the chevron point of one segment does
@@ -212,11 +216,14 @@
     /* pure opaque white, like the inactive chevrons (Rosen: "и на
        бутоните от секцията") */
     background: var(--mcp-bg) !important;
+    /* light grow shadow (Rosen: "лек гроу-сянка на всички бутони") */
+    box-shadow: var(--mcp-shadow-sm) !important;
 
     &:hover {
         color: var(--mcp-accent) !important;
         border-color: var(--mcp-accent) !important;
         background: var(--mcp-accent-soft) !important;
+        box-shadow: var(--mcp-shadow-md) !important;
     }
 }
 .o_form_view .o_form_statusbar .o_statusbar_buttons .btn.btn-primary,
@@ -224,6 +231,7 @@
     /* same lightest border as the rest (Rosen: not the dark sapphire) */
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: 0 !important;
+    box-shadow: var(--mcp-shadow-sm) !important;
 }
 
 /* ── Smart buttons (button-box) ─────────────────────────────── */
