@@ -91,7 +91,9 @@
             letter-spacing: 0.14em !important;
             text-transform: uppercase !important;
             color: var(--mcp-ink-dim) !important;
-            background: var(--mcp-surface) !important;
+            /* inactive segments — pure opaque white (Rosen: "чисто
+               бели без транспарент"), not the tinted --mcp-surface */
+            background: var(--mcp-bg) !important;
             /* A real border is clipped off the slanted chevron edges
                by clip-path (Rosen: "наклонените повърнини нямат
                бордер"). Drawn instead as a ::before RING that follows
