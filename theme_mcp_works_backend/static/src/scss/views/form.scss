@@ -22,8 +22,14 @@
     background: var(--mcp-surface) !important;
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
-    max-width: none !important;
+    max-width: 100% !important;
     width: 100% !important;
+    /* flex item of the display:flex .o_form_sheet_bg — without
+       min-width:0 it refuses to shrink below its content, so the
+       fixed ~1380px o2m table burst the sheet column out (Rosen:
+       "продължава да разпъва извън парент секциите"). The splitter's
+       320px floor lives on .o_form_sheet_bg and stays. */
+    min-width: 0 !important;
     margin: 0 !important;
     flex: 1 1 auto !important;
     min-height: calc(100vh - var(--mcp-navbar-height) - var(--mcp-sp-110)) !important;
