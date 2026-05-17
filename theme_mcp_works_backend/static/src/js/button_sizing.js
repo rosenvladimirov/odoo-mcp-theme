@@ -97,6 +97,14 @@ const EXCLUDE =
        actions styled in form.scss; the 33px rect sizing made the
        add-row too tall (Rosen). */
     ".o_form_view .o_field_x2many_list_row_add .btn," +
+    /* Form statusbar STATE chevron segments — the arrow-tab strip is
+       fully styled in form.scss .o_form_statusbar .o_statusbar_status
+       (height 32, chevron clip-path, padding 0 16). The rect calc's
+       inline !important (min-width 91 + btn-pad) beat that and broke
+       the chevrons (Rosen: "не спазва правилото на бутоните и
+       падинга"). The .o_statusbar_buttons action buttons stay
+       managed — same rule as the control panel. */
+    ".o_form_statusbar .o_statusbar_status .btn," +
     "[data-mcp-no-size]";
 
 function sizeOne(btn, H) {
