@@ -52,8 +52,16 @@ function publishVars(H) {
     return true;
 }
 
-/* Always-square buttons (icon togglers) regardless of classifyButton. */
-const FORCE_SQUARE = ".o_searchview_dropdown_toggler";
+/* Always-square buttons (icon togglers) regardless of classifyButton.
+ * Odoo's compact icon dropdown-toggles carry the .border-0.p-0
+ * signature and render the caret via a CSS ::after (no DOM icon →
+ * classifyButton would mis-call them rectangular). (Rosen: "btn ...
+ * p-0 border-0 ... dropdown-toggle това е по правилата за квадратните
+ * бутони".) */
+const FORCE_SQUARE =
+    ".o_searchview_dropdown_toggler," +
+    ".o_control_panel .btn.dropdown-toggle.border-0.p-0," +
+    ".o_control_panel .btn.o-dropdown.dropdown-toggle.border-0";
 
 /* Search toggler is not a .btn — pick it up explicitly too. */
 const MANAGED = ".btn, .o_searchview_dropdown_toggler";
