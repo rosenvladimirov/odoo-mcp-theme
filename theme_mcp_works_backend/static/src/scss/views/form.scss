@@ -391,6 +391,14 @@
 .o_form_view .o_field_x2many .o_list_renderer,
 .o_form_view .o_field_x2many .o_list_renderer.table-responsive {
     --ListRenderer-margin-x: 0 !important;
+    /* The embedded renderer is NOT .o_list_view, so list.scss:16-17
+       (which drives Odoo's own header layout to the normal/original
+       proportions) never reaches it → core's compact x2many header.
+       Mirror the exact frozen-list tokens here so the form header
+       lays out identically to "normal" (Rosen: "хедъра по-нисък от
+       нормалното"). Tokens only — list.scss untouched. */
+    --ListRenderer-table-padding-x: var(--mcp-list-table-pad-x) !important;
+    --ListRenderer-thead-padding-y: var(--mcp-list-thead-pad-y) !important;
     display: block !important;
     width: 100% !important;
     min-width: 0 !important;
@@ -406,20 +414,23 @@
 
     thead th {
         background: var(--mcp-surface-3) !important;
-        /* original/list proportions, not the cramped 9.5px mono caps
-           (Rosen: "хедъра не е с достатъчна височина както оригинала").
-           Form-context only — standalone list screen untouched. */
+        /* 1:1 mirror of the frozen list thead th (list.scss:36-58) —
+           same proportions as "normal"; form-context only, the
+           standalone frozen screen is never touched. */
+        text-align: left !important;
         font-family: var(--mcp-font-family) !important;
         font-size: var(--mcp-list-font-size) !important;
         line-height: var(--mcp-list-line-height) !important;
         font-weight: 500 !important;
         letter-spacing: 0 !important;
         text-transform: none !important;
+        font-variant-numeric: tabular-nums;
         color: var(--mcp-ink-3) !important;
         height: var(--mcp-btn-h) !important;
         padding: 0 var(--mcp-list-table-pad-x) !important;
         vertical-align: middle !important;
         border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+        white-space: nowrap;
     }
     tbody td {
         padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
@@ -428,8 +439,20 @@
     }
     tbody tr:hover td { background: var(--mcp-accent-soft) !important; }
     tbody tr:last-child td { border-bottom: 0 !important; }
+    /* Footer band — 1:1 mirror of the frozen list tfoot
+       (list.scss:133-145): same row height as the header, a slightly
+       -off white DIFFERENT from the header's surface-3 (Rosen: "полето
+       за сумата е в по-тъмен цвят"). Whole band covered. */
+    tfoot {
+        background: var(--mcp-surface) !important;
+        border-top: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    }
+    tfoot tr { background: var(--mcp-surface) !important; }
     tfoot td {
-        background: var(--mcp-surface-3) !important;
+        height: var(--mcp-btn-h) !important;
+        padding: 0 var(--mcp-list-table-pad-x) !important;
+        vertical-align: middle !important;
+        background: var(--mcp-surface) !important;
         font-family: var(--mcp-font-mono) !important;
         font-weight: 600 !important;
         text-align: right !important;
