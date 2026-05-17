@@ -476,6 +476,38 @@
     background: var(--mcp-accent-soft) !important;
 }
 
+/* Editable o2m row — UNIFORM control height. Each widget scss sets
+   its own form height/padding (many2one 20px, tags min-h 28px,
+   monetary pad 5/6, state pad 3/12, …); harmless on a form but
+   inside a list ROW they make every cell a different height → the
+   inputs look distorted (Rosen: "различна височина на импут
+   полетата ... разкривени"). The original stays uniform via Odoo's
+   native list editor — neutralise our per-widget divergence form
+   -scoped so the row line drives ONE height for all cells. Frozen
+   standalone list screen never matches (.o_form_view scope). */
+.o_form_view .o_field_x2many .o_data_row .o_data_cell {
+    vertical-align: middle !important;
+}
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget > div,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_many2one,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_tags,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_many2many_tags {
+    height: auto !important;
+    min-height: 0 !important;
+    line-height: var(--mcp-list-line-height) !important;
+}
+.o_form_view .o_field_x2many .o_data_row .o_data_cell
+    input:not([type="checkbox"]):not([type="radio"]),
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_input,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell select {
+    height: var(--mcp-sp-24) !important;
+    min-height: var(--mcp-sp-24) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    line-height: var(--mcp-sp-24) !important;
+}
+
 /* ── Totals box (form footer) ───────────────────────────────────
    Odoo 19: NOT .o_total — it's the .oe_subtotal_footer inner-group
    wrapping the tax_totals widget .o_field_account-tax-total.  Make
