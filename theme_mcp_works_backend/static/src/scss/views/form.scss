@@ -373,6 +373,16 @@
 .o_form_view .o_field_x2many .o_list_renderer.table-responsive {
     --ListRenderer-table-padding-x: var(--mcp-list-table-pad-x) !important;
     --ListRenderer-thead-padding-y: var(--mcp-list-thead-pad-y) !important;
+    /* The o2m field also carries .o_list_view, so the FROZEN
+       list.scss:13 `.o_list_view .o_list_renderer { overflow:hidden }`
+       (spec 0,0,2,0) leaks here and BEATS Bootstrap's
+       `.table-responsive{overflow-x:auto}` (0,0,1,0) → the 1426px
+       fixed table is clipped, no scrollbar (Rosen: "продължава да
+       няма скролл"). Re-assert the scroll box form-scoped so it
+       behaves exactly like the original. list.scss untouched — the
+       standalone frozen list keeps its overflow:hidden. */
+    overflow-x: auto !important;
+    overflow-y: visible !important;
 }
 .o_form_view .o_field_x2many .o_list_renderer table.o_list_table {
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
