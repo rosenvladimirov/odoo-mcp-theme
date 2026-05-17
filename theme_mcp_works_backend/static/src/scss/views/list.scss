@@ -153,14 +153,30 @@
     }
 }
 
-/* ── Status pills (state widget in list cells) ──────────────── */
+/* ── Status badges (state widget in list cells) ──────────────────
+   Odoo renders <div.o_field_badge><span.badge.rounded-pill.text-bg-*>.
+   Styling the wrapper DIV stacked a 2nd box behind Bootstrap's real
+   .badge span (Rosen: "наслагва два стила"). So: neutralise the
+   wrapper and style ONE element — the .badge span — with the Robot
+   look: SHARP 0 corners (no pill), no border, soft tinted theme
+   colours (Rosen: "ръбовете 0, без закръгления, нежните им цветове"). */
+.o_list_view .o_field_badge,
+.o_list_view .o_field_widget.o_field_badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    height: auto !important;
+}
+
 .o_list_view .o_field_state_selection .o_status,
 .o_list_view .o_field_widget .o_badge,
-.o_list_view .o_field_badge {
-    /* clean soft rounded pill like the original prototype's
-       .badge.rounded-pill — no heavy border/box (Rosen circled the
-       boxy bordered badge as an error). Tinted bg + colour tokens
-       kept (no new colours). */
+.o_list_view .o_field_badge .badge,
+.o_list_view td.o_badge_cell .badge {
     display: inline-flex !important;
     align-items: center !important;
     height: var(--mcp-sp-18) !important;
@@ -171,7 +187,7 @@
     letter-spacing: 0 !important;
     text-transform: none !important;
     border: 0 !important;
-    border-radius: var(--mcp-r-badge) !important;
+    border-radius: 0 !important;
     color: var(--mcp-ink-3) !important;
     background: var(--mcp-surface-2) !important;
 
@@ -179,8 +195,13 @@
     &.text-bg-success,
     &.o_status_green {
         color: var(--mcp-ok) !important;
-        border-color: var(--mcp-ok) !important;
         background: var(--mcp-ok-a08) !important;
+    }
+    &.bg-info,
+    &.text-bg-info,
+    &.o_status_bubble {
+        color: var(--mcp-accent) !important;
+        background: var(--mcp-accent-soft) !important;
     }
     &.bg-primary,
     &.text-bg-primary,
@@ -192,14 +213,12 @@
     &.text-bg-warning,
     &.o_status_orange {
         color: var(--mcp-warn) !important;
-        border-color: var(--mcp-warn) !important;
         background: var(--mcp-warn-a08) !important;
     }
     &.bg-danger,
     &.text-bg-danger,
     &.o_status_red {
         color: var(--mcp-danger) !important;
-        border-color: var(--mcp-danger) !important;
         background: var(--mcp-danger-soft) !important;
     }
 }
