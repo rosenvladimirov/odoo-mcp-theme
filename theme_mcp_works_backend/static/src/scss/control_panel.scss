@@ -206,8 +206,8 @@
     align-items: center !important;
     justify-content: center !important;
     gap: var(--mcp-sp-6) !important;
-    height: var(--mcp-sp-26) !important;
-    min-height: var(--mcp-sp-26) !important;
+    height: var(--mcp-btn-h) !important;
+    min-height: var(--mcp-btn-h) !important;
     background: var(--mcp-accent) !important;
     color: var(--mcp-surface) !important;
     border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
@@ -234,8 +234,8 @@
     align-items: center !important;
     justify-content: center !important;
     gap: var(--mcp-sp-6) !important;
-    height: var(--mcp-sp-26) !important;
-    min-height: var(--mcp-sp-26) !important;
+    height: var(--mcp-btn-h) !important;
+    min-height: var(--mcp-btn-h) !important;
     color: var(--mcp-ink-2) !important;
     background: transparent !important;
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
@@ -264,8 +264,8 @@
     align-items: center !important;
     justify-content: center !important;
     width: var(--mcp-sp-26) !important;
-    height: var(--mcp-sp-26) !important;
-    min-height: var(--mcp-sp-26) !important;
+    height: var(--mcp-btn-h) !important;
+    min-height: var(--mcp-btn-h) !important;
     padding: 0 !important;
     border: 0 !important;
     background: transparent !important;
@@ -437,7 +437,7 @@
     .btn,
     .o_switch_view {
         width: var(--mcp-sp-26) !important;
-        height: var(--mcp-sp-26) !important;
+        height: var(--mcp-btn-h) !important;
         padding: 0 !important;
         margin: 0 !important;
         background: transparent !important;

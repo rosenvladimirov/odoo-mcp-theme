@@ -97,11 +97,22 @@
 
     /* ── Layout ──────────────────────────────────────────────── */
     --mcp-navbar-height: 36px;
-    /* Canonical button height + rectangular width/height ratio —
-       consumed by the JS size calculator (sizing.js / button_sizing.js).
-       --mcp-btn-h is only the fallback; the live base height is
-       measured from .o_list_button_add at runtime. Tune freely. */
-    --mcp-btn-h: 26px;
+    /* Button typography — em/rem so the box scales with font-size,
+       exactly like the original prototype's --btn-* (Rosen: "бутоните
+       на оригинала са по-големи заради падинга който е em"). */
+    --mcp-btn-font-size:   0.875rem;   /* 14px @ root 16 */
+    --mcp-btn-line-height: 1.5;        /* → 21px */
+    --mcp-btn-pad-y:       0.3125rem;  /* 5px  (vertical em padding) */
+    --mcp-btn-pad-x:       0.625rem;   /* 10px (horizontal em padding) */
+    /* Canonical button height = DERIVED from typography (border-box):
+       line-height·font-size + 2·pad-y + 2·border. CSS resolves the
+       rem natively → 14·1.5 + 2·5 + 2·1 = 33px, and it rescales if any
+       token changes. (sizing.js computeButtonHeight() mirrors this.) */
+    --mcp-btn-h: calc(
+        var(--mcp-btn-font-size) * var(--mcp-btn-line-height)
+        + 2 * var(--mcp-btn-pad-y)
+        + 2 * var(--mcp-bw-1)
+    );
     --mcp-btn-rect-ratio: 2.75;
     /* Calculator outputs — CSS-only defaults (the formula in pure
        tokens); button_sizing.js overrides --mcp-btn-*-live/-w-* at

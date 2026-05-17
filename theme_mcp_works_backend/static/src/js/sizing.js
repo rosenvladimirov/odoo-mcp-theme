@@ -83,6 +83,38 @@ export function computeButtonWidth(height, type = "rectangular", ratio) {
     return Math.round(h * ratio);
 }
 
+/* Resolve a CSS length token (rem/em/px/unitless) to px. */
+function lenToPx(raw, basePx, rootPx) {
+    const v = (raw || "").trim();
+    if (!v) return NaN;
+    if (v.endsWith("rem")) return parseFloat(v) * rootPx;
+    if (v.endsWith("em"))  return parseFloat(v) * basePx;
+    if (v.endsWith("px"))  return parseFloat(v);
+    return parseFloat(v);
+}
+
+/**
+ * Button-HEIGHT calculator — derive the box height from typography the
+ * way the original prototype does (Rosen: "бутоните на оригинала са
+ * по-големи заради падинга който е em — добави такова изчисление").
+ *
+ * border-box height = line-height·font-size + 2·padding-y + 2·border,
+ * where font-size / padding-y are rem/em tokens (so the whole thing
+ * scales with the root font-size, exactly like Bootstrap's
+ * --btn-padding-y / --btn-line-height). All inputs are --mcp-* tokens.
+ *
+ * @returns {number} px (integer)
+ */
+export function computeButtonHeight() {
+    const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    const fsPx = lenToPx(getCSSVar("--mcp-btn-font-size") || "0.875rem", rootPx, rootPx) || 14;
+    const lh = parseFloat(getCSSVar("--mcp-btn-line-height")) || 1.5;
+    const padY = lenToPx(getCSSVar("--mcp-btn-pad-y") || "0.3125rem", fsPx, rootPx) || 5;
+    const bw = parseFloat(getCSSVar("--mcp-bw-1")) || 1;
+    const h = Math.round(fsPx * lh + 2 * padY + 2 * bw);
+    return h > 0 ? h : 33;
+}
+
 /**
  * Classify a button element: "square" when it is icon-only (has an
  * icon/glyph and no visible text label), otherwise "rectangular".

@@ -21,25 +21,20 @@
  * Mirrors the resizer.js / hud_corners.js MutationObserver pattern.
  */
 
-import { computeButtonWidth, classifyButton, getCSSVar } from "@theme_mcp_works_backend/js/sizing";
+import { computeButtonWidth, computeButtonHeight, classifyButton, getCSSVar } from "@theme_mcp_works_backend/js/sizing";
 
 const ROOT = document.documentElement;
 
-/* Canonical button height: every managed button is normalised to ONE
- * height so the toolbar reads as a single row of equal chips.  The
- * reference is the control-panel "New" button (.o_list_button_add);
- * fall back to a primary CP button, then the --mcp-btn-h token, then
- * 26 (Rosen: "височината е същата като o_list_button_add"). */
+/* Canonical button height — DERIVED from the typography calculator
+ * (line-height·font-size + 2·pad-y + 2·border, em/rem), so every
+ * managed button gets the original prototype's bigger, font-scaled
+ * box instead of a cramped fixed px (Rosen). Falls back to the
+ * resolved --mcp-btn-h token, then 33. */
 function baseButtonHeight() {
-    const ref =
-        document.querySelector(".o_list_button_add") ||
-        document.querySelector(".o_control_panel .btn-primary");
-    if (ref && ref.offsetParent) {
-        const h = Math.round(ref.getBoundingClientRect().height);
-        if (h > 0) return h;
-    }
+    const h = computeButtonHeight();
+    if (Number.isFinite(h) && h > 0) return h;
     const tok = parseFloat(getCSSVar("--mcp-btn-h"));
-    return Number.isFinite(tok) && tok > 0 ? tok : 26;
+    return Number.isFinite(tok) && tok > 0 ? tok : 33;
 }
 
 /* Publish the calculator's px results as :root variables (the ONLY
@@ -96,6 +91,12 @@ function sizeOne(btn, H) {
         btn.style.setProperty("justify-content", "center", "important");
     } else {
         btn.style.setProperty("min-width", "var(--mcp-btn-w-rect)", "important");
+        /* em padding like the original prototype (Rosen: padding е em
+           → бутоните по-големи). All-token, scales with font-size. */
+        btn.style.setProperty("padding-top", "var(--mcp-btn-pad-y)", "important");
+        btn.style.setProperty("padding-bottom", "var(--mcp-btn-pad-y)", "important");
+        btn.style.setProperty("padding-left", "var(--mcp-btn-pad-x)", "important");
+        btn.style.setProperty("padding-right", "var(--mcp-btn-pad-x)", "important");
     }
     btn.dataset.mcpBtnSized = stamp;
 }
