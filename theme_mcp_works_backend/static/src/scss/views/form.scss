@@ -636,8 +636,9 @@
     background: var(--mcp-surface-2) !important;
     border-radius: 0 !important;
     padding: var(--mcp-sp-10) var(--mcp-sp-14) !important;
-    /* HUD notch top-left (theme.css .form-totals-box) */
-    clip-path: polygon(var(--mcp-sp-10) 0, 100% 0, 100% 100%, 0 100%, 0 var(--mcp-sp-10));
+    /* HUD notch BOTTOM-left (Rosen: "ъгълчето трябва да е долу в
+       ляво", not top-left) */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, var(--mcp-sp-10) 100%, 0 calc(100% - var(--mcp-sp-10)));
 
     .o_td_label,
     .oe_subtotal_footer_separator,
