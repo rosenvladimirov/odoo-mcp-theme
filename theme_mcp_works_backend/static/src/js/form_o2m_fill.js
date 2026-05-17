@@ -24,23 +24,15 @@ function fitOne(table) {
     if (!rend || !table.offsetParent) return;
     const avail = Math.round(rend.clientWidth);
     if (avail <= 0) return;
-    /* measure the table's natural (column-sum) width with our
-       override cleared */
-    table.style.removeProperty("width");
-    const natural = Math.round(table.scrollWidth || table.getBoundingClientRect().width);
-    const stamp = avail + ":" + natural;
-    if (table.dataset.mcpO2mFit === stamp) {
-        if (avail > natural) table.style.setProperty("width", avail + "px", "important");
-        return;
-    }
-    if (avail > natural) {
-        /* container wider → scale the fixed columns to fill it */
-        table.style.setProperty("width", avail + "px", "important");
-    } else {
-        /* container narrower → keep natural width, renderer scrolls */
-        table.style.removeProperty("width");
-    }
-    table.dataset.mcpO2mFit = stamp;
+    /* Rosen: "резайзер мащабира колоните" — ALWAYS pin the table width
+       to the renderer so table-layout:fixed scales every column to
+       exactly fill the box: wider container → columns grow (no air),
+       narrower → columns shrink (no horizontal scroll). */
+    if (table.dataset.mcpO2mFit === String(avail)) return;
+    table.style.setProperty("width", avail + "px", "important");
+    table.style.setProperty("min-width", avail + "px", "important");
+    table.style.setProperty("max-width", avail + "px", "important");
+    table.dataset.mcpO2mFit = String(avail);
 }
 
 function processAll() {

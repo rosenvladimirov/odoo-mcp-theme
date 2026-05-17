@@ -395,13 +395,19 @@
 
     thead th {
         background: var(--mcp-surface-3) !important;
-        font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-9-5) !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.12em !important;
-        text-transform: uppercase !important;
+        /* original/list proportions, not the cramped 9.5px mono caps
+           (Rosen: "хедъра не е с достатъчна височина както оригинала").
+           Form-context only — standalone list screen untouched. */
+        font-family: var(--mcp-font-family) !important;
+        font-size: var(--mcp-list-font-size) !important;
+        line-height: var(--mcp-list-line-height) !important;
+        font-weight: 500 !important;
+        letter-spacing: 0 !important;
+        text-transform: none !important;
         color: var(--mcp-ink-3) !important;
-        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
+        height: var(--mcp-btn-h) !important;
+        padding: 0 var(--mcp-list-table-pad-x) !important;
+        vertical-align: middle !important;
         border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     }
     tbody td {
