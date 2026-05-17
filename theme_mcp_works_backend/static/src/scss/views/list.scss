@@ -473,7 +473,9 @@ a.purchase-dashboard-card.btn {
     color: var(--mcp-danger) !important;
 }
 .o_purchase_dashboard .purchase-dashboard-card.bg-secondary-subtle {
-    background: var(--mcp-surface-2) !important;
+    /* "Изпратено" = secondary → no real decoration: pure white
+       (Rosen: "защо не е чисто бяло"). */
+    background: var(--mcp-bg) !important;
     color: var(--mcp-ink-2) !important;
 }
 .o_purchase_dashboard .purchase-dashboard-card.bg-100,
@@ -489,6 +491,32 @@ a.purchase-dashboard-card.btn {
 .o_purchase_dashboard .purchase-dashboard-card.bg-warning-subtle [class*="fs-"] { color: var(--mcp-warn) !important; }
 .o_purchase_dashboard .purchase-dashboard-card.bg-danger-subtle [class*="fs-"] span,
 .o_purchase_dashboard .purchase-dashboard-card.bg-danger-subtle [class*="fs-"] { color: var(--mcp-danger) !important; }
+
+/* Hover must stay in the card's OWN decoration hue, not the generic
+   blue (Rosen: "ховер на оранжева карта става синьо"). (0,4,0) beats
+   the generic &:hover. */
+.o_purchase_dashboard .purchase-dashboard-card.bg-info-subtle:hover {
+    background: var(--mcp-accent-a12) !important;
+    color: var(--mcp-accent) !important;
+}
+.o_purchase_dashboard .purchase-dashboard-card.bg-warning-subtle:hover {
+    background: var(--mcp-warn-a10) !important;
+    color: var(--mcp-warn) !important;
+}
+.o_purchase_dashboard .purchase-dashboard-card.bg-danger-subtle:hover {
+    background: var(--mcp-danger-a10) !important;
+    color: var(--mcp-danger) !important;
+}
+.o_purchase_dashboard .purchase-dashboard-card.bg-secondary-subtle:hover {
+    background: var(--mcp-surface-2) !important;
+    color: var(--mcp-ink-2) !important;
+}
+/* OTD / Дни cards are .o_no_hover — keep them static (no blue). */
+.o_purchase_dashboard .purchase-dashboard-card.o_no_hover:hover,
+.o_purchase_dashboard .purchase-dashboard-card.bg-100:hover {
+    background: var(--mcp-bg) !important;
+    color: var(--mcp-ink-2) !important;
+}
 
 /* List-header optional-columns gear — a small icon button that fits
    the short sticky header cell (button_sizing no longer force-squares
