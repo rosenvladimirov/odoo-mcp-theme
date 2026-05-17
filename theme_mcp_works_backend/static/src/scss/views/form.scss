@@ -230,6 +230,8 @@
     > .o_notebook_content {
         flex: 1 1 auto !important;
         min-height: 0 !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
         width: 100% !important;
         display: flex !important;
         flex-direction: column !important;
@@ -238,18 +240,23 @@
     > .o_notebook_content > .tab-pane.show {
         flex: 1 1 auto !important;
         min-height: 0 !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
         width: 100% !important;
         display: flex !important;
         flex-direction: column !important;
     }
     /* let the field widget inside the pane grow too, so the content
        reaches the end (outer container only — the frozen order-line
-       TABLE internals stay untouched). */
+       TABLE internals stay untouched). min-width:0 keeps the wide
+       fixed table from bursting the column. */
     > .o_notebook_content > .tab-pane.active > .o_field_widget,
     > .o_notebook_content > .tab-pane.active > .o_field_widget > .o_field_x2many,
     > .o_notebook_content > .tab-pane.active > .o_field_widget > .o_field_x2many > .o_list_view {
         flex: 1 1 auto !important;
         min-height: 0 !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
         width: 100% !important;
     }
 
@@ -314,9 +321,25 @@
     background: transparent !important;
     padding: 0 !important;
 }
+/* Contain the fixed-layout o2m table INSIDE its renderer instead of
+   letting it burst out of the tab-pane (Rosen: "разпъва много извън
+   tab-pane / o_field_one2many / o_field_x2many"). Flex items default
+   min-width:auto → a ~1380px fixed table forces every ancestor
+   wider; min-width:0 + max-width:100% lets them shrink, and the
+   .table-responsive renderer scrolls the wide table within itself.
+   OUTER containers only — the frozen table internals stay untouched
+   (per the list-freeze rule, form-context container sizing). */
+.o_form_view .o_field_one2many,
+.o_form_view .o_field_x2many,
+.o_form_view .o_field_x2many .o_list_view {
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
 .o_form_view .o_field_x2many .o_list_renderer {
-    max-width: none !important;
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
 }
 .o_form_view .o_field_x2many .o_list_renderer table.o_list_table {
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
