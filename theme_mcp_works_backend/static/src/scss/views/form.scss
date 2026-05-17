@@ -535,6 +535,10 @@
     line-height: var(--mcp-btn-h) !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+    /* Odoo core zeroes the selected-row input padding (no
+       !important); Rosen wants 1px L/R breathing room. Tokenised. */
+    padding-left: var(--mcp-sp-1) !important;
+    padding-right: var(--mcp-sp-1) !important;
 }
 
 /* ── Totals box (form footer) ───────────────────────────────────
