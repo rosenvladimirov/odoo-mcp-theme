@@ -92,8 +92,11 @@
             text-transform: uppercase !important;
             color: var(--mcp-ink-dim) !important;
             background: var(--mcp-surface) !important;
-            border: 0 !important;
-            border-right: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+            /* SAME light border on every segment as the current step
+               (Rosen: "искам навсякъде да е такъв [светъл], другите
+               са тъмно сини") — was border:0 + a lighter --mcp-rule
+               right divider only. */
+            border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
             border-radius: 0 !important;
             transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
             position: relative;
@@ -110,7 +113,8 @@
                 padding-left: var(--mcp-sp-16);
             }
             &:last-child {
-                border-right: 0 !important;
+                /* keep the uniform light border (no border-right:0
+                   override) so the last segment matches the rest */
                 margin-right: 0 !important;
                 clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--mcp-sp-12) 50%);
             }
