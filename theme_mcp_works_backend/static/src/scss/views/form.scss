@@ -256,18 +256,19 @@
         display: flex !important;
         flex-direction: column !important;
     }
-    /* let the field widget inside the pane grow too, so the content
-       reaches the end (outer container only — the frozen order-line
-       TABLE internals stay untouched). min-width:0 keeps the wide
-       fixed table from bursting the column. */
+    /* The o2m field/list inside the pane stays Odoo-NATIVE — ONLY
+       min-width:0 so the wide fixed table can't burst the flex sheet
+       (the .table-responsive renderer becomes the scroll box). NO
+       width/max-width/flex forcing: that froze the columns to the
+       stretched notebook width so a 1426px table never overflowed →
+       no scrollbar. The original keeps natural column widths and the
+       .table-responsive scrolls them — matching that (Rosen:
+       "оригиналът пуска скрол при същите колони, нашият не").
+       Frozen order-line TABLE internals stay untouched. */
     > .o_notebook_content > .tab-pane.active > .o_field_widget,
     > .o_notebook_content > .tab-pane.active > .o_field_widget > .o_field_x2many,
     > .o_notebook_content > .tab-pane.active > .o_field_widget > .o_field_x2many > .o_list_view {
-        flex: 1 1 auto !important;
-        min-height: 0 !important;
         min-width: 0 !important;
-        max-width: 100% !important;
-        width: 100% !important;
     }
 
     /* Kill the core/Bootstrap white background on the tabs <ul.nav>
@@ -440,6 +441,29 @@
     text-decoration: none !important;
 
     &:hover { background: var(--mcp-accent-soft) !important; }
+}
+
+/* In-row list object buttons (forecast .btn.btn-link with <i
+   class="o_button_icon fa">, and the trash <button class="fa
+   fa-trash-o">). The original has NO border / NO box — our theme's
+   global .btn styling added a frame (Rosen: "бутоните имат рамки
+   което не трябва"). Flatten to match the original; keep the FA
+   glyph visible in the theme accent. Form context only. */
+.o_form_view .o_field_x2many .o_data_cell .btn,
+.o_form_view .o_field_x2many .o_list_button .btn,
+.o_form_view .o_field_x2many .o_list_record_remove .btn {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--mcp-accent) !important;
+}
+.o_form_view .o_field_x2many .o_data_cell .btn .o_button_icon,
+.o_form_view .o_field_x2many .o_list_record_remove .btn.fa {
+    color: var(--mcp-accent) !important;
+}
+.o_form_view .o_field_x2many .o_data_cell .btn:hover,
+.o_form_view .o_field_x2many .o_list_record_remove .btn:hover {
+    background: var(--mcp-accent-soft) !important;
 }
 
 /* ── Totals box (form footer) ───────────────────────────────────
