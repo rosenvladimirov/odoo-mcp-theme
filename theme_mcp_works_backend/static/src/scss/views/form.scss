@@ -92,9 +92,13 @@
             text-transform: uppercase !important;
             color: var(--mcp-ink-dim) !important;
             background: var(--mcp-surface) !important;
-            /* SAME lightest border on every segment (Rosen: етал. =
-               --mcp-rule, "другите бяха тъмно сини"). */
-            border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+            /* A real border is clipped off the slanted chevron edges
+               by clip-path (Rosen: "наклонените повърнини нямат
+               бордер"). Drawn instead as a ::before RING that follows
+               the chevron polygon (outer + inner inset 1px, evenodd)
+               → border on the diagonals too; centre transparent so
+               the label + fill stay visible. */
+            border: 0 !important;
             border-radius: 0 !important;
             transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
             position: relative;
@@ -106,15 +110,43 @@
             margin-right: var(--mcp-sp-6) !important;
             padding-left: var(--mcp-sp-24);
 
+            /* RING border — middle chevron (outer CW + inner inset
+               1px, evenodd → only the ~1px band paints). */
+            &::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                background: var(--mcp-rule);
+                clip-path: polygon(evenodd,
+                    0 0, calc(100% - var(--mcp-sp-12)) 0, 100% 50%, calc(100% - var(--mcp-sp-12)) 100%, 0 100%, var(--mcp-sp-12) 50%,
+                    var(--mcp-sp-1) var(--mcp-sp-1), calc(100% - var(--mcp-sp-12) - var(--mcp-sp-1)) var(--mcp-sp-1), calc(100% - var(--mcp-sp-1)) 50%, calc(100% - var(--mcp-sp-12) - var(--mcp-sp-1)) calc(100% - var(--mcp-sp-1)), var(--mcp-sp-1) calc(100% - var(--mcp-sp-1)), calc(var(--mcp-sp-12) + var(--mcp-sp-1)) 50%
+                );
+            }
+
             &:first-child {
                 clip-path: polygon(0 0, calc(100% - var(--mcp-sp-12)) 0, 100% 50%, calc(100% - var(--mcp-sp-12)) 100%, 0 100%);
                 padding-left: var(--mcp-sp-16);
+
+                &::before {
+                    clip-path: polygon(evenodd,
+                        0 0, calc(100% - var(--mcp-sp-12)) 0, 100% 50%, calc(100% - var(--mcp-sp-12)) 100%, 0 100%,
+                        var(--mcp-sp-1) var(--mcp-sp-1), calc(100% - var(--mcp-sp-12) - var(--mcp-sp-1)) var(--mcp-sp-1), calc(100% - var(--mcp-sp-1)) 50%, calc(100% - var(--mcp-sp-12) - var(--mcp-sp-1)) calc(100% - var(--mcp-sp-1)), var(--mcp-sp-1) calc(100% - var(--mcp-sp-1))
+                    );
+                }
             }
             &:last-child {
                 /* keep the uniform light border (no border-right:0
                    override) so the last segment matches the rest */
                 margin-right: 0 !important;
                 clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--mcp-sp-12) 50%);
+
+                &::before {
+                    clip-path: polygon(evenodd,
+                        0 0, 100% 0, 100% 100%, 0 100%, var(--mcp-sp-12) 50%,
+                        var(--mcp-sp-1) var(--mcp-sp-1), calc(100% - var(--mcp-sp-1)) var(--mcp-sp-1), calc(100% - var(--mcp-sp-1)) calc(100% - var(--mcp-sp-1)), var(--mcp-sp-1) calc(100% - var(--mcp-sp-1)), calc(var(--mcp-sp-12) + var(--mcp-sp-1)) 50%
+                    );
+                }
             }
             &:hover { color: var(--mcp-ink-2) !important; background: var(--mcp-surface-2) !important; }
             &[aria-pressed="true"],
@@ -145,7 +177,9 @@
             &[aria-checked="true"] {
                 color: var(--mcp-accent) !important;
                 background: var(--mcp-accent-soft) !important;
-                border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+                /* border comes from the base ::before ring (follows
+                   the chevron incl. diagonals); no clipped border */
+                border: 0 !important;
                 box-shadow: none !important;
                 outline: 0 !important;
             }
