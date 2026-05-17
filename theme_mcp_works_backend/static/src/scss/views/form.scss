@@ -683,20 +683,21 @@
         color: var(--mcp-ink) !important;
     }
 }
-/* Grand-total line — sapphire HUD bar */
+/* Grand-total line — transparent, sapphire text (Rosen: "прозрачен
+   фон, син текст" — not the white-on-blue bar). */
 .o_form_view .oe_subtotal_footer .o_total,
 .o_form_view .oe_subtotal_footer tr:last-child,
 .o_form_view .o_field_account-tax-total .o_total,
 .o_form_view .o_total .o_total_amount,
 .o_form_view .o_total .o_total_total {
-    background: var(--mcp-accent) !important;
-    color: var(--mcp-surface) !important;
+    background: transparent !important;
+    color: var(--mcp-accent) !important;
     font-family: var(--mcp-font-mono) !important;
     font-weight: 700 !important;
     letter-spacing: 0.04em !important;
-    box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
+    box-shadow: none !important;
 
-    * { color: var(--mcp-surface) !important; }
+    * { color: var(--mcp-accent) !important; }
 }
 
 /* ── Chatter (right rail) ───────────────────────────────────── */
