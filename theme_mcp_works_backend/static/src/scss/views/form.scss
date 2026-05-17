@@ -476,36 +476,35 @@
     background: var(--mcp-accent-soft) !important;
 }
 
-/* Editable o2m row — UNIFORM control height. Each widget scss sets
-   its own form height/padding (many2one 20px, tags min-h 28px,
-   monetary pad 5/6, state pad 3/12, …); harmless on a form but
-   inside a list ROW they make every cell a different height → the
-   inputs look distorted (Rosen: "различна височина на импут
-   полетата ... разкривени"). The original stays uniform via Odoo's
-   native list editor — neutralise our per-widget divergence form
-   -scoped so the row line drives ONE height for all cells. Frozen
-   standalone list screen never matches (.o_form_view scope). */
-.o_form_view .o_field_x2many .o_data_row .o_data_cell {
+/* Editable o2m row — match the ORIGINAL exactly. The original's
+   uniformity comes from a UNIFORM CELL padding (8px 4.8px) + Odoo's
+   own inline edit height — NOT from forcing input heights. Our
+   per-widget scss (many2one 20px, tags min-h 28px, monetary 5/6,
+   state 3/12) added DIVERGENT heights so rows looked distorted; the
+   earlier fix over-corrected by zeroing input padding (Rosen: "няма
+   падинг"). So: (a) give the editable cell the original 8px/4.8px
+   padding (overrides the leaked frozen list.scss td 8px/16px —
+   .o_data_cell is form-scoped, standalone list untouched);
+   (b) neutralise ONLY the per-widget fixed/min heights so every
+   cell falls back to the same line — WITHOUT touching input padding
+   or fighting Odoo's native inline edit height. */
+.o_form_view .o_field_x2many .o_data_row .o_data_cell,
+.o_form_view .o_field_x2many tbody td.o_data_cell {
     vertical-align: middle !important;
+    padding: var(--mcp-list-cell-pad-y) var(--mcp-list-cell-pad-x-sm) !important;
 }
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget,
-.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget > div,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget * {
+    min-height: 0 !important;
+}
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_many2one,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_many2one_selection,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_input_dropdown,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_tags,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_many2many_tags {
     height: auto !important;
-    min-height: 0 !important;
     line-height: var(--mcp-list-line-height) !important;
-}
-.o_form_view .o_field_x2many .o_data_row .o_data_cell
-    input:not([type="checkbox"]):not([type="radio"]),
-.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_input,
-.o_form_view .o_field_x2many .o_data_row .o_data_cell select {
-    height: var(--mcp-sp-24) !important;
-    min-height: var(--mcp-sp-24) !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    line-height: var(--mcp-sp-24) !important;
 }
 
 /* ── Totals box (form footer) ───────────────────────────────────
