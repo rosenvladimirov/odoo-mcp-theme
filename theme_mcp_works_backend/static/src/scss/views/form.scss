@@ -451,6 +451,17 @@
     padding: var(--mcp-sp-2) var(--mcp-list-cell-pad-x-sm) !important;
     height: auto !important;
 }
+/* The add-row is a tbody tr → the leaked frozen list.scss
+   `tbody tr:hover` (blue fill + inset accent bars) lights the WHOLE
+   row when the mouse is anywhere on it. Kill the row-level hover
+   here; only the individual link/.btn keeps its own :hover accent
+   (Rosen: "само за бутоните при ховер, без да е на реда ховера"). */
+.o_form_view .o_field_x2many tbody tr:has(> .o_field_x2many_list_row_add):hover,
+.o_form_view .o_field_x2many tr:has(> .o_field_x2many_list_row_add):hover,
+.o_form_view .o_field_x2many .o_field_x2many_list_row_add:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+}
 .o_form_view .o_field_x2many .o_field_x2many_list_row_add a,
 .o_form_view .o_field_x2many .o_list_record_add a,
 .o_form_view .o_field_x2many .o_field_x2many_list_row_add .btn {
