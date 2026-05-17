@@ -488,11 +488,26 @@
    Rosen rejected). Form-scoped: the frozen standalone list screen
    never matches (.o_form_view). Checkbox/radio keep their own
    square widget styling. */
+/* A table ROW is as tall as its TALLEST cell — so the whole row is
+   pinned to btn-h AND every cell clips to it, otherwise one taller
+   cell (the many2one with its label/external-link buttons, the
+   drag handle, the forecast/trash button cells) stretches the row
+   and leaves dead space round the small inputs (Rosen: "в оригинала
+   реда е висок толкото колкото са високи импут полетата"). */
+.o_form_view .o_field_x2many tbody tr.o_data_row {
+    height: var(--mcp-btn-h) !important;
+}
 .o_form_view .o_field_x2many .o_data_row .o_data_cell,
 .o_form_view .o_field_x2many tbody td.o_data_cell {
     height: var(--mcp-btn-h) !important;
     padding: 0 var(--mcp-list-cell-pad-x-sm) !important;
     vertical-align: middle !important;
+    overflow: hidden !important;
+}
+/* No in-row control/button may exceed the row height */
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .btn,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget > * {
+    max-height: var(--mcp-btn-h) !important;
 }
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_widget > div,
