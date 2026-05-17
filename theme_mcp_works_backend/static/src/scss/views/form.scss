@@ -124,6 +124,28 @@
         }
     }
 }
+/* Statusbar action buttons — pale border like the control-panel
+   buttons, not the global .btn-secondary near-black --mcp-ink edge
+   (Rosen: "рамките черни са, трябва да са бледи както в контрол
+   панела"). Mirrors control_panel.scss secondary-button look;
+   sizing stays the button-calc (same as CP). */
+.o_form_view .o_form_statusbar .o_statusbar_buttons .btn-secondary {
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+    color: var(--mcp-ink-2) !important;
+    background: transparent !important;
+
+    &:hover {
+        color: var(--mcp-accent) !important;
+        border-color: var(--mcp-accent) !important;
+        background: var(--mcp-accent-soft) !important;
+    }
+}
+.o_form_view .o_form_statusbar .o_statusbar_buttons .btn.btn-primary,
+.o_form_view .o_form_statusbar .o_statusbar_buttons .btn-primary {
+    border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
+    border-radius: 0 !important;
+}
 
 /* ── Smart buttons (button-box) ─────────────────────────────── */
 .o_form_view .oe_button_box {
