@@ -629,3 +629,17 @@
     justify-content: center !important;
     flex: 0 0 auto !important;
 }
+
+/* Search input must stay frameless ON FOCUS too — the global
+   .o_input:focus underline (inset bottom box-shadow) is redundant
+   inside the widget's own frame/glow. (0,5,0) beats the global
+   input-focus rule. (Rosen: "при фокус махни долния бордер".) */
+.o_control_panel .o_searchview .o_searchview_input.o_input:focus,
+.o_control_panel .o_searchview .o_searchview_input.o_input:focus-visible,
+.o_control_panel .o_searchview .o_searchview_input.o_input:focus-within,
+.o_control_panel .o_searchview input.o_searchview_input:focus {
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+    background: transparent !important;
+}
