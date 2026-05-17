@@ -92,11 +92,9 @@
             text-transform: uppercase !important;
             color: var(--mcp-ink-dim) !important;
             background: var(--mcp-surface) !important;
-            /* SAME light border on every segment as the current step
-               (Rosen: "искам навсякъде да е такъв [светъл], другите
-               са тъмно сини") — was border:0 + a lighter --mcp-rule
-               right divider only. */
-            border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+            /* SAME lightest border on every segment (Rosen: етал. =
+               --mcp-rule, "другите бяха тъмно сини"). */
+            border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
             border-radius: 0 !important;
             transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
             position: relative;
@@ -147,7 +145,7 @@
             &[aria-checked="true"] {
                 color: var(--mcp-accent) !important;
                 background: var(--mcp-accent-soft) !important;
-                border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+                border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
                 box-shadow: none !important;
                 outline: 0 !important;
             }
@@ -170,7 +168,7 @@
    панела"). Mirrors control_panel.scss secondary-button look;
    sizing stays the button-calc (same as CP). */
 .o_form_view .o_form_statusbar .o_statusbar_buttons .btn-secondary {
-    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: 0 !important;
     color: var(--mcp-ink-2) !important;
     background: transparent !important;
@@ -183,7 +181,8 @@
 }
 .o_form_view .o_form_statusbar .o_statusbar_buttons .btn.btn-primary,
 .o_form_view .o_form_statusbar .o_statusbar_buttons .btn-primary {
-    border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
+    /* same lightest border as the rest (Rosen: not the dark sapphire) */
+    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: 0 !important;
 }
 
