@@ -117,7 +117,9 @@
                 position: absolute;
                 inset: 0;
                 pointer-events: none;
-                background: var(--mcp-rule);
+                /* slightly darker than --mcp-rule (Rosen: "леко
+                   потъмни бордерите") */
+                background: var(--mcp-rule-strong);
                 clip-path: polygon(evenodd,
                     0 0, calc(100% - var(--mcp-sp-12)) 0, 100% 50%, calc(100% - var(--mcp-sp-12)) 100%, 0 100%, var(--mcp-sp-12) 50%,
                     var(--mcp-sp-1) var(--mcp-sp-1), calc(100% - var(--mcp-sp-12) - var(--mcp-sp-1)) var(--mcp-sp-1), calc(100% - var(--mcp-sp-1)) 50%, calc(100% - var(--mcp-sp-12) - var(--mcp-sp-1)) calc(100% - var(--mcp-sp-1)), var(--mcp-sp-1) calc(100% - var(--mcp-sp-1)), calc(var(--mcp-sp-12) + var(--mcp-sp-1)) 50%
