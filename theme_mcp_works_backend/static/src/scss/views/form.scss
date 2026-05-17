@@ -59,11 +59,14 @@
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    padding: 0 !important;
+    /* 8px padding on ALL sides (Rosen) */
+    padding: var(--mcp-sp-8) !important;
     overflow: hidden;
     /* Odoo 19 collapses this flex bar to ~9px so the 32px arrow
-       segments get clipped to broken fragments — pin the height. */
-    min-height: var(--mcp-sp-40) !important;
+       segments get clipped to broken fragments — pin the height.
+       32 chevron + 2×8 padding = 48 so the new all-side padding
+       doesn't clip them (overflow:hidden). */
+    min-height: var(--mcp-sp-48) !important;
     align-items: center !important;
 
     .o_statusbar_status {
