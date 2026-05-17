@@ -430,12 +430,25 @@ a.purchase-dashboard-card.btn {
        like the digit was doubled (Rosen: "двойно оказване на
        цифрите"). Keep .ps-4 small & muted. */
     .fs-1 .ps-4, .fs-2 .ps-4, .fs-3 .ps-4, .fs-4 .ps-4,
-    .fs-1 .ps-4 span, .fs-2 .ps-4 span, .fs-3 .ps-4 span, .fs-4 .ps-4 span,
-    .ps-4 .o_priority_star {
-        font-family: var(--mcp-font-family) !important;
+    .fs-1 .ps-4 span, .fs-2 .ps-4 span, .fs-3 .ps-4 span, .fs-4 .ps-4 span {
         font-size: var(--mcp-sp-12) !important;
         font-weight: 500 !important;
         color: var(--mcp-ink-3) !important;
+        line-height: 1 !important;
+        letter-spacing: 0 !important;
+    }
+    /* The ★ is a FontAwesome glyph — it renders via the FA font.
+       The big-number / shrink rules forced mono/sans on it → the
+       glyph broke into a placeholder box (Rosen circled it). Keep
+       FontAwesome + small gold star. (0,5,0) beats them all. */
+    .fs-1 .ps-4 .o_priority_star, .fs-2 .ps-4 .o_priority_star,
+    .fs-3 .ps-4 .o_priority_star, .fs-4 .ps-4 .o_priority_star,
+    .ps-4 .o_priority_star.fa,
+    .ps-4 .o_priority_star.fa-star {
+        font-family: "FontAwesome" !important;
+        font-size: var(--mcp-sp-12) !important;
+        font-weight: 400 !important;
+        color: var(--mcp-warn) !important;
         line-height: 1 !important;
         letter-spacing: 0 !important;
     }
