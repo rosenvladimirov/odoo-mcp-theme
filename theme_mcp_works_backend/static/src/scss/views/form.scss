@@ -409,7 +409,9 @@
         white-space: nowrap;
     }
     tbody td {
-        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
+        /* padding removed (Rosen) — cell padding is owned by the
+           editable-row rule (0 / --mcp-list-cell-pad-x-sm, = the
+           original 0/4.8px); this 8/10 fought it. */
         color: var(--mcp-ink) !important;
         border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     }
