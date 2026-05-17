@@ -222,9 +222,32 @@
     min-height: 0 !important;
     align-self: stretch !important;
 
-    > .o_notebook_content,
-    > .o_notebook_content > .tab-content,
-    > .o_notebook_content > .tab-content > .tab-pane.active {
+    /* DOM is <div class="o_notebook_content tab-content"> (both
+       classes on ONE element) with <div class="tab-pane active">
+       directly inside — so it must be flat + flex-column for the
+       stretch to reach the pane (Rosen: "не се изпъва до края и
+       вътре tab-pane също"). */
+    > .o_notebook_content {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    > .o_notebook_content > .tab-pane.active,
+    > .o_notebook_content > .tab-pane.show {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    /* let the field widget inside the pane grow too, so the content
+       reaches the end (outer container only — the frozen order-line
+       TABLE internals stay untouched). */
+    > .o_notebook_content > .tab-pane.active > .o_field_widget,
+    > .o_notebook_content > .tab-pane.active > .o_field_widget > .o_field_x2many,
+    > .o_notebook_content > .tab-pane.active > .o_field_widget > .o_field_x2many > .o_list_view {
         flex: 1 1 auto !important;
         min-height: 0 !important;
         width: 100% !important;
