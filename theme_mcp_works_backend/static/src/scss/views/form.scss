@@ -331,15 +331,29 @@
    (per the list-freeze rule, form-context container sizing). */
 .o_form_view .o_field_one2many,
 .o_form_view .o_field_x2many,
+.o_form_view .o_field_x2many.o_list_view,
 .o_form_view .o_field_x2many .o_list_view {
     min-width: 0 !important;
     max-width: 100% !important;
+    width: 100% !important;
 }
-.o_form_view .o_field_x2many .o_list_renderer {
+/* The x2many box CLIPS — nothing escapes the field (note:
+   .o_field_x2many IS the .o_list_view element, combined classes). */
+.o_form_view .o_field_one2many,
+.o_form_view .o_field_x2many.o_list_view {
+    overflow: hidden !important;
+}
+/* …and the .table-responsive renderer is the ONE scroll box: a plain
+   block that scrolls the wide fixed table horizontally inside the
+   field (Rosen: "нещо е извън"). */
+.o_form_view .o_field_x2many .o_list_renderer,
+.o_form_view .o_field_x2many .o_list_renderer.table-responsive {
+    display: block !important;
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
     overflow-x: auto !important;
+    overflow-y: visible !important;
 }
 .o_form_view .o_field_x2many .o_list_renderer table.o_list_table {
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
