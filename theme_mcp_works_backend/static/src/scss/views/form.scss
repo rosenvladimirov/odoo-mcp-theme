@@ -131,14 +131,57 @@
                accent border/text (Rosen: "няма ляв бордер, искам да
                се запълва с бледо синьо"). clip-path shapes the
                border to the chevron. */
+            /* CURRENT step. clip-path clips a real border to slivers
+               (reads "blue"); use the bordered-notch technique like
+               the totals box — segment bg = the LIGHT border colour,
+               ::before inset 1px (chevron-shaped per position) paints
+               the pale-blue fill → a clean 1px light border that
+               follows the chevron incl. the left notch (Rosen:
+               "светъл бордер като на бутоните, бледо синьо пълнеж"). */
             &.o_arrow_button_current,
             &[aria-current="step"],
             &[aria-checked="true"] {
                 color: var(--mcp-accent) !important;
-                background: var(--mcp-accent-soft) !important;
-                /* light border like the buttons (Rosen), not accent */
-                border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+                background: var(--mcp-rule-strong) !important;
+                border: 0 !important;
                 box-shadow: none !important;
+                outline: 0 !important;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    z-index: 0;
+                    background: var(--mcp-accent-soft);
+                    /* middle chevron, inset 1px */
+                    clip-path: polygon(
+                        var(--mcp-sp-1) var(--mcp-sp-1),
+                        calc(100% - var(--mcp-sp-12) - var(--mcp-sp-1)) var(--mcp-sp-1),
+                        calc(100% - var(--mcp-sp-1)) 50%,
+                        calc(100% - var(--mcp-sp-12) - var(--mcp-sp-1)) calc(100% - var(--mcp-sp-1)),
+                        var(--mcp-sp-1) calc(100% - var(--mcp-sp-1)),
+                        calc(var(--mcp-sp-12) + var(--mcp-sp-1)) 50%
+                    );
+                }
+                &.o_first::before {
+                    clip-path: polygon(
+                        var(--mcp-sp-1) var(--mcp-sp-1),
+                        calc(100% - var(--mcp-sp-12) - var(--mcp-sp-1)) var(--mcp-sp-1),
+                        calc(100% - var(--mcp-sp-1)) 50%,
+                        calc(100% - var(--mcp-sp-12) - var(--mcp-sp-1)) calc(100% - var(--mcp-sp-1)),
+                        var(--mcp-sp-1) calc(100% - var(--mcp-sp-1))
+                    );
+                }
+                &.o_last::before {
+                    clip-path: polygon(
+                        var(--mcp-sp-1) var(--mcp-sp-1),
+                        calc(100% - var(--mcp-sp-1)) var(--mcp-sp-1),
+                        calc(100% - var(--mcp-sp-1)) calc(100% - var(--mcp-sp-1)),
+                        var(--mcp-sp-1) calc(100% - var(--mcp-sp-1)),
+                        calc(var(--mcp-sp-12) + var(--mcp-sp-1)) 50%
+                    );
+                }
+                > * { position: relative; z-index: 1; }
             }
         }
     }
