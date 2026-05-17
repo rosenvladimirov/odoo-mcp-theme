@@ -213,6 +213,23 @@
 /* ── Notebook tabs ──────────────────────────────────────────── */
 .o_form_view .o_notebook {
     margin-top: var(--mcp-sp-8);
+    /* Stretch the notebook to fill the sheet (full width + grow to
+       the end) WITHOUT touching the sibling widgets — only the
+       notebook box & its own content/tab wrappers (Rosen:
+       "изпънат до края без да влияе на останалите видгети"). The
+       frozen order-line TABLE internals stay untouched. */
+    width: 100% !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    align-self: stretch !important;
+
+    > .o_notebook_content,
+    > .o_notebook_content > .tab-content,
+    > .o_notebook_content > .tab-content > .tab-pane.active {
+        flex: 1 1 auto !important;
+        min-height: 0 !important;
+        width: 100% !important;
+    }
 
     .o_notebook_headers {
         border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
