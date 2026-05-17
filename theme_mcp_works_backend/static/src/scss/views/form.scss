@@ -127,6 +127,16 @@
         }
     }
 }
+/* Odoo keeps the responsive "More…" togglers + a collapsed duplicate
+   in the DOM as .d-none. Our chevron rule's `display:flex !important`
+   out-specifies Bootstrap's .d-none and un-hid them → "Запитване"
+   and "..." showed twice (Rosen). Re-assert d-none with higher
+   specificity (.btn.d-none = 5 classes beats the chevron rule). */
+.o_form_view .o_form_statusbar .o_statusbar_status .btn.d-none,
+.o_form_view .o_form_statusbar .o_statusbar_status .o_arrow_button.d-none,
+.o_form_view .o_form_statusbar .o_statusbar_status button.d-none {
+    display: none !important;
+}
 /* Statusbar action buttons — pale border like the control-panel
    buttons, not the global .btn-secondary near-black --mcp-ink edge
    (Rosen: "рамките черни са, трябва да са бледи както в контрол
