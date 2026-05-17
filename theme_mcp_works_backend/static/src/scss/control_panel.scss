@@ -643,3 +643,25 @@
     outline: 0 !important;
     background: transparent !important;
 }
+
+/* The compact icon dropdown-toggles (cog / actions) are square AND
+   carry Odoo's .border-0 — but the 19.0.1.59 .border-0 honour rule
+   stripped their frame. Per Rosen they follow the square-button
+   rules, which in this theme include the 1px rule-strong border
+   ("продължава да няма бордер"). (0,6,0) selector beats the
+   .border-0 honour rule (0,5,0); the search toggler/facet ✕ stay
+   borderless (no .border-0.p-0 signature). All-token. */
+.o_control_panel .btn.o-dropdown.dropdown-toggle.border-0.p-0,
+.o_control_panel .btn.dropdown-toggle.border-0.p-0:not(.o_searchview_dropdown_toggler),
+.o_control_panel .btn.o-dropdown.dropdown-toggle.border-0.p-0:hover,
+.o_control_panel .btn.dropdown-toggle.border-0.p-0:not(.o_searchview_dropdown_toggler):hover {
+    box-sizing: border-box !important;
+    border: var(--mcp-bw-1) solid var(--mcp-rule-strong) !important;
+    border-radius: 0 !important;
+}
+.o_control_panel .btn.o-dropdown.dropdown-toggle.border-0.p-0:hover,
+.o_control_panel .btn.dropdown-toggle.border-0.p-0:not(.o_searchview_dropdown_toggler):hover {
+    border-color: var(--mcp-accent) !important;
+    background: var(--mcp-accent-soft) !important;
+    color: var(--mcp-accent) !important;
+}
