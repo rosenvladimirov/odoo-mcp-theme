@@ -234,6 +234,40 @@
     box-shadow: var(--mcp-shadow-sm) !important;
 }
 
+/* Form save/discard status buttons (cloud-upload + ✕). Rosen: cloud
+   = blue, ✕ = red, и да получат бордер като останалите бутони
+   ("като паддера"). Override BOTH buttons.scss's accent fill on
+   .o_form_button_save AND the .o_control_panel .border-0 honour
+   rule (high specificity + form.scss loads later). */
+.o_form_status_indicator_buttons .btn.border-0,
+.o_control_panel .o_form_status_indicator_buttons .btn.border-0,
+.o_control_panel .o_form_status_indicator_buttons .o_form_button_save.btn.border-0,
+.o_control_panel .o_form_status_indicator_buttons .o_form_button_cancel.btn.border-0 {
+    background: var(--mcp-bg) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+    border-radius: 0 !important;
+    box-shadow: var(--mcp-shadow-sm) !important;
+}
+.o_form_status_indicator_buttons .btn.border-0:hover,
+.o_control_panel .o_form_status_indicator_buttons .btn.border-0:hover {
+    box-shadow: var(--mcp-shadow-md) !important;
+    background: var(--mcp-accent-soft) !important;
+}
+/* cloud-upload = blue */
+.o_form_status_indicator_buttons .o_form_button_save,
+.o_form_status_indicator_buttons .o_form_button_save .fa,
+.o_form_status_indicator_buttons .o_form_button_save i,
+.o_control_panel .o_form_status_indicator_buttons .o_form_button_save.btn {
+    color: var(--mcp-accent) !important;
+}
+/* discard ✕ = red */
+.o_form_status_indicator_buttons .o_form_button_cancel,
+.o_form_status_indicator_buttons .o_form_button_cancel .fa,
+.o_form_status_indicator_buttons .o_form_button_cancel i,
+.o_control_panel .o_form_status_indicator_buttons .o_form_button_cancel.btn {
+    color: var(--mcp-danger) !important;
+}
+
 /* ── Smart buttons (button-box) ─────────────────────────────── */
 .o_form_view .oe_button_box {
     display: flex !important;
