@@ -254,12 +254,15 @@
 /* ── Icon buttons — cog / optional-columns / action-menus / switcher
    theme.css .cp-icon-btn = 26×26, no border, no padding, transparent,
    ink-3, hover accent-soft. (Fixes Rosen #1: "options button huge".) */
+/* NB: .o_optional_columns_dropdown_toggle is the <i> ICON in v19 —
+   it must NOT be in this group: the block kills ::before, but .oi
+   glyphs ARE rendered via ::before → icon vanished (Rosen: "тази
+   иконка не се вижда"). Only the toggle BUTTON stays (its own
+   ::before/::after caret-kill doesn't touch the child <i>). */
 .o_control_panel .o_cp_action_menus .dropdown-toggle,
 .o_control_panel .o_cp_action_menus > .dropdown > button,
 .o_control_panel .o_cp_action_menus button.dropdown-toggle,
-.o_optional_columns_dropdown_toggle,
-.o_optional_columns_dropdown .dropdown-toggle,
-.o_list_buttons .o_optional_columns_dropdown_toggle {
+.o_optional_columns_dropdown .dropdown-toggle {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
