@@ -75,6 +75,13 @@ const EXCLUDE =
     ".oe_stat_button, .o-form-buttonbox .btn," +
     ".purchase-dashboard-card, .o_sale_dashboard .btn, .o_dashboard_card," +
     ".dropdown-toggle-split, .o_optional_columns_dropdown_toggle," +
+    /* list-header optional-columns gear: the toggle CLASS sits on the
+       inner <i>, the .btn is bare — sizing it to a 33² square
+       overflowed the short sticky header cell and clipped it out of
+       sight (Rosen: "контролера не е наред, не се вижда бутона"). */
+    ".o_optional_columns_dropdown .btn," +
+    ".o_optional_columns_dropdown .dropdown-toggle," +
+    ".o_list_controller .dropdown-toggle," +
     /* facet ✕ — owned entirely by the CSS square rule; JS must NOT
        inject min-width here (Rosen: "махни го"). */
     ".o_facet_remove," +

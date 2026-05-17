@@ -386,3 +386,50 @@ a.purchase-dashboard-card.btn {
         color: var(--mcp-ink-3) !important;
     }
 }
+
+/* List-header optional-columns gear — a small icon button that fits
+   the short sticky header cell (button_sizing no longer force-squares
+   it). Make it visible & centred (Rosen: "контролера не е наред, не
+   се вижда бутона"). Sizes/tokens only — no table colours touched. */
+.o_list_view th.o_list_controller,
+.o_list_view th.o_list_actions_header {
+    overflow: visible !important;
+}
+.o_list_view th.o_list_controller .o_optional_columns_dropdown {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    border-top: 0 !important;
+}
+.o_list_view th.o_list_controller .o_optional_columns_dropdown .btn,
+.o_list_view th.o_list_controller .o_optional_columns_dropdown .dropdown-toggle {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+    line-height: 1 !important;
+    color: var(--mcp-ink-3) !important;
+}
+.o_list_view th.o_list_controller .o_optional_columns_dropdown .btn:hover,
+.o_list_view th.o_list_controller .o_optional_columns_dropdown .dropdown-toggle:hover {
+    color: var(--mcp-accent) !important;
+    background: transparent !important;
+}
+.o_list_view th.o_list_controller .o_optional_columns_dropdown_toggle,
+.o_list_view th.o_list_controller .o_optional_columns_dropdown .oi,
+.o_list_view th.o_list_controller .o_optional_columns_dropdown .fa {
+    display: inline-block !important;
+    font-size: var(--mcp-sp-14) !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+}
