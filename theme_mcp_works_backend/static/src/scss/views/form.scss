@@ -247,6 +247,13 @@
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: 0 !important;
     box-shadow: var(--mcp-shadow-sm) !important;
+    /* bordered inline-flex buttons sit ~1-2px lower on their
+       baseline than the borderless neighbours (Rosen) — centre them */
+    vertical-align: middle !important;
+    align-self: center !important;
+}
+.o_form_status_indicator_buttons {
+    align-items: center !important;
 }
 .o_form_status_indicator_buttons .btn.border-0:hover,
 .o_control_panel .o_form_status_indicator_buttons .btn.border-0:hover {
