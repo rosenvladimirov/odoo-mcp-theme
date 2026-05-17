@@ -379,6 +379,10 @@
 .o_form_view .o_field_x2many .o_list_renderer table.o_list_table {
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     border-radius: 0 !important;
+    /* fill the full-bleed container — no air on the right (Rosen:
+       вертикалния квадрат = "въздух в дясно"). table-layout:fixed +
+       width:100% scales the fixed columns up to span the box. */
+    width: 100% !important;
 
     thead th {
         background: var(--mcp-surface-3) !important;
@@ -388,7 +392,12 @@
         letter-spacing: 0.12em !important;
         text-transform: uppercase !important;
         color: var(--mcp-ink-3) !important;
-        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
+        /* adequate single-row header height — not the tall padded
+           box (Rosen: хоризонталния квадрат = "височината на хедъра
+           не е адекватна"). */
+        height: var(--mcp-btn-h) !important;
+        padding: 0 var(--mcp-sp-10) !important;
+        vertical-align: middle !important;
         border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     }
     tbody td {
