@@ -379,13 +379,24 @@
 }
 /* …and the .table-responsive renderer is the ONE scroll box: a plain
    block that scrolls the wide fixed table horizontally inside the
-   field (Rosen: "нещо е извън"). */
+   field (Rosen: "нещо е извън").
+
+   Odoo core puts `margin: var(--ListRenderer-margin-x)` (= -16px) on
+   the renderer; inside our full-bleed field that shifts it 16px left
+   → 16px AIR on the right (Rosen: "продължава да има въздух"). Kill
+   the offset via the token itself (no raw-px hack — that margin IS a
+   variable), so the renderer sits flush border-to-border on the sheet
+   and the JS resizer's table width then fills with no gap. Form
+   context only — the standalone frozen list screen never matches. */
 .o_form_view .o_field_x2many .o_list_renderer,
 .o_form_view .o_field_x2many .o_list_renderer.table-responsive {
+    --ListRenderer-margin-x: 0 !important;
     display: block !important;
     width: 100% !important;
     min-width: 0 !important;
     max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     overflow-x: auto !important;
     overflow-y: visible !important;
 }
