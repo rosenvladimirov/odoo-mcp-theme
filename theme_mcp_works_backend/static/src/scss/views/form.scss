@@ -24,6 +24,10 @@
     border-radius: 0 !important;
     max-width: 100% !important;
     width: 100% !important;
+    /* H inset for normal widgets (title/fields/groups/note); the
+       order-line o2m list bleeds OUT of exactly this to the sheet
+       border (Rosen). Vertical stays 0 (removed earlier). */
+    padding: 0 var(--mcp-form-sheet-pad-x) !important;
     /* flex item of the display:flex .o_form_sheet_bg — without
        min-width:0 it refuses to shrink below its content, so the
        fixed ~1380px o2m table burst the sheet column out (Rosen:
@@ -348,6 +352,17 @@
 .o_form_view .o_field_one2many,
 .o_form_view .o_field_x2many.o_list_view {
     overflow: hidden !important;
+}
+/* The order-line o2m list bleeds FULL-WIDTH to the .o_form_sheet
+   border, ignoring the sheet's H padding (Rosen: "до границите на
+   o_form_sheet като пренебрегне зададения падинг"). Exactly cancels
+   --mcp-form-sheet-pad-x; only this field bleeds — title/groups/note
+   keep the sheet inset. */
+.o_form_view .o_form_sheet .o_notebook .tab-pane .o_field_widget.o_field_one2many {
+    margin-left: calc(-1 * var(--mcp-form-sheet-pad-x)) !important;
+    margin-right: calc(-1 * var(--mcp-form-sheet-pad-x)) !important;
+    width: calc(100% + 2 * var(--mcp-form-sheet-pad-x)) !important;
+    max-width: calc(100% + 2 * var(--mcp-form-sheet-pad-x)) !important;
 }
 /* …and the .table-responsive renderer is the ONE scroll box: a plain
    block that scrolls the wide fixed table horizontally inside the
