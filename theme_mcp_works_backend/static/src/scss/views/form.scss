@@ -124,6 +124,21 @@
                     0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30),
                     0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
             }
+            /* CURRENT step — radio statusbar uses aria-checked /
+               aria-current / .o_arrow_button_current (NOT
+               aria-pressed), so it fell through to the inactive look
+               with no left edge. Fill it pale-blue from the scheme +
+               accent border/text (Rosen: "няма ляв бордер, искам да
+               се запълва с бледо синьо"). clip-path shapes the
+               border to the chevron. */
+            &.o_arrow_button_current,
+            &[aria-current="step"],
+            &[aria-checked="true"] {
+                color: var(--mcp-accent) !important;
+                background: var(--mcp-accent-soft) !important;
+                border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
+                box-shadow: none !important;
+            }
         }
     }
 }
