@@ -99,7 +99,10 @@
             position: relative;
             /* Arrow-tab shape */
             clip-path: polygon(0 0, calc(100% - var(--mcp-sp-12)) 0, 100% 50%, calc(100% - var(--mcp-sp-12)) 100%, 0 100%, var(--mcp-sp-12) 50%);
-            margin-right: calc(-1 * var(--mcp-sp-8));
+            /* positive gap so the chevron point of one segment does
+               NOT overlap the next (was -8px → segments collided;
+               Rosen: "шевроните се препокриват, по-голямо отстояние"). */
+            margin-right: var(--mcp-sp-6) !important;
             padding-left: var(--mcp-sp-24);
 
             &:first-child {
@@ -108,7 +111,7 @@
             }
             &:last-child {
                 border-right: 0 !important;
-                margin-right: 0;
+                margin-right: 0 !important;
                 clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--mcp-sp-12) 50%);
             }
             &:hover { color: var(--mcp-ink-2) !important; background: var(--mcp-surface-2) !important; }
