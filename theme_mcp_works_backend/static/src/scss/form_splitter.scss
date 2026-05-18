@@ -14,9 +14,16 @@
     margin-right: 0 !important;
     min-width: var(--mcp-sp-320) !important;       /* mirrors MIN_SHEET_PX in JS */
 }
-/* Chatter-form branch: sheet must also reach the bottom (Rosen #3). */
+/* Chatter-form branch: sheet reaches the bottom via flex-fill, NOT a
+   viewport calc. This selector out-specifies form.scss's
+   `.o_form_view .o_form_sheet` so the old `calc(100vh - navbar - 110)`
+   here re-introduced the overshoot (Rosen: "изчислява повече откол-
+   кото е нужно и излиза отдолу; като го махна се позиционира до
+   долния ръб"). min-height:0 → the sheet flex-grows inside the
+   flex-column .o_form_sheet_bg (definite core height) exactly like
+   the chatter, so its bottom == chatter bottom. See form.scss. */
 .o_form_renderer:has(.mcp_form_splitter) > .o_form_sheet_bg .o_form_sheet {
-    min-height: calc(100vh - var(--mcp-navbar-height) - var(--mcp-sp-110)) !important;
+    min-height: 0 !important;
 }
 /* Chatter docked to the right edge — override core's fixed-width rule */
 .o_form_renderer:has(.mcp_form_splitter) > .o-mail-ChatterContainer.o-aside {
