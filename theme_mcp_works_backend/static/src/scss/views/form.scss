@@ -880,6 +880,12 @@
 
     .o-mail-Chatter-topbar {
         border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+        /* Odoo gives most topbar buttons `my-2` but NOT the search
+           button → with the flex default it stuck to the top edge
+           (Rosen: "лепнато за горния край"). Centre the whole flex
+           line so every button is vertically aligned regardless of
+           per-button margin classes. */
+        align-items: center !important;
     }
     /* Text action buttons (Log note / Activity = .btn-secondary):
        mirror the approved statusbar/CP secondary look — PALE
