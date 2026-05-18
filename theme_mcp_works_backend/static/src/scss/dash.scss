@@ -124,7 +124,7 @@
     &:hover { background: var(--mcp-accent-glow); }
 }
 
-/* ── App items — sharp tile with HUD active marker ──────────── */
+/* ── App items — sharp tile (HUD active marker removed) ─────── */
 .mcp_dash_item {
     width: var(--mcp-sp-54);
     height: var(--mcp-sp-54);
@@ -182,15 +182,9 @@
     color: var(--mcp-accent);
 }
 
-/* Active indicator — cyan bar on the left, no soft dot */
-.mcp_dash_item.is-active::before {
-    content: "";
-    position: absolute;
-    left: 0; top: var(--mcp-sp-8); bottom: var(--mcp-sp-8);
-    width: var(--mcp-sp-3);
-    background: var(--mcp-accent-2);
-    box-shadow: 0 0 var(--mcp-sp-6) var(--mcp-accent-2);
-}
+/* Active indicator HUD bar — REMOVED (Rosen: махни всички HUD
+   декорации). Active app still shown by the icon/letter recolor
+   below. */
 .mcp_dash_item.is-active img,
 .mcp_dash_item.is-active .o_app_letter {
     border-color: var(--mcp-accent);

@@ -49,20 +49,9 @@
     flex: 1 1 auto !important;
     min-height: 0 !important;
 }
-/* HUD top-left corner bracket on the sheet (theme.css .form-sheet::before) */
-.o_form_view .o_form_sheet::before {
-    content: "";
-    position: absolute;
-    top: var(--mcp-sp-8);
-    left: var(--mcp-sp-8);
-    width: var(--mcp-sp-12);
-    height: var(--mcp-sp-12);
-    border: var(--mcp-bw-1-5) solid var(--mcp-accent);
-    border-right: 0;
-    border-bottom: 0;
-    opacity: 0.5;
-    pointer-events: none;
-}
+/* HUD top-left corner bracket on the sheet — REMOVED (Rosen: махни
+   всички HUD декорации). .o_form_sheet keeps position:relative for
+   other absolute children. */
 
 /* ── Statusbar — HUD arrow segments ─────────────────────────── */
 .o_form_view .o_form_statusbar {

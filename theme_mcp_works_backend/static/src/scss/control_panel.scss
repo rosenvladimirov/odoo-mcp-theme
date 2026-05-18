@@ -9,11 +9,11 @@
    the raw ~100px brand icon renders unclamped → oversized header +
    stray corner artifact.  Robot styling: slim sharp bar, clamped
    icon, sapphire mono brand + breadcrumb trail. */
-/* Exact match to theme.css .breadcrumb-strip (lines 451-559):
+/* Based on theme.css .breadcrumb-strip (lines 451-559):
    30px strip, pad 0 16px 0 18px, gap 10px, leading › chevron,
-   sapphire ::after gradient underline, and the .mcp_app_brand as a
-   NOTCHED HUD TAG via clip-path — this is the visible cut-corner
-   accent (Rosen: "акцентът с отрязаните ъгълчета да се вижда"). */
+   sapphire ::after gradient underline. The .mcp_app_brand notched
+   HUD tag was REMOVED (Rosen: махни всички HUD декорации) — now a
+   plain inline label (see block below). */
 .mcp_breadcrumb_strip {
     display: flex !important;
     align-items: center !important;
@@ -60,31 +60,32 @@
         pointer-events: none;
     }
 
-    /* the app-brand = notched sapphire HUD tag (cut corner accent) */
+    /* app-brand — notched sapphire HUD tag REMOVED (Rosen: махни
+       всички HUD декорации). Flattened to a plain inline label: no
+       clip-path notch, no sapphire box, no mono/uppercase HUD
+       typography. Layout (height/padding/gap) kept so the strip
+       doesn't reflow; accent text color kept as a plain link tint. */
     .mcp_app_brand,
     .mcp_breadcrumb_steps {
         display: inline-flex !important;
         align-items: center !important;
         gap: var(--mcp-sp-6) !important;
         height: var(--mcp-sp-22) !important;
-        padding: 0 var(--mcp-sp-14) 0 var(--mcp-sp-10) !important;
+        padding: 0 var(--mcp-sp-6) !important;
         text-decoration: none !important;
         outline: 0 !important;
         border: 0 !important;
         box-shadow: none !important;
         color: var(--mcp-accent) !important;
-        background: var(--mcp-accent-soft) !important;
-        clip-path: polygon(0 0, calc(100% - var(--mcp-sp-6)) 0, 100% 50%, calc(100% - var(--mcp-sp-6)) 100%, 0 100%);
-        font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-10) !important;
-        font-weight: 700 !important;
-        letter-spacing: 0.14em !important;
-        text-transform: uppercase !important;
+        background: transparent !important;
+        clip-path: none !important;
+        font-size: var(--mcp-sp-12) !important;
+        font-weight: 600 !important;
         line-height: 1 !important;
         white-space: nowrap;
         flex: 0 0 auto;
 
-        &:hover { background: var(--mcp-accent) !important; color: var(--mcp-surface) !important; }
+        &:hover { color: var(--mcp-accent-dark) !important; }
         &:focus, &:focus-visible { outline: 0 !important; box-shadow: none !important; }
     }
 

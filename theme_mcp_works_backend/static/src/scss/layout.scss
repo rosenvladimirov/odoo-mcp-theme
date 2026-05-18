@@ -41,25 +41,11 @@
     background-image: none !important;
 }
 
-/* HUD corner brackets framing the content viewport — 4 corners,
-   injected as real spans by webclient/hud_corners/hud_corners.js so
-   they sit ABOVE the opaque view surfaces (CSS pseudo-elements only
-   gave 2 corners, painted behind the content).  theme.css .hud-corner
-   = 14×14, 1.5px sapphire, opacity .7. */
+/* HUD corner brackets framing the content viewport — REMOVED (Rosen:
+   махни всички HUD декорации). Injector hud_corners.js dropped from
+   the manifest. position:relative kept as a harmless positioning
+   context (not a visible decoration). */
 .o_action_manager { position: relative; }
-.o_action_manager > .mcp_hud_corner {
-    position: absolute;
-    width: var(--mcp-sp-14);
-    height: var(--mcp-sp-14);
-    border: var(--mcp-bw-1-5) solid var(--mcp-accent);
-    opacity: 0.7;
-    pointer-events: none;
-    z-index: 50;
-}
-.o_action_manager > .mcp_hud_corner.mcp_hud_tl { top: var(--mcp-sp-12);    left: var(--mcp-sp-12);  border-right: 0; border-bottom: 0; }
-.o_action_manager > .mcp_hud_corner.mcp_hud_tr { top: var(--mcp-sp-12);    right: var(--mcp-sp-12); border-left: 0;  border-bottom: 0; }
-.o_action_manager > .mcp_hud_corner.mcp_hud_bl { bottom: var(--mcp-sp-12); left: var(--mcp-sp-12);  border-right: 0; border-top: 0; }
-.o_action_manager > .mcp_hud_corner.mcp_hud_br { bottom: var(--mcp-sp-12); right: var(--mcp-sp-12); border-left: 0;  border-top: 0; }
 
 /* ── Global scanline overlay — robot CRT texture, very subtle ────────── */
 .o_web_client::after {
