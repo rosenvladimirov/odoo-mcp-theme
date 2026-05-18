@@ -866,13 +866,17 @@
 
     /* discuss.scss forces `.o-mail-Thread { bg:--mcp-surface
        !important }` (shared class) — out-specify it so the FORM
-       chatter is pure white; sticky top must be opaque too so
-       scrolled messages don't bleed through. Discuss app thread (no
-       .o-mail-Chatter ancestor) stays --mcp-surface, unchanged. */
+       chatter message area is pure white & readable. Discuss app
+       thread (no .o-mail-Chatter ancestor) stays --mcp-surface. */
     .o-mail-Thread,
-    .o-mail-Chatter-content,
+    .o-mail-Chatter-content { background: var(--mcp-bg) !important; }
+
+    /* Sticky header band intentionally light-blue (Rosen: "искам го
+       светлосин") — same canonical --mcp-cp-bg as the control-panel
+       band, so the chatter topbar reads as a header strip. Opaque so
+       scrolled messages don't bleed through. */
     .o-mail-Chatter-top,
-    .o-mail-Chatter-topbar { background: var(--mcp-bg) !important; }
+    .o-mail-Chatter-topbar { background: var(--mcp-cp-bg) !important; }
 
     .o-mail-Chatter-topbar {
         border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
