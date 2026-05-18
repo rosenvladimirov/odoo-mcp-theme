@@ -795,38 +795,14 @@
 .o_form_view .o_total {
     position: relative;
     min-width: var(--mcp-sp-300);
-    /* The box background IS the border colour; a ::before inset by
-       1px paints the surface, leaving a 1px border that follows the
-       BOTTOM-left diagonal too (clip-path alone clips the border off
-       the cut edge — Rosen: "диагоналната линия да има същия бордер
-       като останалата част"). */
-    border: 0 !important;
-    background: var(--mcp-rule-strong) !important;
+    /* HUD notch + ::before-ring border trick REMOVED (Rosen: махни
+       всички HUD декорации). Plain square bordered box now — no
+       clip-path cut corner. */
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    background: var(--mcp-surface-2) !important;
     border-radius: 0 !important;
     padding: var(--mcp-sp-10) var(--mcp-sp-14) !important;
     margin-right: var(--mcp-sp-8) !important;
-    /* HUD notch BOTTOM-left (Rosen: "ъгълчето трябва да е долу в
-       ляво", not top-left) */
-    clip-path: polygon(0 0, 100% 0, 100% 100%, var(--mcp-sp-10) 100%, 0 calc(100% - var(--mcp-sp-10)));
-
-    &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: var(--mcp-surface-2);
-        /* same notch, inset 1px on every edge incl. the two notch
-           vertices → reveals a 1px band of the box bg (= border) all
-           round, diagonal included. */
-        clip-path: polygon(
-            var(--mcp-sp-1) var(--mcp-sp-1),
-            calc(100% - var(--mcp-sp-1)) var(--mcp-sp-1),
-            calc(100% - var(--mcp-sp-1)) calc(100% - var(--mcp-sp-1)),
-            var(--mcp-sp-10) calc(100% - var(--mcp-sp-1)),
-            var(--mcp-sp-1) calc(100% - var(--mcp-sp-10))
-        );
-    }
-    /* content above the border/fill layers */
-    > * { position: relative; z-index: 1; }
 
     .o_td_label,
     .oe_subtotal_footer_separator,

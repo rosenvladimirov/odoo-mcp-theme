@@ -369,7 +369,7 @@
     font-size: var(--mcp-sp-18);
 }
 
-/* ── Compact name bubble — HUD tag style ────────────────────── */
+/* ── Compact name bubble — plain tooltip (HUD tag REMOVED) ───── */
 .mcp_dash_name_bubble {
     position: absolute;
     left: calc(100% + var(--mcp-sp-8));
@@ -377,17 +377,13 @@
     color: var(--mcp-surface);
     padding: var(--mcp-sp-4) var(--mcp-sp-10);
     border-radius: 0;
-    font-family: var(--mcp-font-mono);
-    font-size: var(--mcp-sp-10);
+    font-size: var(--mcp-sp-12);
     font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
     white-space: nowrap;
     pointer-events: none;
     box-shadow: 0 var(--mcp-sp-2) var(--mcp-sp-8) var(--mcp-scrim-a45);
     z-index: 1;
     transform: translateY(-50%);
-    /* Notched left edge — arrow tag */
-    clip-path: polygon(var(--mcp-sp-4) 0, 100% 0, 100% 100%, var(--mcp-sp-4) 100%, 0 50%);
-    padding-left: var(--mcp-sp-14);
+    /* notched arrow-tag edge REMOVED (Rosen: махни всички HUD
+       декорации) — no clip-path, no mono/uppercase. */
 }
