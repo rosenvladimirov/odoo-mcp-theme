@@ -937,6 +937,10 @@
             box-shadow: var(--mcp-shadow-md) !important;
         }
     }
+    /* Per-message hover-action group nudged down 2px (Rosen). */
+    .o-mail-ActionList-group {
+        margin-top: var(--mcp-sp-2) !important;
+    }
     .o-mail-Message-author { color: var(--mcp-ink) !important; font-weight: 600 !important; }
     .o-mail-Message-date {
         font-family: var(--mcp-font-mono) !important;
