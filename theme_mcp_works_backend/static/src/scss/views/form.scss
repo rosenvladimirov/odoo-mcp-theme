@@ -856,23 +856,67 @@
 
 /* ── Chatter (right rail) ───────────────────────────────────── */
 .o-mail-Chatter {
-    background: var(--mcp-surface) !important;
+    /* pure opaque white so messages are readable (Rosen: "чисто бял
+       без прозрачност"); was --mcp-surface #f8fafc which read dim. */
+    background: var(--mcp-bg) !important;
+    /* same frame as the form sheet (Rosen: "подобно на предходния
+       панел"). */
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
+
+    /* discuss.scss forces `.o-mail-Thread { bg:--mcp-surface
+       !important }` (shared class) — out-specify it so the FORM
+       chatter is pure white; sticky top must be opaque too so
+       scrolled messages don't bleed through. Discuss app thread (no
+       .o-mail-Chatter ancestor) stays --mcp-surface, unchanged. */
+    .o-mail-Thread,
+    .o-mail-Chatter-content,
+    .o-mail-Chatter-top,
+    .o-mail-Chatter-topbar { background: var(--mcp-bg) !important; }
 
     .o-mail-Chatter-topbar {
         border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     }
-    .o-mail-Chatter-topbar button {
-        font-size: var(--mcp-sp-11) !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.06em !important;
-        text-transform: uppercase !important;
-        border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    /* Text action buttons (Log note / Activity = .btn-secondary):
+       mirror the approved statusbar/CP secondary look — PALE
+       --mcp-rule border, opaque white, ink-2, light grow shadow.
+       NOT buttons.scss's near-black --mcp-ink edge, NOT an uppercase
+       box (Rosen: "бутоните не са наред"). */
+    .o-mail-Chatter-topbar .btn-secondary {
+        border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
         border-radius: 0 !important;
         color: var(--mcp-ink-2) !important;
+        background: var(--mcp-bg) !important;
+        box-shadow: var(--mcp-shadow-sm) !important;
+        text-transform: none !important;
+        letter-spacing: normal !important;
 
-        &:hover { color: var(--mcp-accent) !important; border-color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
+        &:hover {
+            color: var(--mcp-accent) !important;
+            border-color: var(--mcp-accent) !important;
+            background: var(--mcp-accent-soft) !important;
+            box-shadow: var(--mcp-shadow-md) !important;
+        }
+    }
+    /* Primary "Изпратете съобщение" — keep the sapphire fill (no
+       colour override), just pale border + sharp + light shadow like
+       the statusbar primary. */
+    .o-mail-Chatter-topbar .btn-primary {
+        border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+        border-radius: 0 !important;
+        box-shadow: var(--mcp-shadow-sm) !important;
+    }
+    /* Icon-only buttons (search / attach / followers = .btn-link):
+       plain icon — no border, no box, no uppercase (button_sizing.js
+       squares them). */
+    .o-mail-Chatter-topbar .btn-link {
+        border: 0 !important;
+        border-radius: 0 !important;
+        text-transform: none !important;
+        letter-spacing: normal !important;
+        color: var(--mcp-ink-2) !important;
+
+        &:hover { color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
     }
     .o-mail-Message-author { color: var(--mcp-ink) !important; font-weight: 600 !important; }
     .o-mail-Message-date {
