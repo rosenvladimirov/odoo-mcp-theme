@@ -15,7 +15,15 @@
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
+    /* Core stretch-а sheet_bg до пълната content-височина (същата,
+       която ограничава chatter-а през .o_form_renderer). Колона →
+       статусбарът взима своите ~48px, а sheet-ът flex-пълни остатъка,
+       така долният му ръб == долния ръб на chatter-а (Rosen: sheet-ът
+       беше „прекалено дълг" — старият 100vh−navbar−110 magic не
+       отчиташе content-top + статусбара и преливаше ~48px надолу). */
     display: flex !important;
+    flex-direction: column !important;
+    min-height: 0 !important;
 }
 .o_form_view .o_form_sheet {
     position: relative;
@@ -35,8 +43,11 @@
        320px floor lives on .o_form_sheet_bg and stays. */
     min-width: 0 !important;
     margin: 0 !important;
+    /* flex-пълни flex-column .o_form_sheet_bg (дефинитна core
+       content-височина) → долен ръб == chatter долен ръб, без viewport
+       magic. min-height:0 → grow-ът не прелива над статусбара. */
     flex: 1 1 auto !important;
-    min-height: calc(100vh - var(--mcp-navbar-height) - var(--mcp-sp-110)) !important;
+    min-height: 0 !important;
 }
 /* HUD top-left corner bracket on the sheet (theme.css .form-sheet::before) */
 .o_form_view .o_form_sheet::before {
