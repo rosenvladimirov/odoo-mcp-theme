@@ -917,16 +917,25 @@
         box-shadow: var(--mcp-shadow-sm) !important;
     }
     /* Icon-only buttons (search / attach / followers = .btn-link):
-       plain icon — no border, no box, no uppercase (button_sizing.js
-       squares them). */
+       framed like the secondary buttons (Rosen: "искам бутоните да
+       са със рамки") — pale --mcp-rule border, white bg so they pop
+       on the light-blue topbar, light grow shadow, hover accent.
+       button_sizing.js keeps them square. */
     .o-mail-Chatter-topbar .btn-link {
-        border: 0 !important;
+        border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
         border-radius: 0 !important;
         text-transform: none !important;
         letter-spacing: normal !important;
         color: var(--mcp-ink-2) !important;
+        background: var(--mcp-bg) !important;
+        box-shadow: var(--mcp-shadow-sm) !important;
 
-        &:hover { color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
+        &:hover {
+            color: var(--mcp-accent) !important;
+            border-color: var(--mcp-accent) !important;
+            background: var(--mcp-accent-soft) !important;
+            box-shadow: var(--mcp-shadow-md) !important;
+        }
     }
     .o-mail-Message-author { color: var(--mcp-ink) !important; font-weight: 600 !important; }
     .o-mail-Message-date {
