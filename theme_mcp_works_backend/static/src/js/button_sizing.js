@@ -61,7 +61,14 @@ function publishVars(H) {
 const FORCE_SQUARE =
     ".o_searchview_dropdown_toggler," +
     ".o_control_panel .btn.dropdown-toggle.border-0.p-0," +
-    ".o_control_panel .btn.o-dropdown.dropdown-toggle.border-0";
+    ".o_control_panel .btn.o-dropdown.dropdown-toggle.border-0," +
+    /* Chatter Followers button: a user icon + a tiny count badge
+       <sup class="o-mail-Followers-counter">1</sup>. classifyButton
+       sees the "1" textContent → mis-calls it rectangular (91px min-
+       width) so it isn't square like the sibling search/attach icon
+       buttons (Rosen: "този бутон не е квадратен"). The counter is a
+       badge, not a label → force square. */
+    ".o-mail-Followers-button";
 
 /* Search toggler is not a .btn — pick it up explicitly too. */
 const MANAGED = ".btn, .o_searchview_dropdown_toggler";
