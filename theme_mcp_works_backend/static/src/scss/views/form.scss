@@ -937,21 +937,6 @@
             box-shadow: var(--mcp-shadow-md) !important;
         }
     }
-    /* Per-message hover actions (reaction smile / star / copy-link).
-       Rosen: иконките са високо → 2px надолу; и да са цветни (звезда
-       жълта, усмивка също; link = sapphire accent). */
-    .o-mail-Message-actions .o-mail-ActionList-group button > i {
-        transform: translateY(var(--mcp-sp-2)) !important;
-    }
-    .o-mail-Message-actions .oi-smile-add,
-    .o-mail-Message-actions .fa-star-o,
-    .o-mail-Message-actions .fa-star {
-        color: var(--mcp-c-amber) !important;
-    }
-    .o-mail-Message-actions .fa-link {
-        color: var(--mcp-accent) !important;
-    }
-
     .o-mail-Message-author { color: var(--mcp-ink) !important; font-weight: 600 !important; }
     .o-mail-Message-date {
         font-family: var(--mcp-font-mono) !important;
