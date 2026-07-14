@@ -14,8 +14,10 @@
     transition: color var(--mcp-t-fast), transform var(--mcp-t-fast);
     color: var(--mcp-rule-strong) !important;
 
-    &:hover,
-    &.fa-star {
+    /* scale ONLY on hover — binding it to &.fa-star also scaled every FILLED
+       star at rest, so filled/empty stars rendered mismatched. Resting filled
+       colour is handled by `.o_priority .fa-star` below. */
+    &:hover {
         color: var(--mcp-warn) !important;
         transform: scale(1.15);
     }

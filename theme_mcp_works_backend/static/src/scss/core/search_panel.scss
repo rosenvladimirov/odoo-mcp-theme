@@ -43,7 +43,9 @@
     padding: 0 var(--mcp-sp-4) !important;
     font-size: var(--mcp-sp-10) !important;
     height: auto !important;
-    transform: none !important;
+    /* NOT !important — else it beats the folded rotate(-90deg) below and the
+       fold chevron never turns (open/folded looked identical). */
+    transform: none;
     opacity: 0.55;
     transition: opacity var(--mcp-t-fast), transform var(--mcp-t-fast);
     &:hover { opacity: 1; }

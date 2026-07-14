@@ -53,7 +53,11 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 99999;
+    /* Must sit BELOW every Odoo overlay — dropdowns/popovers/tooltips (~1000+)
+       and modals (--mcp-z-modal 9999). At 99999 the multiply layer composited
+       OVER modals & date pickers and tinted them (Rosen: разкривени). Kept
+       above the workspace panels so the CRT texture still reads. */
+    z-index: 5;
     background: repeating-linear-gradient(
         0deg,
         transparent 0 var(--mcp-sp-3),
@@ -92,11 +96,12 @@
 .o_field_float,
 .o_field_integer,
 .o_breadcrumb_record_id,
-.mcp_mono,
-.o_searchview .o_facet_values {
+.mcp_mono {
     font-family: var(--mcp-font-mono) !important;
     font-feature-settings: "tnum","ss01";
 }
+/* .o_searchview .o_facet_values removed from the mono set — facet pills are
+   free text; mono widened them and pushed them past the search bar. */
 
 /* ── Soft sapphire halo on panel surfaces ──────────────────────────────
    Triple-stacked: 1px ring + close 12px + far 32px. Survives white-on-white
