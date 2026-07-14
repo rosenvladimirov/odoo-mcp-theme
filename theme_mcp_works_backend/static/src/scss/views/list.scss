@@ -10,7 +10,10 @@
     background: var(--mcp-surface) !important;
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
-    overflow: hidden;
+    /* auto (was hidden) to match Odoo-native .o_list_renderer — wide,
+       many-column lists keep their horizontal scroll instead of losing the
+       trailing columns. table-layout:fixed below is native too, so kept. */
+    overflow: auto;
     /* Drive Odoo's own ListRenderer layout vars to the original
        prototype's proportions (Rosen — sizes only, not colours). */
     --ListRenderer-table-padding-x: var(--mcp-list-table-pad-x) !important;
