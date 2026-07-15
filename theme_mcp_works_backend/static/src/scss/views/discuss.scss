@@ -66,13 +66,17 @@
 
     &.o-active,
     &.o_active {
-        background: var(--mcp-accent-soft) !important;
+        /* no fill box on the active row (Rosen: "бекграуда да изчезне") —
+           just the accent left tick (moved in toward the content, "чертичката
+           да се приближи") + accent text. */
+        background: transparent !important;
         color: var(--mcp-accent) !important;
+        font-weight: 600 !important;
 
         &::before {
             content: "";
             position: absolute;
-            inset: var(--mcp-sp-6) auto var(--mcp-sp-6) 0;
+            inset: var(--mcp-sp-6) auto var(--mcp-sp-6) var(--mcp-sp-12);
             width: var(--mcp-sp-2);
             background: var(--mcp-accent);
             box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-glow);
@@ -141,6 +145,11 @@
     }
     &:hover::after,
     &:focus-visible::after { transform: scaleX(1); }
+
+    /* active row keeps the sapphire text (this rule's base ink-2 would
+       otherwise win over the .o-active color further up the file). */
+    &.o-active,
+    &.o_active { color: var(--mcp-accent) !important; }
 }
 
 /* ── Sidebar action buttons (⋮ channel actions, +/gear category) ──
