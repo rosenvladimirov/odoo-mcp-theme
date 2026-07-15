@@ -120,17 +120,34 @@
    Community е много отдалечена, трябва да е като чертичката"). It sat at the
    channel's far-left edge (inset-left 0 = x8) while the active tick moved in
    to 12px; pull the dot to the same x and give it the sapphire accent. */
+/* Unread marker — a short accent underline under the channel name that
+   BLINKS, instead of the round dot (Rosen: "непрочетено маркирай с премигване
+   на къса подчертаваща линия"). The indicator span is present ONLY when there
+   are unread messages, so restyling it in place needs no extra state class. */
+@keyframes mcp-unread-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.12; }
+}
 .o-mail-DiscussSidebar .o-mail-DiscussSidebar-unreadIndicator {
-    /* x14 — pulled back from the tick's 12px/x20 (Rosen: "много я доближи" =
-       overshot, too close); sits between the old far edge (x8) and the tick. */
-    left: var(--mcp-sp-6) !important;
+    top: auto !important;
+    bottom: var(--mcp-sp-10) !important;
     right: auto !important;
-    color: var(--mcp-accent) !important;
+    left: 56px !important;                       /* under the channel name */
+    width: var(--mcp-sp-16) !important;
+    height: var(--mcp-sp-2) !important;
+    background: var(--mcp-accent) !important;
+    border-radius: 0 !important;
+    animation: mcp-unread-blink 1.2s ease-in-out infinite;
 
+    /* drop the round dot glyph — the bar replaces it */
     i,
-    .fa-circle {
-        color: var(--mcp-accent) !important;
-    }
+    .fa-circle { display: none !important; }
+}
+/* threads have no avatar, so their name sits further left; the shorter row
+   also needs the bar dropped nearer the bottom to clear the name. */
+.o-mail-DiscussSidebarSubchannel .o-mail-DiscussSidebar-unreadIndicator {
+    left: 42px !important;
+    bottom: var(--mcp-sp-2) !important;
 }
 
 /* ── Sidebar rows: animated underline on hover (no fill box) ──────
@@ -221,12 +238,6 @@
     }
     /* drop Odoo's per-item L connectors — the single spine replaces them */
     svg { display: none !important; }
-
-    /* hide the per-thread unread dot — it read as a stray mark next to the
-       thread name (Rosen: "има някаква точка срещу Ideas & Suggestions,
-       разкарай я, не разбирам за какво е"). The unread thread still shows
-       via its bold name; the dot stays on top-level channels. */
-    .o-mail-DiscussSidebar-unreadIndicator { display: none !important; }
 }
 .o-mail-DiscussSidebarChannel-subChannel.btn,
 .o-mail-DiscussSidebarChannel-subChannel {
