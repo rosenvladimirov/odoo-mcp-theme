@@ -221,6 +221,12 @@
     }
     /* drop Odoo's per-item L connectors — the single spine replaces them */
     svg { display: none !important; }
+
+    /* hide the per-thread unread dot — it read as a stray mark next to the
+       thread name (Rosen: "има някаква точка срещу Ideas & Suggestions,
+       разкарай я, не разбирам за какво е"). The unread thread still shows
+       via its bold name; the dot stays on top-level channels. */
+    .o-mail-DiscussSidebar-unreadIndicator { display: none !important; }
 }
 .o-mail-DiscussSidebarChannel-subChannel.btn,
 .o-mail-DiscussSidebarChannel-subChannel {
