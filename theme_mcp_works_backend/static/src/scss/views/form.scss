@@ -481,6 +481,15 @@
         /* no bottom rule under the tabs (Rosen: "махни го") */
         padding: 0 !important;
         background: transparent !important;
+        /* Bleed the tab strip to the sheet's inner border (like the full-width
+           order-line table) but NOT past it. The native ~-24px negative margin
+           overshot the theme's 16px sheet padding by ~8px each side, so the
+           tabs stuck out of the sheet and forced a horizontal scrollbar that
+           stretched the form (Rosen: "разпънало формата"). Clamp the bleed to
+           exactly the sheet padding. */
+        margin-left: calc(-1 * var(--mcp-form-sheet-pad-x)) !important;
+        margin-right: calc(-1 * var(--mcp-form-sheet-pad-x)) !important;
+        max-width: none !important;
 
         .nav-item .nav-link {
             display: inline-flex !important;
