@@ -101,6 +101,55 @@
     }
 }
 
+/* ── Sub-channel (thread) list — clean accordion nesting ──────────
+   Odoo renders each thread under a channel as a `btn btn-secondary` inside
+   a <li> that also carries a per-item SVG L-connector. The theme's generic
+   .btn-secondary gave every thread a heavy 1px ink border and the L-lines
+   read as clutter (Rosen: "Троубълшутинг бутона не трябва да има рамка …
+   разгръщането е грозно → акордеон"). Redo it as a flat, borderless,
+   indented list that hangs off a single sapphire spine. */
+.o-mail-DiscussSidebarChannel-subChannelList {
+    position: relative;
+    /* the accordion spine — one continuous guide the threads hang off,
+       aligned under the parent channel's avatar (~20px in). */
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: var(--mcp-sp-6);
+        left: 20px;
+        width: var(--mcp-sp-2);
+        background: var(--mcp-rule-strong);
+    }
+    /* drop Odoo's per-item L connectors — the single spine replaces them */
+    svg { display: none !important; }
+}
+.o-mail-DiscussSidebarChannel-subChannel.btn,
+.o-mail-DiscussSidebarChannel-subChannel {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    color: var(--mcp-ink-2) !important;
+    margin-left: var(--mcp-sp-32) !important;   /* indent so the item sits clearly right of the spine */
+    padding: var(--mcp-sp-4) var(--mcp-sp-10) !important;
+    min-height: 0 !important;
+    transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
+    /* Odoo dims the thread name to opacity-75 until hover — keep it legible */
+    span, .text-truncate { opacity: 1 !important; }
+
+    &:hover {
+        background: var(--mcp-accent-soft) !important;
+        color: var(--mcp-accent) !important;
+    }
+    &.o-active,
+    &.o_active {
+        background: var(--mcp-accent-soft) !important;
+        color: var(--mcp-accent) !important;
+        font-weight: 600 !important;
+    }
+}
+
 /* ── Thread (right pane) ────────────────────────────────────── */
 .o-mail-Thread,
 .o-mail-DiscussContent {
