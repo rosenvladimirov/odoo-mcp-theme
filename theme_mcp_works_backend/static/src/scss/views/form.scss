@@ -78,7 +78,14 @@
 
         .o_arrow_button,
         button.btn {
-            flex: 1 1 0 !important;
+            /* content-basis segments (was flex:1 1 0 → equal narrow width):
+               long state labels no longer get clipped, AND no segment falls
+               below the ~26px width where the evenodd ::before ring self-
+               intersects into a solid band. grow fills the bar, no shrink so
+               labels stay whole; min-width floors short labels to a valid
+               chevron. */
+            flex: 1 0 auto !important;
+            min-width: var(--mcp-sp-32) !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -162,9 +169,11 @@
             &.disabled[aria-pressed="true"] {
                 color: var(--mcp-surface) !important;
                 background: var(--mcp-accent) !important;
-                box-shadow:
-                    0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30),
-                    0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
+                /* box-shadow renders a RECTANGULAR halo on a clip-path
+                   chevron; drop-shadow follows the shape. none!important
+                   also beats the generic .btn-primary glow in layout.scss. */
+                box-shadow: none !important;
+                filter: drop-shadow(0 0 var(--mcp-sp-3) var(--mcp-accent-a30));
             }
             /* CURRENT step — radio statusbar uses aria-checked /
                aria-current / .o_arrow_button_current (NOT

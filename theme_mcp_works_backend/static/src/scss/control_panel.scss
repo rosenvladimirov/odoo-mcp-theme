@@ -97,10 +97,30 @@
         border-radius: 0 !important;
     }
 
+    /* Horizontal scroll container for the crumb trail. It was unstyled
+       (overflow:visible), so breadcrumb_strip.js — which reveals the ‹ ›
+       chevrons when .mcp_breadcrumb_scroll.scrollWidth > clientWidth and
+       scrolls it via scrollBy — could never detect overflow, and the tail
+       of a deep trail was silently cut. overflow-x:hidden stays program-
+       matically scrollable; the chevrons drive it. */
+    .mcp_breadcrumb_scroll {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        overflow-x: hidden !important;
+        overflow-y: hidden !important;
+        scrollbar-width: none;
+    }
+    .mcp_breadcrumb_scroll::-webkit-scrollbar { display: none; }
+
     /* Odoo's .o_breadcrumb is flex-md-column → inside the 30px strip
        the crumbs stack vertically & collide with the app-brand tag
        ("ПокупкаПокупка", not a path).  Force a single horizontal
-       trail with "/" separators (theme.css .bc-trail). */
+       trail with "/" separators (theme.css .bc-trail).  flex:0 0 auto so
+       the trail keeps its full content width and OVERFLOWS the scroll
+       container (instead of self-clipping with overflow:hidden), which is
+       what lets breadcrumb_strip.js see the overflow and show chevrons. */
     .o_breadcrumb,
     .o_breadcrumb .breadcrumb,
     .breadcrumb {
@@ -112,7 +132,7 @@
         margin: 0 !important;
         padding: 0 !important;
         min-width: 0 !important;
-        overflow: hidden;
+        flex: 0 0 auto !important;
     }
     .o_breadcrumb .breadcrumb-item,
     .breadcrumb .breadcrumb-item {
