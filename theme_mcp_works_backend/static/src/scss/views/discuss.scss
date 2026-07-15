@@ -24,6 +24,10 @@
     border: 0 !important;
     box-shadow: none !important;
     background: transparent !important;
+    /* kill the browser/Bootstrap focus outline — on click the active row lit
+       up a pale 1px frame (Rosen: "про ховера светва бледа рамка"). The
+       animated underline is the cue instead (added for :focus-visible too). */
+    outline: none !important;
 }
 
 /* Category header ("CHANNELS" / "DIRECT MESSAGES"). Odoo 19 nests it
@@ -129,11 +133,14 @@
         transition: transform 0.22s cubic-bezier(0.2, 0.6, 0.2, 1);
         pointer-events: none;
     }
-    &:hover {
+    &:hover,
+    &:focus-visible {
         background: transparent !important;
         color: var(--mcp-accent) !important;
+        outline: none !important;
     }
-    &:hover::after { transform: scaleX(1); }
+    &:hover::after,
+    &:focus-visible::after { transform: scaleX(1); }
 }
 
 /* ── Sidebar action buttons (⋮ channel actions, +/gear category) ──
