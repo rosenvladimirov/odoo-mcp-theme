@@ -13,14 +13,17 @@
     border-right: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
 }
 
-/* Odoo 19: the channel item is a <button class="...btn...rounded-2">.
-   The theme's generic .btn rule otherwise gives it a heavy 1px ink
-   border + rounding — neutralise so the rail stays flat & sharp. */
-.o-mail-DiscussSidebarChannel.btn,
-.o-mail-DiscussSidebarChannel {
-    background: transparent !important;
+/* Odoo 19 renders sidebar rows (mailboxes, channels) and their action
+   buttons as <button class="...btn...">, so the theme's generic .btn rule
+   painted a heavy 1px ink border on each. Kill the border on EVERYTHING in
+   the rail so the menus read flat & borderless (Rosen: "разкарай всички
+   рамки на менютата"). Hover feedback is an animated underline (below). */
+.o-mail-DiscussSidebar .btn,
+.o-mail-DiscussSidebarChannel,
+.o-mail-Mailbox {
     border: 0 !important;
     box-shadow: none !important;
+    background: transparent !important;
 }
 
 /* Category header ("CHANNELS" / "DIRECT MESSAGES"). Odoo 19 nests it
@@ -51,7 +54,9 @@
     position: relative;
 
     &:hover {
-        background: var(--mcp-accent-soft) !important;
+        /* no fill box on hover — the animated underline (below) is the only
+           hover cue (Rosen: "само анимирано подчертаване при ховер"). */
+        background: transparent !important;
         color: var(--mcp-accent) !important;
     }
 
@@ -98,6 +103,64 @@
         min-width: var(--mcp-sp-14);
         text-align: center;
         box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
+    }
+}
+
+/* ── Sidebar rows: animated underline on hover (no fill box) ──────
+   Rosen: "разкарай всички рамки на менютата, само анимирано подчертаване
+   при ховер". Mailboxes (Inbox / Starred / History) + channels get a thin
+   accent underline that sweeps in from the left on hover — no box, no border. */
+.o-mail-DiscussSidebar .o-mail-Mailbox,
+.o-mail-DiscussSidebar .o-mail-DiscussSidebarChannel {
+    position: relative;
+    color: var(--mcp-ink-2) !important;
+    transition: color var(--mcp-t-fast);
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: var(--mcp-sp-12);
+        right: var(--mcp-sp-12);
+        bottom: var(--mcp-sp-3);
+        height: var(--mcp-sp-2);
+        background: var(--mcp-accent);
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 0.22s cubic-bezier(0.2, 0.6, 0.2, 1);
+        pointer-events: none;
+    }
+    &:hover {
+        background: transparent !important;
+        color: var(--mcp-accent) !important;
+    }
+    &:hover::after { transform: scaleX(1); }
+}
+
+/* ── Sidebar action buttons (⋮ channel actions, +/gear category) ──
+   The ⋮ was a big bordered box (Rosen: "бутона с 3 точки … много голям,
+   има рамка, не е нежен"). Make it a small, borderless, gentle icon button. */
+.o-mail-DiscussSidebar .o-mail-DiscussSidebarChannel-actions .btn,
+.o-mail-DiscussSidebar .o-mail-DiscussSidebarChannel-commands .btn,
+.o-mail-DiscussSidebar .o-mail-DiscussSidebarCategory-actions .btn,
+.o-mail-DiscussSidebar button.btn-light.rounded-circle {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    width: var(--mcp-sp-22) !important;
+    height: var(--mcp-sp-22) !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    color: var(--mcp-ink-3) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
+
+    i { font-size: var(--mcp-sp-11) !important; }
+    &:hover {
+        background: var(--mcp-accent-soft) !important;
+        color: var(--mcp-accent) !important;
     }
 }
 
