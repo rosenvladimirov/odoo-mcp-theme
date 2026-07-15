@@ -53,11 +53,13 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    /* Must sit BELOW every Odoo overlay — dropdowns/popovers/tooltips (~1000+)
-       and modals (--mcp-z-modal 9999). At 99999 the multiply layer composited
-       OVER modals & date pickers and tinted them (Rosen: разкривени). Kept
-       above the workspace panels so the CRT texture still reads. */
-    z-index: 5;
+    /* z-index:-1 — sit BEHIND the opaque workspace panels (same idea as the
+       blueprint grid mesh), so the multiply scanline textures ONLY the empty
+       canvas and never tints panels. At z:5 it multiplied over the pure-white
+       form sheet and read as "dirty white" (Rosen: "мръсно бяло заради ситната
+       мрежа"); at 99999 it also composited over modals/pickers. Behind the
+       content = neither problem, texture still shows through transparent gaps. */
+    z-index: -1;
     background: repeating-linear-gradient(
         0deg,
         transparent 0 var(--mcp-sp-3),
