@@ -408,6 +408,15 @@
 .o-mail-DiscussContent-header .o-mail-ActionList button.o-tag-JOIN_LEAVE_CALL:hover i {
     color: var(--mcp-accent) !important;
 }
+/* "New Meeting" button (discuss search area) — a btn-primary whose bg went
+   transparent, leaving its light SVG glyph (--mcp-surface) invisible (Rosen:
+   "икона нов видео разговор не се вижда"). Colour the glyph sapphire. */
+.o-mail-DiscussSearch .btn-primary,
+.o-mail-DiscussSearch .btn-primary svg,
+.o-mail-DiscussSearch .btn-primary path {
+    color: var(--mcp-accent) !important;
+    fill: var(--mcp-accent) !important;
+}
 
 /* Composer (bottom textbox) */
 .o-mail-Composer {
