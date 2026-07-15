@@ -293,8 +293,12 @@
     color: var(--mcp-danger) !important;
 }
 
-/* ── Smart buttons (button-box) ─────────────────────────────── */
-.o_form_view .oe_button_box {
+/* ── Smart buttons (button-box) ─────────────────────────────────
+   Odoo 19 renders the smart-button container as .o-form-buttonbox (the
+   old .oe_button_box no longer exists), so this whole block was scoped to
+   a dead class and never applied — the buttons stayed unstyled AND unequal
+   (Rosen). Retarget the real class. */
+.o_form_view .o-form-buttonbox {
     display: flex !important;
     gap: var(--mcp-sp-1) !important;
     margin: 0 0 var(--mcp-sp-20) 0 !important;
@@ -304,7 +308,7 @@
     width: fit-content;
 
     .oe_stat_button,
-    .o-form-buttonbox button.btn {
+    button.btn {
         display: flex !important;
         flex-direction: column !important;
         align-items: flex-start !important;
@@ -337,6 +341,16 @@
             text-transform: uppercase !important;
             color: var(--mcp-ink-3) !important;
         }
+    }
+
+    /* Consume the equal width the resizer computes per button-box
+       (resizer.js equalizeStatButtons → --mcp-stat-btn-w). Without this the
+       smart buttons stayed content-width and rendered UNEQUAL (Rosen:
+       "магическите бутони да са еднакво широки"). Scoped to real stat
+       buttons — the responsive "More" toggler keeps its own width. */
+    .oe_stat_button {
+        width: var(--mcp-stat-btn-w, var(--mcp-sp-110)) !important;
+        flex: 0 0 auto !important;
     }
 }
 
