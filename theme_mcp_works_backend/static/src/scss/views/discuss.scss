@@ -42,10 +42,13 @@
        of the solid grey bar (Rosen: "бекграунда … само гроу сянка без
        запълване или с полупрозрачно запълване мрежа" → мрежа + glow). */
     background-color: transparent !important;
+    /* very fine mesh, same faint sapphire style as the workspace canvas
+       (--mcp-grid-color) so the label reads clearly over it (Rosen: "не
+       изпъква надписа, мрежата да е много ситна като тази на фона"). */
     background-image:
-        linear-gradient(to right, var(--mcp-accent-a12) var(--mcp-sp-1), transparent var(--mcp-sp-1)),
-        linear-gradient(to bottom, var(--mcp-accent-a12) var(--mcp-sp-1), transparent var(--mcp-sp-1)) !important;
-    background-size: var(--mcp-sp-8) var(--mcp-sp-8) !important;
+        linear-gradient(to right, var(--mcp-grid-color) var(--mcp-sp-1), transparent var(--mcp-sp-1)),
+        linear-gradient(to bottom, var(--mcp-grid-color) var(--mcp-sp-1), transparent var(--mcp-sp-1)) !important;
+    background-size: 4px 4px !important;
     border-bottom: 0 !important;
     box-shadow: 0 var(--mcp-sp-2) var(--mcp-sp-10) calc(-1 * var(--mcp-sp-4)) var(--mcp-accent-a20) !important;
 }
@@ -69,7 +72,9 @@
     font-family: sans-serif !important;
 }
 .o-mail-DiscussSidebarCategory-title {
-    color: var(--mcp-ink-3) !important;
+    /* darker than the old ink-3 so the section label stands out over the mesh
+       (Rosen: "не изпъква надписа") */
+    color: var(--mcp-ink-2) !important;
     font-family: var(--mcp-font-mono) !important;
     font-size: var(--mcp-sp-10) !important;
     font-weight: 600 !important;
