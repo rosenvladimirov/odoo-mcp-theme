@@ -50,7 +50,12 @@
         linear-gradient(to bottom, var(--mcp-grid-color) var(--mcp-sp-1), transparent var(--mcp-sp-1)) !important;
     background-size: 4px 4px !important;
     border-bottom: 0 !important;
-    box-shadow: 0 var(--mcp-sp-2) var(--mcp-sp-10) calc(-1 * var(--mcp-sp-4)) var(--mcp-accent-a20) !important;
+    /* a touch more glow + a faint 1px sapphire ring so a light frame reads
+       around the header (Rosen: "леко увеличи гроуа за да поличи че има лека
+       рамка"). */
+    box-shadow:
+        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a12),
+        0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-4)) var(--mcp-accent-a30) !important;
 }
 /* Category accordion toggle — swap Odoo's chevron for a filled triangle and
    pull it to the tick column (~x14) (Rosen: "смени показалеца > с иконка
