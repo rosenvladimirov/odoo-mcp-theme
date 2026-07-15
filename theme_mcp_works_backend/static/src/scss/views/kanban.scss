@@ -115,9 +115,9 @@
         }
     }
 
-    /* Card title / record-id-style first field */
-    .o_kanban_record_title,
-    .oe_kanban_text strong:first-child {
+    /* Card title / record-id-style first field.
+       (.oe_kanban_text removed — a pre-v17 class Odoo 19 no longer renders.) */
+    .o_kanban_record_title {
         font-family: var(--mcp-font-mono) !important;
         font-size: var(--mcp-sp-11) !important;
         font-weight: 700 !important;
@@ -133,9 +133,9 @@
         color: var(--mcp-ink) !important;
     }
 
-    /* Card footer (metadata) */
-    .o_kanban_record_bottom,
-    .oe_kanban_bottom {
+    /* Card footer (metadata).
+       (.oe_kanban_bottom removed — dead pre-v17 class in Odoo 19.) */
+    .o_kanban_record_bottom {
         display: flex;
         align-items: center;
         justify-content: space-between;
