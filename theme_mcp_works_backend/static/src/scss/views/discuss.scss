@@ -38,8 +38,35 @@
    Grey bar + border on the CONTAINER only; mono/uppercase text on the TITLE;
    no theme padding (the toggler's own padding sets the height = native). */
 .o-mail-DiscussSidebarCategory {
-    background: var(--mcp-surface-3) !important;
-    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+    /* semi-transparent blueprint mesh + a soft sapphire glow below, instead
+       of the solid grey bar (Rosen: "бекграунда … само гроу сянка без
+       запълване или с полупрозрачно запълване мрежа" → мрежа + glow). */
+    background-color: transparent !important;
+    background-image:
+        linear-gradient(to right, var(--mcp-accent-a12) var(--mcp-sp-1), transparent var(--mcp-sp-1)),
+        linear-gradient(to bottom, var(--mcp-accent-a12) var(--mcp-sp-1), transparent var(--mcp-sp-1)) !important;
+    background-size: var(--mcp-sp-8) var(--mcp-sp-8) !important;
+    border-bottom: 0 !important;
+    box-shadow: 0 var(--mcp-sp-2) var(--mcp-sp-10) calc(-1 * var(--mcp-sp-4)) var(--mcp-accent-a20) !important;
+}
+/* Category accordion toggle — swap Odoo's chevron for a filled triangle and
+   pull it to the tick column (~x14) (Rosen: "смени показалеца > с иконка
+   (триъгълник) и го извади на нивото на лявата чертичка на генерал менюто"). */
+.o-mail-DiscussSidebarCategory-icon {
+    left: -15px !important;          /* → ~x14, in the active-tick column */
+    margin-left: 0 !important;
+    color: var(--mcp-accent) !important;
+    font-size: var(--mcp-sp-11) !important;
+}
+.o-mail-DiscussSidebarCategory-icon.oi-chevron-right::before,
+.o-mail-DiscussSidebarCategory-icon.oi-chevron-left::before {
+    content: "\25B8" !important;     /* ▸ collapsed */
+    font-family: sans-serif !important;
+}
+.o-mail-DiscussSidebarCategory-icon.oi-chevron-down::before,
+.o-mail-DiscussSidebarCategory-icon.oi-chevron-up::before {
+    content: "\25BE" !important;     /* ▾ expanded */
+    font-family: sans-serif !important;
 }
 .o-mail-DiscussSidebarCategory-title {
     color: var(--mcp-ink-3) !important;
