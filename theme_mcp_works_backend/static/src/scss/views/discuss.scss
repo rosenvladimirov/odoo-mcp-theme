@@ -365,6 +365,50 @@
     }
 }
 
+/* ── Thread controls: borderless + hover indigo glow ──────────────
+   The header toolbar buttons, the sub-channel preview link and the
+   message-action buttons all picked up the theme's 1px ink border; the call
+   buttons even kept a WHITE glyph on the now-transparent bg → invisible.
+   Strip the border, make every icon visible, and give ONLY a hover sapphire
+   glow (Rosen: "иконите не се виждат, има рамка на линка за отваряне, трябва
+   само да има ховер с индиго сияние"). */
+.o-mail-DiscussContent-header button,
+.o-mail-DiscussContent-header .btn,
+.o-mail-SubChannelPreview,
+.o-mail-SubChannelPreview.btn,
+.o-mail-Message .btn {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    transition: box-shadow var(--mcp-t-fast), color var(--mcp-t-fast);
+
+    &:hover {
+        background: transparent !important;
+        box-shadow:
+            0 0 var(--mcp-sp-10) var(--mcp-accent-a30),
+            0 0 0 var(--mcp-sp-1) var(--mcp-accent-a20) !important;
+        color: var(--mcp-accent) !important;
+    }
+}
+/* header icons made visible & uniform — the call buttons' glyph was white */
+.o-mail-DiscussContent-header button i,
+.o-mail-DiscussContent-header .btn i {
+    color: var(--mcp-ink-2) !important;
+}
+.o-mail-DiscussContent-header button:hover i,
+.o-mail-DiscussContent-header .btn:hover i {
+    color: var(--mcp-accent) !important;
+}
+/* the call-button glyph is forced WHITE by Odoo with high specificity
+   (.o-mail-ActionList button.o-tag-JOIN_LEAVE_CALL i !important) — beat it so
+   the video/phone icons show on the theme's transparent bg. */
+.o-mail-DiscussContent-header .o-mail-ActionList button.o-tag-JOIN_LEAVE_CALL i {
+    color: var(--mcp-ink-2) !important;
+}
+.o-mail-DiscussContent-header .o-mail-ActionList button.o-tag-JOIN_LEAVE_CALL:hover i {
+    color: var(--mcp-accent) !important;
+}
+
 /* Composer (bottom textbox) */
 .o-mail-Composer {
     background: var(--mcp-surface) !important;
