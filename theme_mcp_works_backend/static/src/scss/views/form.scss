@@ -51,8 +51,13 @@
     margin: 0 !important;
     /* flex-пълни flex-column .o_form_sheet_bg (дефинитна core
        content-височина) → долен ръб == chatter долен ръб, без viewport
-       magic. min-height:0 → grow-ът не прелива над статусбара. */
-    flex: 1 1 auto !important;
+       magic. min-height:0 → grow-ът не прелива над статусбара.
+       shrink:0 (беше 1) — стекът НЕ се свива под съдържанието си: при
+       висока форма (напр. фактура с дълъг Outstanding списък) sheet-ът
+       расте до съдържанието вместо да го капва → .o_content пуска скрол
+       и totals/outstanding остават ВЪТРЕ (Rosen: "ТРЯБВА да са в него и
+       форм вю-то да пуска скрол"). Grow остава → къси форми пак се пълнят. */
+    flex: 1 0 auto !important;
     min-height: 0 !important;
 }
 /* HUD top-left corner bracket on the sheet — REMOVED (Rosen: махни
@@ -423,7 +428,9 @@
        "изпънат до края без да влияе на останалите видгети"). The
        frozen order-line TABLE internals stay untouched. */
     width: 100% !important;
-    flex: 1 1 auto !important;
+    /* shrink:0 (беше 1) — вж. .o_form_sheet: не се свива под съдържанието,
+       за да не изпадат totals/outstanding под sheet-а без скрол. */
+    flex: 1 0 auto !important;
     min-height: 0 !important;
     align-self: stretch !important;
 
@@ -433,7 +440,7 @@
        stretch to reach the pane (Rosen: "не се изпъва до края и
        вътре tab-pane също"). */
     > .o_notebook_content {
-        flex: 1 1 auto !important;
+        flex: 1 0 auto !important;
         min-height: 0 !important;
         min-width: 0 !important;
         max-width: 100% !important;
@@ -443,7 +450,7 @@
     }
     > .o_notebook_content > .tab-pane.active,
     > .o_notebook_content > .tab-pane.show {
-        flex: 1 1 auto !important;
+        flex: 1 0 auto !important;
         min-height: 0 !important;
         min-width: 0 !important;
         max-width: 100% !important;
