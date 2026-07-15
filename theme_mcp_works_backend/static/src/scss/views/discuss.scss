@@ -119,7 +119,9 @@
    channel's far-left edge (inset-left 0 = x8) while the active tick moved in
    to 12px; pull the dot to the same x and give it the sapphire accent. */
 .o-mail-DiscussSidebar .o-mail-DiscussSidebar-unreadIndicator {
-    left: var(--mcp-sp-12) !important;
+    /* x14 — pulled back from the tick's 12px/x20 (Rosen: "много я доближи" =
+       overshot, too close); sits between the old far edge (x8) and the tick. */
+    left: var(--mcp-sp-6) !important;
     right: auto !important;
     color: var(--mcp-accent) !important;
 
