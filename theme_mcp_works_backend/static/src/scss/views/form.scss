@@ -884,15 +884,6 @@
         background: var(--mcp-accent-soft) !important;
     }
 }
-/* The outstanding credits/debits list can be LONG — cap its height and scroll
-   inside the box instead of letting the rows run off the bottom of the form
-   (Rosen: "излиза отдолу, трябва да се разпъва с скрол"). */
-.o_form_view .oe_subtotal_footer.px-4 .o_field_payment {
-    max-height: 11rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
 /* Grand-total line — transparent, sapphire text (Rosen: "прозрачен
    фон, син текст" — not the white-on-blue bar). */
 .o_form_view .oe_subtotal_footer .o_total,
