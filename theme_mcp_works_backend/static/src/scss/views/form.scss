@@ -869,6 +869,22 @@
         color: var(--mcp-ink) !important;
     }
 }
+
+/* The "Add" buttons in the Outstanding credits/debits widget are inline
+   reconcile links. The theme's generic 1.5px ink .btn border made them read as
+   heavy black-framed boxes (Rosen: "рамките на бутоните са проблема"). Give
+   them a light, subtle border to match that (now native-looking) widget. */
+.o_form_view .oe_subtotal_footer.px-4 .btn,
+.o_form_view .oe_subtotal_footer.px-4 a.btn {
+    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+    color: var(--mcp-accent) !important;
+    background: transparent !important;
+    &:hover {
+        border-color: var(--mcp-accent) !important;
+        background: var(--mcp-accent-soft) !important;
+    }
+}
+
 /* Grand-total line — transparent, sapphire text (Rosen: "прозрачен
    фон, син текст" — not the white-on-blue bar). */
 .o_form_view .oe_subtotal_footer .o_total,
