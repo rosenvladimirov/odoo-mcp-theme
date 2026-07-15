@@ -125,7 +125,7 @@
     --mcp-list-thead-pad-y:  0.5rem;    /* 8px  (--ListRenderer-thead-padding-y) */
     --mcp-list-cell-pad-y:   0.5rem;    /* 8px  row vertical rhythm */
     --mcp-list-cell-pad-x-sm: 0.3rem;   /* 4.8px — narrow cols (priority) */
-    --mcp-form-sheet-pad-x: var(--mcp-sp-16);  /* form sheet H inset;
+    --mcp-form-sheet-pad-x: var(--mcp-sp-24);  /* form sheet H inset (24px = native Odoo, Rosen: match eталон); notebook tabs bleed -this;
         the o2m list bleeds out of exactly this to the sheet border */
     /* Calculator outputs — CSS-only defaults (the formula in pure
        tokens); button_sizing.js overrides --mcp-btn-*-live/-w-* at

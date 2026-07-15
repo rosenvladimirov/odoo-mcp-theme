@@ -836,7 +836,8 @@
 .o_form_view .oe_subtotal_footer,
 .o_form_view .o_total {
     position: relative;
-    min-width: var(--mcp-sp-300);
+    /* 240px ≈ native Odoo's ~236px totals box (Rosen: match eталон); was 300. */
+    min-width: var(--mcp-sp-240);
     /* HUD notch + ::before-ring border trick REMOVED (Rosen: махни
        всички HUD декорации). Plain square bordered box now — no
        clip-path cut corner. */
