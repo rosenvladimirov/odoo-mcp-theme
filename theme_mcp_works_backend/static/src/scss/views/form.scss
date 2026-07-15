@@ -40,8 +40,11 @@
     width: 100% !important;
     /* H inset for normal widgets (title/fields/groups/note); the
        order-line o2m list bleeds OUT of exactly this to the sheet
-       border (Rosen). Vertical stays 0 (removed earlier). */
-    padding: 0 var(--mcp-form-sheet-pad-x) !important;
+       border (Rosen). V inset restored to native 24px so the contact
+       avatar / first field aren't glued to the top border (Rosen:
+       "снимката долепена е до горния ръб") — measured native EE = 24px
+       all round; the notebook tabs still bleed only HORIZONTALLY. */
+    padding: var(--mcp-form-sheet-pad-y) var(--mcp-form-sheet-pad-x) !important;
     /* flex item of the display:flex .o_form_sheet_bg — without
        min-width:0 it refuses to shrink below its content, so the
        fixed ~1380px o2m table burst the sheet column out (Rosen:

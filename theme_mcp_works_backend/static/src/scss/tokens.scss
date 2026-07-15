@@ -127,6 +127,8 @@
     --mcp-list-cell-pad-x-sm: 0.3rem;   /* 4.8px — narrow cols (priority) */
     --mcp-form-sheet-pad-x: var(--mcp-sp-24);  /* form sheet H inset (24px = native Odoo, Rosen: match eталон); notebook tabs bleed -this;
         the o2m list bleeds out of exactly this to the sheet border */
+    --mcp-form-sheet-pad-y: var(--mcp-sp-24);  /* form sheet V inset (24px = native Odoo EE, measured on :8170);
+        was 0 → the contact avatar & first field sat flush on the top border (Rosen: "снимката долепена е до горния ръб") */
     /* Calculator outputs — CSS-only defaults (the formula in pure
        tokens); button_sizing.js overrides --mcp-btn-*-live/-w-* at
        runtime with the px-precise measured values. No raw px lives
