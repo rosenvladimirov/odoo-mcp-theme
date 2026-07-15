@@ -9,6 +9,10 @@
    other panels / not down to the bottom.) */
 .o_form_view {
     padding: var(--mcp-view-pad) !important;
+    /* OPAQUE background over the whole form work area so the blueprint canvas
+       mesh / scanline never show through it (Rosen: "задай да не е полу-
+       прозрачен фона"). Pure white in light, dark surface in dark. */
+    background: var(--mcp-form-sheet-bg) !important;
 }
 .o_form_view .o_form_sheet_bg {
     background: transparent !important;
