@@ -14,8 +14,13 @@
         0 var(--mcp-sp-10) var(--mcp-sp-30) calc(-1 * var(--mcp-sp-10)) var(--mcp-accent-a30) !important;
     padding: 0;
     max-width: var(--mcp-popover-max-w, 320px);
-    max-height: var(--mcp-content-h, calc(100vh - var(--mcp-sp-64)));
-    overflow: auto;
+    /* overflow:visible !important — the arrow is a child that protrudes
+       OUTSIDE the box; Odoo INLINES overflow-y:auto + max-height on the
+       popover for viewport fitting, which clipped the arrow, so we must beat
+       the inline value. Long content scrolls on the body instead (below).
+       Backend popovers fit within max-height in practice, so overriding the
+       rarely-triggered box scroll is a safe trade for a visible arrow. */
+    overflow: visible !important;
     z-index: var(--mcp-z-modal);
     animation: mcp-pop-in 0.15s cubic-bezier(0.34, 1.4, 0.64, 1) both;
 }
@@ -25,10 +30,25 @@
     to   { opacity: 1; transform: scale(1); }
 }
 
-/* Arrow */
-.o-popover .o-popover-arrow::before,
-.o_popover .popover-arrow::before {
-    border-color: var(--mcp-rule) transparent transparent transparent;
+/* Arrow — colour the edge that faces the anchor, PER Popper placement.
+   The old rule coloured only the top edge, so the arrow was themed only
+   when the popover sat ABOVE the anchor; every other placement fell back to
+   Bootstrap grey. Match Bootstrap's [data-popper-placement] structure. */
+.o-popover[data-popper-placement^="top"] .o-popover-arrow::before,
+.o_popover[data-popper-placement^="top"] .popover-arrow::before {
+    border-top-color: var(--mcp-rule) !important;
+}
+.o-popover[data-popper-placement^="bottom"] .o-popover-arrow::before,
+.o_popover[data-popper-placement^="bottom"] .popover-arrow::before {
+    border-bottom-color: var(--mcp-rule) !important;
+}
+.o-popover[data-popper-placement^="left"] .o-popover-arrow::before,
+.o_popover[data-popper-placement^="left"] .popover-arrow::before {
+    border-left-color: var(--mcp-rule) !important;
+}
+.o-popover[data-popper-placement^="right"] .o-popover-arrow::before,
+.o_popover[data-popper-placement^="right"] .popover-arrow::before {
+    border-right-color: var(--mcp-rule) !important;
 }
 
 /* Header */
@@ -53,4 +73,7 @@
     color: var(--mcp-ink) !important;
     background: var(--mcp-paper-light) !important;
     border-radius: 0 0 var(--mcp-r-md) var(--mcp-r-md);
+    /* scroll long content here (moved off the box so the arrow isn't clipped) */
+    max-height: var(--mcp-content-h, calc(100vh - var(--mcp-sp-64)));
+    overflow-y: auto;
 }
