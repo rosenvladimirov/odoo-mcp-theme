@@ -294,11 +294,12 @@
 }
 
 /* ── Smart buttons (button-box) ─────────────────────────────────
-   Odoo 19 renders the smart-button container as .o-form-buttonbox (the
-   old .oe_button_box no longer exists), so this whole block was scoped to
-   a dead class and never applied — the buttons stayed unstyled AND unequal
-   (Rosen). Retarget the real class. */
-.o_form_view .o-form-buttonbox {
+   This restyle stays parked on the legacy .oe_button_box (dormant in Odoo
+   19). Activating it wholesale over-reached — it hid the stat-button icons
+   and ballooned the responsive "More" toggler. Rosen asked ONLY for equal
+   WIDTH, handled by the scoped rule after this block; the full sharp/mono
+   restyle waits until it can be tuned against a live screen. */
+.o_form_view .oe_button_box {
     display: flex !important;
     gap: var(--mcp-sp-1) !important;
     margin: 0 0 var(--mcp-sp-20) 0 !important;
@@ -308,7 +309,7 @@
     width: fit-content;
 
     .oe_stat_button,
-    button.btn {
+    .o-form-buttonbox button.btn {
         display: flex !important;
         flex-direction: column !important;
         align-items: flex-start !important;
@@ -342,16 +343,16 @@
             color: var(--mcp-ink-3) !important;
         }
     }
+}
 
-    /* Consume the equal width the resizer computes per button-box
-       (resizer.js equalizeStatButtons → --mcp-stat-btn-w). Without this the
-       smart buttons stayed content-width and rendered UNEQUAL (Rosen:
-       "магическите бутони да са еднакво широки"). Scoped to real stat
-       buttons — the responsive "More" toggler keeps its own width. */
-    .oe_stat_button {
-        width: var(--mcp-stat-btn-w, var(--mcp-sp-110)) !important;
-        flex: 0 0 auto !important;
-    }
+/* The ONE thing Rosen asked for — equal-width smart buttons — on the LIVE
+   .o-form-buttonbox. :has(.o_stat_info) scopes it to REAL stat buttons so the
+   responsive "More" toggler keeps its own size (activating the block above
+   had ballooned it). Consumes --mcp-stat-btn-w from resizer.js; leaves the
+   default Odoo look (icons, layout) otherwise untouched. */
+.o_form_view .o-form-buttonbox .oe_stat_button:has(.o_stat_info) {
+    width: var(--mcp-stat-btn-w, var(--mcp-sp-110)) !important;
+    flex: 0 0 auto !important;
 }
 
 /* ── Sheet title row + breadcrumb-style eyebrow ─────────────── */
