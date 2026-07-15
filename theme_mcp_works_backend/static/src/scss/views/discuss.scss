@@ -114,6 +114,21 @@
     }
 }
 
+/* Unread dot — align it with the active tick (Rosen: "точката до Public
+   Community е много отдалечена, трябва да е като чертичката"). It sat at the
+   channel's far-left edge (inset-left 0 = x8) while the active tick moved in
+   to 12px; pull the dot to the same x and give it the sapphire accent. */
+.o-mail-DiscussSidebar .o-mail-DiscussSidebar-unreadIndicator {
+    left: var(--mcp-sp-12) !important;
+    right: auto !important;
+    color: var(--mcp-accent) !important;
+
+    i,
+    .fa-circle {
+        color: var(--mcp-accent) !important;
+    }
+}
+
 /* ── Sidebar rows: animated underline on hover (no fill box) ──────
    Rosen: "разкарай всички рамки на менютата, само анимирано подчертаване
    при ховер". Mailboxes (Inbox / Starred / History) + channels get a thin
