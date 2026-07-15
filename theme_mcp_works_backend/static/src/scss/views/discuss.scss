@@ -124,9 +124,13 @@
    BLINKS, instead of the round dot (Rosen: "непрочетено маркирай с премигване
    на къса подчертаваща линия"). The indicator span is present ONLY when there
    are unread messages, so restyling it in place needs no extra state class. */
+/* the unread bar paces left↔right and blinks (Rosen: "да ходи наляво
+   надясно и да мига") */
 @keyframes mcp-unread-blink {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0.12; }
+    0%, 100% { transform: translateX(0);       opacity: 1; }
+    25%      {                                  opacity: 0.25; }
+    50%      { transform: translateX(24px);     opacity: 1; }
+    75%      {                                  opacity: 0.25; }
 }
 .o-mail-DiscussSidebar .o-mail-DiscussSidebar-unreadIndicator {
     top: auto !important;
@@ -137,7 +141,7 @@
     height: var(--mcp-sp-2) !important;
     background: var(--mcp-accent) !important;
     border-radius: 0 !important;
-    animation: mcp-unread-blink 1.2s ease-in-out infinite;
+    animation: mcp-unread-blink 1.6s ease-in-out infinite;
 
     /* drop the round dot glyph — the bar replaces it */
     i,
