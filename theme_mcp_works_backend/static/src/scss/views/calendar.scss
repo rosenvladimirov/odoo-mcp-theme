@@ -100,7 +100,7 @@
     .fc-daygrid-day-number {
         color: var(--mcp-accent) !important;
         font-weight: 700 !important;
-        text-shadow: 0 0 var(--mcp-sp-8) var(--mcp-accent-a30);
+        /* text-shadow glow removed — blurred today's day number. */
     }
 }
 

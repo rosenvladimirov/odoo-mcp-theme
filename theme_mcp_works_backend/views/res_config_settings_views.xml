@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Rosen Vladimirov <vladimirov.rosen@gmail.com>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="res_config_settings_view_form_mcp" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.mcp_theme</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="MCP Theme" name="theme_mcp_works"
+                     logo="/base/static/description/settings.png">
+
+                    <block title="Backend UI font"
+                           name="mcp_font_block">
+                        <setting string="UI font"
+                                 help="Typeface used across the whole Odoo backend. Every option ships Cyrillic + Latin (Space Grotesk is Latin only). Save, then reload the page to apply.">
+                            <field name="mcp_ui_font"/>
+                        </setting>
+                    </block>
+
+                    <block title="Installation"
+                           name="mcp_info_block">
+                        <setting string="Database"
+                                 help="Active database this backend is served from.">
+                            <field name="mcp_db_name" readonly="1"/>
+                        </setting>
+                        <setting string="Odoo version">
+                            <field name="mcp_odoo_version" readonly="1"/>
+                        </setting>
+                        <setting string="Theme version">
+                            <field name="mcp_theme_version" readonly="1"/>
+                        </setting>
+                        <setting string="Installed modules">
+                            <field name="mcp_module_count" readonly="1"/>
+                        </setting>
+                        <setting string="Selectable UI fonts">
+                            <field name="mcp_font_count" readonly="1"/>
+                        </setting>
+                    </block>
+
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
