@@ -833,7 +833,12 @@
    Odoo 19: NOT .o_total — it's the .oe_subtotal_footer inner-group
    wrapping the tax_totals widget .o_field_account-tax-total.  Make
    it the theme.css notched HUD .form-totals-box. */
-.o_form_view .oe_subtotal_footer,
+/* :not(.px-4) scopes the bordered totals-box look to the REAL totals only.
+   The "Outstanding credits/debits" widget is ALSO an .oe_subtotal_footer but
+   carries .px-4 — it was picking up the border + surface-2 fill + min-width
+   and rendered as a heavy, misplaced box below the totals (Rosen: circled
+   "размазано и разпънало"). Excluded → it keeps Odoo's native subtle look. */
+.o_form_view .oe_subtotal_footer:not(.px-4),
 .o_form_view .o_total {
     position: relative;
     /* 240px ≈ native Odoo's ~236px totals box (Rosen: match eталон); was 300. */
