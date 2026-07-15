@@ -134,7 +134,9 @@
 }
 .o-mail-DiscussSidebar .o-mail-DiscussSidebar-unreadIndicator {
     top: auto !important;
-    bottom: var(--mcp-sp-10) !important;
+    /* sit ~5px clear below the name text (was 1px = almost touching it,
+       Rosen: "чертичката е много близко [до името]") */
+    bottom: var(--mcp-sp-6) !important;
     right: auto !important;
     left: 56px !important;                       /* under the channel name */
     width: var(--mcp-sp-16) !important;
