@@ -27,7 +27,9 @@
 }
 .o_form_view .o_form_sheet {
     position: relative;
-    background: var(--mcp-surface) !important;
+    /* form sheet pure white in light (Rosen: "искам си чисто бяло"); the
+       token keeps the darker sheet in dark mode. */
+    background: var(--mcp-form-sheet-bg) !important;
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     border-radius: 0 !important;
     max-width: 100% !important;
