@@ -23,19 +23,24 @@
     box-shadow: none !important;
 }
 
-.o-mail-DiscussSidebar-category,
-.o-mail-DiscussSidebarCategoryHeader,
-.o-mail-DiscussSidebarCategory,
-.o-mail-DiscussSidebarCategory-title {
+/* Category header ("CHANNELS" / "DIRECT MESSAGES"). Odoo 19 nests it
+   .o-mail-DiscussSidebarCategory > -toggler(btn) > -title. The old rule
+   applied the grey bar + 6px padding to BOTH the container AND the title,
+   so padding stacked across three nested levels (6+6+6) → a 62px bulky
+   header with a nested grey box, vs native ~30px (Rosen: discuss "не е ок").
+   Grey bar + border on the CONTAINER only; mono/uppercase text on the TITLE;
+   no theme padding (the toggler's own padding sets the height = native). */
+.o-mail-DiscussSidebarCategory {
     background: var(--mcp-surface-3) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+}
+.o-mail-DiscussSidebarCategory-title {
     color: var(--mcp-ink-3) !important;
     font-family: var(--mcp-font-mono) !important;
     font-size: var(--mcp-sp-10) !important;
     font-weight: 600 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
-    padding: var(--mcp-sp-6) var(--mcp-sp-12) !important;
-    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
 }
 
 .o-mail-DiscussSidebarChannel {
