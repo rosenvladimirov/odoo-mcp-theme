@@ -348,7 +348,8 @@
     font-weight: 700 !important;
     color: var(--mcp-ink) !important;
     letter-spacing: -0.02em !important;
-    text-shadow: 0 0 var(--mcp-sp-16) var(--mcp-accent-a22);
+    /* text-shadow glow removed — the 16px blur made the title text read as
+       "размазано"/fuzzy; a backend heading wants crisp text. */
 }
 .o_form_view .oe_title {
     padding-bottom: var(--mcp-sp-14) !important;
@@ -378,7 +379,9 @@
 .o_form_view .o_field_email,
 .o_form_view .o_field_url {
     color: var(--mcp-accent) !important;
-    text-shadow: 0 0 var(--mcp-sp-10) var(--mcp-accent-a18);
+    /* text-shadow glow removed — the 10px blur on m2o/email/url link text
+       made link-heavy areas (e.g. the invoice payments box) look blurred
+       ("размазано"). Keep the sapphire colour, drop the fuzz. */
     &:hover { color: var(--mcp-accent-2) !important; text-decoration: underline; }
 }
 .o_form_view .o_field_monetary,

@@ -80,8 +80,11 @@
 .o_web_client select,
 .o_web_client textarea {
     font-family: var(--mcp-font-family) !important;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    /* font-smoothing overrides removed — forcing antialiased/grayscale draws
+       text with grayscale AA, which on non-Retina displays (Linux/Windows)
+       reads lighter & softer ("размазано") than Odoo-native (auto = subpixel
+       AA). Let the browser default win so backend text is as crisp as vanilla
+       Odoo. Measured: native EE = "auto", themed was "antialiased". */
     color: var(--mcp-ink);
 }
 .o_web_client button:not([class*="fa-"]):not([class*="oi-"]):not(.fa):not(.oi) {
