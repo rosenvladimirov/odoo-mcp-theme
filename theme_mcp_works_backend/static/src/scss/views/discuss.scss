@@ -76,7 +76,9 @@
         &::before {
             content: "";
             position: absolute;
-            inset: var(--mcp-sp-6) auto var(--mcp-sp-6) var(--mcp-sp-12);
+            /* x14 — same distance as the unread dot so tick & dot line up
+               (Rosen: "чертичката я измести на същото разстояние"). */
+            inset: var(--mcp-sp-6) auto var(--mcp-sp-6) var(--mcp-sp-6);
             width: var(--mcp-sp-2);
             background: var(--mcp-accent);
             box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-glow);
