@@ -485,3 +485,59 @@
         box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
     }
 }
+
+/* ── Call panel (RTC) — theme the black rectangle ──────────────────
+   Starting a call shows a near-black participant/video panel whose dark
+   theme-icons vanish on it (Rosen: "черен правоъгълник, не се виждат
+   бутоните — оправи фона и иконите в стил на темата"). Give it the theme's
+   dark-navy + blueprint mesh + a sapphire frame, and make the controls
+   light/sapphire so they read on the dark. */
+.o-discuss-Call {
+    background-color: #0b1424 !important;
+    background-image:
+        linear-gradient(to right, var(--mcp-accent-a20) var(--mcp-sp-1), transparent var(--mcp-sp-1)),
+        linear-gradient(to bottom, var(--mcp-accent-a20) var(--mcp-sp-1), transparent var(--mcp-sp-1)) !important;
+    background-size: var(--mcp-sp-24) var(--mcp-sp-24) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-accent-a30) !important;
+}
+.o-discuss-Call-main {
+    /* drop the extra 50% black wash so the themed navy + mesh shows */
+    background: transparent !important;
+}
+
+/* call control buttons — borderless light chips, sapphire hover glow */
+.o-discuss-CallActionList button {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: var(--mcp-surface) !important;
+    border-radius: 0 !important;
+
+    i,
+    svg { color: var(--mcp-surface) !important; }
+
+    &:hover {
+        background: var(--mcp-accent) !important;
+        box-shadow: 0 0 var(--mcp-sp-8) var(--mcp-accent-a30) !important;
+        i, svg { color: #fff !important; }
+    }
+}
+/* join → sapphire (theme's go colour); leave/disconnect → danger-red */
+.o-discuss-CallActionList .o-tag-JOIN_LEAVE_CALL.o-tag-SUCCESS {
+    background: var(--mcp-accent) !important;
+    color: #fff !important;
+    i, svg { color: #fff !important; }
+    &:hover {
+        background: var(--mcp-accent-dark, #0a3d8f) !important;
+        box-shadow: 0 0 var(--mcp-sp-8) var(--mcp-accent-a30) !important;
+    }
+}
+.o-discuss-CallActionList .o-tag-JOIN_LEAVE_CALL.o-tag-DANGER {
+    background: var(--mcp-danger, #e5484d) !important;
+    color: #fff !important;
+    i, svg { color: #fff !important; }
+    &:hover {
+        background: #c93a3f !important;
+        box-shadow: 0 0 var(--mcp-sp-8) rgba(229, 72, 77, 0.45) !important;
+    }
+}
