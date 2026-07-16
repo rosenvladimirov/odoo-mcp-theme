@@ -169,9 +169,14 @@ input[type="checkbox"].form-check-input,
         border-color var(--mcp-t-fast),
         box-shadow var(--mcp-t-fast);
 
+    /* Hover: БЕЗ появяваща се ярка accent рамка („чертичка" при ховер —
+       Rosen). Държим resting вида (rule-strong рамка + paper-light фон);
+       `!important` за да надбие и Bootstrap/Odoo `.form-check:hover
+       .form-check-input {border-color: accent}`. cursor:pointer остава
+       като сигнал за интерактивност. */
     &:hover:not(:checked) {
-        border-color: var(--mcp-accent);
-        background: var(--mcp-accent-soft);
+        border-color: var(--mcp-rule-strong) !important;
+        background: var(--mcp-paper-light) !important;
     }
 
     /* Фокус: БЕЗ glow-пръстен — той мигаше като „чертичка" при клик (Chrome
