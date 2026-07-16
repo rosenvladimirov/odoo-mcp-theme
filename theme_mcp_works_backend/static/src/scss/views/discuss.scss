@@ -543,21 +543,28 @@
     }
 }
 
-/* ── Call-in-progress systray pill ────────────────────────────────
-   The "you're in a call" navbar indicator was a faint light-grey pill with
-   muted purple text/icon → nearly invisible on the white navbar (Rosen
-   circled it). Make it a clear sapphire pill in the theme's style. */
+/* ── Call-in-progress systray indicator ───────────────────────────
+   No frame/box — just elegant bare sapphire icons in the navbar (Rosen: "в
+   рамка и полвинчат → изчисти рамката, голи елегантни икони в стила на
+   темата"). The framed pill was h16 with overflow:hidden and clipped the
+   taller dropdown button in half; strip the box and let it size to content. */
 .o-discuss-CallMenu-buttonContent {
-    background: var(--mcp-accent-soft) !important;
-    border: var(--mcp-sp-1) solid var(--mcp-accent-a30) !important;
-    border-radius: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    overflow: visible !important;
+    align-items: center !important;
     color: var(--mcp-accent) !important;
 }
 .o-discuss-CallMenu-channelInfo,
 .o-discuss-CallMenu-dropdownMore {
     background: transparent !important;
     border: 0 !important;
+    box-shadow: none !important;
     color: var(--mcp-accent) !important;
+    min-height: 0 !important;
+    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
 }
 .o-discuss-CallMenu-animation,
 .o-discuss-CallMenu .inCallIconColor,
