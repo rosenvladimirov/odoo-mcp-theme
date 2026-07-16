@@ -153,7 +153,12 @@
 /* ── Toggle switch (boolean field) ──────────────────────────── */
 .settings .o_field_widget.o_field_boolean,
 .o_setting_box .o_field_boolean {
-    .form-check-input,
+    /* САМО реални toggle switch-ове (.form-switch). Иначе този блок хващаше
+       и обикновените чекбоксове (.o-checkbox.form-check) и ги правеше switch
+       (32px track), но checkbox правилото ги клампва на max-width 16 → track-ът
+       се реже отдясно (Rosen: „на чекбокса дясната страна е закрита, все едно
+       отрязана"). Чекбоксовете падат към boolean.scss → 16×16 остра кутия. */
+    .form-switch .form-check-input,
     input[type="checkbox"].o_switch {
         width: var(--mcp-sp-32) !important;
         height: var(--mcp-sp-18) !important;
