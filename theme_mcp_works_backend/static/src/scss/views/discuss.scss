@@ -553,14 +553,14 @@
     border: 0 !important;
     overflow: visible !important;
     align-items: center !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-ink) !important;
 }
 .o-discuss-CallMenu-channelInfo,
 .o-discuss-CallMenu-dropdownMore {
     background: transparent !important;
     border: 0 !important;
     box-shadow: none !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-ink) !important;
     min-height: 0 !important;
     height: auto !important;
     display: flex !important;
@@ -569,7 +569,7 @@
 .o-discuss-CallMenu-animation,
 .o-discuss-CallMenu .inCallIconColor,
 .o-discuss-CallMenu-buttonContent i {
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-ink) !important;
 }
 /* kill the residual border on the dropdown button (a btn-group divider that
    beat the earlier rule) — Rosen: "махни рамката на дропдовн бутона". */
