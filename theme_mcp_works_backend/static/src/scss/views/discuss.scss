@@ -542,3 +542,25 @@
         box-shadow: 0 0 var(--mcp-sp-8) rgba(229, 72, 77, 0.45) !important;
     }
 }
+
+/* ── Call-in-progress systray pill ────────────────────────────────
+   The "you're in a call" navbar indicator was a faint light-grey pill with
+   muted purple text/icon → nearly invisible on the white navbar (Rosen
+   circled it). Make it a clear sapphire pill in the theme's style. */
+.o-discuss-CallMenu-buttonContent {
+    background: var(--mcp-accent-soft) !important;
+    border: var(--mcp-sp-1) solid var(--mcp-accent-a30) !important;
+    border-radius: 0 !important;
+    color: var(--mcp-accent) !important;
+}
+.o-discuss-CallMenu-channelInfo,
+.o-discuss-CallMenu-dropdownMore {
+    background: transparent !important;
+    border: 0 !important;
+    color: var(--mcp-accent) !important;
+}
+.o-discuss-CallMenu-animation,
+.o-discuss-CallMenu .inCallIconColor,
+.o-discuss-CallMenu-buttonContent i {
+    color: var(--mcp-accent) !important;
+}
