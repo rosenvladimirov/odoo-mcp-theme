@@ -437,6 +437,15 @@
         display: flex !important;
         align-items: center !important;
     }
+    /* Odoo pushes the action buttons down with margin-top:5px + baseline
+       alignment (a multi-line hack) → on a single line they sat ~3px below
+       the input's centre (Rosen: "бутоните не са точно в средата на полето").
+       Drop the margin and centre them. */
+    .o-mail-Composer-mainActions {
+        margin-top: 0 !important;
+        align-self: center !important;
+        align-items: center !important;
+    }
 
     .o-mail-Composer-input,
     textarea {
