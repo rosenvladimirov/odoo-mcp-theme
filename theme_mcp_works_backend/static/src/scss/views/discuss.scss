@@ -571,3 +571,18 @@
 .o-discuss-CallMenu-buttonContent i {
     color: var(--mcp-accent) !important;
 }
+/* kill the residual border on the dropdown button (a btn-group divider that
+   beat the earlier rule) — Rosen: "махни рамката на дропдовн бутона". */
+.o-discuss-CallMenu-buttonContent .btn,
+.o-discuss-CallMenu-buttonContent > * {
+    border: 0 !important;
+    box-shadow: none !important;
+}
+/* swap its chevron for the same triangle glyph as the category
+   opener/closer (Rosen: "смени иконата с тази от отварачката/затварачката"). */
+.o-discuss-CallMenu-dropdownMore .oi-chevron-down::before,
+.o-discuss-CallMenu-dropdownMore .oi::before,
+.o-discuss-CallMenu-dropdownMore i::before {
+    content: "\25BE" !important;      /* ▾ */
+    font-family: sans-serif !important;
+}
