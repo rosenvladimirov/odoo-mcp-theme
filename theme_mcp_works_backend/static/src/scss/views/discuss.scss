@@ -424,10 +424,25 @@
     border-top: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
 
+    /* input + action buttons on ONE centred line — the theme's taller (47px)
+       buttons vs the 36px input under Odoo's default align-items:flex-start
+       made the text float to the top and the buttons to the bottom (Rosen:
+       "полето лети в горния край, бутоните летят в долния край"). */
+    .o-mail-Composer-coreMain {
+        align-items: center !important;
+    }
+    /* the input sits in a taller flex-grow-1 wrapper and was top-anchored in
+       it → centre it there too, so its text lines up with the buttons. */
+    .o-mail-Composer-coreMain > .flex-grow-1 {
+        display: flex !important;
+        align-items: center !important;
+    }
+
     .o-mail-Composer-input,
     textarea {
         background: var(--mcp-surface-2) !important;
-        border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+        /* no frame around the input (Rosen: "има рамка на полето за писане") */
+        border: 0 !important;
         border-radius: 0 !important;
         color: var(--mcp-ink) !important;
         font-family: var(--mcp-font-family) !important;
@@ -435,8 +450,7 @@
 
         &:focus {
             outline: 0;
-            border-color: var(--mcp-accent) !important;
-            box-shadow: 0 0 0 var(--mcp-sp-2) var(--mcp-accent-soft), 0 0 var(--mcp-sp-6) var(--mcp-accent-a30);
+            box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-6) var(--mcp-accent-a30);
         }
     }
     button.o-mail-Composer-send,
