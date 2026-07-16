@@ -186,7 +186,11 @@ input[type="checkbox"].form-check-input,
     &:focus,
     &:focus-visible {
         outline: none !important;
-        border-color: var(--mcp-accent) !important;
+        /* И рамката остава rule-strong (не accent) — иначе при клик/фокус
+           accent рамката СТОИ докато чекбоксът е фокусиран → „линия, която
+           продължава да се показва в левия край" (Rosen). Фокус = вид като
+           покой; отметката (checked) е основната обратна връзка. */
+        border-color: var(--mcp-rule-strong) !important;
         box-shadow: inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a06) !important;
     }
 
