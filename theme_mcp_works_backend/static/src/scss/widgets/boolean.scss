@@ -183,14 +183,22 @@ input[type="checkbox"].form-check-input,
        пуска :focus-visible и на клик по чекбокс, а Bootstrap слага свой
        .form-check-input:focus glow). Оставяме само тънка accent рамка + inset
        (без пръстен). `!important` за да надбие Bootstrap-ския focus glow. */
-    &:focus,
-    &:focus-visible {
+    /* Мишка/клик (`:focus` без `:focus-visible`) — ЧИСТО, без маркер: рамка
+       rule-strong, само inset (Rosen не искаше линия при клик/hover). */
+    &:focus {
         outline: none !important;
-        /* И рамката остава rule-strong (не accent) — иначе при клик/фокус
-           accent рамката СТОИ докато чекбоксът е фокусиран → „линия, която
-           продължава да се показва в левия край" (Rosen). Фокус = вид като
-           покой; отметката (checked) е основната обратна връзка. */
         border-color: var(--mcp-rule-strong) !important;
+        box-shadow: inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a06) !important;
+    }
+    /* Клавиатура (Tab) — ВИДИМ focus маркер за достъпност (Rosen: „то било
+       маркер за клавиатура"). `:focus-visible` се пуска при клавиатурна
+       навигация, не при клик → маркерът не дразни с мишка. Чист accent
+       outline (не размазан glow), в стила на темата. Идва СЛЕД `:focus`, тъй
+       че при клавиатура надбива чистото състояние. */
+    &:focus-visible {
+        outline: var(--mcp-sp-2) solid var(--mcp-accent) !important;
+        outline-offset: var(--mcp-sp-2) !important;
+        border-color: var(--mcp-accent) !important;
         box-shadow: inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a06) !important;
     }
 
