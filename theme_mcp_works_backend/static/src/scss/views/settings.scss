@@ -80,7 +80,6 @@
 }
 
 .app_settings_block,
-.o_setting_box,
 .settings_block {
     background: var(--mcp-surface) !important;
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
@@ -90,6 +89,19 @@
     box-shadow:
         0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
         0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12) !important;
+}
+
+/* Индивидуалните setting клетки НЯМАТ собствена рамка (native = 0; темата
+   ги рамкираше и буташе чекбокса вдясно от „чертата" — Rosen: „трябва да
+   отиде от ляво на чертата"). Рамката/панелът остава само на външния
+   .app_settings_block; клетката е чист ред, чекбоксът на левия ръб (native
+   padding-left 16). */
+.o_setting_box {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: var(--mcp-sp-8) var(--mcp-sp-16) !important;
+    margin: 0 !important;
 }
 
 /* Block header (section eyebrow + title) */
