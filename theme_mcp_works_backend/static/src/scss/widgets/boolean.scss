@@ -1,5 +1,15 @@
 /* MCP Works backend — Boolean / checkbox widget */
 
+/* Odoo 19 ползва `.o-checkbox` (ТИРЕ), не `.o_checkbox` (долна черта — блокът
+   по-долу е за стария клас). Bootstrap-ският `.form-check` слага
+   `padding-left: 1.5em` (~21px), а Odoo прави input-а `float:left` БЕЗ
+   negative margin → padding-ът е мъртво пространство, което буташе чекбокса
+   вдясно (Rosen: „махни .form-check padding-left: 1.5em"). Занулявам го;
+   margin-left = 0, тъй че input-ът НЕ изхвърля наляво. */
+.o-checkbox.form-check {
+    padding-left: 0 !important;
+}
+
 /* ── Checkbox via .o_checkbox wrapper ────────────────────────────
    Unchecked: paper surface + soft inset depth + thin rule.
    Hover:     accent rule + accent-soft fill (preview).
