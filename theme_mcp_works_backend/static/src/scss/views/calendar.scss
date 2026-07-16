@@ -37,7 +37,7 @@
         border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
         border-radius: 0 !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-11) !important;
+        font-size: var(--mcp-fs-11) !important;
         font-weight: 600 !important;
         letter-spacing: 0.08em !important;
         text-transform: uppercase !important;
@@ -65,7 +65,7 @@
     .fc-col-header-cell-cushion,
     .fc-day-header-text {
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-10) !important;
+        font-size: var(--mcp-fs-10) !important;
         font-weight: 600 !important;
         letter-spacing: 0.14em !important;
         text-transform: uppercase !important;
@@ -85,7 +85,7 @@
     .fc-daygrid-day-number,
     .fc-day-number {
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-11) !important;
+        font-size: var(--mcp-fs-11) !important;
         font-weight: 600 !important;
         color: var(--mcp-ink-2) !important;
         padding: var(--mcp-sp-4) var(--mcp-sp-6) !important;
@@ -113,7 +113,7 @@
     border-left: var(--mcp-sp-3) solid var(--mcp-accent-2) !important;
     border-radius: 0 !important;
     font-family: var(--mcp-font-family) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
     font-weight: 500 !important;
     padding: var(--mcp-sp-2) var(--mcp-sp-6) !important;
     box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
@@ -138,7 +138,7 @@
     .fc-timegrid-slot-label-cushion,
     .fc-axis-cushion {
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-9-5) !important;
+        font-size: var(--mcp-fs-10) !important;
         font-weight: 500 !important;
         letter-spacing: 0.06em !important;
         color: var(--mcp-ink-3) !important;

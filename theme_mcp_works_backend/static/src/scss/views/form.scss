@@ -107,7 +107,7 @@
             min-height: var(--mcp-sp-32) !important;
             padding: 0 var(--mcp-sp-16) !important;
             font-family: var(--mcp-font-mono) !important;
-            font-size: var(--mcp-sp-11) !important;
+            font-size: var(--mcp-fs-11) !important;
             font-weight: 600 !important;
             letter-spacing: 0.14em !important;
             text-transform: uppercase !important;
@@ -350,7 +350,7 @@
             line-height: 1 !important;
         }
         .o_stat_info {
-            font-size: var(--mcp-sp-10) !important;
+            font-size: var(--mcp-fs-10) !important;
             font-weight: 600 !important;
             letter-spacing: 0.08em !important;
             text-transform: uppercase !important;
@@ -390,7 +390,7 @@
 .o_form_view .o_form_label,
 .o_form_view label.o_form_label {
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-9-5) !important;
+    font-size: var(--mcp-fs-10) !important;
     font-weight: 600 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
@@ -506,7 +506,7 @@
             align-items: center !important;
             height: var(--mcp-sp-32) !important;
             padding: 0 var(--mcp-sp-14) !important;
-            font-size: var(--mcp-sp-12) !important;
+            font-size: var(--mcp-fs-12) !important;
             font-weight: 600 !important;
             letter-spacing: 0.04em !important;
             color: var(--mcp-ink-3) !important;
@@ -689,7 +689,7 @@
     border: 0 !important;
     box-shadow: none !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-10) !important;
+    font-size: var(--mcp-fs-10) !important;
     font-weight: 600 !important;
     letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
@@ -1017,7 +1017,7 @@
     .o-mail-Message-author { color: var(--mcp-ink) !important; font-weight: 600 !important; }
     .o-mail-Message-date {
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-9-5) !important;
+        font-size: var(--mcp-fs-10) !important;
         letter-spacing: 0.06em !important;
         color: var(--mcp-ink-3) !important;
     }
@@ -1026,7 +1026,7 @@
         border-left: var(--mcp-sp-2) solid var(--mcp-accent) !important;
         border-radius: 0 !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-10) !important;
+        font-size: var(--mcp-fs-10) !important;
         padding: var(--mcp-sp-6) var(--mcp-sp-8) !important;
     }
 }

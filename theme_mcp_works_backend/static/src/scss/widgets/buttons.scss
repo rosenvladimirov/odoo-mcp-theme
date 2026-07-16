@@ -12,7 +12,7 @@ button.btn,
     border-radius: var(--mcp-r-sm) !important;
     padding: var(--mcp-sp-6) var(--mcp-sp-14) !important;
     font-weight: 500 !important;
-    font-size: var(--mcp-sp-13) !important;
+    font-size: var(--mcp-fs-13) !important;
     transition: all var(--mcp-t-base) !important;
     box-shadow: none !important;
 }
@@ -58,7 +58,7 @@ button.o_form_button_save {
 }
 
 /* ── Size variants ───────────────────────────────────────────── */
-.btn-sm { padding: var(--mcp-sp-4) var(--mcp-sp-10) !important;  font-size: var(--mcp-sp-12) !important; }
+.btn-sm { padding: var(--mcp-sp-4) var(--mcp-sp-10) !important;  font-size: var(--mcp-fs-12) !important; }
 .btn-lg { padding: var(--mcp-sp-8) var(--mcp-sp-18) !important;  font-size: var(--mcp-sp-14) !important; }
 
 /* ── Disabled ────────────────────────────────────────────────── */

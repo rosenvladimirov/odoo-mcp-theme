@@ -103,7 +103,7 @@
     /* ── Section dropdowns — sharp, no rounding, accent underline ── */
     .o_menu_sections .dropdown-toggle,
     .o_menu_sections > * {
-        font-size: var(--mcp-sp-12) !important;
+        font-size: var(--mcp-fs-12) !important;
         font-weight: 500;
         letter-spacing: 0.01em;
         padding: 0 var(--mcp-sp-14) !important;
@@ -137,7 +137,7 @@
         .dropdown-toggle, button, a {
             padding: 0 var(--mcp-sp-10) !important;
             border-radius: 0 !important;
-            font-size: var(--mcp-sp-12);
+            font-size: var(--mcp-fs-12);
             font-family: var(--mcp-font-mono);
             letter-spacing: 0.04em;
         }

@@ -12,7 +12,7 @@
 .o_field_state_selection .btn,
 .o_field_state_selection .o_status_button {
     padding: var(--mcp-sp-3) var(--mcp-sp-12) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -55,7 +55,7 @@
     cursor: pointer;
     border: var(--mcp-bw-1-5) solid transparent !important;
     border-radius: var(--mcp-r-sm) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
     font-weight: 500;
     padding: var(--mcp-sp-3) var(--mcp-sp-8) !important;
     transition: all var(--mcp-t-fast);

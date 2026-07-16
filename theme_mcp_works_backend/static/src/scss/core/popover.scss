@@ -59,7 +59,7 @@
     border-radius: var(--mcp-r-md) var(--mcp-r-md) 0 0 !important;
     padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
     font-weight: 600;
-    font-size: var(--mcp-sp-12);
+    font-size: var(--mcp-fs-12);
     color: var(--mcp-ink) !important;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -69,7 +69,7 @@
 .o-popover-body,
 .o_popover .popover-body {
     padding: var(--mcp-sp-10) var(--mcp-sp-12) !important;
-    font-size: var(--mcp-sp-13);
+    font-size: var(--mcp-fs-13);
     color: var(--mcp-ink) !important;
     background: var(--mcp-paper-light) !important;
     border-radius: 0 0 var(--mcp-r-md) var(--mcp-r-md);

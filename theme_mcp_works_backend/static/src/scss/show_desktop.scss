@@ -34,7 +34,7 @@
     margin: 0;
 }
 .mcp_forum_meta_main {
-    font-size: var(--mcp-sp-11);
+    font-size: var(--mcp-fs-11);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--mcp-ink-3);
@@ -111,7 +111,7 @@
     flex-shrink: 0;
     width: var(--mcp-sp-16);
     color: var(--mcp-ink-3);
-    font-size: var(--mcp-sp-12);
+    font-size: var(--mcp-fs-12);
     line-height: 1.4;
     margin-top: var(--mcp-sp-2);
     transition: color var(--mcp-t-fast);
@@ -139,7 +139,7 @@
 }
 
 .mcp_forum_post_excerpt {
-    font-size: var(--mcp-sp-12-5);
+    font-size: var(--mcp-fs-12);
     line-height: 1.5;
     color: var(--mcp-ink-2);
     margin: 0 0 var(--mcp-sp-6) 0;
@@ -157,12 +157,12 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--mcp-sp-14);
-    font-size: var(--mcp-sp-11);
+    font-size: var(--mcp-fs-11);
     color: var(--mcp-ink-3);
 
     span { display: inline-flex; align-items: center; }
     .mcp_forum_post_author { font-weight: 600; }
-    .fa { font-size: var(--mcp-sp-11); opacity: 0.6; }
+    .fa { font-size: var(--mcp-fs-11); opacity: 0.6; }
 }
 
 /* Expanded thread — accordion body */
@@ -185,7 +185,7 @@
     align-items: baseline;
     gap: var(--mcp-sp-10);
     margin-bottom: var(--mcp-sp-6);
-    font-size: var(--mcp-sp-11);
+    font-size: var(--mcp-fs-11);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--mcp-ink-3);
@@ -201,7 +201,7 @@
     color: var(--mcp-ink-2);
 }
 .mcp_forum_reply_content {
-    font-size: var(--mcp-sp-13);
+    font-size: var(--mcp-fs-13);
     line-height: 1.6;
     color: var(--mcp-ink);
     margin: 0;
@@ -216,7 +216,7 @@
     border: var(--mcp-sp-1) solid var(--mcp-rule);
     border-radius: var(--mcp-r-sm);
     color: var(--mcp-accent);
-    font-size: var(--mcp-sp-12);
+    font-size: var(--mcp-fs-12);
     text-decoration: none;
     transition:
         background-color var(--mcp-t-fast),

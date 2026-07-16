@@ -64,7 +64,7 @@
     left: -15px !important;          /* → ~x14, in the active-tick column */
     margin-left: 0 !important;
     color: var(--mcp-accent) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
 }
 .o-mail-DiscussSidebarCategory-icon.oi-chevron-right::before,
 .o-mail-DiscussSidebarCategory-icon.oi-chevron-left::before {
@@ -81,7 +81,7 @@
        (Rosen: "не изпъква надписа") */
     color: var(--mcp-ink-2) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-10) !important;
+    font-size: var(--mcp-fs-10) !important;
     font-weight: 600 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
@@ -142,7 +142,7 @@
         background: var(--mcp-accent) !important;
         color: var(--mcp-surface) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-9) !important;
+        font-size: var(--mcp-fs-10) !important;
         font-weight: 700 !important;
         letter-spacing: 0.04em !important;
         border-radius: 0 !important;
@@ -252,7 +252,7 @@
     justify-content: center !important;
     transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
 
-    i { font-size: var(--mcp-sp-11) !important; }
+    i { font-size: var(--mcp-fs-11) !important; }
     &:hover {
         background: var(--mcp-accent-soft) !important;
         color: var(--mcp-accent) !important;
@@ -317,7 +317,7 @@
 .o-mail-Thread-empty {
     color: var(--mcp-ink-3) !important;
     font-family: var(--mcp-font-mono);
-    font-size: var(--mcp-sp-11);
+    font-size: var(--mcp-fs-11);
     letter-spacing: 0.12em;
     text-transform: uppercase;
 }
@@ -329,7 +329,7 @@
     border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
     padding: var(--mcp-sp-10) var(--mcp-sp-16) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-13) !important;
+    font-size: var(--mcp-fs-13) !important;
     font-weight: 700 !important;
     letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
@@ -350,13 +350,13 @@
     }
     .o-mail-Message-date {
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-9-5) !important;
+        font-size: var(--mcp-fs-10) !important;
         letter-spacing: 0.06em !important;
         color: var(--mcp-ink-3) !important;
     }
     .o-mail-Message-body {
         color: var(--mcp-ink-2) !important;
-        font-size: var(--mcp-sp-13) !important;
+        font-size: var(--mcp-fs-13) !important;
         line-height: 1.55 !important;
     }
     .o-mail-Message-avatar {
@@ -477,7 +477,7 @@
         border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
         border-radius: 0 !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-11) !important;
+        font-size: var(--mcp-fs-11) !important;
         font-weight: 600 !important;
         letter-spacing: 0.08em !important;
         text-transform: uppercase !important;

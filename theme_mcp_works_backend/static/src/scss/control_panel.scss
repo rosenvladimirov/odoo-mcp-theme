@@ -28,7 +28,7 @@
     border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
     box-shadow: none !important;
     position: relative;
-    font-size: var(--mcp-sp-12) !important;
+    font-size: var(--mcp-fs-12) !important;
     overflow: visible;
 
     /* leading › chevron (theme.css .bc-steps) */
@@ -79,7 +79,7 @@
         color: var(--mcp-accent) !important;
         background: transparent !important;
         clip-path: none !important;
-        font-size: var(--mcp-sp-12) !important;
+        font-size: var(--mcp-fs-12) !important;
         font-weight: 600 !important;
         line-height: 1 !important;
         white-space: nowrap;
@@ -147,7 +147,7 @@
     .breadcrumb .breadcrumb-item a {
         color: var(--mcp-accent) !important;
         font-family: var(--mcp-font-family) !important;
-        font-size: var(--mcp-sp-12) !important;
+        font-size: var(--mcp-fs-12) !important;
         font-weight: 500 !important;
         text-decoration: none !important;
         letter-spacing: 0;
@@ -162,7 +162,7 @@
     .o_breadcrumb .o_last_breadcrumb_item::before {
         content: "/" !important;
         color: var(--mcp-ink-dim) !important;
-        font-size: var(--mcp-sp-11) !important;
+        font-size: var(--mcp-fs-11) !important;
         padding: 0 var(--mcp-sp-6) !important;
         display: inline-block !important;
         flex: 0 0 auto !important;
@@ -177,7 +177,7 @@
     .breadcrumb .o_last_breadcrumb_item {
         color: var(--mcp-ink) !important;
         font-family: var(--mcp-font-family) !important;
-        font-size: var(--mcp-sp-13) !important;
+        font-size: var(--mcp-fs-13) !important;
         font-weight: 600 !important;
         letter-spacing: 0;
         /* last breadcrumb element fully transparent (Rosen) */
@@ -303,7 +303,7 @@
     }
     &::after,
     &::before { display: none !important; content: none !important; }
-    .fa, .oi { font-size: var(--mcp-sp-13) !important; line-height: 1 !important; }
+    .fa, .oi { font-size: var(--mcp-fs-13) !important; line-height: 1 !important; }
 }
 
 /* ── Search bar ──────────────────────────────────────────────── */
@@ -333,7 +333,7 @@
         color: var(--mcp-ink) !important;
         background: transparent !important;
         font-family: var(--mcp-font-family) !important;
-        font-size: var(--mcp-sp-12) !important;
+        font-size: var(--mcp-fs-12) !important;
         font-weight: 500 !important;
     }
     input::placeholder { color: var(--mcp-ink-dim) !important; }
@@ -371,7 +371,7 @@
     border-radius: 0 !important;
     background: transparent !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-10) !important;
+    font-size: var(--mcp-fs-10) !important;
     font-weight: 500 !important;
     letter-spacing: 0.04em !important;
     overflow: hidden;
@@ -385,7 +385,7 @@
         border-radius: 0 !important;
         padding: 0 var(--mcp-sp-6) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-9-5) !important;
+        font-size: var(--mcp-fs-10) !important;
         font-weight: 600 !important;
         letter-spacing: 0.06em !important;
         text-transform: uppercase !important;
@@ -419,7 +419,7 @@
     align-items: center !important;
     gap: var(--mcp-sp-6);
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
     letter-spacing: 0.06em !important;
 }
 .o_pager_counter,
@@ -500,7 +500,7 @@
             }
         }
 
-        .fa, .oi { font-size: var(--mcp-sp-13) !important; line-height: 1 !important; }
+        .fa, .oi { font-size: var(--mcp-fs-13) !important; line-height: 1 !important; }
     }
 }
 

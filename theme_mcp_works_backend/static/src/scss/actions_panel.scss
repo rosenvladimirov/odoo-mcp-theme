@@ -33,7 +33,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    font-size: var(--mcp-sp-12);
+    font-size: var(--mcp-fs-12);
     margin: 0;
 }
 .mcp_actions_panel_close {
@@ -69,7 +69,7 @@
     cursor: pointer;
     transition: all var(--mcp-t-base);
     text-decoration: none;
-    font-size: var(--mcp-sp-13);
+    font-size: var(--mcp-fs-13);
     line-height: 1.3;
 }
 .mcp_action_btn:hover {
@@ -82,7 +82,7 @@
 .mcp_action_btn .mcp_action_icon  { font-size: var(--mcp-sp-18); line-height: 1; color: var(--mcp-accent); }
 .mcp_action_btn .mcp_action_label { font-weight: 500; }
 .mcp_action_btn .mcp_action_kind  {
-    font-size: var(--mcp-sp-10);
+    font-size: var(--mcp-fs-10);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--mcp-ink-3);

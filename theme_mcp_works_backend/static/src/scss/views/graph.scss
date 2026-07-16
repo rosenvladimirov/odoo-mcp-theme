@@ -32,7 +32,7 @@ body > .chartjs-tooltip {
     border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
     border-radius: 0 !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-10) !important;
+    font-size: var(--mcp-fs-10) !important;
     letter-spacing: 0.06em !important;
     padding: var(--mcp-sp-6) var(--mcp-sp-10) !important;
     box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
@@ -59,7 +59,7 @@ body > .chartjs-tooltip {
         border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
         border-radius: 0;
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-10) !important;
+        font-size: var(--mcp-fs-10) !important;
         font-weight: 500 !important;
         letter-spacing: 0.06em !important;
         text-transform: uppercase !important;
@@ -83,7 +83,7 @@ body > .chartjs-tooltip {
         border-radius: 0 !important;
         padding: var(--mcp-sp-4) var(--mcp-sp-10) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-10) !important;
+        font-size: var(--mcp-fs-10) !important;
         letter-spacing: 0.08em !important;
         text-transform: uppercase !important;
 
@@ -104,7 +104,7 @@ body > .chartjs-tooltip {
     text-align: center;
     color: var(--mcp-ink-3);
     font-family: var(--mcp-font-mono);
-    font-size: var(--mcp-sp-11);
+    font-size: var(--mcp-fs-11);
     letter-spacing: 0.12em;
     text-transform: uppercase;
 }

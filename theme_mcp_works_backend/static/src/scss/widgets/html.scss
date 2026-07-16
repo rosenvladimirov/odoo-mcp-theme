@@ -15,7 +15,7 @@
     border-radius: var(--mcp-r-sm);
     background: var(--mcp-surface);
     color: var(--mcp-ink);
-    font-size: var(--mcp-sp-13);
+    font-size: var(--mcp-fs-13);
     line-height: 1.6;
     transition: border-color var(--mcp-t-base), box-shadow var(--mcp-t-base);
     outline: none;
@@ -49,7 +49,7 @@
         color: var(--mcp-ink-2) !important;
         padding: var(--mcp-sp-3) var(--mcp-sp-6) !important;
         border-radius: var(--mcp-r-xs) !important;
-        font-size: var(--mcp-sp-12) !important;
+        font-size: var(--mcp-fs-12) !important;
         font-weight: normal !important;
         height: auto !important;
         transform: none !important;

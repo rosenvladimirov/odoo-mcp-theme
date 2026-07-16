@@ -1,4 +1,16 @@
-/* MCP Works backend — Search Panel (left sidebar filters) */
+/* MCP Works backend — Search Panel (left sidebar filters)
+
+   Odoo 19 markup (старите pre-v17 класове _category_item/_filter_item ги
+   няма — темата ги таргетираше напразно, панелът показваше гол Bootstrap):
+     .o_search_panel > .o_search_panel_section
+       > header.o_search_panel_section_header (i.o_search_panel_section_icon + b)
+       > .o_search_panel_field  (ul.list-group)
+          > li.o_search_panel_category_value | li.o_search_panel_filter_value
+             > header.list-group-item.list-group-item-action
+                > .o_search_panel_label
+                   ( button.o_toggle_fold + span.o_search_panel_label_title )
+                + small.o_search_panel_counter
+*/
 
 /* ── Panel wrapper ───────────────────────────────────────────── */
 .o_search_panel {
@@ -13,112 +25,119 @@
     max-width: var(--mcp-sp-280);
 }
 
-/* ── Section (category group) ────────────────────────────────── */
-.o_search_panel_section {
-    padding: 0 0 var(--mcp-sp-8);
+/* ── Section ─────────────────────────────────────────────────── */
+.o_search_panel_section { padding: 0 0 var(--mcp-sp-8); }
+.o_search_panel_section + .o_search_panel_section {
+    border-top: var(--mcp-sp-1) solid var(--mcp-rule);
+    margin-top: var(--mcp-sp-4);
 }
 
+/* Section header — икона + етикет (Odoo рендира <i> + <b>, не _title span) */
 .o_search_panel_section_header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--mcp-sp-8) var(--mcp-sp-14) var(--mcp-sp-4);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: var(--mcp-sp-6);
+    /* padding-left 0 → иконата сяда на панел-гутера (16px), а етикетът
+       (икона 10 + gap 6) излиза на 32px = точно където подравняваме имената
+       под него (виж .list-group-item-action padding-left по-долу). */
+    padding: var(--mcp-sp-10) 0 var(--mcp-sp-4) !important;
     cursor: default;
+
+    b,
+    .o_search_panel_section_title {
+        font-size: var(--mcp-fs-10);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--mcp-ink-3);
+    }
+}
+.o_search_panel_section_icon {
+    color: var(--mcp-accent) !important;
+    font-size: var(--mcp-fs-11) !important;
+    margin: 0 !important;
 }
 
-.o_search_panel_section_header .o_search_panel_section_title {
-    font-size: var(--mcp-sp-10);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--mcp-ink-3);
-}
-
-/* Collapse toggle */
-.o_search_panel_section_header .o_search_panel_section_fold {
+/* ── Rows (category + filter) ────────────────────────────────── */
+/* Махаме Bootstrap list-group хрома (рамки/rounding/native active синьо).
+   Кликаемият ред е вътрешният <header class="list-group-item-action">. */
+.o_search_panel_field,
+.o_search_panel_field .list-group-item {
+    border: 0 !important;
+    border-radius: 0 !important;
     background: transparent !important;
-    border: none !important;
+    padding: 0 !important;
+}
+.o_search_panel_field .list-group-item-action {
+    color: var(--mcp-ink) !important;
+    /* padding-left 0 → името сяда на панел-гутера (16px), изравнено с
+       иконата на секцията — минимален indent, нищо не го "избутва"
+       надясно; right 8 за брояча. */
+    padding: var(--mcp-sp-4) var(--mcp-sp-8) var(--mcp-sp-4) 0 !important;
+    border-radius: 0 !important;
+    transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
+
+    &:hover { background: var(--mcp-accent-soft) !important; color: var(--mcp-ink) !important; }
+
+    &.active {
+        background: var(--mcp-accent-soft) !important;
+        color: var(--mcp-accent) !important;
+
+        .o_search_panel_label_title { font-weight: 600; color: var(--mcp-accent) !important; }
+    }
+}
+
+/* Fold toggle — БЕЗ рамка. Темата дава на всеки .btn ink рамка, а тук
+   бутонът е празен за листните категории → 30×14px празни боксчета на
+   всеки ред (това е "размазаното" в панела). Гол, тесен, пази подравняване. */
+.o_search_panel .o_toggle_fold {
+    border: 0 !important;
+    background: transparent !important;
     box-shadow: none !important;
     color: var(--mcp-ink-3) !important;
-    padding: 0 var(--mcp-sp-4) !important;
-    font-size: var(--mcp-sp-10) !important;
+    /* Фиксирани 16px като на еталона (native `.o_toggle_fold {width:16px}`):
+       резервирана колона за fold-каретката, за да са подравнени всички имена
+       (листни + родителски). Не `auto`/0 (разчупваше подравняването), не
+       JS-оразмерения rect (разпъваше го — затова е в button_sizing.js EXCLUDE). */
+    width: var(--mcp-sp-16) !important;
+    min-width: var(--mcp-sp-16) !important;
     height: auto !important;
-    /* NOT !important — else it beats the folded rotate(-90deg) below and the
-       fold chevron never turns (open/folded looked identical). */
-    transform: none;
-    opacity: 0.55;
-    transition: opacity var(--mcp-t-fast), transform var(--mcp-t-fast);
-    &:hover { opacity: 1; }
-}
-.o_search_panel_section.o_search_panel_section_folded .o_search_panel_section_fold {
-    transform: rotate(-90deg);
+    padding: 0 !important;
+    flex-shrink: 0;
+    text-align: center;
+
+    &:hover { color: var(--mcp-accent) !important; }
 }
 
-/* ── Filter item ─────────────────────────────────────────────── */
-.o_search_panel_filter_item,
-.o_search_panel_category_item {
-    display: flex;
-    align-items: center;
-    gap: var(--mcp-sp-8);
-    padding: var(--mcp-sp-5) var(--mcp-sp-14);
-    cursor: pointer;
-    font-size: var(--mcp-sp-13);
-    color: var(--mcp-ink);
-    border-radius: 0;
-    transition: background var(--mcp-t-fast);
-    user-select: none;
-
-    &:hover { background: var(--mcp-accent-soft) !important; }
+/* Label text */
+.o_search_panel_label_title {
+    font-size: var(--mcp-fs-13) !important;
+    line-height: 1.4;
 }
 
-/* Active */
-.o_search_panel_filter_item.active,
-.o_search_panel_category_item.active,
-.o_search_panel_filter_item.o_active,
-.o_search_panel_category_item.o_active {
-    background: var(--mcp-accent-soft) !important;
-    color: var(--mcp-accent) !important;
-    font-weight: 500;
+/* Count → дискретно mono число (в стила на телеметрията) */
+.o_search_panel_counter {
+    font-family: var(--mcp-font-mono) !important;
+    font-size: var(--mcp-fs-10) !important;
+    font-weight: 700 !important;
+    color: var(--mcp-ink-3) !important;
+    margin: 0 var(--mcp-sp-10) 0 var(--mcp-sp-6) !important;
+    flex-shrink: 0;
 }
 
-/* Checkbox */
-.o_search_panel_filter_item input[type="checkbox"] {
+/* Filter checkbox (филтър-секции) */
+.o_search_panel_filter_value input[type="checkbox"],
+.o_search_panel_label input[type="checkbox"] {
     accent-color: var(--mcp-accent);
     width: var(--mcp-sp-14);
     height: var(--mcp-sp-14);
     flex-shrink: 0;
     cursor: pointer;
+    margin-right: var(--mcp-sp-8);
 }
 
-/* Color dot (kanban-style) */
-.o_search_panel_category_item .o_record_color_dot {
-    width: var(--mcp-sp-10);
-    height: var(--mcp-sp-10);
-    border-radius: var(--mcp-r-pill);
-    flex-shrink: 0;
-}
-
-/* Count badge */
-.o_search_panel_filter_item .o_search_panel_filter_item_count,
-.o_search_panel_category_item .o_search_panel_category_item_count {
-    margin-left: auto;
-    font-size: var(--mcp-sp-10);
-    color: var(--mcp-ink-3);
-    background: var(--mcp-paper-deep);
-    border-radius: var(--mcp-r-pill);
-    padding: 0 var(--mcp-sp-6);
-    line-height: 1.6;
-}
-
-/* Child items indent */
-.o_search_panel_filter_group,
-.o_search_panel_category_item .o_search_panel_child_items {
-    .o_search_panel_filter_item,
-    .o_search_panel_category_item { padding-left: var(--mcp-sp-28); }
-}
-
-/* Separator between sections */
-.o_search_panel_section + .o_search_panel_section {
-    border-top: var(--mcp-sp-1) solid var(--mcp-rule);
-    padding-top: var(--mcp-sp-8);
+/* Child items indent (йерархични категории) */
+.o_search_panel_category_value .o_search_panel_category_value {
+    .list-group-item-action { padding-left: var(--mcp-sp-24) !important; }
 }

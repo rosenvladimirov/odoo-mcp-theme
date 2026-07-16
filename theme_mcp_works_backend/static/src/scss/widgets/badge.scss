@@ -3,7 +3,7 @@
 /* ── Bootstrap badge base ────────────────────────────────────── */
 .badge {
     border-radius: var(--mcp-r-xs) !important;
-    font-size: 11px !important;
+    font-size: var(--mcp-fs-11) !important;
     font-weight: 500 !important;
     letter-spacing: 0.02em;
     padding: 3px 8px !important;

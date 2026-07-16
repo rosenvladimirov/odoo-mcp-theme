@@ -25,7 +25,7 @@
     padding: var(--mcp-sp-8) var(--mcp-sp-14) !important;
     color: var(--mcp-ink-2) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
     font-weight: 600 !important;
     letter-spacing: 0.10em !important;
     text-transform: uppercase !important;
@@ -52,6 +52,22 @@
         width: var(--mcp-sp-16);
         height: var(--mcp-sp-16);
         border-radius: 0 !important;
+    }
+
+    /* Odoo 19 рендира иконата на таба като <span class="icon"> с
+       background-image (НЕ <img>) → правилото по-горе не я хваща. Темата
+       прави .tab flex, тъй че празният span остава с height:0 (в native
+       височината идваше от line-height на инлайн реда) → иконата изчезва
+       (Rosen: "в конфига не се виждат иконите на апликациите"). Даваме му
+       квадрат с изрична височина + background sizing. */
+    .icon {
+        width: var(--mcp-sp-16) !important;
+        height: var(--mcp-sp-16) !important;
+        min-width: var(--mcp-sp-16) !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        flex-shrink: 0;
     }
 }
 
@@ -80,7 +96,7 @@
 .settings_block h2,
 .o_form_view.o_settings h2 {
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
     font-weight: 700 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
@@ -107,7 +123,7 @@
     .o_form_label,
     label {
         font-family: var(--mcp-font-family) !important;
-        font-size: var(--mcp-sp-13) !important;
+        font-size: var(--mcp-fs-13) !important;
         font-weight: 600 !important;
         color: var(--mcp-ink) !important;
         letter-spacing: 0 !important;
@@ -117,7 +133,7 @@
     .text-muted,
     .o_form_field_descriptive {
         color: var(--mcp-ink-3) !important;
-        font-size: var(--mcp-sp-11-5) !important;
+        font-size: var(--mcp-fs-11) !important;
         line-height: 1.5;
     }
 }
@@ -177,6 +193,6 @@
     color: var(--mcp-accent) !important;
     border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
     border-radius: 0 !important;
-    font-size: var(--mcp-sp-12) !important;
+    font-size: var(--mcp-fs-12) !important;
     padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
 }

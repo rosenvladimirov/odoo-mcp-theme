@@ -57,7 +57,7 @@
         .o_kanban_header_title,
         .o_column_title {
             font-family: var(--mcp-font-mono) !important;
-            font-size: var(--mcp-sp-11) !important;
+            font-size: var(--mcp-fs-11) !important;
             font-weight: 700 !important;
             letter-spacing: 0.12em !important;
             text-transform: uppercase !important;
@@ -73,7 +73,7 @@
             background: var(--mcp-accent-soft);
             color: var(--mcp-accent);
             font-family: var(--mcp-font-mono);
-            font-size: var(--mcp-sp-10);
+            font-size: var(--mcp-fs-10);
             font-weight: 700;
             letter-spacing: 0.04em;
             border-radius: 0;
@@ -117,7 +117,7 @@
        (.oe_kanban_text removed — a pre-v17 class Odoo 19 no longer renders.) */
     .o_kanban_record_title {
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-11) !important;
+        font-size: var(--mcp-fs-11) !important;
         font-weight: 700 !important;
         color: var(--mcp-accent) !important;
         letter-spacing: 0.02em !important;
@@ -126,7 +126,7 @@
 
     /* Card body text */
     .o_kanban_record_subtitle {
-        font-size: var(--mcp-sp-13) !important;
+        font-size: var(--mcp-fs-13) !important;
         font-weight: 500 !important;
         color: var(--mcp-ink) !important;
     }
@@ -139,7 +139,7 @@
         justify-content: space-between;
         gap: var(--mcp-sp-8);
         font-family: var(--mcp-font-mono);
-        font-size: var(--mcp-sp-10);
+        font-size: var(--mcp-fs-10);
         color: var(--mcp-ink-3);
         letter-spacing: 0.04em;
     }
@@ -224,7 +224,7 @@
     border-radius: 0 !important;
     color: var(--mcp-ink-3) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
     letter-spacing: 0.06em !important;
     text-transform: uppercase !important;
 

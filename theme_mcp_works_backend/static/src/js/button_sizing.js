@@ -112,6 +112,13 @@ const EXCLUDE =
        падинга"). The .o_statusbar_buttons action buttons stay
        managed — same rule as the control panel. */
     ".o_form_statusbar .o_statusbar_status .btn," +
+    /* Search-panel fold toggle (.o_toggle_fold): празен е за листните
+       категории → classifyButton го брои за rectangular и inline
+       min-width/padding/height го напомпват в разпънат бутон (Rosen:
+       "този бутон е много разпънат"). Оразмеряването му е изцяло CSS в
+       search_panel.scss (гол, border 0, width:auto → 0px за листните,
+       каретка за родителските) → JS да НЕ го пипа. */
+    ".o_toggle_fold," +
     "[data-mcp-no-size]";
 
 function sizeOne(btn, H) {

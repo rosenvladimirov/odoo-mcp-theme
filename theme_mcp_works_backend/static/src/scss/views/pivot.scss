@@ -22,7 +22,7 @@
 .o_pivot table.o_pivot_table {
     width: 100%;
     border-collapse: collapse;
-    font-size: var(--mcp-sp-12) !important;
+    font-size: var(--mcp-fs-12) !important;
 
     /* All header cells — monospace caps */
     thead th,
@@ -30,7 +30,7 @@
     th.o_pivot_origin_row {
         background: var(--mcp-surface-3) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-10) !important;
+        font-size: var(--mcp-fs-10) !important;
         font-weight: 600 !important;
         letter-spacing: 0.12em !important;
         text-transform: uppercase !important;
@@ -50,7 +50,7 @@
     tbody th {
         background: var(--mcp-surface-2) !important;
         font-family: var(--mcp-font-family) !important;
-        font-size: var(--mcp-sp-12) !important;
+        font-size: var(--mcp-fs-12) !important;
         font-weight: 500 !important;
         color: var(--mcp-ink) !important;
         padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
@@ -64,7 +64,7 @@
     tbody td {
         font-family: var(--mcp-font-mono) !important;
         font-feature-settings: "tnum","ss01";
-        font-size: var(--mcp-sp-12) !important;
+        font-size: var(--mcp-fs-12) !important;
         font-weight: 500 !important;
         color: var(--mcp-ink) !important;
         padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;

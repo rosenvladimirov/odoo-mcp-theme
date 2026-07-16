@@ -17,13 +17,13 @@
 .o_activity_view table.o_activity_table {
     width: 100%;
     border-collapse: collapse;
-    font-size: var(--mcp-sp-12) !important;
+    font-size: var(--mcp-fs-12) !important;
 
     /* Header — activity types */
     thead th {
         background: var(--mcp-surface-3) !important;
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-10) !important;
+        font-size: var(--mcp-fs-10) !important;
         font-weight: 600 !important;
         letter-spacing: 0.12em !important;
         text-transform: uppercase !important;
@@ -74,7 +74,7 @@
                 width: var(--mcp-sp-22);
                 height: var(--mcp-sp-22);
                 font-family: var(--mcp-font-mono);
-                font-size: var(--mcp-sp-11);
+                font-size: var(--mcp-fs-11);
                 font-weight: 700;
                 color: var(--mcp-accent);
                 background: var(--mcp-accent-soft);

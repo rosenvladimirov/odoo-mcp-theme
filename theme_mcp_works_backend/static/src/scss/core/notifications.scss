@@ -82,13 +82,13 @@
 .o_notification_content { flex: 1 1 auto; min-width: 0; }
 .o_notification_title {
     font-weight: 600;
-    font-size: var(--mcp-sp-13);
+    font-size: var(--mcp-fs-13);
     color: var(--mcp-ink);
     margin-bottom: var(--mcp-sp-2);
 }
 .o_notification_body,
 .o_notification_message {
-    font-size: var(--mcp-sp-12);
+    font-size: var(--mcp-fs-12);
     color: var(--mcp-ink-2);
     line-height: 1.4;
 }

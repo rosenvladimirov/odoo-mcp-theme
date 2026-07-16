@@ -119,7 +119,7 @@
                 &.o_list_field_datetime {
                     font-family: var(--mcp-font-mono) !important;
                     color: var(--mcp-ink-2) !important;
-                    font-size: var(--mcp-sp-11-5) !important;
+                    font-size: var(--mcp-fs-11) !important;
                 }
             }
         }
@@ -185,7 +185,7 @@
     height: var(--mcp-sp-18) !important;
     padding: 0 var(--mcp-sp-8) !important;
     font-family: var(--mcp-font-family) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
     font-weight: 600 !important;
     letter-spacing: 0 !important;
     text-transform: none !important;
@@ -230,7 +230,7 @@
 .o_list_view .o_group_header {
     background: var(--mcp-surface-3) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-10) !important;
+    font-size: var(--mcp-fs-10) !important;
     font-weight: 700 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
@@ -243,7 +243,7 @@
     background: var(--mcp-accent) !important;
     color: var(--mcp-surface) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
     letter-spacing: 0.06em !important;
     border-radius: 0 !important;
     box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
@@ -423,7 +423,7 @@ a.purchase-dashboard-card.btn {
        greedily caught the number's <span> and shrank it). */
     small, .text-muted, .o_label, [class*="label"] {
         font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-sp-9-5) !important;
+        font-size: var(--mcp-fs-10) !important;
         font-weight: 500 !important;
         letter-spacing: 0.16em !important;
         text-transform: uppercase !important;
@@ -436,7 +436,7 @@ a.purchase-dashboard-card.btn {
        цифрите"). Keep .ps-4 small & muted. */
     .fs-1 .ps-4, .fs-2 .ps-4, .fs-3 .ps-4, .fs-4 .ps-4,
     .fs-1 .ps-4 span, .fs-2 .ps-4 span, .fs-3 .ps-4 span, .fs-4 .ps-4 span {
-        font-size: var(--mcp-sp-12) !important;
+        font-size: var(--mcp-fs-12) !important;
         font-weight: 500 !important;
         color: var(--mcp-ink-3) !important;
         line-height: 1 !important;
@@ -451,7 +451,7 @@ a.purchase-dashboard-card.btn {
     .ps-4 .o_priority_star.fa,
     .ps-4 .o_priority_star.fa-star {
         font-family: "FontAwesome" !important;
-        font-size: var(--mcp-sp-12) !important;
+        font-size: var(--mcp-fs-12) !important;
         font-weight: 400 !important;
         color: var(--mcp-warn) !important;
         line-height: 1 !important;

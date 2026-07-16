@@ -8,7 +8,7 @@
     gap: var(--mcp-sp-4);
     padding: var(--mcp-sp-2) var(--mcp-sp-8) !important;
     border-radius: var(--mcp-r-sm) !important;
-    font-size: var(--mcp-sp-11) !important;
+    font-size: var(--mcp-fs-11) !important;
     font-weight: 500;
     line-height: 1.4;
     background: var(--mcp-accent-soft) !important;
@@ -22,7 +22,7 @@
 /* Delete cross on tag */
 .o_tag .o_delete,
 .o_tag .o_tag_badge_delete {
-    font-size: var(--mcp-sp-10);
+    font-size: var(--mcp-fs-10);
     opacity: 0.55;
     cursor: pointer;
     transition: opacity var(--mcp-t-fast);
