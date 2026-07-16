@@ -174,12 +174,15 @@ input[type="checkbox"].form-check-input,
         background: var(--mcp-accent-soft);
     }
 
+    /* Фокус: БЕЗ glow-пръстен — той мигаше като „чертичка" при клик (Chrome
+       пуска :focus-visible и на клик по чекбокс, а Bootstrap слага свой
+       .form-check-input:focus glow). Оставяме само тънка accent рамка + inset
+       (без пръстен). `!important` за да надбие Bootstrap-ския focus glow. */
+    &:focus,
     &:focus-visible {
-        outline: none;
-        border-color: var(--mcp-accent);
-        box-shadow:
-            inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a06),
-            0 0 0 var(--mcp-sp-3) var(--mcp-accent-glow);
+        outline: none !important;
+        border-color: var(--mcp-accent) !important;
+        box-shadow: inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a06) !important;
     }
 
     &:checked {
