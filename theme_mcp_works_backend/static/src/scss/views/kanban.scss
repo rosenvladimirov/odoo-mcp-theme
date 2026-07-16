@@ -187,6 +187,46 @@
     gap: var(--mcp-sp-12);
 }
 
+/* ── Apps / modules kanban — dense grid, match native compactness ──
+   Страницата рендира 60+ малки module-карти. Дефолтните за темата card
+   padding (10/12) + renderer gap (12) ги разпръскват в хлабава, тежка
+   мозайка спрямо еталона (Rosen: "нашия е грозен"). Стягаме към native
+   метриките: 8px padding + без extra renderer gap (native ги разрежда
+   само през card margin-а). Плоски в покой (halo-то е махнато от records
+   в layout.scss) → glow само на hover, като останалите kanban-и. */
+.o_kanban_view.o_modules_kanban .o_kanban_record:not(.o_kanban_ghost):not(.o_kanban_demo) {
+    padding: var(--mcp-sp-8) !important;
+}
+.o_kanban_view.o_modules_kanban .o_kanban_renderer {
+    gap: 0 !important;
+}
+
+/* ⋮ dropdown toggle — БЕЗ рамка (Rosen: "трите точки без рамка").
+   Темата дава на всеки .btn ink рамка; тук е плаващ overlay икон-бутон,
+   рамката стои зле. Голи икони ink-3 → accent на hover (като менютата). */
+.o_kanban_view.o_modules_kanban .o_dropdown_kanban .btn {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--mcp-ink-3) !important;
+    &:hover, &:focus, &:focus-visible, &.show {
+        border: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        color: var(--mcp-accent) !important;
+    }
+}
+
+/* Card hover = САМО лявата синя линия (Rosen: "ховъра само лява синя
+   линия") — без border-акцент, без lift, без glow. Лявата линия идва от
+   базовото .o_kanban_record:hover::before (по-горе); тук само гасим
+   glow/transform/border-color, за да остане чисто линията. */
+.o_kanban_view.o_modules_kanban .o_kanban_record:not(.o_kanban_ghost):not(.o_kanban_demo):hover {
+    border-color: var(--mcp-rule-strong) !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
 /* ── Quick-create / "+" column add ──────────────────────────── */
 .o_kanban_view .o_kanban_quick_add,
 .o_kanban_view .o_kanban_quick_create {

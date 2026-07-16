@@ -111,11 +111,16 @@
 /* ── Soft sapphire halo on panel surfaces ──────────────────────────────
    Triple-stacked: 1px ring + close 12px + far 32px. Survives white-on-white
    backgrounds without screaming. Applied to all the main panel-class
-   chrome containers that Odoo renders. */
+   chrome containers that Odoo renders.
+   NB: kanban RECORDS (cards) are deliberately excluded — the halo is for
+   large single panels, not repeated small items. On dense grids (Apps:
+   60+ module cards) a per-card halo turns the grid into a glowing-box
+   mosaic (Rosen: "нашия е грозен" vs еталона). Cards stay flat at rest
+   and glow only on :hover (виж .o_kanban_record:hover по-долу + kanban.scss).
+   Панелът тук е .o_kanban_group (колоната), не картата. */
 .o_form_sheet_bg .o_form_sheet,
 .o_form_view .o_form_sheet,
 .o_list_view .o_list_renderer,
-.o_kanban_view .o_kanban_record,
 .o_kanban_group,
 .o-mail-Chatter,
 .o_pivot,
