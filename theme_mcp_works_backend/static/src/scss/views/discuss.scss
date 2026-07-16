@@ -493,7 +493,8 @@
    dark-navy + blueprint mesh + a sapphire frame, and make the controls
    light/sapphire so they read on the dark. */
 .o-discuss-Call {
-    background-color: #0b1424 !important;
+    /* deep indigo, not the neutral dark-navy (Rosen: "не тъмно-синьо, а индиго") */
+    background-color: #1e1b4b !important;
     background-image:
         linear-gradient(to right, var(--mcp-accent-a20) var(--mcp-sp-1), transparent var(--mcp-sp-1)),
         linear-gradient(to bottom, var(--mcp-accent-a20) var(--mcp-sp-1), transparent var(--mcp-sp-1)) !important;
