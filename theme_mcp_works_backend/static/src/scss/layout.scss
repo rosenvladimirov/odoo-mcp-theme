@@ -149,9 +149,6 @@
         0 0 0 var(--mcp-sp-1) var(--mcp-accent-2),
         0 0 var(--mcp-sp-6) var(--mcp-accent-a30) !important;
 }
-.o_kanban_record:hover {
-    box-shadow:
-        0 0 0 var(--mcp-sp-1) var(--mcp-accent),
-        0 0 var(--mcp-sp-6) var(--mcp-accent-a20),
-        0 var(--mcp-sp-4) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-4)) var(--mcp-accent-a20) !important;
-}
+/* Kanban card hover glow — ПРЕМАХНАТ (v204). Hover-ът вече е само лявата
+   сапфир линия (виж kanban.scss .o_kanban_record:hover::before), за всички
+   карти; без glow/lift, за да не "скача"/свети всяка карта. */

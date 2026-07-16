@@ -97,22 +97,20 @@
         background var(--mcp-t-fast),
         box-shadow var(--mcp-t-fast);
 
-    &:hover {
-        border-color: var(--mcp-accent) !important;
-        transform: translateY(calc(-1 * var(--mcp-sp-2)));
-        box-shadow:
-            0 0 0 var(--mcp-sp-1) var(--mcp-accent),
-            0 0 var(--mcp-sp-6) var(--mcp-accent-a20),
-            0 var(--mcp-sp-4) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-4)) var(--mcp-accent-a20) !important;
-
-        &::before {
-            content: "";
-            position: absolute;
-            inset: 0 auto 0 0;
-            width: var(--mcp-sp-2);
-            background: var(--mcp-accent);
-            box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-glow);
-        }
+    /* Hover = САМО лявата сапфир линия — за ВСИЧКИ kanban карти (Rosen:
+       "ховърът само лява синя линия"). Без border-акцент, без lift, без
+       glow (иначе всяка карта "скача"/свети). Линията се показва само на
+       НЕцветните карти; цветните (native ::after + theme border-left ляв
+       цвят) си пазят цвета и не се покриват със синьо (Rosen: "има едни
+       с цвят, запази цвета"). Нищо на hover вече не пипа border-*-color,
+       затова левият цвят на цветните карти оцелява. */
+    &:not([class*="o_kanban_color_"]):hover::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: var(--mcp-sp-2);
+        background: var(--mcp-accent);
+        box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-glow);
     }
 
     /* Card title / record-id-style first field.
@@ -187,24 +185,11 @@
     gap: var(--mcp-sp-12);
 }
 
-/* ── Apps / modules kanban — dense grid, match native compactness ──
-   Страницата рендира 60+ малки module-карти. Дефолтните за темата card
-   padding (10/12) + renderer gap (12) ги разпръскват в хлабава, тежка
-   мозайка спрямо еталона (Rosen: "нашия е грозен"). Стягаме към native
-   метриките: 8px padding + без extra renderer gap (native ги разрежда
-   само през card margin-а). Плоски в покой (halo-то е махнато от records
-   в layout.scss) → glow само на hover, като останалите kanban-и. */
-.o_kanban_view.o_modules_kanban .o_kanban_record:not(.o_kanban_ghost):not(.o_kanban_demo) {
-    padding: var(--mcp-sp-8) !important;
-}
-.o_kanban_view.o_modules_kanban .o_kanban_renderer {
-    gap: 0 !important;
-}
-
-/* ⋮ dropdown toggle — БЕЗ рамка (Rosen: "трите точки без рамка").
-   Темата дава на всеки .btn ink рамка; тук е плаващ overlay икон-бутон,
-   рамката стои зле. Голи икони ink-3 → accent на hover (като менютата). */
-.o_kanban_view.o_modules_kanban .o_dropdown_kanban .btn {
+/* ⋮ dropdown toggle — БЕЗ рамка, за ВСИЧКИ kanban карти (Rosen: "трите
+   точки без рамка"). Темата дава на всеки .btn ink рамка; тук е плаващ
+   overlay икон-бутон, рамката стои зле. Голи икони ink-3 → accent на hover
+   (като менютата). */
+.o_kanban_view .o_dropdown_kanban .btn {
     border: 0 !important;
     box-shadow: none !important;
     background: transparent !important;
@@ -217,14 +202,18 @@
     }
 }
 
-/* Card hover = САМО лявата синя линия (Rosen: "ховъра само лява синя
-   линия") — без border-акцент, без lift, без glow. Лявата линия идва от
-   базовото .o_kanban_record:hover::before (по-горе); тук само гасим
-   glow/transform/border-color, за да остане чисто линията. */
-.o_kanban_view.o_modules_kanban .o_kanban_record:not(.o_kanban_ghost):not(.o_kanban_demo):hover {
-    border-color: var(--mcp-rule-strong) !important;
-    transform: none !important;
-    box-shadow: none !important;
+/* ── Apps / modules kanban — dense grid, match native compactness ──
+   Страницата рендира 60+ малки module-карти. Дефолтните за темата card
+   padding (10/12) + renderer gap (12) ги разпръскват в хлабава, тежка
+   мозайка спрямо еталона (Rosen: "нашия е грозен"). Стягаме към native
+   метриките: 8px padding + без extra renderer gap (native ги разрежда
+   само през card margin-а). Плоски в покой (halo-то е махнато от records
+   в layout.scss) → glow само на hover, като останалите kanban-и. */
+.o_kanban_view.o_modules_kanban .o_kanban_record:not(.o_kanban_ghost):not(.o_kanban_demo) {
+    padding: var(--mcp-sp-8) !important;
+}
+.o_kanban_view.o_modules_kanban .o_kanban_renderer {
+    gap: 0 !important;
 }
 
 /* ── Quick-create / "+" column add ──────────────────────────── */
