@@ -586,13 +586,14 @@
     content: "\25BE" !important;      /* ▾ */
     font-family: sans-serif !important;
 }
-/* stay ink on hover too — the generic .btn:hover would otherwise flash the
-   icons sapphire (Rosen: "само ховера да е инк"). */
+/* rest = ink (black); on hover the text/icons turn sapphire, like the other
+   menus in the rail (Rosen: "на hover да сменя цвета на текста като при
+   останалите менюта"). */
 .o-discuss-CallMenu-buttonContent:hover,
 .o-discuss-CallMenu-buttonContent .btn:hover,
 .o-discuss-CallMenu-dropdownMore:hover,
 .o-discuss-CallMenu-channelInfo:hover,
 .o-discuss-CallMenu-buttonContent:hover i,
 .o-discuss-CallMenu-buttonContent .btn:hover i {
-    color: var(--mcp-ink) !important;
+    color: var(--mcp-accent) !important;
 }
