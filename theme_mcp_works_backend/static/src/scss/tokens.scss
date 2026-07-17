@@ -41,9 +41,12 @@
     --mcp-accent-dark:  #0a3f8c;
     --mcp-accent-2:     #1e6fe0;   /* brighter sapphire highlight */
     --mcp-accent-3:     #38bdf8;   /* sky sparkle */
-    --mcp-accent-soft:  rgba(15, 82, 186, 0.08);
-    --mcp-accent-glow:  rgba(15, 82, 186, 0.55);
-    --mcp-accent-mute:  rgba(15, 82, 186, 0.04);
+    /* accent-derived — follow var(--mcp-accent) via color-mix (identical at
+       default #0F52BA; the accent knob cascades these). -dark/-2/-3 stay
+       hand-tuned; the config module derives them in JS when accent changes. */
+    --mcp-accent-soft:  color-mix(in srgb, var(--mcp-accent) 8%, transparent);
+    --mcp-accent-glow:  color-mix(in srgb, var(--mcp-accent) 55%, transparent);
+    --mcp-accent-mute:  color-mix(in srgb, var(--mcp-accent) 4%, transparent);
 
     --mcp-danger:       #dc2626;
     --mcp-danger-soft:  rgba(220, 38, 38, 0.10);
@@ -52,9 +55,9 @@
 
     --mcp-rule:         rgba(165, 195, 225, 0.32);   /* light bluish gray — soft */
     --mcp-rule-strong:  rgba(130, 165, 205, 0.40);
-    --mcp-grid-color:   rgba(15, 82, 186, 0.05);
+    --mcp-grid-color:   color-mix(in srgb, var(--mcp-accent) 5%, transparent);
     --mcp-grid-size:    48px;
-    --mcp-scan-color:   rgba(15, 82, 186, 0.05);
+    --mcp-scan-color:   color-mix(in srgb, var(--mcp-accent) 5%, transparent);
 
     /* Control-panel & sheet backgrounds */
     --mcp-cp-bg: color-mix(in srgb, var(--mcp-surface) 92%, var(--mcp-accent) 8%);
@@ -64,14 +67,18 @@
     --mcp-sheet-border: var(--mcp-rule);
     --mcp-sheet-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px -6px rgba(15, 23, 42, 0.08);
 
-    /* ── Border-radius scale · ROBOT = SHARP ────────────────── */
-    --mcp-r-xs:   0px;
-    --mcp-r-sm:   0px;
-    --mcp-r-base: 0px;
-    --mcp-r-md:   0px;
-    --mcp-r-lg:   0px;
-    --mcp-r-xl:   0px;
-    --mcp-r-pill: 0px;
+    /* ── Border-radius scale · ROBOT = SHARP ──────────────────
+       One knob --mcp-radius-scale (0 = sharp robot). The config module
+       raises it → all radii scale to rounded. Default 0 → all 0px
+       (identical to before). */
+    --mcp-radius-scale: 0;
+    --mcp-r-xs:   calc(var(--mcp-radius-scale) * 1px);
+    --mcp-r-sm:   calc(var(--mcp-radius-scale) * 2px);
+    --mcp-r-base: calc(var(--mcp-radius-scale) * 3px);
+    --mcp-r-md:   calc(var(--mcp-radius-scale) * 4px);
+    --mcp-r-lg:   calc(var(--mcp-radius-scale) * 6px);
+    --mcp-r-xl:   calc(var(--mcp-radius-scale) * 8px);
+    --mcp-r-pill: calc(var(--mcp-radius-scale) * 999px);
     /* Cut-corner notch for "HUD panel" surfaces (use via clip-path) */
     --mcp-notch:  6px;
 
@@ -102,10 +109,11 @@
        на еталона" → основен текст/хром = 14px (= native Odoo), микро-
        етикетите леко под това. Единствените 4 копчета за размер на текст;
        всички `font-size` в темата сочат тук. */
-    --mcp-fs-10: 12px;   /* микро (броячи, телеметрия); беше 10px */
-    --mcp-fs-11: 13px;   /* малки mono-caps етикети; беше 11px */
-    --mcp-fs-12: 14px;   /* хром/вторичен текст → native; беше 12px */
-    --mcp-fs-13: 14px;   /* съдържание → native; беше 13px */
+    --mcp-font-scale: 1;   /* text-size multiplier (config knob); 1 = native */
+    --mcp-fs-10: calc(12px * var(--mcp-font-scale));   /* микро (броячи, телеметрия) */
+    --mcp-fs-11: calc(13px * var(--mcp-font-scale));   /* малки mono-caps етикети */
+    --mcp-fs-12: calc(14px * var(--mcp-font-scale));   /* хром/вторичен текст → native */
+    --mcp-fs-13: calc(14px * var(--mcp-font-scale));   /* съдържание → native */
 
     /* ── Layout ──────────────────────────────────────────────── */
     --mcp-navbar-height: 36px;
@@ -209,18 +217,18 @@
 
     /* ── Accent (sapphire #0F52BA) at fixed alphas ──────────────
        The glow/halo family used everywhere as rgba(15,82,186,α). */
-    --mcp-accent-a04: rgba(15, 82, 186, 0.04);
-    --mcp-accent-a05: rgba(15, 82, 186, 0.05);
-    --mcp-accent-a06: rgba(15, 82, 186, 0.06);
-    --mcp-accent-a08: rgba(15, 82, 186, 0.08);
-    --mcp-accent-a12: rgba(15, 82, 186, 0.12);
-    --mcp-accent-a18: rgba(15, 82, 186, 0.18);
-    --mcp-accent-a20: rgba(15, 82, 186, 0.20);
-    --mcp-accent-a22: rgba(15, 82, 186, 0.22);
-    --mcp-accent-a25: rgba(15, 82, 186, 0.25);
-    --mcp-accent-a30: rgba(15, 82, 186, 0.30);
-    --mcp-accent-a45: rgba(15, 82, 186, 0.45);
-    --mcp-accent-a55: rgba(15, 82, 186, 0.55);
+    --mcp-accent-a04: color-mix(in srgb, var(--mcp-accent) 4%, transparent);
+    --mcp-accent-a05: color-mix(in srgb, var(--mcp-accent) 5%, transparent);
+    --mcp-accent-a06: color-mix(in srgb, var(--mcp-accent) 6%, transparent);
+    --mcp-accent-a08: color-mix(in srgb, var(--mcp-accent) 8%, transparent);
+    --mcp-accent-a12: color-mix(in srgb, var(--mcp-accent) 12%, transparent);
+    --mcp-accent-a18: color-mix(in srgb, var(--mcp-accent) 18%, transparent);
+    --mcp-accent-a20: color-mix(in srgb, var(--mcp-accent) 20%, transparent);
+    --mcp-accent-a22: color-mix(in srgb, var(--mcp-accent) 22%, transparent);
+    --mcp-accent-a25: color-mix(in srgb, var(--mcp-accent) 25%, transparent);
+    --mcp-accent-a30: color-mix(in srgb, var(--mcp-accent) 30%, transparent);
+    --mcp-accent-a45: color-mix(in srgb, var(--mcp-accent) 45%, transparent);
+    --mcp-accent-a55: color-mix(in srgb, var(--mcp-accent) 55%, transparent);
     /* Ink (#0f172a) shadow family */
     --mcp-ink-a04: rgba(15, 23, 42, 0.04);
     --mcp-ink-a06: rgba(15, 23, 42, 0.06);
@@ -254,7 +262,7 @@
     --mcp-danger-a10:   rgba(220, 38, 38, 0.10);
     --mcp-warn-a08:     rgba(245, 158, 11, 0.08);
     --mcp-warn-a10:     rgba(245, 158, 11, 0.10);
-    --mcp-accent-a40:   rgba(15, 82, 186, 0.40);
+    --mcp-accent-a40:   color-mix(in srgb, var(--mcp-accent) 40%, transparent);
     --mcp-scrim-a45:    rgba(5, 10, 20, 0.45);
     --mcp-shadow-a25:   rgba(0, 0, 0, 0.25);
     /* Long-tail one-off sizes */
@@ -295,9 +303,9 @@
     --mcp-accent-dark:  #2563eb;
     --mcp-accent-2:     #22d3ee;
     --mcp-accent-3:     #38bdf8;
-    --mcp-accent-soft:  rgba(59, 130, 246, 0.12);
-    --mcp-accent-glow:  rgba(59, 130, 246, 0.30);
-    --mcp-accent-mute:  rgba(59, 130, 246, 0.05);
+    --mcp-accent-soft:  color-mix(in srgb, var(--mcp-accent) 12%, transparent);
+    --mcp-accent-glow:  color-mix(in srgb, var(--mcp-accent) 30%, transparent);
+    --mcp-accent-mute:  color-mix(in srgb, var(--mcp-accent) 5%, transparent);
 
     --mcp-danger:       #f87171;
     --mcp-danger-soft:  rgba(248, 113, 113, 0.10);
