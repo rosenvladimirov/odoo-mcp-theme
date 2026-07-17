@@ -5,7 +5,7 @@
     "summary": "Independent hi-tech minimalist Odoo CE backend — robot "
                "theme, electric sapphire accents, sharp corners, "
                "light/dark mode, vertical Dash dock",
-    "version": "19.0.1.222.0",
+    "version": "19.0.1.223.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -13,6 +13,10 @@
     "license": "AGPL-3",
     "depends": ["web", "base_setup"],
     "excludes": ["web_enterprise"],
+    # Първата картинка = cover/thumbnail на Odoo Apps Store (иначе „no cover image").
+    "images": [
+        "static/description/banner.png",
+    ],
     "data": [
         "views/res_config_settings_views.xml",
     ],
