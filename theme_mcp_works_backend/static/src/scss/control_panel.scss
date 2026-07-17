@@ -197,6 +197,31 @@
     display: none !important;
 }
 
+/* Breadcrumb "⋯" collapsed-ancestors dropdown toggle. Odoo 19 markup:
+   <button class="btn btn-light btn-sm px-1 p-0"><i class="oi oi-ellipsis-h"/></button>
+   inside .o_breadcrumb .breadcrumb.  The generic .btn rule framed it (1.5px ink)
+   and on hover added an accent border + lift + fill.  Rosen: махни рамката и
+   фона при ховер — на ховер само точките да стават сини.  Scoped by .btn-light
+   INSIDE the breadcrumb, so the CP cog/actions toggles (.border-0.p-0, which DO
+   carry a frame per Rosen) stay untouched.  (0,5,0) beats the generic .btn:hover
+   (0,2,0). All-token. */
+.o_breadcrumb .breadcrumb .btn.btn-light,
+.o_breadcrumb .breadcrumb .btn.btn-light:hover,
+.o_breadcrumb .breadcrumb .btn.btn-light:focus,
+.o_breadcrumb .breadcrumb .btn.btn-light:focus-visible,
+.o_breadcrumb .breadcrumb .btn.btn-light.show {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+    transform: none !important;
+}
+.o_breadcrumb .breadcrumb .btn.btn-light:hover,
+.o_breadcrumb .breadcrumb .btn.btn-light:hover .oi,
+.o_breadcrumb .breadcrumb .btn.btn-light:hover .oi-ellipsis-h {
+    color: var(--mcp-accent) !important;   /* dots go blue on hover */
+}
+
 /* theme.css .control-panel = flat 38px strip, border-bottom only,
    NO halo (the halo belongs to data panels, not the CP bar). */
 .o_control_panel {

@@ -257,6 +257,56 @@
     box-shadow: var(--mcp-shadow-sm) !important;
 }
 
+/* Statusbar ACTION buttons (Send / Print / Pay / Preview / Credit-note /
+   Debit-note / Reset-to-draft) + the state chevron.  Long BG labels made the
+   row overflow → wrap onto a 2nd line (Rosen: "не се побират"); equal-width
+   padded short labels with air ("много въздух").  Fix: force the WHOLE
+   statusbar onto ONE row (nowrap) + let the buttons GROUP shrink so the
+   chevron never drops (Rosen: "шеврона пада на долния ред"); keep natural
+   button width, ellipsis + title-tooltip only the long ones; and size EVERY
+   action button uniformly — descendant .btn also reaches buttons nested in a
+   split .btn-group, which "> .btn" missed → blue looked bigger than white
+   (Rosen: "белите са по-малки от сините"). */
+.o_form_view .o_form_statusbar { flex-wrap: nowrap !important; }
+.o_form_view .o_form_statusbar .o_statusbar_buttons {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    flex: 0 1 auto !important;              /* group yields space to the chevron */
+    min-width: 0 !important;
+    gap: var(--mcp-sp-6) !important;
+    overflow: hidden !important;
+}
+/* direct flex children (buttons AND split-button groups) share the row */
+.o_form_view .o_form_statusbar .o_statusbar_buttons > * {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+}
+/* uniform size + ellipsis for EVERY action button (descendant → also the
+   ones nested in a .btn-group split, which "> .btn" missed → size mismatch). */
+.o_form_view .o_form_statusbar .o_statusbar_buttons .btn {
+    max-width: 13ch !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    /* block + line-height so text-overflow:ellipsis applies to the bare
+       label (no inner span; inline-flex can't ellipsis its own text). */
+    display: block !important;
+    height: var(--mcp-sp-32) !important;
+    min-height: var(--mcp-sp-32) !important;
+    line-height: calc(var(--mcp-sp-32) - 2 * var(--mcp-sp-1)) !important;
+    padding: 0 var(--mcp-sp-10) !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    /* kill the generic .btn:hover translateY(-1px) lift — the bar is
+       overflow:hidden so the lifted button's top got clipped and it looked
+       shorter on hover (Rosen: "реже горната част ... подскачат нагоре /
+       белите по-малки"). No lift → no clip, no jump. */
+    transform: none !important;
+}
+
 /* Form save/discard status buttons (cloud-upload + ✕). Rosen: cloud
    = blue, ✕ = red, и да получат бордер като останалите бутони
    ("като паддера"). Override BOTH buttons.scss's accent fill on

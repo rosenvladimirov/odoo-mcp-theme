@@ -104,14 +104,15 @@ const EXCLUDE =
        actions styled in form.scss; the 33px rect sizing made the
        add-row too tall (Rosen). */
     ".o_form_view .o_field_x2many_list_row_add .btn," +
-    /* Form statusbar STATE chevron segments — the arrow-tab strip is
-       fully styled in form.scss .o_form_statusbar .o_statusbar_status
-       (height 32, chevron clip-path, padding 0 16). The rect calc's
-       inline !important (min-width 91 + btn-pad) beat that and broke
-       the chevrons (Rosen: "не спазва правилото на бутоните и
-       падинга"). The .o_statusbar_buttons action buttons stay
-       managed — same rule as the control panel. */
+    /* Form statusbar buttons — BOTH the STATE chevron segments AND the
+       ACTION buttons are CSS-owned in form.scss (chevron strip + the
+       .o_statusbar_buttons natural-width/ellipsis/tooltip rules). The rect
+       calc's inline min-width (91, !important) broke the chevrons AND padded
+       the short action labels with dead air (Rosen: "много въздух") →
+       exclude both so CSS controls sizing; truncated action labels get a
+       native title tooltip via tagStatusbarTitles(). */
     ".o_form_statusbar .o_statusbar_status .btn," +
+    ".o_form_statusbar .o_statusbar_buttons .btn," +
     /* Search-panel fold toggle (.o_toggle_fold): празен е за листните
        категории → classifyButton го брои за rectangular и inline
        min-width/padding/height го напомпват в разпънат бутон (Rosen:
@@ -150,7 +151,27 @@ function sizeOne(btn, H) {
     btn.dataset.mcpBtnSized = stamp;
 }
 
+/* Statusbar action buttons truncate long labels with CSS ellipsis; expose
+   the full label as a native `title` on the shortened ones so the browser
+   shows a tooltip (Rosen: тоолтип на скъсените надписи). Only OUR titles are
+   managed (dataset flag) so an Odoo help-title is never clobbered. The doc
+   observer watches childList only, so setting title/dataset here can't loop. */
+function tagStatusbarTitles() {
+    document.querySelectorAll(".o_form_statusbar .o_statusbar_buttons .btn").forEach((b) => {
+        const truncated = b.scrollWidth > b.clientWidth + 1;
+        if (truncated) {
+            const full = (b.textContent || "").trim();
+            if (full && b.getAttribute("title") !== full) b.setAttribute("title", full);
+            b.dataset.mcpTitle = "1";
+        } else if (b.dataset.mcpTitle) {
+            b.removeAttribute("title");
+            delete b.dataset.mcpTitle;
+        }
+    });
+}
+
 function processAll() {
+    tagStatusbarTitles();
     const H = baseButtonHeight();
     if (!publishVars(H)) return;
     document.querySelectorAll(MANAGED).forEach((b) => sizeOne(b, H));
