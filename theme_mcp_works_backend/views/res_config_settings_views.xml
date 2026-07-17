@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2026 Rosen Vladimirov <vladimirov.rosen@gmail.com>
-     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
 <odoo>
 
     <record id="res_config_settings_view_form_mcp" model="ir.ui.view">

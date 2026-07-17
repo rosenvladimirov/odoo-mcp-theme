@@ -1,16 +1,16 @@
 # Copyright 2026 Rosen Vladimirov <vladimirov.rosen@gmail.com>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 {
     "name": "Theme MCP Works — Backend (Robot style)",
     "summary": "Independent hi-tech minimalist Odoo CE backend — robot "
                "theme, electric sapphire accents, sharp corners, "
                "light/dark mode, vertical Dash dock",
-    "version": "19.0.1.228.0",
+    "version": "19.0.1.229.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
     "website": "https://www.mcpworks.net",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "depends": ["web", "base_setup"],
     "excludes": ["web_enterprise"],
     # Първата картинка = cover/thumbnail на Odoo Apps Store (иначе „no cover image").

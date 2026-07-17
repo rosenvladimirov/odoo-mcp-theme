@@ -6,7 +6,7 @@
 > electric-sapphire accents, sharp corners, a fine blueprint mesh, seamless
 > light/dark mode and a vertical *Dash* dock. **No Enterprise dependency.**
 
-[![License: AGPL-3](https://img.shields.io/badge/license-AGPL--3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![License: LGPL-3](https://img.shields.io/badge/license-LGPL--3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![Odoo 19.0](https://img.shields.io/badge/Odoo-19.0%20Community-0F52BA.svg)](https://www.odoo.com)
 
 ---
@@ -64,4 +64,9 @@ tooling alive. Please star our MCP server as a thank-you:
 
 ## 📄 License
 
-[AGPL-3.0-or-later](https://www.gnu.org/licenses/agpl-3.0). © MCP Works / Rosen Vladimirov.
+[LGPL-3.0-or-later](https://www.gnu.org/licenses/lgpl-3.0). © MCP Works / Rosen Vladimirov.
+
+> **Why LGPL-3 (not AGPL):** this theme is an open, permissive base that
+> proprietary companion modules (e.g. `theme_mcp_works_backend_config`, OPL-1)
+> build on top of. A proprietary module may not depend on an AGPL core, so the
+> core is LGPL-3 (open, non-copyleft-infecting for downstream modules).

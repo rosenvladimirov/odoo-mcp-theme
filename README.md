@@ -42,4 +42,15 @@ cp -r theme_mcp_works /path/to/odoo/addons/
 
 ## License
 
-AGPL-3.0 — see [LICENSE](LICENSE).
+This repository is **mixed-licensed** — each module declares its own license
+in its manifest, headers and (where present) a module-local `LICENSE` file:
+
+| Module | License |
+|---|---|
+| `theme_mcp_works` (frontend) | AGPL-3.0-or-later — repo default, see [LICENSE](LICENSE) |
+| `theme_mcp_works_backend` | **LGPL-3.0-or-later** — see [theme_mcp_works_backend/LICENSE](theme_mcp_works_backend/LICENSE) |
+| `theme_mcp_works_backend_config` | **OPL-1** (proprietary) — see [theme_mcp_works_backend_config/LICENSE](theme_mcp_works_backend_config/LICENSE) |
+
+The backend theme is LGPL-3 (open, permissive core) so the proprietary OPL-1
+configurator may build on it; a proprietary module must not depend on an AGPL
+core (licensing Rule №0 / ADR-P-0010).
