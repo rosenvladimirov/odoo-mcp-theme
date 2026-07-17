@@ -54,12 +54,13 @@ Toggle light/dark and pick the UI font from **Settings**.
 ## ⭐ Support & thanks
 
 Made by **MCP Works** — independent Odoo work, crafted with ⚡.
-Visit our Odoo server & workshop: **<https://www.mcpworks.net>**
+Meet our **Odoo ↔ Claude MCP server** — the bridge that lets AI drive your Odoo:
+**<https://github.com/rosenvladimirov/odoo-claude-mcp>**
 
 **Enjoying the theme?** A single ⭐ star means a lot and keeps independent Odoo
-theming alive. Please leave one on the repository as a thank-you:
+tooling alive. Please star our MCP server as a thank-you:
 
-👉 **[⭐ Star on GitHub](https://github.com/rosenvladimirov/odoo-mcp-theme)** — thank you!
+👉 **[⭐ Star odoo-claude-mcp on GitHub](https://github.com/rosenvladimirov/odoo-claude-mcp)** — thank you!
 
 ## 📄 License
 
