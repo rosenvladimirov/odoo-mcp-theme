@@ -115,6 +115,13 @@
     --mcp-fs-12: calc(14px * var(--mcp-font-scale));   /* хром/вторичен текст → native */
     --mcp-fs-13: calc(14px * var(--mcp-font-scale));   /* съдържание → native */
 
+    /* ── Density (EXPERIMENTAL config knob) ──────────────────────
+       ЕДИНСТВЕНО върху row-rhythm/padding метриките (бутон/лист/CP/view),
+       НЕ върху структурните ширини (dash/panel/sp-*) — те остават фиксирани,
+       за да не се чупят калибрираните layout-и (ADR 0002: „подбор кои
+       spacing-и"). 1 = native; <1 компактно, >1 комфортно. */
+    --mcp-density-scale: 1;
+
     /* ── Layout ──────────────────────────────────────────────── */
     --mcp-navbar-height: 36px;
     /* Button typography — em/rem so the box scales with font-size,
@@ -122,7 +129,7 @@
        на оригинала са по-големи заради падинга който е em"). */
     --mcp-btn-font-size:   0.875rem;   /* 14px @ root 16 */
     --mcp-btn-line-height: 1.5;        /* → 21px */
-    --mcp-btn-pad-y:       0.3125rem;  /* 5px  (vertical em padding) */
+    --mcp-btn-pad-y:       calc(0.3125rem * var(--mcp-density-scale));  /* 5px em padding · density-scaled */
     --mcp-btn-pad-x:       0.625rem;   /* 10px (horizontal em padding) */
     /* Canonical button height = DERIVED from typography (border-box):
        line-height·font-size + 2·pad-y + 2·border. CSS resolves the
@@ -141,8 +148,8 @@
     --mcp-list-font-size:    0.875rem;  /* 14px @ root 16 */
     --mcp-list-line-height:  1.5;       /* → 21px */
     --mcp-list-table-pad-x:  1rem;      /* 16px (--ListRenderer-table-padding-x) */
-    --mcp-list-thead-pad-y:  0.5rem;    /* 8px  (--ListRenderer-thead-padding-y) */
-    --mcp-list-cell-pad-y:   0.5rem;    /* 8px  row vertical rhythm */
+    --mcp-list-thead-pad-y:  calc(0.5rem * var(--mcp-density-scale));    /* 8px thead · density-scaled */
+    --mcp-list-cell-pad-y:   calc(0.5rem * var(--mcp-density-scale));    /* 8px row rhythm · density-scaled */
     --mcp-list-cell-pad-x-sm: 0.3rem;   /* 4.8px — narrow cols (priority) */
     --mcp-form-sheet-pad-x: var(--mcp-sp-24);  /* form sheet H inset (24px = native Odoo, Rosen: match eталон); notebook tabs bleed -this;
         the o2m list bleeds out of exactly this to the sheet border */
@@ -157,8 +164,8 @@
     --mcp-btn-w-rect: calc(var(--mcp-btn-h) * var(--mcp-btn-rect-ratio));
     /* Search dropdown toggler border (kept transparent — no focus ring) */
     --mcp-toggler-border: var(--mcp-rule-strong);
-    --mcp-cp-row-h:      30px;
-    --mcp-view-pad:      8px;
+    --mcp-cp-row-h:      calc(30px * var(--mcp-density-scale));  /* CP row · density-scaled */
+    --mcp-view-pad:      calc(8px * var(--mcp-density-scale));   /* view inset · density-scaled */
     --mcp-stat-btn-min-w: 140px;
     --mcp-stat-btn-max-w: 240px;
     --mcp-dash-width:    54px;
