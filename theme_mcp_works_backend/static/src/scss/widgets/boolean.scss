@@ -161,7 +161,12 @@ input[type="checkbox"].form-check-input,
     box-shadow: inset 0 var(--mcp-sp-1) var(--mcp-sp-2) var(--mcp-ink-a06);
     cursor: pointer;
     position: relative;
-    margin: 0;
+    /* margin-right за отстъп до съседния етикет (напр. calendar Attendees,
+       филтър-списъци) — Bootstrap-ският .form-check padding даваше този gap,
+       но темата го занули (margin:0 + v209 padding-left:0) → чекбоксът лепна
+       за текста (Rosen: „чекбоксите са много близо до текста"). В settings
+       етикетът е в отделен pane, тъй че margin-right е безвреден там. */
+    margin: 0 var(--mcp-sp-8) 0 0;
     padding: 0;
     vertical-align: middle;
     transition:

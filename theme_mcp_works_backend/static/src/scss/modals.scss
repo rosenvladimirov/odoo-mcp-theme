@@ -72,6 +72,14 @@
     background: var(--mcp-accent-soft) !important;
     color: var(--mcp-accent) !important;
 }
+/* Отметката (::before) на избран/активен dropdown item (напр. calendar scale:
+   Week / Show weekends) — Odoo я слага без отстъп → чекът лепне за текста
+   (Rosen: „чекбоксите са много близо до текста"). Малък margin-right. */
+.o-dropdown-item.active::before,
+.o-dropdown-item.selected::before,
+.dropdown-item.active::before {
+    margin-right: var(--mcp-sp-6) !important;
+}
 
 /* ── Notifications ───────────────────────────────────────────── */
 .o_notification {
