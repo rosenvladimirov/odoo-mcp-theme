@@ -6,3 +6,6 @@ __pycache__/
 *.swp
 *.swo
 .DS_Store
+
+# Proprietary OPL-1 companion — lives in private repo l10n-bulgaria-expert, never here
+theme_mcp_works_backend_config/
