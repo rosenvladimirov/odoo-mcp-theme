@@ -80,6 +80,19 @@
 .dropdown-item.active::before {
     margin-right: var(--mcp-sp-6) !important;
 }
+/* Секция-хедъри / групови разделители в dropdown менютата (напр. Inventory >
+   Configuration: „Warehouse Management" / „Products"). Odoo им слага inline
+   `padding-left: 20px` (изместени надясно спрямо items-ите на 12px) + сиво.
+   Rosen: подравнени ВЛЯВО (до items), удебелени, ИНДИГО. `!important` надбива
+   inline padding-а. */
+.dropdown-menu_group.dropdown-header,
+.o-dropdown--menu .dropdown-header,
+.dropdown-menu .dropdown-header {
+    padding-left: var(--mcp-sp-12) !important;
+    font-weight: 700 !important;
+    color: var(--mcp-c-indigo) !important;
+    text-transform: none;
+}
 
 /* ── Notifications ───────────────────────────────────────────── */
 .o_notification {
