@@ -129,7 +129,7 @@
        на оригинала са по-големи заради падинга който е em"). */
     --mcp-btn-font-size:   0.875rem;   /* 14px @ root 16 */
     --mcp-btn-line-height: 1.5;        /* → 21px */
-    --mcp-btn-pad-y:       calc(0.3125rem * var(--mcp-density-scale));  /* 5px em padding · density-scaled */
+    --mcp-btn-pad-y:       0.3125rem;  /* 5px em padding — NOT density-scaled: feeds --mcp-btn-h + sizing.js JS calc, which can't parse calc() (review #1) */
     --mcp-btn-pad-x:       0.625rem;   /* 10px (horizontal em padding) */
     /* Canonical button height = DERIVED from typography (border-box):
        line-height·font-size + 2·pad-y + 2·border. CSS resolves the
