@@ -141,3 +141,24 @@
 .o_search_panel_category_value .o_search_panel_category_value {
     .list-group-item-action { padding-left: var(--mcp-sp-24) !important; }
 }
+
+/* Search/side-panel collapse toggle (иконата oi-panel-left / oi-panel-right) —
+   плаващ .btn горе-ляво, който сгъва search panel-а. Темата му слагаше .btn
+   ink рамка → грозна кутия (Rosen: „махни рамката на бутона" — Stock/Apps).
+   Гол икон-бутон, ink-2 → accent на hover. Покрива и двата DOM варианта:
+   иконата директно на .btn (calendar) ИЛИ като дъщерен <i> (list/apps). */
+.btn.oi-panel-right, .btn.oi-panel-left,
+.btn:has(> .oi-panel-right), .btn:has(> .oi-panel-left),
+.btn:has(> i.oi-panel-right), .btn:has(> i.oi-panel-left) {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--mcp-ink-2) !important;
+
+    &:hover, &:focus, &:focus-visible, &.active {
+        border: 0 !important;
+        box-shadow: none !important;
+        background: var(--mcp-accent-soft) !important;
+        color: var(--mcp-accent) !important;
+    }
+}
