@@ -103,30 +103,50 @@
         /* text-shadow glow removed — blurred today's day number. */
     }
 }
+/* „Днес" число в седмичния/дневния хедър — Odoo го рендира като ЧЕРВЕН кръг
+   (`.o_cw_day_number` с bg-danger + radius 50%); темата не го покриваше
+   (стилизира само `.fc-daygrid-day-number`). Махаме червения кръг → само
+   bold accent текст (днешната колона вече е маркирана с accent-soft фон +
+   рамка). Rosen: „не ми харесва" червеният кръг. */
+.o_calendar_view .fc-day-today .o_cw_day_number,
+.o_calendar_view .fc-day-today .fc-day-number {
+    background: transparent !important;
+    color: var(--mcp-accent) !important;
+    font-weight: 700 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
 
-/* Event chips */
+/* Event chips — леки сапфир „чипове": светъл accent tint фон + плътна лява
+   лента + четим ТЪМЕН текст. (Беше солиден тежък accent блок с бял текст,
+   който при минали/фейднати събития ставаше нечетим — Rosen: „не ми
+   харесват".) Остри ъгли, subtle ring, без крещящ glow. */
 .o_calendar_view .fc-event,
 .o_calendar_view .o_event {
-    background: var(--mcp-accent) !important;
-    color: var(--mcp-surface) !important;
+    background: var(--mcp-accent-a20) !important;
+    color: var(--mcp-ink) !important;
     border: 0 !important;
-    border-left: var(--mcp-sp-3) solid var(--mcp-accent-2) !important;
+    border-left: var(--mcp-sp-3) solid var(--mcp-accent) !important;
     border-radius: 0 !important;
     font-family: var(--mcp-font-family) !important;
     font-size: var(--mcp-fs-11) !important;
     font-weight: 500 !important;
     padding: var(--mcp-sp-2) var(--mcp-sp-6) !important;
-    box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
+    box-shadow: inset 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a20) !important;
 
     &:hover {
-        box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-2), 0 0 var(--mcp-sp-8) var(--mcp-accent-a40) !important;
+        background: var(--mcp-accent-a30) !important;
+        box-shadow: inset 0 0 0 var(--mcp-sp-1) var(--mcp-accent) !important;
     }
 
+    .fc-event-title,
+    .fc-event-title-container { color: var(--mcp-ink) !important; }
     .fc-event-time {
         font-family: var(--mcp-font-mono) !important;
         font-feature-settings: "tnum","ss01";
         font-weight: 600 !important;
-        opacity: 0.85;
+        color: var(--mcp-accent) !important;
+        opacity: 1;
     }
 }
 
@@ -154,4 +174,17 @@
 .o_calendar_view .fc-timegrid-now-indicator-arrow {
     border-left-color: var(--mcp-accent) !important;
     border-right-color: var(--mcp-accent) !important;
+}
+
+/* Side-panel toggle (иконата „oi-panel-right" горе-дясно) — темата даваше на
+   всеки .btn ink рамка, което правеше плаващия икон-бутон грозна кутия
+   (Rosen circled it). Гол, ink-2 → accent на hover. */
+.oi-panel-right.btn,
+button.oi-panel-right {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--mcp-ink-2) !important;
+
+    &:hover { color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
 }
