@@ -396,6 +396,17 @@
         box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
     }
 
+    /* Hover edit-писалка overlay: Odoo я слага в абсолютно позициониран span
+       (inset 0) БЕЗ центриране, а theme-ското line-height:1 на label-а я тласка
+       към ГОРНИЯ ръб (Rosen: „писалката отива много нагоре, не заменя фунията").
+       Центрираме span-а → писалката сяда точно върху фунията. */
+    .o_searchview_facet_label > span,
+    .o_searchview_facet_label .position-absolute {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
     .o_facet_values {
         background: var(--mcp-accent-soft) !important;
         color: var(--mcp-accent) !important;
