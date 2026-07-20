@@ -43,59 +43,12 @@
         background: var(--mcp-accent-soft) !important;
     }
 
-    /* ── Apps button — sharp square, replaces heavy dropdown ────── */
-    .o_navbar_apps_menu .dropdown-toggle,
-    .o_navbar_apps_menu > .o-dropdown {
-        position: relative;
-        margin: 0 !important;
-        padding: 0 !important;
-        width: var(--mcp-navbar-height);
-        height: var(--mcp-navbar-height);
-        border-radius: 0 !important;
-        background: transparent !important;
-        color: var(--mcp-ink-2) !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: var(--mcp-sp-14);
-        line-height: 1;
-        border: 0 !important;
-        border-right: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-        box-shadow: none !important;
-        transition:
-            background var(--mcp-t-base),
-            color var(--mcp-t-base);
-    }
-    .o_navbar_apps_menu .dropdown-toggle::after,
-    .o_navbar_apps_menu .dropdown-toggle::before {
-        display: none !important;
-        content: none !important;
-    }
-    .o_navbar_apps_menu .dropdown-toggle:hover {
-        background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
-    }
-    .o_navbar_apps_menu .dropdown-toggle[aria-expanded='true'],
-    .o_navbar_apps_menu.show .dropdown-toggle {
-        background: var(--mcp-accent) !important;
-        color: var(--mcp-surface) !important;
-    }
-    /* Active indicator strip — cyan underglow */
-    .o_navbar_apps_menu .dropdown-toggle[aria-expanded='true']::after,
-    .o_navbar_apps_menu.show .dropdown-toggle::after {
-        content: "" !important;
-        display: block !important;
-        position: absolute !important;
-        inset: auto 0 calc(-1 * var(--mcp-sp-2)) 0 !important;
-        height: var(--mcp-sp-2) !important;
-        background: var(--mcp-accent-2) !important;
-        box-shadow: 0 0 var(--mcp-sp-8) var(--mcp-accent-2);
-    }
-    .o_navbar_apps_menu .dropdown-toggle i.oi,
-    .o_navbar_apps_menu .dropdown-toggle .oi-apps {
-        font-size: var(--mcp-sp-16) !important;
-        line-height: 1 !important;
-    }
+    /* Стилизирането на нативния apps бутон (`.o_navbar_apps_menu` и неговите
+       потомци) е махнато — беше недостижимо. `apps_trigger.scss` скрива
+       родителя безусловно (`.o_navbar_apps_menu {display:none !important}`,
+       без media query) и го замества с `.mcp_apps_trigger` + McpDash.
+       Проверено: computed display на родителя = none, getClientRects() = 0.
+       В Odoo 19 EE този клас изобщо не съществува. */
 
     /* App brand relocated to .mcp_breadcrumb_strip .mcp_app_brand */
     .o_menu_brand { display: none !important; }
