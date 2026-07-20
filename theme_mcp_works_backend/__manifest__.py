@@ -12,7 +12,6 @@
     "website": "https://www.mcpworks.net",
     "license": "LGPL-3",
     "depends": ["web", "base_setup"],
-    "excludes": ["web_enterprise"],
     # Първата картинка = cover/thumbnail на Odoo Apps Store (иначе „no cover image").
     "images": [
         "static/description/banner.png",
@@ -39,8 +38,7 @@
 
             # ── 2. Layout foundation ───────────────────────────────────
             "theme_mcp_works_backend/static/src/scss/layout.scss",
-            "theme_mcp_works_backend/static/src/scss/navbar.scss",
-            "theme_mcp_works_backend/static/src/scss/control_panel.scss",
+            "theme_mcp_works_backend/static/src/scss/control_panel_core.scss",
             "theme_mcp_works_backend/static/src/scss/modals.scss",
 
             # ── 3. Core components ─────────────────────────────────────
@@ -80,12 +78,6 @@
             "theme_mcp_works_backend/static/src/scss/views/discuss.scss",
             "theme_mcp_works_backend/static/src/scss/views/settings.scss",
 
-            # ── 6. Component panels ────────────────────────────────────
-            "theme_mcp_works_backend/static/src/scss/dash.scss",
-            "theme_mcp_works_backend/static/src/scss/apps_trigger.scss",
-            "theme_mcp_works_backend/static/src/scss/actions_panel.scss",
-            "theme_mcp_works_backend/static/src/scss/show_desktop.scss",
-            "theme_mcp_works_backend/static/src/scss/form_splitter.scss",
 
             # ── 7. JS utilities ────────────────────────────────────────
             # apply the Settings-chosen UI font before the client paints
@@ -98,17 +90,6 @@
             # no JS width-pin (it ballooned the .o_list_button column).
 
             # ── 8. OWL components ──────────────────────────────────────
-            "theme_mcp_works_backend/static/src/webclient/dash/dash.js",
-            "theme_mcp_works_backend/static/src/webclient/dash/dash.xml",
-            "theme_mcp_works_backend/static/src/webclient/actions_panel/actions_panel.js",
-            "theme_mcp_works_backend/static/src/webclient/actions_panel/actions_panel.xml",
-            "theme_mcp_works_backend/static/src/webclient/breadcrumb_strip/breadcrumb_strip.js",
-            "theme_mcp_works_backend/static/src/webclient/control_panel/control_panel.xml",
-            "theme_mcp_works_backend/static/src/webclient/show_desktop/show_desktop.js",
-            "theme_mcp_works_backend/static/src/webclient/show_desktop/show_desktop.xml",
-            "theme_mcp_works_backend/static/src/webclient/show_desktop/empty_desktop.js",
-            "theme_mcp_works_backend/static/src/webclient/show_desktop/empty_desktop.xml",
-            "theme_mcp_works_backend/static/src/webclient/form_splitter/form_splitter.js",
             "theme_mcp_works_backend/static/src/webclient/statusbar_unhide/statusbar_unhide.js",
         ],
     },
