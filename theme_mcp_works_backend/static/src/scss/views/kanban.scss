@@ -216,6 +216,35 @@
     gap: 0 !important;
 }
 
+/* Footer action buttons ("Activate" / "Learn More" / "Upgrade" / "Module
+   Info"). Преведените етикети са дълги ("Придвижете към по-нова версия") →
+   пренасяха се на два реда и вторият изпадаше ПОД рамката на бутона (той е
+   с фиксирана височина от sizing-а). Същият лек като статусбар бутоните
+   (v226): естествена ширина, скъсяване с ellipsis и нативен title tooltip
+   с пълния надпис (слага се от button_sizing.js → tagTruncatedTitles).
+   Бутоните са изключени от button_sizing.js, за да няма inline !important
+   борба — размерът е изцяло CSS. */
+.o_kanban_view.o_modules_kanban .o_kanban_record footer {
+    gap: var(--mcp-sp-6) !important;
+    min-width: 0 !important;
+}
+.o_kanban_view.o_modules_kanban .o_kanban_record footer .btn {
+    max-width: 16ch !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    /* block + line-height: ellipsis не се прилага върху собствения текст на
+       inline-flex елемент (няма вътрешен span). */
+    display: block !important;
+    height: var(--mcp-sp-28) !important;
+    min-height: var(--mcp-sp-28) !important;
+    line-height: calc(var(--mcp-sp-28) - 2 * var(--mcp-sp-1)) !important;
+    padding: 0 var(--mcp-sp-10) !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
 /* ── Quick-create / "+" column add ──────────────────────────── */
 .o_kanban_view .o_kanban_quick_add,
 .o_kanban_view .o_kanban_quick_create {

@@ -110,7 +110,7 @@ const EXCLUDE =
        calc's inline min-width (91, !important) broke the chevrons AND padded
        the short action labels with dead air (Rosen: "много въздух") →
        exclude both so CSS controls sizing; truncated action labels get a
-       native title tooltip via tagStatusbarTitles(). */
+       native title tooltip via tagTruncatedTitles(). */
     ".o_form_statusbar .o_statusbar_status .btn," +
     ".o_form_statusbar .o_statusbar_buttons .btn," +
     /* Search-panel fold toggle (.o_toggle_fold): празен е за листните
@@ -120,6 +120,12 @@ const EXCLUDE =
        search_panel.scss (гол, border 0, width:auto → 0px за листните,
        каретка за родителските) → JS да НЕ го пипа. */
     ".o_toggle_fold," +
+    /* Apps/modules kanban footer actions. Преведените етикети са дълги
+       ("Придвижете към по-нова версия") → редът се пренасяше и изпадаше под
+       рамката. Размерът им е CSS-owned в kanban.scss (естествена ширина +
+       ellipsis), точно като статусбар бутоните → JS да не инжектира inline
+       min-width/height. Скъсените получават title tooltip по-долу. */
+    ".o_modules_kanban .o_kanban_record footer .btn," +
     "[data-mcp-no-size]";
 
 function sizeOne(btn, H) {
@@ -151,13 +157,19 @@ function sizeOne(btn, H) {
     btn.dataset.mcpBtnSized = stamp;
 }
 
-/* Statusbar action buttons truncate long labels with CSS ellipsis; expose
-   the full label as a native `title` on the shortened ones so the browser
-   shows a tooltip (Rosen: тоолтип на скъсените надписи). Only OUR titles are
-   managed (dataset flag) so an Odoo help-title is never clobbered. The doc
-   observer watches childList only, so setting title/dataset here can't loop. */
-function tagStatusbarTitles() {
-    document.querySelectorAll(".o_form_statusbar .o_statusbar_buttons .btn").forEach((b) => {
+/* Buttons whose long labels are truncated with CSS ellipsis and therefore
+   need the full text exposed as a native tooltip. */
+const TRUNCATABLE =
+    ".o_form_statusbar .o_statusbar_buttons .btn," +
+    ".o_modules_kanban .o_kanban_record footer .btn";
+
+/* Truncated action buttons expose the full label as a native `title` so the
+   browser shows a tooltip (Rosen: тоолтип на скъсените надписи). Only OUR
+   titles are managed (dataset flag) so an Odoo help-title is never clobbered.
+   The doc observer watches childList only, so setting title/dataset here
+   can't loop. */
+function tagTruncatedTitles() {
+    document.querySelectorAll(TRUNCATABLE).forEach((b) => {
         const truncated = b.scrollWidth > b.clientWidth + 1;
         if (truncated) {
             const full = (b.textContent || "").trim();
@@ -171,7 +183,7 @@ function tagStatusbarTitles() {
 }
 
 function processAll() {
-    tagStatusbarTitles();
+    tagTruncatedTitles();
     const H = baseButtonHeight();
     if (!publishVars(H)) return;
     document.querySelectorAll(MANAGED).forEach((b) => sizeOne(b, H));
