@@ -95,10 +95,10 @@
 }
 
 /* ── Notifications ───────────────────────────────────────────── */
-.o_notification {
-    border-radius: var(--mcp-r-md) !important;
-    border-left-width: var(--mcp-sp-4) !important;
-}
+/* Празно нарочно: правилото за `.o_notification` беше мъртво — core/
+   notifications.scss се зарежда по-късно и задава `border-radius: 0` плюс
+   `border` shorthand (който включва и border-left-width). Доказано:
+   computed border-radius = 0px, border-left-width = 1px. */
 
 /* ── Tooltips ────────────────────────────────────────────────── */
 .tooltip-inner {

@@ -125,8 +125,10 @@
 .o-mail-Chatter,
 .o_pivot,
 .o_graph_view,
-.o_calendar_view,
-.modal-content {
+.o_calendar_view {
+    /* .modal-content НЕ е тук: modals.scss се зарежда по-късно и задава
+       същото свойство с еднаква специфичност → халото никога не се прилагаше
+       върху модалите (доказано: computed box-shadow = --mcp-shadow-modal). */
     box-shadow:
         0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
         0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12),
@@ -134,21 +136,21 @@
 }
 
 /* ── Small accent glow on active interactive surfaces ───────────────── */
-.btn-primary,
+/* Голите `.btn-primary` и `.o_searchview_facet_label` са махнати: и двата са
+   (0,1,0) и се презаписват по-късно — първият от widgets/buttons.scss
+   (`.btn {box-shadow:none}`), вторият от control_panel.scss с идентична
+   стойност. Остават САМО селекторите с по-висока специфичност, които реално
+   печелят и носят glow-а. */
 .o_cp_buttons .btn-primary,
 .o_cp_switch_buttons .btn.active,
-.o_searchview_facet_label,
 .o_form_statusbar .o_arrow_button.btn-primary,
 .o_form_statusbar .o_arrow_button[data-value][aria-pressed="true"] {
     box-shadow:
         0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30),
         0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
 }
-.btn-primary:hover {
-    box-shadow:
-        0 0 0 var(--mcp-sp-1) var(--mcp-accent-2),
-        0 0 var(--mcp-sp-6) var(--mcp-accent-a30) !important;
-}
+/* `.btn-primary:hover` махнат — widgets/buttons.scss дава на същия селектор
+   `box-shadow: var(--mcp-shadow-glow-strong)` и се зарежда по-късно. */
 /* Kanban card hover glow — ПРЕМАХНАТ (v204). Hover-ът вече е само лявата
    сапфир линия (виж kanban.scss .o_kanban_record:hover::before), за всички
    карти; без glow/lift, за да не "скача"/свети всяка карта. */
