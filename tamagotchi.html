@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>tamagotchi</title>
+<style>
+  :root{
+    --bg:#f3f1ea;
+    --ink:#1f1f1f;
+    --dim:#8c8a82;
+    --line:#d8d5cb;
+    --ok:#6fa84a;
+    --warn:#d39b2b;
+    --bad:#cf4c3f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{
+    height:100%;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+    display:flex;align-items:center;justify-content:center;
+    user-select:none;
+  }
+  .wrap{width:min(92vw,400px);text-align:center}
+  .head{font-size:13px;color:var(--dim);letter-spacing:.5px}
+  .head b{color:var(--ink)}
+  .stage{
+    position:relative;
+    height:210px;
+    display:flex;align-items:center;justify-content:center;
+    margin:6px 0 2px;
+  }
+  pre.pet{
+    font-size:15px;
+    line-height:1.18;
+    letter-spacing:0;
+    display:inline-block;
+    transition:filter .4s,opacity .4s;
+  }
+  pre.pet.bob{animation:bob 1.7s ease-in-out infinite}
+  pre.pet.breathe{animation:breathe 3.6s ease-in-out infinite;opacity:.9}
+  pre.pet.sick{filter:hue-rotate(58deg) saturate(.75)}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  .px{display:inline-block}
+  .deco{
+    position:absolute;color:var(--dim);font-size:14px;
+    opacity:0;pointer-events:none;
+  }
+  .deco.show{opacity:1}
+  .zzz{top:42px;right:84px;animation:floatz 2.6s ease-in-out infinite}
+  @keyframes floatz{0%{transform:translateY(0);opacity:0}25%{opacity:.7}100%{transform:translateY(-30px);opacity:0}}
+  .speech{
+    position:absolute;top:8px;left:50%;transform:translateX(-50%) translateY(6px);
+    background:var(--ink);color:var(--bg);
+    font-size:12px;padding:4px 10px;border-radius:3px;
+    opacity:0;transition:.22s;white-space:nowrap;
+  }
+  .speech.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .speech:after{
+    content:"";position:absolute;bottom:-5px;left:50%;margin-left:-5px;
+    border:5px solid transparent;border-top-color:var(--ink);border-bottom:0;
+  }
+  .status{font-size:13px;color:var(--dim);min-height:18px;margin:2px 0 12px}
+  .bars{
+    text-align:left;font-size:13px;line-height:1.7;
+    display:inline-block;margin-bottom:14px;
+  }
+  .bars .row{white-space:pre}
+  .bars .lbl{color:var(--dim)}
+  .bars .br{letter-spacing:1px}
+  .pad{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:8px;max-width:340px;margin:0 auto;
+  }
+  button{
+    font-family:inherit;font-size:13px;cursor:pointer;
+    background:transparent;color:var(--ink);
+    border:1.5px solid var(--ink);border-radius:4px;
+    padding:9px 4px;
+    transition:background .12s,color .12s,opacity .12s;
+  }
+  button:active{background:var(--ink);color:var(--bg)}
+  button:disabled{opacity:.3;cursor:not-allowed;border-color:var(--dim);color:var(--dim)}
+  button:disabled:active{background:transparent;color:var(--dim)}
+  .footer{font-size:11px;color:var(--dim);margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head"><b id="pname">pixel</b> &mdash; <span id="age">0 мин</span></div>
+
+  <div class="stage" id="stage">
+    <div class="speech" id="speech"></div>
+    <pre class="pet" id="pet"></pre>
+    <div class="deco zzz" id="zzz">z &nbsp;Z</div>
+  </div>
+
+  <div class="status" id="status">чука се отвътре...</div>
+
+  <div class="bars" id="barsBox"></div>
+
+  <div class="pad">
+    <button data-a="feed">храна</button>
+    <button data-a="play">игра</button>
+    <button data-a="sleep" id="btnSleep">сън</button>
+    <button data-a="clean">баня</button>
+    <button data-a="heal">лек</button>
+    <button data-a="reset">нов</button>
+  </div>
+
+  <div class="footer">натисни го за галене &middot; живее и докато е затворено</div>
+</div>
+
+<script>
+"use strict";
+
+/* ---------- pixel art ---------- */
+const COLORS = { b:"#c2795c", e:"#1d1d1d", t:"#9a9a9a", k:"#6b3f2e" };
+
+const ART = {
+  idle:[
+    "  bbbbbb      ",
+    "  bbbbbb    tt",
+    " bbebbeb   tt ",
+    " bbebbeb  tt  ",
+    " bbbbbbbbtt   ",
+    " bbbbbbbb     ",
+    " b b b b      ",
+    " b b b b      ",
+  ],
+  sad:[
+    "  bbbbbb      ",
+    "  bbbbbb      ",
+    " bbebbeb      ",
+    " bbebbeb      ",
+    " bbbbbbbb     ",
+    " bbbbbbbbtt   ",
+    " b b b b  tt  ",
+    " b b b b   tt ",
+  ],
+  sleep:[
+    "  bbbbbb      ",
+    "  bbbbbb    tt",
+    " bbbbbbb   tt ",
+    " bbbbbbb  tt  ",
+    " bbbbbbbbtt   ",
+    " bbbbbbbb     ",
+    " b b b b      ",
+    " b b b b      ",
+  ],
+  egg:[
+    "    bbbb      ",
+    "   bbbbbb     ",
+    "  bbbbbbbb    ",
+    "  bbbkkbbb    ",
+    "  bbbbbbbb    ",
+    "  bbkbbbbb    ",
+    "   bbbbbb     ",
+    "    bbbb      ",
+  ],
+};
+
+function renderPet(frameName){
+  const rows = ART[frameName] || ART.idle;
+  let html = "";
+  for (const row of rows){
+    for (const ch of row){
+      if (ch === " "){ html += "<span class='px'>  </span>"; continue; }
+      const c = COLORS[ch] || COLORS.b;
+      html += "<span class='px' style='color:"+c+"'>██</span>";
+    }
+    html += "\n";
+  }
+  return html;
+}
+
+/* ---------- state / mechanics ---------- */
+const SAVE_KEY = "tamagotchi.ascii.v1";
+const MAX = 100;
+const DECAY = { hunger:0.55, happy:0.40, energy:0.30, clean:0.28 };
+const SLEEP_REGEN = 0.9;
+const SLEEP_DECAY_MULT = 0.3;
+const NAMES = ["pixel","bobo","charlie","zara","mimi","gosho","luna","toto"];
+
+function freshState(){
+  return {
+    name: NAMES[(Math.random()*NAMES.length)|0],
+    born: Date.now(), last: Date.now(),
+    hunger:80, happy:80, energy:80, clean:90, health:100,
+    sleeping:false, hatched:false
+  };
+}
+function load(){
+  try{ const r=localStorage.getItem(SAVE_KEY); if(!r)return null;
+       const s=JSON.parse(r); return (s&&typeof s==="object")?s:null; }catch{ return null; }
+}
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch{} }
+
+let S = load() || freshState();
+
+const el = id => document.getElementById(id);
+const E = {
+  pet:el("pet"), stage:el("stage"), speech:el("speech"), status:el("status"),
+  age:el("age"), name:el("pname"), zzz:el("zzz"),
+  barsBox:el("barsBox"), btnSleep:el("btnSleep"),
+};
+
+const clamp = v => Math.max(0, Math.min(MAX, v));
+
+function tick(){
+  const now = Date.now();
+  const mins = (now - S.last)/60000;
+  S.last = now;
+  if (!S.hatched || mins <= 0){ render(); return; }
+
+  if (S.sleeping){
+    S.energy = clamp(S.energy + SLEEP_REGEN*mins);
+    S.hunger = clamp(S.hunger - DECAY.hunger*SLEEP_DECAY_MULT*mins);
+    S.clean  = clamp(S.clean  - DECAY.clean *SLEEP_DECAY_MULT*mins);
+    if (S.energy >= MAX){ S.sleeping=false; say("добро утро"); }
+  } else {
+    S.hunger = clamp(S.hunger - DECAY.hunger*mins);
+    S.happy  = clamp(S.happy  - DECAY.happy *mins);
+    S.energy = clamp(S.energy - DECAY.energy*mins);
+    S.clean  = clamp(S.clean  - DECAY.clean *mins);
+  }
+
+  const neglected =
+    (S.hunger<=0?1:0)+(S.energy<=0?1:0)+(S.clean<=5?1:0)+(S.happy<=0?1:0);
+  if (neglected>0) S.health = clamp(S.health - neglected*0.8*mins);
+  else if (S.hunger>45 && S.happy>45 && S.clean>40) S.health = clamp(S.health + 0.4*mins);
+
+  save(); render();
+}
+
+function ageText(){
+  const ms = Date.now()-S.born, h = ms/3600000;
+  if (h<1)  return ((ms/60000)|0)+" мин";
+  if (h<48) return (h|0)+" ч";
+  return ((h/24)|0)+" дни";
+}
+
+function mood(){
+  if (!S.hatched) return { f:"egg", s:"чука се отвътре... натисни го!" };
+  if (S.sleeping) return { f:"sleep", s:S.name+" спи..." };
+  if (S.health<30) return { f:"sad", s:S.name+" е болен! дай лек" };
+  if (S.clean<25)  return { f:"sad", s:"тук мирише... баня!" };
+  if (S.hunger<25) return { f:"sad", s:S.name+" е гладен!" };
+  if (S.energy<20) return { f:"idle", s:S.name+" е изморен..." };
+  if (S.happy<25)  return { f:"sad", s:S.name+" скучае..." };
+  const avg=(S.hunger+S.happy+S.energy+S.clean)/4;
+  return avg>75 ? { f:"idle", s:S.name+" е щастлив <3" }
+                : { f:"idle", s:S.name+" се чувства добре" };
+}
+
+function barColor(v){ return v>55?"var(--ok)":v>25?"var(--warn)":"var(--bad)"; }
+
+function barLine(label, v){
+  const n = Math.round(v/10);
+  const fill = "█".repeat(n), empty = "░".repeat(10-n);
+  const pad = (label+"      ").slice(0,6);
+  return "<div class='row'><span class='lbl'>"+pad+"</span> "+
+         "<span class='br' style='color:"+barColor(v)+"'>"+fill+"</span>"+
+         "<span class='br' style='color:var(--line)'>"+empty+"</span> "+
+         Math.round(v)+"%</div>";
+}
+
+function render(){
+  E.name.textContent = S.name;
+  E.age.textContent  = S.hatched ? ageText() : "—";
+
+  const m = mood();
+  E.pet.innerHTML = renderPet(m.f);
+  E.pet.className = "pet " +
+    (S.sleeping ? "breathe" : "bob") +
+    (S.health<30 && S.hatched && !S.sleeping ? " sick" : "");
+  E.status.textContent = m.s;
+  E.zzz.classList.toggle("show", S.sleeping);
+
+  E.barsBox.innerHTML =
+    barLine("глад",  S.hunger) +
+    barLine("радост",S.happy)  +
+    barLine("сила",  S.energy) +
+    barLine("чисто", S.clean)  +
+    barLine("здраве",S.health);
+
+  E.btnSleep.textContent = S.sleeping ? "буди" : "сън";
+
+  document.querySelectorAll(".pad button").forEach(b=>{
+    const a=b.dataset.a;
+    if (a==="reset"){ b.disabled=false; return; }
+    if (a==="heal"){ b.disabled = !S.hatched; return; }
+    b.disabled = !S.hatched || (S.sleeping && a!=="sleep");
+  });
+}
+
+let speechT;
+function say(t){
+  E.speech.textContent = t;
+  E.speech.classList.add("show");
+  clearTimeout(speechT);
+  speechT = setTimeout(()=>E.speech.classList.remove("show"), 1700);
+}
+
+function hatch(){
+  S.hatched=true; S.born=Date.now(); S.last=Date.now();
+  say("здравей, аз съм "+S.name);
+  save(); render();
+}
+
+const actions = {
+  feed(){ if(S.hunger>=MAX)return say("сит съм");
+    S.hunger=clamp(S.hunger+30); S.happy=clamp(S.happy+4); S.clean=clamp(S.clean-6); say("ам-ам"); },
+  play(){ if(S.energy<15)return say("много съм уморен");
+    S.happy=clamp(S.happy+28); S.energy=clamp(S.energy-14); S.hunger=clamp(S.hunger-8); say("ураа :)"); },
+  sleep(){ S.sleeping=!S.sleeping; say(S.sleeping?"лека нощ...":"будя се"); },
+  clean(){ if(S.clean>=MAX)return say("вече съм чист");
+    S.clean=clamp(S.clean+55); S.happy=clamp(S.happy+6); say("чистичко"); },
+  heal(){ if(S.health>=MAX)return say("здрав съм");
+    S.health=clamp(S.health+45); S.happy=clamp(S.happy-4); say("по-добре съм"); },
+  reset(){ S=freshState(); save(); render(); say("свежо яйце"); },
+};
+
+document.querySelector(".pad").addEventListener("click", e=>{
+  const btn=e.target.closest("button"); if(!btn)return;
+  const a=btn.dataset.a;
+  if (a==="reset"){ actions.reset(); return; }
+  if (!S.hatched){ say("първо ме излюпи"); return; }
+  if (S.sleeping && a!=="sleep" && a!=="heal"){ say("шшт... спя"); return; }
+  actions[a](); save(); render();
+});
+
+E.pet.addEventListener("click", ()=>{
+  if (!S.hatched){ hatch(); return; }
+  if (S.sleeping){ say("шшт..."); return; }
+  S.happy = clamp(S.happy+6);
+  const r=["хи-хи :)","гъдел!","обичам те <3","още!"];
+  say(r[(Math.random()*r.length)|0]); save(); render();
+});
+
+tick();
+setInterval(tick, 1000);
+document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) tick(); });
+</script>
+</body>
+</html>
