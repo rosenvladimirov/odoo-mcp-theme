@@ -13,8 +13,15 @@
  * chatter, list/kanban views) are untouched.
  */
 
-const STORAGE_KEY = "mcp_form_split_ratio";
-const MIN_SHEET_PX   = 320;     // sheet keeps at least this — long field rows readable
+/* 🚨 КЛЮЧЪТ Е СМЕНЕН НАРОЧНО. Старите стойности са мерени срещу дял, който
+   включваше и прегледа в общата сметка; върху поправения модел същото число
+   значи друго и изкривява подредбата (измерено 09.09.2026 на фактура с PDF:
+   форма 590 срещу 1110 преглед и 1680 празно вдясно). Без запазена стойност
+   сплитерът НЕ пипа flex-овете — остава ядреното разпределение, което е и
+   еталонът на Enterprise: sheet 2 : преглед 1 : чатър 1. */
+const STORAGE_KEY = "mcp_form_split_ratio_v2";
+const MIN_SHEET_PX   = 420;     // формата не пада под четимото — при по-малко
+                                // полетата се чупят на срички (Росен, 09.09.2026)
 const MIN_CHATTER_PX = 585;     // chatter keeps at least this — matches the natural readable size of message bubbles + actions
 const MIN_PREVIEW_PX = 360;     // прегледът пази толкова — под това страницата на PDF-а не се чете
 const SPLITTER_CLASS = "mcp_form_splitter";
