@@ -821,8 +821,7 @@
 }
 .o_form_view .o_field_x2many .o_data_row .o_data_cell
     input:not([type="checkbox"]):not([type="radio"]),
-.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_input,
-.o_form_view .o_field_x2many .o_data_row .o_data_cell textarea.o_input,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_input:not(textarea),
 .o_form_view .o_field_x2many .o_data_row .o_data_cell select {
     height: var(--mcp-btn-h) !important;
     min-height: var(--mcp-btn-h) !important;
@@ -833,6 +832,35 @@
        !important); Rosen wants 1px L/R breathing room. Tokenised. */
     padding-left: var(--mcp-sp-1) !important;
     padding-right: var(--mcp-sp-1) !important;
+}
+/* 🚨 МНОГОРЕДОВОТО ОПИСАНИЕ Е ИЗКЛЮЧЕНИЕ ОТ ПИНА КЪМ `btn-h`.
+   Полето „Етикет“ на реда (`account.move.line.name`, `sale.order.line.name`,
+   `purchase.order.line.name`) е ЕДНО текстово поле с ДВА реда съдържание:
+   „услуга по договор\nКонсултации по проект за …“. Пинът отгоре го събираше
+   в 30px и му даваше `line-height: var(--mcp-btn-h)` ≈ 30px — тоест първият
+   ред стоеше разреден, а вторият падаше под видимата зона и опираше долната
+   граница на клетката (Росен, 09.09.2026: „твърде голям … и описанието в
+   редовете на фактурата, СО-то, ПО-то е твърде ниско“).
+   Редът за едноредово поле остава `btn-h` — за таблична клетка `height` е
+   МИНИМУМ, не таван — тъй че расте само там, където описанието наистина е на
+   няколко реда. Клипваше го не `height`, а `max-height` на `.o_field_widget
+   > *` малко по-горе; затова тук се отменя и той. */
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_text,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_text > *,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell textarea.o_input {
+    height: auto !important;
+    max-height: none !important;
+    min-height: var(--mcp-btn-h) !important;
+    line-height: var(--mcp-list-line-height) !important;
+    align-items: flex-start !important;
+}
+.o_form_view .o_field_x2many .o_data_row .o_data_cell textarea.o_input {
+    padding-top: var(--mcp-sp-4) !important;
+    padding-bottom: var(--mcp-sp-4) !important;
+    padding-left: var(--mcp-sp-1) !important;
+    padding-right: var(--mcp-sp-1) !important;
+    overflow: hidden !important;
+    resize: none !important;
 }
 /* many2one dropdown caret + external-link icon — vertically centre
    them in the btn-h row. Odoo absolutely-positions the caret with a
@@ -1079,4 +1107,23 @@
         font-size: var(--mcp-fs-10) !important;
         padding: var(--mcp-sp-6) var(--mcp-sp-8) !important;
     }
+}
+
+/* ── Формата срещу десния панел (преглед + чатър) ─────────────
+   🚨 Прегледът и чатърът НЕ бият формата. Ядрото на 19 дава на трите
+   колони: sheet `flex: 2 1 990px`, преглед `flex: auto` + `width: 530px`,
+   чатър `width: 530px` със `flex-shrink: 0` — тоест чатърът НЕ отстъпва и
+   целият недостиг пада върху формата. При отворен преглед на фактура тя се
+   смачкваше дотам, че адресът на клиента се чупеше на срички (Росен,
+   09.09.2026: „твърде голям е чатъра“, оградено на снимката).
+   Подът е нативният 990px, но НЕ повече от половината контейнер — иначе на
+   тесен екран формата би избутала хоризонтален скрол. Прегледът отстъпва
+   пръв: `min-width: 0` го прави свиваемият от тримата. */
+.o_form_view.o_xxl_form_view .o_form_sheet_bg {
+    flex: 2 1 var(--mcp-form-sheet-min-w) !important;
+    min-width: min(var(--mcp-form-sheet-min-w), 50%) !important;
+}
+.o_form_view.o_xxl_form_view .o_attachment_preview {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
 }
