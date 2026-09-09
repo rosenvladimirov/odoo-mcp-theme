@@ -16,6 +16,7 @@
 const STORAGE_KEY = "mcp_form_split_ratio";
 const MIN_SHEET_PX   = 320;     // sheet keeps at least this — long field rows readable
 const MIN_CHATTER_PX = 585;     // chatter keeps at least this — matches the natural readable size of message bubbles + actions
+const MIN_PREVIEW_PX = 360;     // прегледът пази толкова — под това страницата на PDF-а не се чете
 const SPLITTER_CLASS = "mcp_form_splitter";
 
 function readSavedRatio() {
@@ -43,18 +44,44 @@ function applyRatio(sheet, chatter, ratio) {
     const parent = sheet.parentElement;
     if (!parent) return;
     const total = parent.getBoundingClientRect().width;
-    if (total < MIN_SHEET_PX + MIN_CHATTER_PX) return;
-    const minRatio = MIN_SHEET_PX / total;
-    const maxRatio = 1 - MIN_CHATTER_PX / total;
+
+    /* 🚨 ТРЕТИЯТ ПАНЕЛ. Когато документът има прикачен файл, ядрото вмъква
+       `.o_attachment_preview` МЕЖДУ формата и чатъра — тоест точно там, където
+       седи дръжката. Панелът идва с `flex: auto` + `width: 530px`, тъй че
+       расте наравно с двата дяла на съотношението и ги изяжда: измерено на
+       фактура с PDF — форма ~470px срещу преглед ~1210px, при което адресът на
+       клиента се чупи на срички (Росен, 09.09.2026). Дръжката физически дели
+       ФОРМАТА и ПРЕГЛЕДА, тъй че съотношението важи за тях; чатърът излиза от
+       сметката и пази своята естествена ширина. */
+    const preview = parent.querySelector(":scope > .o_attachment_preview");
+    const neighbour = preview || chatter;
+    const minNeighbour = preview ? MIN_PREVIEW_PX : MIN_CHATTER_PX;
+
+    /* Ширината, която дръжката реално разпределя. При отворен преглед от нея
+       се вади запазеното за чатъра — не измерваме чатъра, защото сме на път да
+       му сменим flex-а и стойността би била от предишния кадър. */
+    const reserved = preview ? Math.min(MIN_CHATTER_PX, total * 0.32) : 0;
+    const span = total - reserved;
+    if (span < MIN_SHEET_PX + minNeighbour) return;
+
+    const minRatio = MIN_SHEET_PX / span;
+    const maxRatio = 1 - minNeighbour / span;
     ratio = Math.max(minRatio, Math.min(maxRatio, ratio));
 
     /* Proportional flex — values map directly to relative widths */
-    sheet.style.flex   = `${ratio} 1 0`;
-    chatter.style.flex = `${1 - ratio} 1 0`;
-    sheet.style.minWidth   = `${MIN_SHEET_PX}px`;
-    chatter.style.minWidth = `${MIN_CHATTER_PX}px`;
+    sheet.style.flex = `${ratio} 1 0`;
+    sheet.style.minWidth = `${MIN_SHEET_PX}px`;
+    neighbour.style.flex = `${1 - ratio} 1 0`;
+    neighbour.style.minWidth = `${minNeighbour}px`;
     /* Override the core's `width: calc(...)` on chatter so flex wins */
-    chatter.style.width = "auto";
+    neighbour.style.width = "auto";
+
+    if (preview) {
+        /* Чатърът е извън съотношението: без grow, на своята ширина. */
+        chatter.style.flex = "0 0 auto";
+        chatter.style.width = `${reserved}px`;
+        chatter.style.minWidth = "";
+    }
 }
 
 function buildSplitter() {
@@ -83,7 +110,9 @@ function attachDrag(splitter, sheet, chatter) {
         if (!dragging) return;
         const dx = ev.clientX - startX;
         let newSheetW = startSheetW + dx;
-        newSheetW = Math.max(MIN_SHEET_PX, Math.min(totalW - MIN_CHATTER_PX, newSheetW));
+        const minNb = sheet.parentElement?.querySelector(":scope > .o_attachment_preview")
+            ? MIN_PREVIEW_PX : MIN_CHATTER_PX;
+        newSheetW = Math.max(MIN_SHEET_PX, Math.min(totalW - minNb, newSheetW));
         applyRatio(sheet, chatter, newSheetW / totalW);
         writeSavedRatio(newSheetW / totalW);
     };
@@ -101,8 +130,10 @@ function attachDrag(splitter, sheet, chatter) {
         dragging = true;
         startX = ev.clientX;
         startSheetW = sheet.getBoundingClientRect().width;
-        const chatterW = chatter.getBoundingClientRect().width;
-        totalW = startSheetW + chatterW;
+        /* Съседът вдясно от дръжката е прегледът, ако има такъв — чатърът
+           стои по-надясно и не участва в съотношението. */
+        const nb = sheet.parentElement?.querySelector(":scope > .o_attachment_preview") || chatter;
+        totalW = startSheetW + nb.getBoundingClientRect().width;
         splitter.classList.add("is-dragging");
         document.body.style.userSelect = "none";
         document.body.style.cursor = "col-resize";
@@ -114,12 +145,13 @@ function attachDrag(splitter, sheet, chatter) {
     splitter.addEventListener("keydown", (ev) => {
         if (ev.key !== "ArrowLeft" && ev.key !== "ArrowRight") return;
         const sheetW = sheet.getBoundingClientRect().width;
-        const chatterW = chatter.getBoundingClientRect().width;
-        const total = sheetW + chatterW;
+        const nb = sheet.parentElement?.querySelector(":scope > .o_attachment_preview") || chatter;
+        const total = sheetW + nb.getBoundingClientRect().width;
         const step = ev.shiftKey ? 60 : 24;
         const dir = ev.key === "ArrowRight" ? 1 : -1;
         let newSheetW = sheetW + dir * step;
-        newSheetW = Math.max(MIN_SHEET_PX, Math.min(total - MIN_CHATTER_PX, newSheetW));
+        const minNb = nb === chatter ? MIN_CHATTER_PX : MIN_PREVIEW_PX;
+        newSheetW = Math.max(MIN_SHEET_PX, Math.min(total - minNb, newSheetW));
         applyRatio(sheet, chatter, newSheetW / total);
         writeSavedRatio(newSheetW / total);
         ev.preventDefault();
