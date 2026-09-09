@@ -19,7 +19,7 @@
    форма 590 срещу 1110 преглед и 1680 празно вдясно). Без запазена стойност
    сплитерът НЕ пипа flex-овете — остава ядреното разпределение, което е и
    еталонът на Enterprise: sheet 2 : преглед 1 : чатър 1. */
-const STORAGE_KEY = "mcp_form_split_ratio_v2";
+const STORAGE_KEY = "mcp_form_split_ratio_v3";
 const MIN_SHEET_PX   = 420;     // формата не пада под четимото — при по-малко
                                 // полетата се чупят на срички (Росен, 09.09.2026)
 const MIN_CHATTER_PX = 585;     // chatter keeps at least this — matches the natural readable size of message bubbles + actions
@@ -39,56 +39,55 @@ function writeSavedRatio(ratio) {
 }
 
 /**
- * Apply a sheet/chatter split using proportional flex. We never use
- * absolute pixel basis — that overflows the viewport when the window
- * shrinks. Instead each panel gets `flex: <portion> 1 0` so the ratio
- * stays correct no matter the parent width, with both still able to
- * shrink (flex-shrink: 1) when needed. min-width caps prevent either
- * side from collapsing past readability.
+ * Ширината на формата се задава като ПРОЦЕНТ ОТ КОНТЕЙНЕРА, а съседът вдясно
+ * от дръжката взима остатъка.
+ *
+ * 🚨 Защо не дял по `flex-grow` (както беше): grow има смисъл само срещу
+ * ДРУГИТЕ grow стойности в същия ред. Прегледът идва от ядрото с `flex: auto`,
+ * тоест grow 1; когато формата получеше `flex: 0.249 1 0`, прегледът печелеше
+ * четворно и формата падаше на 320px при контейнер 1695 — измерено в браузъра
+ * на Росен на 09.09.2026, при това `min-width` не я спасяваше. Процентът не
+ * зависи от чуждите grow стойности, тъй че подредбата е предвидима.
+ *
+ * Съседът се чете ДИНАМИЧНО при всяко прилагане: прегледът се появява в DOM
+ * след първото рисуване, а чатърът в тази подредба изобщо не е дете на
+ * renderer-а (децата са три: форма, дръжка, преглед). Отпратка, взета при
+ * закачането, сочеше към откачен елемент и стиловете отиваха в нищото.
  */
-function applyRatio(sheet, chatter, ratio) {
-    /* Clamp ratio between hard limits derived from the parent width */
+function neighbourOf(sheet) {
+    let el = sheet.nextElementSibling;
+    while (el && el.classList.contains(SPLITTER_CLASS)) {
+        el = el.nextElementSibling;
+    }
+    return el;
+}
+
+function minWidthFor(el) {
+    if (!el) return MIN_CHATTER_PX;
+    return el.classList.contains("o_attachment_preview") ? MIN_PREVIEW_PX : MIN_CHATTER_PX;
+}
+
+function applyRatio(sheet, _chatter, ratio) {
     const parent = sheet.parentElement;
     if (!parent) return;
-    const total = parent.getBoundingClientRect().width;
+    const neighbour = neighbourOf(sheet);
+    if (!neighbour) return;
 
-    /* 🚨 ТРЕТИЯТ ПАНЕЛ. Когато документът има прикачен файл, ядрото вмъква
-       `.o_attachment_preview` МЕЖДУ формата и чатъра — тоест точно там, където
-       седи дръжката. Панелът идва с `flex: auto` + `width: 530px`, тъй че
-       расте наравно с двата дяла на съотношението и ги изяжда: измерено на
-       фактура с PDF — форма ~470px срещу преглед ~1210px, при което адресът на
-       клиента се чупи на срички (Росен, 09.09.2026). Дръжката физически дели
-       ФОРМАТА и ПРЕГЛЕДА, тъй че съотношението важи за тях; чатърът излиза от
-       сметката и пази своята естествена ширина. */
-    const preview = parent.querySelector(":scope > .o_attachment_preview");
-    const neighbour = preview || chatter;
-    const minNeighbour = preview ? MIN_PREVIEW_PX : MIN_CHATTER_PX;
-
-    /* Ширината, която дръжката реално разпределя. При отворен преглед от нея
-       се вади запазеното за чатъра — не измерваме чатъра, защото сме на път да
-       му сменим flex-а и стойността би била от предишния кадър. */
-    const reserved = preview ? Math.min(MIN_CHATTER_PX, total * 0.32) : 0;
-    const span = total - reserved;
+    const splitter = parent.querySelector(":scope > ." + SPLITTER_CLASS);
+    const handleW = splitter ? splitter.getBoundingClientRect().width : 0;
+    const span = parent.getBoundingClientRect().width - handleW;
+    const minNeighbour = minWidthFor(neighbour);
     if (span < MIN_SHEET_PX + minNeighbour) return;
 
-    const minRatio = MIN_SHEET_PX / span;
-    const maxRatio = 1 - minNeighbour / span;
-    ratio = Math.max(minRatio, Math.min(maxRatio, ratio));
+    ratio = Math.max(MIN_SHEET_PX / span, Math.min(1 - minNeighbour / span, ratio));
 
-    /* Proportional flex — values map directly to relative widths */
-    sheet.style.flex = `${ratio} 1 0`;
-    sheet.style.minWidth = `${MIN_SHEET_PX}px`;
-    neighbour.style.flex = `${1 - ratio} 1 0`;
-    neighbour.style.minWidth = `${minNeighbour}px`;
-    /* Override the core's `width: calc(...)` on chatter so flex wins */
+    sheet.style.flex = "0 0 auto";
+    sheet.style.width = (ratio * 100).toFixed(2) + "%";
+    sheet.style.minWidth = MIN_SHEET_PX + "px";
+
+    neighbour.style.flex = "1 1 auto";
     neighbour.style.width = "auto";
-
-    if (preview) {
-        /* Чатърът е извън съотношението: без grow, на своята ширина. */
-        chatter.style.flex = "0 0 auto";
-        chatter.style.width = `${reserved}px`;
-        chatter.style.minWidth = "";
-    }
+    neighbour.style.minWidth = minNeighbour + "px";
 }
 
 function buildSplitter() {
@@ -117,8 +116,7 @@ function attachDrag(splitter, sheet, chatter) {
         if (!dragging) return;
         const dx = ev.clientX - startX;
         let newSheetW = startSheetW + dx;
-        const minNb = sheet.parentElement?.querySelector(":scope > .o_attachment_preview")
-            ? MIN_PREVIEW_PX : MIN_CHATTER_PX;
+        const minNb = minWidthFor(neighbourOf(sheet));
         newSheetW = Math.max(MIN_SHEET_PX, Math.min(totalW - minNb, newSheetW));
         applyRatio(sheet, chatter, newSheetW / totalW);
         writeSavedRatio(newSheetW / totalW);
@@ -137,10 +135,12 @@ function attachDrag(splitter, sheet, chatter) {
         dragging = true;
         startX = ev.clientX;
         startSheetW = sheet.getBoundingClientRect().width;
-        /* Съседът вдясно от дръжката е прегледът, ако има такъв — чатърът
-           стои по-надясно и не участва в съотношението. */
-        const nb = sheet.parentElement?.querySelector(":scope > .o_attachment_preview") || chatter;
-        totalW = startSheetW + nb.getBoundingClientRect().width;
+        /* Базата е контейнерът минус дръжката — същата, срещу която applyRatio
+           смята процента. Различни бази значеха отскок при първото движение. */
+        const parent = sheet.parentElement;
+        const handle = parent.querySelector(":scope > ." + SPLITTER_CLASS);
+        totalW = parent.getBoundingClientRect().width
+            - (handle ? handle.getBoundingClientRect().width : 0);
         splitter.classList.add("is-dragging");
         document.body.style.userSelect = "none";
         document.body.style.cursor = "col-resize";
@@ -152,12 +152,14 @@ function attachDrag(splitter, sheet, chatter) {
     splitter.addEventListener("keydown", (ev) => {
         if (ev.key !== "ArrowLeft" && ev.key !== "ArrowRight") return;
         const sheetW = sheet.getBoundingClientRect().width;
-        const nb = sheet.parentElement?.querySelector(":scope > .o_attachment_preview") || chatter;
-        const total = sheetW + nb.getBoundingClientRect().width;
+        const parent = sheet.parentElement;
+        const handle = parent.querySelector(":scope > ." + SPLITTER_CLASS);
+        const total = parent.getBoundingClientRect().width
+            - (handle ? handle.getBoundingClientRect().width : 0);
         const step = ev.shiftKey ? 60 : 24;
         const dir = ev.key === "ArrowRight" ? 1 : -1;
         let newSheetW = sheetW + dir * step;
-        const minNb = nb === chatter ? MIN_CHATTER_PX : MIN_PREVIEW_PX;
+        const minNb = minWidthFor(neighbourOf(sheet));
         newSheetW = Math.max(MIN_SHEET_PX, Math.min(total - minNb, newSheetW));
         applyRatio(sheet, chatter, newSheetW / total);
         writeSavedRatio(newSheetW / total);
@@ -170,7 +172,10 @@ function injectSplitters() {
     renderers.forEach((renderer) => {
         if (renderer.dataset.mcpSplitter === "ready") return;
         const sheet   = renderer.querySelector(":scope > .o_form_sheet_bg");
-        const chatter = renderer.querySelector(":scope > .o-mail-ChatterContainer");
+        /* Съседът може да е чатърът ИЛИ прегледът — в подредбата с прикачен
+           документ чатърът изобщо не е дете на renderer-а. */
+        const chatter = renderer.querySelector(
+            ":scope > .o-mail-ChatterContainer, :scope > .o-mail-Form-chatter, :scope > .o_attachment_preview");
         if (!sheet || !chatter) return;
         /* Both panels found AND they are direct flex siblings — proceed. */
         const splitter = buildSplitter();
