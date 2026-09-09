@@ -12,7 +12,21 @@
     max-width: none !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    min-width: var(--mcp-sp-320) !important;       /* mirrors MIN_SHEET_PX in JS */
+    /* 🚨 `!important` тук БИЕ inline стила, който JS-ът пише — inline без
+       `!important` губи от CSS с `!important`. Затова подът в JS (MIN_SHEET_PX)
+       беше мъртъв: измерено 09.09.2026, формата стоеше на 320px с inline
+       `min-width: 420px`. Двете стойности ТРЯБВА да съвпадат, а JS-ът вече
+       пише със `important` приоритет, за да е той последната дума. */
+    min-width: var(--mcp-sp-420) !important;       /* == MIN_SHEET_PX в JS */
+}
+/* 🚨 ПРЕГЛЕДЪТ НА ДОКУМЕНТА. Ядрото не му дава долна граница, тъй че той
+   остава с `min-width: auto` — автоматичният минимум на flex елемент, тоест
+   НЕ СЕ СВИВА под съдържанието си. Съседите с `flex-shrink` поемат целия
+   недостиг: формата падаше на пода си, а прегледът взимаше 1367 от 1695
+   (измерено при Росен). Изричен под му позволява да отстъпи. */
+.o_form_renderer:has(.mcp_form_splitter) > .o_attachment_preview {
+    min-width: var(--mcp-sp-360) !important;       /* == MIN_PREVIEW_PX в JS */
+    max-width: none !important;
 }
 /* Chatter-form branch: sheet reaches the bottom via flex-fill, NOT a
    viewport calc. This selector out-specifies form.scss's

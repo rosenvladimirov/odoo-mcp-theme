@@ -5,7 +5,7 @@
     "summary": "Community-edition navigation shell for the MCP Works backend "
                "theme — vertical Dash dock, apps trigger, breadcrumb strip, "
                "actions panel, desktop",
-    "version": "19.0.1.236.0",
+    "version": "19.0.1.237.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],

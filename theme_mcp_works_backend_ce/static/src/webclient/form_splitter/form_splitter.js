@@ -81,13 +81,27 @@ function applyRatio(sheet, _chatter, ratio) {
 
     ratio = Math.max(MIN_SHEET_PX / span, Math.min(1 - minNeighbour / span, ratio));
 
-    sheet.style.flex = "0 0 auto";
-    sheet.style.width = (ratio * 100).toFixed(2) + "%";
-    sheet.style.minWidth = MIN_SHEET_PX + "px";
+    /* 🚨 СЪС `important`. Собственият SCSS на дръжката слага
+       `min-width … !important` на панелите, а inline стил БЕЗ `!important`
+       губи от CSS с `!important` — тъй че всичко, което този код пишеше за
+       минимума, беше мъртво (измерено: формата на 320px с inline 420px).
+       `setProperty(..., "important")` прави JS-а последната дума. */
+    setImportant(sheet, {
+        flex: "0 0 auto",
+        width: (ratio * 100).toFixed(2) + "%",
+        "min-width": MIN_SHEET_PX + "px",
+    });
+    setImportant(neighbour, {
+        flex: "1 1 auto",
+        width: "auto",
+        "min-width": minNeighbour + "px",
+    });
+}
 
-    neighbour.style.flex = "1 1 auto";
-    neighbour.style.width = "auto";
-    neighbour.style.minWidth = minNeighbour + "px";
+function setImportant(el, props) {
+    for (const [name, value] of Object.entries(props)) {
+        el.style.setProperty(name, value, "important");
+    }
 }
 
 function buildSplitter() {
