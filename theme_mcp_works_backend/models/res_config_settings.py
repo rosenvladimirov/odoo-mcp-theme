@@ -28,6 +28,19 @@ class ResConfigSettings(models.TransientModel):
              "after saving and reloading.",
     )
 
+    mcp_app_icons = fields.Selection(
+        selection=[
+            ("theme", "Drawn by the theme"),
+            ("odoo", "Odoo / module icons"),
+        ],
+        string="App icons",
+        default="theme",
+        config_parameter="theme_mcp_works_backend.app_icons",
+        help="Icons of the apps in the Dash and the home menu. The theme's "
+             "icons follow the selected preset and dark mode; apps the theme "
+             "does not know keep their own icon. Applied after reloading.",
+    )
+
     # ── Installation info (read-only) ──────────────────────────────────
     mcp_db_name = fields.Char(
         string="Database", compute="_compute_mcp_info")

@@ -14,4 +14,8 @@ class IrHttp(models.AbstractModel):
         result["mcp_ui_font"] = self.env["ir.config_parameter"].sudo().get_param(
             "theme_mcp_works_backend.ui_font", "system"
         )
+        # иконките на приложенията: "theme" (рисувани от темата) или "odoo"
+        result["mcp_app_icons"] = self.env["ir.config_parameter"].sudo().get_param(
+            "theme_mcp_works_backend.app_icons", "theme"
+        )
         return result

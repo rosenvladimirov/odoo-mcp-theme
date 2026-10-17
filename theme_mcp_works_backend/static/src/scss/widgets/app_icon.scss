@@ -1,0 +1,30 @@
+/* MCP Works backend — иконка на приложение, рисувана от темата
+   (McpAppIcon, webclient/app_icon). Плочка: тинт на цветовата група върху
+   повърхността + глиф в същия цвят. color-mix върху --mcp-surface дава
+   правилния тинт и в тъмния режим, без отделни стойности. Размерът идва
+   от --mcp-app-icon-size, който задава мястото, където е сложена (Dash,
+   решетката, началното меню на EE). */
+.mcp_app_icon {
+    --mcp-app-icon-size: var(--mcp-sp-38);
+    width: var(--mcp-app-icon-size);
+    height: var(--mcp-app-icon-size);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--mcp-r-control);
+    background: color-mix(in srgb, var(--mcp-app-hue, var(--mcp-accent)) 14%, var(--mcp-surface));
+    box-shadow: inset 0 0 0 var(--mcp-bw-1) color-mix(in srgb, var(--mcp-app-hue, var(--mcp-accent)) 22%, transparent);
+    color: var(--mcp-app-hue, var(--mcp-accent));
+    transition: background-color var(--mcp-t-fast), color var(--mcp-t-fast);
+
+    > .fa {
+        font-size: calc(var(--mcp-app-icon-size) * 0.46);
+        line-height: 1;
+    }
+}
+/* посочване / активно приложение — по-плътен тинт, глифът остава */
+a:hover > .mcp_app_icon,
+.is-active > .mcp_app_icon {
+    background: color-mix(in srgb, var(--mcp-app-hue, var(--mcp-accent)) 24%, var(--mcp-surface));
+}

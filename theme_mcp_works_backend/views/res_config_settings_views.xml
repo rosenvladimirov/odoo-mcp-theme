@@ -18,6 +18,10 @@
                                  help="Typeface used across the whole Odoo backend. Every option ships Cyrillic + Latin (Space Grotesk is Latin only). Save, then reload the page to apply.">
                             <field name="mcp_ui_font"/>
                         </setting>
+                        <setting string="App icons"
+                                 help="Icons of the apps in the Dash and the home menu. The theme's icons follow the preset and dark mode; unknown apps keep their own icon. Save, then reload the page to apply.">
+                            <field name="mcp_app_icons"/>
+                        </setting>
                     </block>
 
                     <block title="Installation"
