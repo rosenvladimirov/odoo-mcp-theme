@@ -73,8 +73,8 @@
                        t-on-click.prevent="() => this.onAppClick(app)"
                        t-on-mouseenter="(ev) => this.onAppMouseEnter(app, ev)"
                        t-on-mouseleave="onAppMouseLeave">
-                        <img t-if="app.webIconData" t-att-src="app.webIconData" t-att-alt="app.name"/>
-                        <span t-else="" class="o_app_letter" t-esc="app.name.charAt(0).toUpperCase()"/>
+                        <!-- иконката: рисувана от темата, родната на модула или буква -->
+                        <McpAppIcon app="app"/>
                         <!-- надписът е в списъка (1) и в решетката (2); компактният (0) показва балонче -->
                         <span t-if="state.viewMode !== 0" class="mcp_dash_label" t-esc="app.name"/>
                     </a>

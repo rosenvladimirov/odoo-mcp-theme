@@ -5,10 +5,12 @@ import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { browser } from "@web/core/browser/browser";
 import { _t } from "@web/core/l10n/translation";
+import { McpAppIcon } from "@theme_mcp_works_backend/webclient/app_icon/app_icon";
 
 export class McpDash extends Component {
     static template = "theme_mcp_works_backend.McpDash";
     static props = {};
+    static components = { McpAppIcon };
 
     setup() {
         this.state = useState({
