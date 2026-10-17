@@ -5,29 +5,31 @@
    • Header → CP-style band (cp-bg + cp-shadow + hairline rule).
    • Body   → white surface (content area).
    • Footer → white surface (action buttons sit on the same white). */
+/* EE 20: един горен слой с тиха неутрална елевация — без сапфирен пръстен;
+   хедърът пази индиго лентата на CP, но без втората линия (cp-shadow). */
 .modal-content {
-    background: var(--mcp-surface) !important;       /* content = white */
-    border-radius: var(--mcp-r-md) !important;
-    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    box-shadow: var(--mcp-shadow-modal) !important;
+    background: var(--mcp-surface-raised) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-surface) !important;
+    box-shadow: var(--mcp-shadow-dialog) !important;
     max-height: calc(var(--mcp-vp-h, 100vh) - var(--mcp-sp-32));
-    overflow: hidden !important;                     /* keep rounded corners clean */
+    overflow: hidden !important;                     /* ъглите остават чисти */
 }
 .modal-header {
-    background-color: var(--mcp-cp-bg) !important;
-    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    border-radius: var(--mcp-r-md) var(--mcp-r-md) 0 0 !important;
+    background-color: var(--mcp-cp-bg) !important;   /* индиго лентата остава */
+    border-bottom: var(--mcp-bw-1) solid var(--mcp-rule) !important;
+    box-shadow: none !important;                      /* махаме втората линия */
+    border-radius: var(--mcp-r-surface) var(--mcp-r-surface) 0 0 !important;
     padding: var(--mcp-sp-12) var(--mcp-sp-16) !important;
     position: relative;
-    z-index: 1;                                       /* shadow paints over body */
+    z-index: 1;
 }
 .modal-title {
+    font-size: var(--mcp-fs-h4) !important;
+    font-weight: var(--mcp-fw-medium) !important;
+    text-transform: var(--mcp-btn-case);
+    letter-spacing: 0;
     color: var(--mcp-ink) !important;
-    font-weight: 600 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: var(--mcp-sp-14) !important;
 }
 .modal-header .btn-close {
     color: var(--mcp-ink-2) !important;
@@ -35,50 +37,129 @@
     &:hover { opacity: 1; color: var(--mcp-accent) !important; }
 }
 .modal-body {
-    background: var(--mcp-surface) !important;
+    background: var(--mcp-surface-raised) !important;
     max-height: calc(var(--mcp-vp-h, 100vh) - var(--mcp-sp-200));
     overflow-y: auto;
-    padding: var(--mcp-sp-16) !important;
 }
+/* отстъп само когато Odoo НЕ иска тяло без отстъп (.p-0) — напр. SelectCreate;
+   палитрата е от ръб до ръб */
+.modal-body:not(.p-0) { padding: var(--mcp-sp-16) !important; }
+.o_command_palette > .modal-body { padding: 0 !important; }
 .modal-footer {
-    background: var(--mcp-surface) !important;
-    border-top: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+    background: var(--mcp-surface-raised) !important;   /* същият слой като тялото */
+    border-top: var(--mcp-bw-1) solid var(--mcp-rule) !important;
     padding: var(--mcp-sp-12) var(--mcp-sp-16) !important;
     gap: var(--mcp-sp-8) !important;
+}
+/* фонът зад диалога — неутрален; неактивен (вложен отдолу) диалог не тъмнее двойно */
+.o_dialog > .modal:not([data-bs-backdrop="false"]) { background-color: var(--mcp-modal-scrim) !important; }
+.o_dialog > .modal.o_inactive_modal { background-color: transparent !important; }
+
+/* ── Командна палитра (Ctrl+K) ───────────────────────────────── */
+/* избраният ред — акцент 10% + тънка акцентна черта отляво */
+.o_command_palette .o_command.focused {
+    background: var(--mcp-active-bg) !important;
+    box-shadow: inset var(--mcp-bw-2) 0 0 var(--mcp-accent);
+}
+/* етикетите на категориите: Odoo ги дава text-muted + opacity-50 (!important) */
+.o_command_palette .o_command_category > span {
+    color: var(--mcp-ink-3) !important;
+    opacity: 1 !important;
 }
 
 /* ── Dropdowns ───────────────────────────────────────────────── */
 /* Bootstrap (.dropdown-menu) AND Odoo OWL (.o-dropdown--menu, double dash)
    panels — both use the same indigo-tinted card surface as the CP. */
+/* Плаващо меню: мека неутрална елевация, радиус от горния край на скалата;
+   фонът остава на --mcp-dropdown-bg (= cp-bg, решение на Росен) */
 .dropdown-menu,
 .o-dropdown--menu {
-    /* Same indigo-tinted white as the control panel header */
-    background: var(--mcp-cp-bg) !important;
-    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow: var(--mcp-cp-shadow) !important;
-    padding: var(--mcp-sp-4) !important;
+    background: var(--mcp-dropdown-bg) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-float) !important;
+    box-shadow: var(--mcp-shadow-float) !important;
+    padding: var(--mcp-float-pad) !important;
+    --gradient: none;
 }
 .dropdown-item {
     color: var(--mcp-ink) !important;
-    border-radius: var(--mcp-r-xs);
+    border-radius: var(--mcp-r-float-item);
     padding: var(--mcp-sp-6) var(--mcp-sp-12) !important;
     font-size: var(--mcp-fs-13) !important;
-    transition: all var(--mcp-t-fast);
+    transition: background-color var(--mcp-t-fast), color var(--mcp-t-fast);
 }
+/* hover/фокус — неутрално, текстът не сменя цвета; акцентът само за избраното */
 .dropdown-item:hover,
+.dropdown-item:focus,
+.dropdown-item.focus {
+    background: var(--mcp-hover-bg) !important;
+    color: var(--mcp-ink) !important;
+}
 .dropdown-item.active,
-.dropdown-item:focus {
-    background: var(--mcp-accent-soft) !important;
+.dropdown-item.selected {
+    background: var(--mcp-active-bg) !important;
     color: var(--mcp-accent) !important;
 }
-/* Отметката (::before) на избран/активен dropdown item (напр. calendar scale:
-   Week / Show weekends) — Odoo я слага без отстъп → чекът лепне за текста
-   (Rosen: „чекбоксите са много близо до текста"). Малък margin-right. */
-.o-dropdown-item.active::before,
-.o-dropdown-item.selected::before,
-.dropdown-item.active::before {
-    margin-right: var(--mcp-sp-6) !important;
+/* Разрушителните действия (Изтриване в менюто с действия / зъбчатото колело)
+   — в цвета на опасността и на ховър/фокус (EE 20). В O19 иконата е
+   `fa fa-trash-o` в <i> директно в елемента; .text-danger е по-общият път.
+   Фонът на ховъра остава неутрален — сменя се само цветът на текста. */
+.dropdown-item.text-danger,
+.dropdown-item:has(> .fa-trash),
+.dropdown-item:has(> .fa-trash-o),
+.dropdown-item.text-danger:hover,
+.dropdown-item.text-danger:focus,
+.dropdown-item.text-danger.focus,
+.dropdown-item:has(> .fa-trash):hover,
+.dropdown-item:has(> .fa-trash):focus,
+.dropdown-item:has(> .fa-trash).focus,
+.dropdown-item:has(> .fa-trash-o):hover,
+.dropdown-item:has(> .fa-trash-o):focus,
+.dropdown-item:has(> .fa-trash-o).focus {
+    color: var(--mcp-danger) !important;
+}
+/* Отметката (::before) на избран/активен dropdown item (филтри, групиране,
+   calendar scale). Odoo я слага absolute и я изнася с translate(-1.5em) в
+   левия отстъп, който при него е 20px; нашият е 12px → чекът излизаше вляво
+   от реда и text-truncate (overflow:hidden) го режеше наполовина (Rosen:
+   „чекчето е половинесто“). Затова: редовете, които МОГАТ да имат отметка
+   (role=menuitemcheckbox, или вече избрани), получават място за нея, а чекът
+   стои вътре в отстъпа, с въздух до текста. */
+:not(.dropstart) > .dropdown-item[role="menuitemcheckbox"],
+:not(.dropstart) > .dropdown-item.selected:not(.dropdown-item_active_noarrow),
+:not(.dropstart) > .dropdown-item.active:not(.dropdown-item_active_noarrow) {
+    padding-left: var(--mcp-sp-24) !important;
+}
+/* в меню с отметки всички редове (и „Задайте дата“, „Персонализиран
+   филтър…“) стоят на една линия с текста на отметнатите; вложените стойности
+   на акордеона (Дата → Година/Тримесечие) са с едно ниво навътре */
+.o-dropdown--menu:has(.dropdown-item[role="menuitemcheckbox"]) .dropdown-item,
+.o-dropdown--menu:has(.dropdown-item.selected:not(.dropdown-item_active_noarrow)) .dropdown-item,
+.o-dropdown--menu:has(.dropdown-item.active:not(.dropdown-item_active_noarrow)) .dropdown-item {
+    padding-left: var(--mcp-sp-24) !important;
+}
+.o-dropdown--menu .o_accordion_values .dropdown-item {
+    padding-left: var(--mcp-sp-36) !important;
+}
+/* бутоните в менюто (Любими → Запазете / Редактирай) са w-100 в половин
+   колона — без това „Редактирай“ се пречупваше на два реда */
+.o-dropdown--menu .btn {
+    white-space: nowrap;
+}
+/* стрелката на акордеона Odoo я слага absolute с right:0 → застъпваше
+   дълъг текст („Запазете настоящото търсене▾“); място отдясно за нея */
+.o-dropdown--menu .o_accordion_toggle {
+    padding-right: var(--mcp-sp-24) !important;
+}
+.o-dropdown--menu .o_accordion_toggle::after {
+    right: var(--mcp-sp-8) !important;
+}
+:not(.dropstart) > .dropdown-item.active:not(.dropdown-item_active_noarrow)::before,
+:not(.dropstart) > .dropdown-item.selected:not(.dropdown-item_active_noarrow)::before {
+    left: var(--mcp-sp-8) !important;
+    transform: translateY(90%) !important;
+    margin-right: 0 !important;
+    color: var(--mcp-accent) !important;
 }
 /* Секция-хедъри / групови разделители в dropdown менютата (напр. Inventory >
    Configuration: „Warehouse Management" / „Products"). Odoo им слага inline
@@ -89,7 +170,7 @@
 .o-dropdown--menu .dropdown-header,
 .dropdown-menu .dropdown-header {
     padding-left: var(--mcp-sp-12) !important;
-    font-weight: 700 !important;
+    font-weight: var(--mcp-fw-bold) !important;
     color: var(--mcp-c-indigo) !important;
     text-transform: none;
 }
@@ -104,5 +185,7 @@
 .tooltip-inner {
     background: var(--mcp-ink) !important;
     color: var(--mcp-paper) !important;
-    border-radius: var(--mcp-r-sm) !important;
+    /* хапчето на подсказката (в O19 и .o-tooltip е .tooltip-inner в .o_popover) —
+       радиусът съвпада с този на поповъра-обвивка */
+    border-radius: var(--mcp-r-control-sm) !important;
 }

@@ -3,15 +3,11 @@
 /* ── Base popover ────────────────────────────────────────────── */
 .o-popover,
 .o_popover {
-    background: var(--mcp-paper-light) !important;
-    /* Elegant soft border + glow shadow — match the autocomplete
-       dropdown (.o-autocomplete--dropdown-menu / .ui-autocomplete),
-       not the harsh 1.5px sapphire modal frame (Rosen). */
-    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) !important;
-    box-shadow:
-        0 0 0 var(--mcp-sp-1) var(--mcp-accent-soft),
-        0 var(--mcp-sp-10) var(--mcp-sp-30) calc(-1 * var(--mcp-sp-10)) var(--mcp-accent-a30) !important;
+    /* EE 20: плаващ слой — неутрална елевация като менютата, без сапфирен ореол */
+    background: var(--mcp-surface-raised) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-float) !important;
+    box-shadow: var(--mcp-shadow-float) !important;
     padding: 0;
     max-width: var(--mcp-popover-max-w, 320px);
     /* overflow:visible !important — the arrow is a child that protrudes
@@ -22,12 +18,26 @@
        rarely-triggered box scroll is a safe trade for a visible arrow. */
     overflow: visible !important;
     z-index: var(--mcp-z-modal);
-    animation: mcp-pop-in 0.15s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+    animation: mcp-pop-in var(--mcp-t-base) both;
 }
 
+/* тихо появяване, без отскок */
 @keyframes mcp-pop-in {
-    from { opacity: 0; transform: scale(0.94); }
+    from { opacity: 0; transform: scale(0.98); }
     to   { opacity: 1; transform: scale(1); }
+}
+
+/* Подсказката (O19: .o_popover > .o-tooltip): само тъмното хапче — без фона,
+   рамката и тавана 320px на поповъра. Bootstrap префиксът е bs-. */
+.o_popover:has(> .o-tooltip) {
+    --bs-popover-bg: var(--mcp-ink);
+    --bs-popover-border-color: transparent;
+    --bs-popover-arrow-border: var(--mcp-ink);
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: var(--mcp-r-control-sm) !important;
+    max-width: none;
+    animation: none;
 }
 
 /* Arrow — colour the edge that faces the anchor, PER Popper placement.
@@ -50,19 +60,27 @@
 .o_popover[data-popper-placement^="right"] .popover-arrow::before {
     border-right-color: var(--mcp-rule) !important;
 }
+/* стрелката на подсказката — в цвета на хапчето, не на рамката (идва след
+   горните правила със същата специфичност, затова печели) */
+@each $side in top, bottom, left, right {
+    .o_popover:has(> .o-tooltip)[data-popper-placement^="#{$side}"] .popover-arrow::before {
+        border-#{$side}-color: var(--mcp-ink) !important;
+    }
+}
 
 /* Header */
 .o-popover-header,
 .o_popover .popover-header {
     background: var(--mcp-paper) !important;
     border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    border-radius: var(--mcp-r-md) var(--mcp-r-md) 0 0 !important;
+    border-radius: var(--mcp-r-float) var(--mcp-r-float) 0 0 !important;
     padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
-    font-weight: 600;
-    font-size: var(--mcp-fs-12);
+    /* нормален регистър, 500 — главните букви остават само за разделители */
+    font-weight: var(--mcp-fw-medium);
+    font-size: var(--mcp-fs-13);
     color: var(--mcp-ink) !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    text-transform: none;
+    letter-spacing: 0;
 }
 
 /* Body */
@@ -71,9 +89,16 @@
     padding: var(--mcp-sp-10) var(--mcp-sp-12) !important;
     font-size: var(--mcp-fs-13);
     color: var(--mcp-ink) !important;
-    background: var(--mcp-paper-light) !important;
-    border-radius: 0 0 var(--mcp-r-md) var(--mcp-r-md);
+    background: var(--mcp-surface-raised) !important;   /* същият слой като кутията */
+    /* кутията е overflow:visible (заради стрелката) → тялото само закръгля
+       ъглите си; без хедър горните ъгли не бива да стърчат от радиуса 12 */
+    border-radius: var(--mcp-r-float);
     /* scroll long content here (moved off the box so the arrow isn't clipped) */
     max-height: var(--mcp-content-h, calc(100vh - var(--mcp-sp-64)));
     overflow-y: auto;
+}
+.o-popover-header + .o-popover-body,
+.o_popover .popover-header + .popover-body {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }

@@ -6,9 +6,9 @@
                      through the --mcp-font-family stack, by design).
    JetBrains Mono  — HUD / numerics / telemetry (Latin + Cyrillic).
 
-   Self-hosted (no external CDN @import) — try-shop is customer-facing;
+   Self-hosted (no external CDN import) — try-shop is customer-facing;
    keeps the theme offline-safe and privacy-clean.  @font-face src:url()
-   is NOT @import url() so it is bundle-safe. */
+   is NOT an import url() so it is bundle-safe. */
 
 /* ── Space Grotesk (UI) ───────────────────────────────────────── */
 @font-face {

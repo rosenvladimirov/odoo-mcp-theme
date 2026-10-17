@@ -93,6 +93,19 @@
     font-family: var(--mcp-font-family);
 }
 
+/* Заглавна стълба като в EE; :where() държи специфичността ниска — изгледните правила печелят */
+.o_web_client :where(h1, h2, h3, h4, h5, h6) {
+    font-weight: var(--mcp-fw-medium);
+    line-height: var(--mcp-lh-heading);
+    letter-spacing: var(--mcp-ls-tight);
+    color: var(--mcp-ink);
+}
+.o_web_client :where(h1) { font-size: var(--mcp-fs-h1); }
+.o_web_client :where(h2) { font-size: var(--mcp-fs-h2); }
+.o_web_client :where(h3) { font-size: var(--mcp-fs-h3); }
+.o_web_client :where(h4) { font-size: var(--mcp-fs-h4); }
+.o_web_client :where(h5) { font-size: var(--mcp-fs-h5); }
+
 /* Mono for telemetry-flavored elements (numbers, timers, IDs, badges) */
 .o_pager_counter,
 .o_pager_value,
@@ -108,6 +121,13 @@
 /* .o_searchview .o_facet_values removed from the mono set — facet pills are
    free text; mono widened them and pushed them past the search bar. */
 
+/* Числата във формата — UI шрифт + таблични цифри; вградените o2m остават mono
+   (огледало на листа). По-високата специфичност печели над mono правилото горе. */
+.o_form_view :is(.o_field_monetary, .o_field_float, .o_field_integer):not(.o_list_renderer *) {
+    font-family: var(--mcp-font-family) !important;
+    font-variant-numeric: tabular-nums;
+}
+
 /* ── Soft sapphire halo on panel surfaces ──────────────────────────────
    Triple-stacked: 1px ring + close 12px + far 32px. Survives white-on-white
    backgrounds without screaming. Applied to all the main panel-class
@@ -117,18 +137,22 @@
    60+ module cards) a per-card halo turns the grid into a glowing-box
    mosaic (Rosen: "нашия е грозен" vs еталона). Cards stay flat at rest
    and glow only on :hover (виж .o_kanban_record:hover по-долу + kanban.scss).
-   Панелът тук е .o_kanban_group (колоната), не картата. */
+   Панелът тук е .o_kanban_group (колоната), не картата.
+   EE 20 (B1): тихи повърхности — 1px линия, без цветно сияние. Халото остава
+   САМО на листа (ЗАМРАЗЕН, без нито пиксел промяна). .o_pivot, .o_graph_view и
+   .o_calendar_view излизат оттук — картата им отива в B8.
+   .modal-content НЕ е тук: modals.scss се зарежда по-късно и задава същото
+   свойство с еднаква специфичност (computed box-shadow = --mcp-shadow-modal). */
 .o_form_sheet_bg .o_form_sheet,
-.o_form_view .o_form_sheet,
-.o_list_view .o_list_renderer,
-.o_kanban_group,
+.o_form_view .o_form_sheet {
+    box-shadow: var(--mcp-shadow-surface) !important;
+}
 .o-mail-Chatter,
-.o_pivot,
-.o_graph_view,
-.o_calendar_view {
-    /* .modal-content НЕ е тук: modals.scss се зарежда по-късно и задава
-       същото свойство с еднаква специфичност → халото никога не се прилагаше
-       върху модалите (доказано: computed box-shadow = --mcp-shadow-modal). */
+.o_kanban_group {
+    box-shadow: none !important;
+}
+/* ЗАМРАЗЕНО: старата стойност на листа, непроменена */
+.o_list_view .o_list_renderer {
     box-shadow:
         0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
         0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12),
@@ -145,9 +169,8 @@
 .o_cp_switch_buttons .btn.active,
 .o_form_statusbar .o_arrow_button.btn-primary,
 .o_form_statusbar .o_arrow_button[data-value][aria-pressed="true"] {
-    box-shadow:
-        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30),
-        0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
+    /* EE 20 (B1): само тънък ринг, без 4px размиване */
+    box-shadow: 0 0 0 var(--mcp-bw-1) var(--mcp-accent-a30) !important;
 }
 /* `.btn-primary:hover` махнат — widgets/buttons.scss дава на същия селектор
    `box-shadow: var(--mcp-shadow-glow-strong)` и се зарежда по-късно. */

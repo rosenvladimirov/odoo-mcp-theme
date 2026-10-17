@@ -35,7 +35,8 @@
        token keeps the darker sheet in dark mode. */
     background: var(--mcp-form-sheet-bg) !important;
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-    border-radius: 0 !important;
+    /* семантичен радиус на повърхност (EE 8px при scale 1; 0 при Robot) */
+    border-radius: var(--mcp-r-surface) !important;
     max-width: 100% !important;
     width: 100% !important;
     /* H inset for normal widgets (title/fields/groups/note); the
@@ -71,7 +72,7 @@
 .o_form_view .o_form_statusbar {
     background: var(--mcp-surface) !important;
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-    border-radius: 0 !important;
+    border-radius: var(--mcp-r-surface) !important;
     box-shadow: none !important;
     /* 8px padding on ALL sides (Rosen) */
     padding: var(--mcp-sp-8) !important;
@@ -108,10 +109,12 @@
             padding: 0 var(--mcp-sp-16) !important;
             font-family: var(--mcp-font-mono) !important;
             font-size: var(--mcp-fs-11) !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.14em !important;
+            font-weight: var(--mcp-fw-medium) !important;
+            /* беше 0.14em — дългите БГ етикети се режеха */
+            letter-spacing: var(--mcp-ls-caps) !important;
             text-transform: uppercase !important;
-            color: var(--mcp-ink-dim) !important;
+            /* ink-dim беше под AA */
+            color: var(--mcp-ink-3) !important;
             /* inactive segments — pure opaque white (Rosen: "чисто
                бели без транспарент"), not the tinted --mcp-surface */
             background: var(--mcp-bg) !important;
@@ -177,7 +180,8 @@
                     );
                 }
             }
-            &:hover { color: var(--mcp-ink-2) !important; background: var(--mcp-surface-2) !important; }
+            /* hover = неутрален фон, без смяна на цвета на текста */
+            &:hover { background: var(--mcp-hover-bg) !important; }
             &[aria-pressed="true"],
             &.btn-primary,
             &.disabled[aria-pressed="true"] {
@@ -206,8 +210,9 @@
             &.o_arrow_button_current,
             &[aria-current="step"],
             &[aria-checked="true"] {
-                color: var(--mcp-accent) !important;
-                background: var(--mcp-accent-soft) !important;
+                /* текущата стъпка: тинт на акцента + мастило (EE: action 10% / #000 / 500) */
+                color: var(--mcp-ink) !important;
+                background: var(--mcp-active-bg) !important;
                 /* border comes from the base ::before ring (follows
                    the chevron incl. diagonals); no clipped border */
                 border: 0 !important;
@@ -227,6 +232,17 @@
 .o_form_view .o_form_statusbar .o_statusbar_status button.d-none {
     display: none !important;
 }
+/* Шев между статусбара и листа — една линия вместо двойна 2px:
+   статусбарът губи долната рамка и долните ъгли, листът — горните ъгли. */
+.o_form_view .o_form_sheet_bg > .o_form_statusbar:has(+ .o_form_sheet) {
+    border-bottom-width: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+.o_form_view .o_form_sheet_bg > .o_form_statusbar + .o_form_sheet {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
 /* Statusbar action buttons — pale border like the control-panel
    buttons, not the global .btn-secondary near-black --mcp-ink edge
    (Rosen: "рамките черни са, трябва да са бледи както в контрол
@@ -234,7 +250,7 @@
    sizing stays the button-calc (same as CP). */
 .o_form_view .o_form_statusbar .o_statusbar_buttons .btn-secondary {
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    border-radius: 0 !important;
+    border-radius: var(--mcp-r-control) !important;
     color: var(--mcp-ink-2) !important;
     /* pure opaque white, like the inactive chevrons (Rosen: "и на
        бутоните от секцията") */
@@ -253,7 +269,7 @@
 .o_form_view .o_form_statusbar .o_statusbar_buttons .btn-primary {
     /* same lightest border as the rest (Rosen: not the dark sapphire) */
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    border-radius: 0 !important;
+    border-radius: var(--mcp-r-control) !important;
     box-shadow: var(--mcp-shadow-sm) !important;
 }
 
@@ -318,7 +334,7 @@
 .o_control_panel .o_form_status_indicator_buttons .o_form_button_cancel.btn.border-0 {
     background: var(--mcp-bg) !important;
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    border-radius: 0 !important;
+    border-radius: var(--mcp-r-control) !important;
     box-shadow: var(--mcp-shadow-sm) !important;
     /* bordered inline-flex buttons sit ~1-2px lower on their
        baseline than the borderless neighbours (Rosen) — centre them */
@@ -418,41 +434,125 @@
     width: var(--mcp-stat-btn-w, var(--mcp-sp-110)) !important;
     flex: 0 0 auto !important;
 }
+/* Smart бутони на живия .o-form-buttonbox: бял фон, неутрална рамка на
+   контрол, семантичен радиус; hover сменя само рамката (без акцент).
+   Стойността е mono с таблични цифри, 600 (KPI броячът). */
+.o_form_view .o-form-buttonbox {
+    --o-stat-text-color: var(--mcp-ink);
+    --o-stat-button-color: var(--mcp-accent);
+}
+.o_form_view .o-form-buttonbox .oe_stat_button.btn-outline-secondary {
+    background: var(--mcp-bg) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-control-border) !important;
+    border-radius: var(--mcp-r-control) !important;
+
+    &:hover {
+        background: var(--mcp-bg) !important;
+        border-color: var(--mcp-control-border-hover) !important;
+    }
+}
+/* Обвивката на „Повече“ (oe_stat_button btn p-0 border-0) е също .btn →
+   хващаше белия фон и 12px отстъп на CP бутоните. С margin-left:-1px
+   (колапсът на рамките на Odoo) белият ѝ фон покриваше дясната рамка на
+   последния smart бутон (Rosen: „липсва дясната чертичка“), а самото
+   „Повече“ стоеше отлепено. Обвивката — прозрачна, без отстъп и рамка;
+   вътрешният .o_button_more носи рамката и застъпва чертата с -1px като
+   останалите. */
+.o_form_view .o-form-buttonbox > .oe_stat_button.border-0:has(> .o_button_more) {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+.o_form_view .o-form-buttonbox .o_button_more {
+    /* пълни обвивката (иначе стои центриран в нея с празно поле отляво) */
+    width: 100%;
+    align-self: stretch;
+    background: var(--mcp-bg) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-control-border) !important;
+    border-radius: var(--mcp-r-control) !important;
+}
+.o_form_view .o-form-buttonbox .o_stat_value {
+    font-family: var(--mcp-font-mono);
+    font-feature-settings: "tnum";
+    font-weight: var(--mcp-fw-semibold);
+}
 
 /* ── Sheet title row + breadcrumb-style eyebrow ─────────────── */
 .o_form_view .oe_title h1,
 .o_form_view .oe_title .o_field_widget input {
-    font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-sp-28) !important;
-    font-weight: 700 !important;
+    /* UI шрифт, 500, шрифтов токен (следва --mcp-font-scale; калибрираните
+       28px — EE 33.6 е решение на Росен); разделяме с въздух, не с черта */
+    font-family: var(--mcp-form-title-font) !important;
+    font-size: var(--mcp-fs-title) !important;
+    font-weight: var(--mcp-fw-medium) !important;
+    line-height: var(--mcp-lh-heading) !important;
+    letter-spacing: var(--mcp-ls-tight) !important;
     color: var(--mcp-ink) !important;
-    letter-spacing: -0.02em !important;
     /* text-shadow glow removed — the 16px blur made the title text read as
        "размазано"/fuzzy; a backend heading wants crisp text. */
 }
 .o_form_view .oe_title {
-    padding-bottom: var(--mcp-sp-14) !important;
-    margin-bottom: var(--mcp-sp-18) !important;
-    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule);
+    padding-bottom: 0 !important;
+    margin-bottom: var(--mcp-sp-16) !important;
+    border-bottom: 0 !important;
 }
 
 /* ── Field labels ───────────────────────────────────────────── */
+/* Етикетите четат B0 токените --mcp-form-label-* (по подразбиране EE вид:
+   UI шрифт, 500, без главни букви и разредка). Mono caps идентичността се
+   връща от пресета, без да се пипа тук. nowrap — дългите БГ етикети
+   („Срокове за плащане“) не се чупят на два реда и не разширяват колоната. */
 .o_form_view .o_form_label,
 .o_form_view label.o_form_label {
-    font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-fs-10) !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
-    color: var(--mcp-ink-3) !important;
+    font-family: var(--mcp-form-label-font) !important;
+    font-size: var(--mcp-form-label-size) !important;
+    font-weight: var(--mcp-form-label-weight) !important;
+    letter-spacing: var(--mcp-form-label-tracking) !important;
+    text-transform: var(--mcp-form-label-case) !important;
+    color: var(--mcp-ink-2) !important;
+    white-space: nowrap !important;
 }
+/* стойността е 400 (EE: етикет 500, стойност 400) */
 .o_form_view .o_field_widget,
 .o_form_view .o_form_input {
     color: var(--mcp-ink) !important;
+    font-weight: var(--mcp-fw-regular) !important;
+}
+/* Подчертаване на полетата: в покой линията е невидима, при hover се
+   показва само на редактируемите полета. */
+.o_form_view .o_field_widget:not(:focus-within):not(.o_field_invalid) {
+    border-bottom: var(--mcp-bw-1) solid transparent !important;
+}
+.o_form_view .o_form_editable .o_field_widget:hover:not(:focus-within):not(.o_field_invalid):not(.o_readonly_modifier) {
+    border-bottom-color: var(--mcp-control-border) !important;
+}
+/* ЗАМРАЗЕНО (план 4-А.6): o2m таблицата във формата е огледало на списъка
+   и решението за нея е заедно със списъка. Връщаме ѝ досегашния вид —
+   тегло 500 и пунктирната линия под полетата, без hover линия. */
+.o_form_view .o_field_x2many.o_field_widget,
+.o_form_view .o_field_x2many .o_field_widget {
     font-weight: 500 !important;
 }
-.o_form_view .o_field_widget:not(:focus-within):not(.o_field_invalid) {
+.o_form_view .o_field_x2many.o_field_widget:not(:focus-within):not(.o_field_invalid),
+.o_form_view .o_field_x2many .o_field_widget:not(:focus-within):not(.o_field_invalid),
+.o_form_view .o_form_editable .o_field_x2many.o_field_widget:hover:not(:focus-within):not(.o_field_invalid):not(.o_readonly_modifier),
+.o_form_view .o_form_editable .o_field_x2many .o_field_widget:hover:not(:focus-within):not(.o_field_invalid):not(.o_readonly_modifier) {
     border-bottom: var(--mcp-sp-1) dashed var(--mcp-rule) !important;
+}
+
+/* Разделители на групи — единственото място с mono caps във формата */
+.o_form_view .o_horizontal_separator {
+    font-family: var(--mcp-font-mono);
+    font-size: var(--mcp-fs-10) !important;
+    font-weight: var(--mcp-fw-semibold) !important;
+    letter-spacing: var(--mcp-ls-caps-wide);
+    color: var(--mcp-ink-3) !important;
+
+    &:not(:empty) {
+        box-shadow: 0 var(--mcp-bw-1) 0 var(--mcp-rule) !important;
+        padding-bottom: var(--mcp-sp-4);
+    }
 }
 .o_form_view .o_field_many2one a,
 .o_form_view .o_field_email,
@@ -462,6 +562,31 @@
        made link-heavy areas (e.g. the invoice payments box) look blurred
        ("размазано"). Keep the sapphire colour, drop the fuzz. */
     &:hover { color: var(--mcp-accent-2) !important; text-decoration: underline; }
+}
+/* Връзката към записа в readonly many2one (клиентът „Acme Corporation“)
+   беше лилава от Bootstrap $link — същият цвят като останалите връзки. */
+.o_form_view .o_form_uri,
+.o_form_view a.o_form_uri {
+    color: var(--mcp-link) !important;
+
+    &:hover { color: var(--mcp-link-hover) !important; }
+}
+/* Полетата във вътрешните групи (не x2many) — без сив фон на инпута и без
+   изместване. Ядрото прави many2one на flex колона, а widgets/many2one.scss
+   добавя align-items: center → тясното 213px поле се центрира в 378px клетка
+   и стои ~80px вдясно от другите стойности („30 Дни“). stretch = като ядрото. */
+.o_form_view .o_inner_group .o_field_widget.o_field_many2one:not(.o_field_x2many *) {
+    align-items: stretch !important;
+}
+/* :not(.o_field_x2many *) — o2m в група пази своя (замразен) вид на клетките */
+.o_form_view .o_inner_group .o_field_widget .o_input:not(.o_field_x2many *),
+.o_form_view .o_inner_group .o_field_widget input.o_input:not(.o_field_x2many *),
+.o_form_view .o_inner_group .o_field_widget select.o_input:not(.o_field_x2many *),
+.o_form_view .o_inner_group .o_field_widget.o_input:not(.o_field_x2many *) {
+    background: transparent !important;
+}
+.o_form_view .o_inner_group .o_cell.o_wrap_input {
+    padding-left: 0 !important;
 }
 .o_form_view .o_field_monetary,
 .o_form_view .o_field_float,
@@ -557,27 +682,32 @@
             height: var(--mcp-sp-32) !important;
             padding: 0 var(--mcp-sp-14) !important;
             font-size: var(--mcp-fs-12) !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.04em !important;
+            /* EE: и двата таба са 400, активният се различава по цвета */
+            font-weight: var(--mcp-fw-regular) !important;
+            letter-spacing: 0 !important;
             color: var(--mcp-ink-3) !important;
             border: 0 !important;
-            border-radius: 0 !important;
+            border-radius: var(--mcp-r-control) var(--mcp-r-control) 0 0 !important;
             background: transparent !important;
             position: relative;
-            transition: color var(--mcp-t-fast);
+            transition: color var(--mcp-t-fast), background var(--mcp-t-fast);
 
-            &:hover { color: var(--mcp-ink) !important; }
+            &:hover:not(.active) {
+                background: var(--mcp-hover-bg) !important;
+                color: var(--mcp-ink) !important;
+            }
             &.active {
                 color: var(--mcp-accent) !important;
                 background: transparent !important;
 
+                /* долната линия на Росен остава, glow-ът отпада */
                 &::after {
                     content: "";
                     position: absolute;
-                    left: var(--mcp-sp-4); right: var(--mcp-sp-4); bottom: calc(-1 * var(--mcp-sp-1));
+                    left: 0; right: 0; bottom: calc(-1 * var(--mcp-sp-1));
                     height: var(--mcp-sp-2);
                     background: var(--mcp-accent);
-                    box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-2);
+                    box-shadow: none !important;
                 }
             }
         }
@@ -647,9 +777,20 @@
        standalone frozen list keeps its overflow:hidden. */
     overflow-x: auto !important;
     overflow-y: visible !important;
+    scrollbar-gutter: auto !important;
+}
+/* Излишният хоризонтален скрол под o2m: Odoo замразява колоните така, че да
+   запълнят точно ширината на рендерера (9 колони = 1137px), а 1px рамка на
+   таблицата при border-collapse добавя още ½+½px → таблица 1138px в 1137px
+   кутия → 1px overflow и празна писта за скрол. Рамката се пренася на
+   КОНТЕЙНЕРА (рендерера): видът е същият, но колоните се смятат вътре в нея
+   и таблицата вече не прелива. Самата таблица не се променя визуално. */
+.o_form_view .o_field_x2many .o_list_renderer.table-responsive {
+    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+    border-radius: 0 !important;
 }
 .o_form_view .o_field_x2many .o_list_renderer table.o_list_table {
-    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+    border: 0 !important;
     border-radius: 0 !important;
 
     thead th {
@@ -931,19 +1072,27 @@
     position: relative;
     /* 240px ≈ native Odoo's ~236px totals box (Rosen: match eталон); was 300. */
     min-width: var(--mcp-sp-240);
-    /* HUD notch + ::before-ring border trick REMOVED (Rosen: махни
-       всички HUD декорации). Plain square bordered box now — no
-       clip-path cut corner. */
-    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-    background: var(--mcp-surface-2) !important;
+    /* EE: обикновени редове вдясно върху листа — без сива кутия, без рамка
+       (вкл. border-top на ядрото), без вътрешен отстъп. */
+    border: 0 !important;
+    background: transparent !important;
     border-radius: 0 !important;
-    padding: var(--mcp-sp-10) var(--mcp-sp-14) !important;
+    padding: 0 !important;
+    /* 8px = десният ръб на сумите съвпада с десния ръб на o2m таблицата */
     margin-right: var(--mcp-sp-8) !important;
 
     .o_td_label,
     .oe_subtotal_footer_separator,
     label,
-    .o_form_label { color: var(--mcp-ink-2) !important; font-weight: 500 !important; }
+    .o_form_label { color: var(--mcp-ink-2) !important; font-weight: var(--mcp-fw-medium) !important; }
+
+    /* етикетите — UI шрифт, без главни букви и разредка (не mono caps) */
+    label,
+    .o_form_label {
+        font-family: var(--mcp-font-family) !important;
+        text-transform: none !important;
+        letter-spacing: 0 !important;
+    }
 
     .o_field_widget,
     .o_field_monetary,
@@ -982,19 +1131,20 @@
     background: transparent !important;
     color: var(--mcp-accent) !important;
     font-family: var(--mcp-font-mono) !important;
-    font-weight: 700 !important;
+    font-weight: var(--mcp-fw-semibold) !important;
     letter-spacing: 0.04em !important;
     box-shadow: none !important;
 
     * { color: var(--mcp-accent) !important; }
 }
-/* Odoo puts inline font-size:1.3em on the grand-total amount → it
-   reads bigger than the other rows. Equalise it (Rosen: "трябва да
-   са равни"). !important beats the inline style. */
+/* Редът „Общо“ — по-голям (--mcp-fs-h4) и полудебел, като в EE; !important
+   бие inline font-size:1.3em / bold на ядрото. Етикетът на същия ред следва
+   размера (:has — редът със сумата, не просто последният ред). */
 .o_form_view .oe_subtotal_footer tr:last-child [name="amount_total"],
 .o_form_view .oe_subtotal_footer .oe_subtotal_footer_separator,
 .o_form_view .o_total .o_total_amount {
-    font-size: var(--mcp-list-font-size) !important;
+    font-size: var(--mcp-fs-h4) !important;
+    font-weight: var(--mcp-fw-semibold) !important;
     /* right-aligned text drifts left from trailing tracking / extra
        box spacing — the other rows have none, so the total looked
        shifted (Rosen: "леко е изместено наляво"). Zero them so the
@@ -1003,6 +1153,10 @@
     padding-right: 0 !important;
     margin-right: 0 !important;
     text-align: right !important;
+}
+.o_form_view .oe_subtotal_footer tr:has([name="amount_total"]) .o_form_label {
+    font-size: var(--mcp-fs-h4) !important;
+    font-weight: var(--mcp-fw-semibold) !important;
 }
 
 /* ── Chatter (right rail) ───────────────────────────────────── */
@@ -1013,7 +1167,7 @@
     /* same frame as the form sheet (Rosen: "подобно на предходния
        панел"). */
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-    border-radius: 0 !important;
+    border-radius: var(--mcp-r-surface) !important;
 
     /* discuss.scss forces `.o-mail-Thread { bg:--mcp-surface
        !important }` (shared class) — out-specify it so the FORM
@@ -1045,7 +1199,7 @@
        box (Rosen: "бутоните не са наред"). */
     .o-mail-Chatter-topbar .btn-secondary {
         border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-        border-radius: 0 !important;
+        border-radius: var(--mcp-r-control) !important;
         color: var(--mcp-ink-2) !important;
         background: var(--mcp-bg) !important;
         box-shadow: var(--mcp-shadow-sm) !important;
@@ -1064,7 +1218,7 @@
        the statusbar primary. */
     .o-mail-Chatter-topbar .btn-primary {
         border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-        border-radius: 0 !important;
+        border-radius: var(--mcp-r-control) !important;
         box-shadow: var(--mcp-shadow-sm) !important;
     }
     /* Icon-only buttons (search / attach / followers = .btn-link):
@@ -1074,7 +1228,7 @@
        button_sizing.js keeps them square. */
     .o-mail-Chatter-topbar .btn-link {
         border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-        border-radius: 0 !important;
+        border-radius: var(--mcp-r-control) !important;
         text-transform: none !important;
         letter-spacing: normal !important;
         color: var(--mcp-ink-2) !important;
@@ -1099,12 +1253,44 @@
         letter-spacing: 0.06em !important;
         color: var(--mcp-ink-3) !important;
     }
-    .o-mail-Message-tracking {
-        background: var(--mcp-surface-2) !important;
-        border-left: var(--mcp-sp-2) solid var(--mcp-accent) !important;
-        border-radius: 0 !important;
-        font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-fs-10) !important;
-        padding: var(--mcp-sp-6) var(--mcp-sp-8) !important;
+    /* без линии между съобщенията — ритъм от отстъпи и дата-секции;
+       само в .o-mail-Chatter, приложението Discuss не се засяга */
+    .o-mail-Message {
+        border-bottom: 0 !important;
+        padding: var(--mcp-sp-6) var(--mcp-sp-12) !important;
+        border-radius: var(--mcp-r-control) !important;
     }
+    .o-mail-Message:hover { background: var(--mcp-accent-mute) !important; }
+    .o-mail-DateSection {
+        color: var(--mcp-ink-3);
+        font-size: var(--mcp-fs-11);
+    }
+    /* проследените стойности — обикновен текст: стара → нова */
+    .o-mail-Message-tracking {
+        background: transparent !important;
+        border-left: 0 !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        font-family: var(--mcp-font-family) !important;
+        font-size: var(--mcp-fs-12) !important;
+        color: var(--mcp-ink-2);
+
+        .o-mail-Message-trackingOld { color: var(--mcp-ink-3) !important; }
+        .o-mail-Message-trackingNew {
+            color: var(--mcp-accent) !important;
+            font-weight: var(--mcp-fw-medium) !important;
+        }
+    }
+}
+/* лентата на chatter-а отстрани е подравнена по височина със статусбара */
+.o-mail-Form-chatter.o-aside .o-mail-Chatter-topbar { min-height: var(--mcp-sp-48); }
+
+/* Етикетите в сумите — в шрифта на интерфейса, без главни букви (еталонът);
+   числата остават mono */
+.o_form_view .oe_subtotal_footer .o_form_label,
+.o_form_view .oe_subtotal_footer label {
+    font-family: var(--mcp-font-family) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    color: var(--mcp-ink-2);
 }

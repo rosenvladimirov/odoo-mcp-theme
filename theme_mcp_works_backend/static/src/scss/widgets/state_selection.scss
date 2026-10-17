@@ -1,6 +1,6 @@
 /* MCP Works backend — State Selection & Badge Selection widgets */
 
-/* ── State selection (pill group) ────────────────────────────── */
+/* ── State selection ─────────────────────────────────────────── */
 .o_field_state_selection,
 .o_status_bar_buttons {
     display: inline-flex;
@@ -9,59 +9,21 @@
     flex-wrap: wrap;
 }
 
+/* В O19 точката е `btn btn-link p-0` (за четене — `btn p-0`), затова
+   капсулата се маха: без рамка, фон, сянка и главни букви. */
 .o_field_state_selection .btn,
-.o_field_state_selection .o_status_button {
-    padding: var(--mcp-sp-3) var(--mcp-sp-12) !important;
-    font-size: var(--mcp-fs-11) !important;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    border-radius: var(--mcp-r-pill) !important;
-    border: var(--mcp-bw-1-5) solid var(--mcp-rule-strong) !important;
+.o_field_state_selection .btn.btn-link {
+    padding: 0 !important;
+    border: 0 !important;
     background: transparent !important;
-    color: var(--mcp-ink-2) !important;
     box-shadow: none !important;
-    transition: background var(--mcp-t-fast), border-color var(--mcp-t-fast), color var(--mcp-t-fast);
-    cursor: pointer;
-
-    &:hover {
-        border-color: var(--mcp-accent) !important;
-        color: var(--mcp-accent) !important;
-        background: var(--mcp-accent-soft) !important;
-    }
+    text-transform: none;
+    letter-spacing: normal;
 }
 
-/* Active / current state */
-.o_field_state_selection .btn.btn-primary,
-.o_field_state_selection .o_status_button.o_arrow_button_current,
-.o_field_state_selection .active {
-    background: var(--mcp-accent) !important;
-    border-color: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
-    font-weight: 600;
-}
-
-/* ── Badge Selection (colored toggle group) ──────────────────── */
-.o_badge_selection,
-.o_field_badge_selection {
-    display: inline-flex;
-    gap: var(--mcp-sp-4);
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.o_badge_selection .badge,
-.o_field_badge_selection .badge {
-    cursor: pointer;
-    border: var(--mcp-bw-1-5) solid transparent !important;
-    border-radius: var(--mcp-r-sm) !important;
-    font-size: var(--mcp-fs-11) !important;
-    font-weight: 500;
-    padding: var(--mcp-sp-3) var(--mcp-sp-8) !important;
-    transition: all var(--mcp-t-fast);
-    opacity: 0.65;
-
-    &:hover  { opacity: 0.90; transform: translateY(calc(-1 * var(--mcp-sp-1))); }
-    &.active,
-    &.o_badge_active { opacity: 1; border-color: currentColor !important; }
+/* ── Selection badge (бутони-значки) — избраната е с тинт + акцентна рамка ── */
+.o_field_selection_badge .o_selection_badge.btn.active {
+    background: var(--mcp-active-bg) !important;
+    border-color: var(--mcp-active-border) !important;
+    color: var(--mcp-ink) !important;
 }

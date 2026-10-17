@@ -2,15 +2,29 @@
    Sharp sapphire grid, monospace HUD headers, sapphire today-marker,
    accent event chips with subtle halo. */
 
+/* Коренът обхваща контролния панел → без кутия; картата е .o_calendar_container */
 .o_calendar_view {
-    padding: var(--mcp-view-pad);
-    background: var(--mcp-surface) !important;
-    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    padding: 0;
+    background: transparent !important;
+    border: 0 !important;
     border-radius: 0 !important;
-    box-shadow:
-        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
-        0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12),
-        0 var(--mcp-sp-8) var(--mcp-sp-32) calc(-1 * var(--mcp-sp-12)) var(--mcp-accent-a18) !important;
+    box-shadow: none !important;
+}
+/* Една тиха карта около хедъра, мрежата и страничния панел (EE 20).
+   height calc пази d-grid h-100 контейнера да не прелее след долния margin. */
+.o_calendar_view .o_calendar_container {
+    margin: 0 var(--mcp-view-pad) var(--mcp-view-pad);
+    height: calc(100% - var(--mcp-view-pad)) !important;
+    background: var(--mcp-view-card-bg) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-rule-strong);
+    border-radius: var(--mcp-r-surface);
+    box-shadow: var(--mcp-shadow-surface);
+    overflow: hidden;
+}
+/* EE 20: без дясна рамка на последната колона — ръбът на картата я замества */
+.o_calendar_view .o_calendar_widget {
+    td:last-child,
+    th:last-child { border-right: 0 !important; }
 }
 
 /* Top toolbar (prev/next, view picker, today) */
@@ -56,31 +70,36 @@
     }
 }
 
-/* Day-header cells (Mon, Tue, …) */
+/* Заглавия на дните — пазим mono (идентичност), но по-тихо: без лента,
+   по-малък тракинг, средно тегло; числото на деня е основният акцент. */
 .o_calendar_view .fc-col-header-cell,
 .o_calendar_view .fc-day-header {
-    background: var(--mcp-surface-3) !important;
-    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    background: var(--mcp-view-card-bg) !important;
+    border-bottom: var(--mcp-bw-1) solid var(--mcp-rule) !important;
 
     .fc-col-header-cell-cushion,
     .fc-day-header-text {
         font-family: var(--mcp-font-mono) !important;
         font-size: var(--mcp-fs-10) !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.14em !important;
+        font-weight: var(--mcp-fw-medium) !important;
+        letter-spacing: 0.06em !important;
         text-transform: uppercase !important;
         color: var(--mcp-ink-3) !important;
         padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
+    }
+    .o_cw_day_number {
+        font-size: var(--mcp-fs-12);
+        font-weight: var(--mcp-fw-semibold);
+        color: var(--mcp-ink);
+        letter-spacing: 0;
     }
 }
 
 /* Grid cells */
 .o_calendar_view .fc-day,
 .o_calendar_view .fc-daygrid-day {
-    background: var(--mcp-surface) !important;
+    background: var(--mcp-view-card-bg) !important;
     border-color: var(--mcp-rule) !important;
-
-    &:hover { background: var(--mcp-accent-mute) !important; }
 
     .fc-daygrid-day-number,
     .fc-day-number {
@@ -92,10 +111,16 @@
     }
 }
 
-/* Today marker */
+/* Тихо: hover само в месечната мрежа, със споделения оттенък
+   (EE 20 няма hover по дните; в месеца помага за прицелването) */
+.o_calendar_view .fc-daygrid-day:not(.fc-day-today):hover {
+    background: var(--mcp-table-hover-bg) !important;
+}
+
+/* Днес: лек фон, без рамка и вътрешно сияние (числото остава bold accent) */
 .o_calendar_view .fc-day-today {
-    background: var(--mcp-accent-soft) !important;
-    box-shadow: inset 0 0 0 var(--mcp-sp-1) var(--mcp-accent), inset 0 0 var(--mcp-sp-12) var(--mcp-accent-a12);
+    background: var(--mcp-accent-mute) !important;
+    box-shadow: none !important;
 
     .fc-daygrid-day-number {
         color: var(--mcp-accent) !important;
@@ -127,7 +152,7 @@
     color: var(--mcp-ink) !important;
     border: 0 !important;
     border-left: var(--mcp-sp-3) solid var(--mcp-accent) !important;
-    border-radius: 0 !important;
+    border-radius: var(--mcp-r-sm) !important; /* радиус от скалата (беше твърдо 0) */
     font-family: var(--mcp-font-family) !important;
     font-size: var(--mcp-fs-11) !important;
     font-weight: 500 !important;
@@ -187,4 +212,11 @@ button.oi-panel-right {
     color: var(--mcp-ink-2) !important;
 
     &:hover { color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
+}
+
+/* Днешният ден в малкия календар (DateTimePicker): акцент вместо червено —
+   червеното е за грешка, не за „днес“ */
+.o_datetime_picker .o_today > div {
+    background-color: var(--mcp-accent) !important;
+    color: var(--mcp-paper) !important;
 }

@@ -63,16 +63,26 @@
     max-width: 160px;
 }
 
-/* Kanban record left color stripe */
-.o_kanban_record[class*="o_kanban_color_"] {
-    border-left-width: 3px !important;
+/* Цветът на записа — ЕДНА лента през ::after (като EE 20), вместо border-left
+   върху нативното ::after (даваше две ленти). Цвят 0 = без лента: O19 винаги
+   слага o_kanban_color_0, затова неоцветените журнали в таблото бяха със сива
+   лента. Режимът за избор (.o_record_selection_available) ползва същото
+   ::after за затъмняващия слой — не го пипаме. */
+.o_kanban_record.o_kanban_color_0:not(.o_record_selection_available)::after {
+    content: none !important;
 }
-/* Color stripe map — 12 colors */
-$kanban-colors: (
-    0: #6b7280,  1: #ef4444,  2: #f97316,  3: #eab308,
-    4: #22c55e,  5: #14b8a6,  6: #38bdf8,  7: #3b82f6,
-    8: #6366f1,  9: #a855f7,  10: #ec4899, 11: #f59e0b
-);
-@each $i, $color in $kanban-colors {
-    .o_kanban_record.o_kanban_color_#{$i} { border-left-color: #{$color} !important; }
+@for $i from 1 through 11 {
+    .o_kanban_record.o_kanban_color_#{$i}:not(.o_record_selection_available)::after {
+        content: "" !important;
+        position: absolute;
+        inset: 0 auto 0 0 !important;
+        width: var(--mcp-card-accent-w) !important;
+        border: 0 !important;
+        background: var(--mcp-color-#{$i}) !important;
+        /* лентата следва радиуса на картата отляво, вдясно е права */
+        border-radius: inherit;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        pointer-events: none;
+    }
 }

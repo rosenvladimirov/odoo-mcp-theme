@@ -3,27 +3,61 @@
    Widget-specific overrides live in widgets/statusbar.scss, widgets/stat_button.scss etc. */
 
 /* ── Base ────────────────────────────────────────────────────── */
+/* Тих бутон по еталона: 1px неутрална рамка, бял фон, без подскачане.
+   Отстъпите — през --bs-btn-*, БЕЗ !important, за да действат p-0/px-1 на Odoo;
+   така реалната височина = --mcp-btn-h. */
+.btn {
+    --bs-btn-padding-y: var(--mcp-btn-pad-y);
+    --bs-btn-padding-x: var(--mcp-btn-pad-x);
+    --bs-btn-font-size: var(--mcp-btn-font-size);
+    --bs-btn-line-height: var(--mcp-btn-line-height);
+    --bs-btn-border-radius: var(--mcp-btn-radius);
+}
 .btn,
 button.btn,
 .btn-secondary {
-    background: transparent !important;
-    border: var(--mcp-bw-1-5) solid var(--mcp-ink) !important;
-    color: var(--mcp-ink) !important;
-    border-radius: var(--mcp-r-sm) !important;
-    padding: var(--mcp-sp-6) var(--mcp-sp-14) !important;
-    font-weight: 500 !important;
-    font-size: var(--mcp-fs-13) !important;
-    transition: all var(--mcp-t-base) !important;
-    box-shadow: none !important;
+    background: var(--mcp-btn-bg) !important;
+    border: var(--mcp-btn-border-w) solid var(--mcp-btn-border-color) !important;
+    color: var(--mcp-btn-color) !important;
+    border-radius: var(--mcp-btn-radius) !important;
+    font-weight: var(--mcp-fw-medium) !important;
+    text-transform: var(--mcp-btn-case);
+    letter-spacing: var(--mcp-btn-tracking);
+    box-shadow: var(--mcp-btn-shadow) !important;
+    /* анимират се само цветовете — без transform и без all */
+    transition:
+        background-color var(--mcp-t-fast),
+        border-color var(--mcp-t-fast),
+        color var(--mcp-t-fast) !important;
 }
+/* hover — само неутрален фон, рамката остава (EE) */
 .btn:hover,
 button.btn:hover,
 .btn-secondary:hover {
-    background: transparent !important;
-    border-color: var(--mcp-accent) !important;
-    color: var(--mcp-accent) !important;
+    background: var(--mcp-hover-bg) !important;
+    border-color: var(--mcp-btn-border-color) !important;
+    color: var(--mcp-ink) !important;
+}
+/* натиснат / отворен / избран — тинт + акцентна рамка */
+.btn:not(.btn-primary):not(.btn-link):active,
+.btn.btn-secondary.active,
+.btn.btn-secondary.show,
+.btn.btn-secondary[aria-expanded="true"] {
+    background: var(--mcp-active-bg) !important;
+    border-color: var(--mcp-active-border) !important;
+    color: var(--mcp-ink) !important;
     box-shadow: none !important;
-    transform: translateY(calc(-1 * var(--mcp-sp-1)));
+}
+
+/* ── Клавиатурен фокус ───────────────────────────────────────── */
+/* `box-shadow: none !important` горе маха пръстена на Bootstrap, затова без
+   това правило бутонът на фокус от Tab не показваше нищо. Само за клавиатура
+   (`:focus-visible`), при клик остава чисто. Цветът следва акцента на пресета. */
+.btn:focus-visible,
+button.btn:focus-visible,
+.btn-secondary:focus-visible {
+    outline: var(--mcp-bw-2) solid var(--mcp-accent) !important;
+    outline-offset: var(--mcp-bw-2) !important;
 }
 
 /* ── Primary ─────────────────────────────────────────────────── */
@@ -41,7 +75,8 @@ button.o_form_button_save {
     background: var(--mcp-accent-dark) !important;
     border-color: var(--mcp-accent-dark) !important;
     color: var(--mcp-paper) !important;
-    box-shadow: var(--mcp-shadow-glow-strong) !important;
+    /* primary — само потъмняване, без неонов ореол */
+    box-shadow: var(--mcp-btn-shadow) !important;
 }
 
 /* ── Link ────────────────────────────────────────────────────── */
@@ -57,9 +92,31 @@ button.o_form_button_save {
     transform: none !important;
 }
 
+/* ── Light (прозрачен иконен бутон) ──────────────────────────── */
+.btn.btn-light {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    color: var(--mcp-ink-2) !important;
+}
+.btn.btn-light:hover,
+.btn.btn-light.show {
+    background: var(--mcp-hover-bg) !important;
+    color: var(--mcp-ink) !important;
+}
+
 /* ── Size variants ───────────────────────────────────────────── */
-.btn-sm { padding: var(--mcp-sp-4) var(--mcp-sp-10) !important;  font-size: var(--mcp-fs-12) !important; }
-.btn-lg { padding: var(--mcp-sp-8) var(--mcp-sp-18) !important;  font-size: var(--mcp-sp-14) !important; }
+/* през --bs-btn-* (без !important), за да не бият помощните класове на Odoo */
+.btn-sm {
+    --bs-btn-padding-y: var(--mcp-sp-3);
+    --bs-btn-padding-x: var(--mcp-sp-8);
+    --bs-btn-font-size: var(--mcp-fs-12);
+}
+.btn-lg {
+    --bs-btn-padding-y: var(--mcp-sp-8);
+    --bs-btn-padding-x: var(--mcp-sp-16);
+    --bs-btn-font-size: var(--mcp-fs-13);
+}
 
 /* ── Disabled ────────────────────────────────────────────────── */
 .btn:disabled,

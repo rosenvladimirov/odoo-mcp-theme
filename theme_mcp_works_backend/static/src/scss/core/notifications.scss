@@ -3,8 +3,9 @@
 /* ── Container ───────────────────────────────────────────────── */
 .o_notification_manager {
     position: fixed;
-    bottom: var(--mcp-sp-16);
-    right: var(--mcp-sp-16);
+    /* нулираме top/left от базовия inset на O19 (md+), иначе контейнерът
+       е на цяла височина и тостовете не стоят долу вдясно */
+    inset: auto var(--mcp-sp-16) var(--mcp-sp-16) auto;
     z-index: var(--mcp-z-modal);
     display: flex;
     flex-direction: column;
@@ -17,17 +18,14 @@
 /* ── Single notification ─────────────────────────────────────── */
 .o_notification {
     pointer-events: auto;
-    /* Odoo 19 handles the internal flex/spacing itself (type-bar + content
-       wrapper); the theme only skins the outer box: sharp, surface, a thin
-       rule + a soft sapphire glow — robot style (Rosen: "нотификациите
-       грозни → в стила на темата"). */
-    background: var(--mcp-surface) !important;
-    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-    border-radius: 0 !important;
-    box-shadow:
-        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a12),
-        0 var(--mcp-sp-8) var(--mcp-sp-24) calc(-1 * var(--mcp-sp-8)) var(--mcp-accent-a30) !important;
-    overflow: hidden;                 /* square off the type-colour bar */
+    /* Odoo 19 подрежда вътрешността сам (цветна лента + обвивка); темата
+       облича само външната кутия. EE 20: плаващ слой с неутрална елевация,
+       радиус на повърхност (0 при Robot scale 0), без сапфирен ореол. */
+    background: var(--mcp-surface-raised) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-surface) !important;
+    box-shadow: var(--mcp-shadow-float) !important;
+    overflow: hidden;                 /* лентата за типа следва радиуса */
     animation: mcp-notif-in 0.25s cubic-bezier(0.34, 1.4, 0.64, 1) both;
 }
 /* Odoo 19 wraps the body in its own grey-bordered/rounded div — drop that
@@ -47,15 +45,6 @@
     to   { opacity: 1; transform: translateX(0) scale(1); }
 }
 
-/* Leaving */
-.o_notification.o_notification_close {
-    animation: mcp-notif-out 0.2s ease both;
-}
-@keyframes mcp-notif-out {
-    from { opacity: 1; transform: translateX(0); max-height: var(--mcp-sp-200); margin-bottom: 0; }
-    to   { opacity: 0; transform: translateX(var(--mcp-sp-16)); max-height: 0; margin-bottom: calc(-1 * var(--mcp-sp-8)); }
-}
-
 /* ── Type colours — Odoo 19 carries them on the bar + progress track ── */
 .o_notification_bar.bg-success,
 .o_notification_progress.bg-success { background-color: var(--mcp-c-green) !important; }
@@ -66,50 +55,40 @@
 .o_notification_bar.bg-info,
 .o_notification_progress.bg-info    { background-color: var(--mcp-accent) !important; }
 
-/* ── Icon ────────────────────────────────────────────────────── */
-.o_notification_icon,
+/* ── Иконки в бутоните на тоста ─────────────────────────────── */
 .o_notification .fa {
     font-size: var(--mcp-sp-16);
     flex-shrink: 0;
     margin-top: var(--mcp-sp-1);
 }
-.o_notification.bg-success .o_notification_icon { color: var(--mcp-c-green); }
-.o_notification.bg-danger  .o_notification_icon { color: var(--mcp-c-red); }
-.o_notification.bg-warning .o_notification_icon { color: var(--mcp-warn); }
-.o_notification.bg-info    .o_notification_icon { color: var(--mcp-accent); }
 
 /* ── Content ─────────────────────────────────────────────────── */
-.o_notification_content { flex: 1 1 auto; min-width: 0; }
-.o_notification_title {
-    font-weight: 600;
+.o_notification_content {
+    flex: 1 1 auto;
+    min-width: 0;
     font-size: var(--mcp-fs-13);
-    color: var(--mcp-ink);
-    margin-bottom: var(--mcp-sp-2);
+    line-height: 1.45;
+    color: var(--mcp-ink-2);
 }
-.o_notification_body,
-.o_notification_message {
+.o_notification_body {
     font-size: var(--mcp-fs-12);
     color: var(--mcp-ink-2);
     line-height: 1.4;
 }
 
 /* ── Close button ────────────────────────────────────────────── */
+/* O19: X-ът е .btn-close — иконата е background-image. Shorthand-ът
+   `background` я триеше, а `height:auto` + падингът смачкваха кутията →
+   X-ът беше невидим. Пипаме само background-color; размерът е на Bootstrap. */
 .o_notification_close {
-    flex-shrink: 0;
-    background: transparent !important;
-    border: none !important;
+    background-color: transparent !important;
+    border: 0 !important;
     box-shadow: none !important;
-    color: var(--mcp-ink-3) !important;
-    padding: var(--mcp-sp-2) var(--mcp-sp-4) !important;
-    font-size: var(--mcp-sp-14) !important;
-    border-radius: var(--mcp-r-xs) !important;
-    opacity: 0.55;
-    cursor: pointer;
-    height: auto !important;
-    transform: none !important;
+    opacity: .55;
     transition: opacity var(--mcp-t-fast);
-    &:hover { opacity: 1; }
 }
+.o_notification_close:hover,
+.o_notification_close:focus-visible { opacity: 1; }
 
 /* ── Buttons row ─────────────────────────────────────────────── */
 .o_notification_buttons {

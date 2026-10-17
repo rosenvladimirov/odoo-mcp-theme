@@ -1,103 +1,71 @@
 /* MCP Works backend — Robot Theme · Activity view
-   Matrix-style grid (records × activity-types). Sharp cells with
-   sapphire activity counters, accent today column. */
+   Матрица записи × видове дейности. Една тиха карта (EE 20); цветът е
+   само за състоянието: мек tint + лява лента вместо плътни блокове. */
 
+/* Коренът обхваща контролния панел → без кутия. */
 .o_activity_view {
-    padding: var(--mcp-view-pad);
-    background: var(--mcp-surface) !important;
-    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+    padding: 0;
+    background: transparent !important;
+    border: 0 !important;
     border-radius: 0 !important;
-    overflow: auto;
-    box-shadow:
-        0 0 0 var(--mcp-sp-1) var(--mcp-accent-a06),
-        0 var(--mcp-sp-2) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-2)) var(--mcp-accent-a12),
-        0 var(--mcp-sp-8) var(--mcp-sp-32) calc(-1 * var(--mcp-sp-12)) var(--mcp-accent-a18) !important;
+    box-shadow: none !important;
 }
 
-.o_activity_view table.o_activity_table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: var(--mcp-fs-12) !important;
+/* O19: таблицата е .o_activity_view_table (не .o_activity_table). Картата —
+   с пръстен вместо рамка, за да не чупим table-bordered. */
+.o_activity_view .o_activity_view_table {
+    --bs-border-color: var(--mcp-rule);
+    width: calc(100% - 2 * var(--mcp-view-pad));
+    margin: var(--mcp-view-pad) !important;
+    background: var(--mcp-view-card-bg) !important;
+    box-shadow: 0 0 0 var(--mcp-bw-1) var(--mcp-rule-strong), var(--mcp-shadow-surface);
+    font-size: var(--mcp-fs-12);
 
-    /* Header — activity types */
-    thead th {
-        background: var(--mcp-surface-3) !important;
-        font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-fs-10) !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.12em !important;
-        text-transform: uppercase !important;
-        color: var(--mcp-ink-3) !important;
-        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
-        border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-        text-align: center !important;
-
-        &:first-child { text-align: left !important; }
-
-        .o_activity_filter_button {
-            color: var(--mcp-accent) !important;
-            background: transparent;
-        }
+    > thead > tr > th {
+        background: var(--mcp-view-card-bg) !important;
+        color: var(--mcp-ink-2);
+        font-weight: var(--mcp-fw-medium);
+        border-bottom: var(--mcp-bw-1) solid var(--mcp-rule-strong) !important;
     }
-
-    /* Body */
-    tbody {
-        tr { border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important; }
-
-        tr:hover {
-            background: var(--mcp-accent-soft) !important;
-            box-shadow: inset var(--mcp-sp-2) 0 0 var(--mcp-accent);
-        }
-
-        td {
-            padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
-            border-right: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-            vertical-align: middle !important;
-
-            &:first-child {
-                font-weight: 500 !important;
-                color: var(--mcp-ink) !important;
-            }
-        }
-
-        /* Activity cell (with state dot) */
-        .o_activity_record,
-        .o_activity_summary_cell {
-            text-align: center;
-            cursor: pointer;
-            min-height: var(--mcp-sp-32);
-
-            .o_activity_summary {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                width: var(--mcp-sp-22);
-                height: var(--mcp-sp-22);
-                font-family: var(--mcp-font-mono);
-                font-size: var(--mcp-fs-11);
-                font-weight: 700;
-                color: var(--mcp-accent);
-                background: var(--mcp-accent-soft);
-                border: var(--mcp-sp-1) solid var(--mcp-accent);
-                border-radius: 0;
-                box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
-            }
-
-            /* Overdue / planned state colorways */
-            &.o_overdue .o_activity_summary { color: var(--mcp-danger); border-color: var(--mcp-danger); background: var(--mcp-danger-soft); box-shadow: none; }
-            &.o_today   .o_activity_summary { color: var(--mcp-warn);   border-color: var(--mcp-warn);   background: var(--mcp-warn-a10); box-shadow: none; }
-            &.o_planned .o_activity_summary { color: var(--mcp-ok);     border-color: var(--mcp-ok);     background: var(--mcp-ok-a10); box-shadow: none; }
-        }
-    }
-
-    /* Footer totals */
-    tfoot td {
-        background: var(--mcp-surface-3) !important;
-        font-family: var(--mcp-font-mono) !important;
-        font-weight: 700 !important;
-        color: var(--mcp-accent) !important;
-        padding: var(--mcp-sp-8) var(--mcp-sp-10) !important;
-        border-top: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-        text-align: center !important;
+    .o_activity_record:hover { background: var(--mcp-table-hover-bg) !important; }
+    .o_activity_view_table_footer {
+        background: var(--mcp-surface-2) !important;
+        td { border-top: var(--mcp-bw-1) solid var(--mcp-rule-strong) !important; }
     }
 }
+
+/* Състояния (O19: planned/today/overdue/done върху .o_activity_summary_cell) —
+   мек tint + лява лента в цвета на състоянието, тъмен текст (вместо плътни
+   зелено/жълто/червено с бял текст). Свойството за цвят е преди общото
+   правило, затова всяко състояние взима своя цвят. */
+.o_activity_view .o_activity_summary_cell {
+    &.planned { --mcp-state-c: var(--mcp-ok); }
+    &.today   { --mcp-state-c: var(--mcp-warn); }
+    &.overdue { --mcp-state-c: var(--mcp-danger); }
+    &.done    { --mcp-state-c: var(--mcp-ink-dim); }
+
+    &.planned, &.today, &.overdue, &.done {
+        background-color: color-mix(in srgb, var(--mcp-state-c) 10%, var(--mcp-view-card-bg)) !important;
+        color: var(--mcp-ink) !important;
+        box-shadow: inset var(--mcp-state-stripe) 0 0 var(--mcp-state-c);
+        a { color: var(--mcp-ink) !important; }
+        .o-mail-ActivityCell-deadline {
+            color: var(--mcp-state-c);
+            font-family: var(--mcp-font-mono);
+            font-feature-settings: "tnum";
+            font-weight: var(--mcp-fw-semibold);
+        }
+    }
+    .o-mail-ActivityCell-counter {
+        background: var(--mcp-surface-2) !important;
+        color: var(--mcp-ink-2) !important;
+        border-radius: var(--mcp-r-pill) !important;
+        font-family: var(--mcp-font-mono);
+    }
+    &.o_activity_empty_cell:hover { background-color: var(--mcp-table-hover-bg) !important; }
+}
+
+/* Активен филтър по състояние (лентата с прогрес горе) */
+.o_activity_view .o_activity_filter_planned { background-color: var(--mcp-ok-a08) !important; }
+.o_activity_view .o_activity_filter_today   { background-color: var(--mcp-warn-a08) !important; }
+.o_activity_view .o_activity_filter_overdue { background-color: var(--mcp-danger-a10) !important; }

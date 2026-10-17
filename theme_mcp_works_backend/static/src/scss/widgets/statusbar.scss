@@ -4,5 +4,5 @@
    (.o_statusbar_status) keeps Odoo's defaults — we don't wrap it in
    a paper card any more, that fought with the chevron silhouette. */
 
-/* Action buttons row (Save/Confirm etc.) above the status bar */
-.o_statusbar_buttons .btn { margin-right: var(--mcp-sp-4); }
+/* Мъртвият margin-right на бутоните в лентата е изтрит: form.scss
+   ги нулира (margin: 0 !important) и разстоянието идва от gap. */

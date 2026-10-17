@@ -11,7 +11,9 @@
     /* ── Typography ─────────────────────────────────────────────
        Space Grotesk for UI, JetBrains Mono for telemetry/numbers.
        Bundle the fonts in /static/src/fonts/ and @font-face them
-       in fonts.scss; OR @import from Google in tokens.scss head. */
+       in fonts.scss; OR import from Google in tokens.scss head.
+       (думата за импорт с „@“ не бива да стои в коментар: Odoo я огражда
+       като коментар и затваря нашия преждевременно — шрифтът отпадаше) */
     /* UI font = Roboto (bundled by Odoo core; Rosen request). */
     --mcp-font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Ubuntu, "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --mcp-font-mono:   "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -79,6 +81,131 @@
     --mcp-r-lg:   calc(var(--mcp-radius-scale) * 6px);
     --mcp-r-xl:   calc(var(--mcp-radius-scale) * 8px);
     --mcp-r-pill: calc(var(--mcp-radius-scale) * 999px);
+    /* ── Семантични радиуси · при scale 1 = EE 20 (контрол 6 / малък 4 / повърхност 8 / плаващ 12) ── */
+    --mcp-r-2xl:        calc(var(--mcp-radius-scale) * 12px);
+    --mcp-r-control:    var(--mcp-r-lg);
+    --mcp-r-control-sm: var(--mcp-r-md);
+    --mcp-r-surface:    var(--mcp-r-xl);
+    --mcp-r-float:      var(--mcp-r-2xl);
+    /* вложен радиус на ред в меню = радиус на менюто − отстъпа (0 при scale 0);
+       custom property → libsass не го изчислява, max() стига до браузъра */
+    --mcp-float-pad:    var(--mcp-sp-4);
+    --mcp-r-float-item: max(0px, calc(var(--mcp-r-2xl) - var(--mcp-sp-4)));
+
+    /* ── Неутрални състояния · hover сиво, акцентът е само за избраното ── */
+    --mcp-hover-bg:             var(--mcp-surface-3);
+    --mcp-active-bg:            color-mix(in srgb, var(--mcp-accent) 10%, var(--mcp-bg));
+    --mcp-active-border:        var(--mcp-accent);
+    --mcp-control-border:       color-mix(in srgb, var(--mcp-ink-3) 35%, var(--mcp-bg));
+    --mcp-control-border-hover: color-mix(in srgb, var(--mcp-ink-3) 60%, var(--mcp-bg));
+    --mcp-focus-border:         color-mix(in srgb, var(--mcp-accent) 50%, var(--mcp-control-border));
+    --mcp-table-hover-bg:       color-mix(in srgb, var(--mcp-accent) 5.5%, transparent);
+    --mcp-link:                 var(--mcp-accent);
+    --mcp-link-hover:           var(--mcp-accent-dark);
+
+    /* ── Елевация · неутрална, следва режима през --mcp-elev-color ── */
+    --mcp-elev-color:     #0f172a;
+    --mcp-shadow-float:
+        0 var(--mcp-sp-1) var(--mcp-sp-2) color-mix(in srgb, var(--mcp-elev-color) 6%, transparent),
+        0 var(--mcp-sp-5) var(--mcp-sp-16) color-mix(in srgb, var(--mcp-elev-color) 10%, transparent);
+    --mcp-shadow-dialog:
+        0 var(--mcp-sp-2) var(--mcp-sp-6) color-mix(in srgb, var(--mcp-elev-color) 6%, transparent),
+        0 var(--mcp-sp-16) var(--mcp-sp-48) calc(-1 * var(--mcp-sp-8)) color-mix(in srgb, var(--mcp-elev-color) 22%, transparent);
+    /* повърхности (лист, карта): EE е плоско; пазим тихата сянка на листа —
+       пресет „flat“ слага none */
+    --mcp-shadow-surface: var(--mcp-sheet-shadow);
+    --mcp-modal-scrim:    color-mix(in srgb, var(--mcp-ink) 24%, transparent);
+
+    /* ── Тегла · единственото място за тегла в темата ── */
+    --mcp-fw-regular:  400;
+    --mcp-fw-medium:   500;
+    --mcp-fw-semibold: 600;
+    --mcp-fw-bold:     700;
+    --mcp-lh-base:     1.5;
+    --mcp-lh-sm:       1.25;
+    --mcp-lh-heading:  1.2;
+
+    /* ── Заглавна стълба · база 14px × коефициент, следва --mcp-font-scale ── */
+    --mcp-fs-h1:    calc(14px * 2.4 * var(--mcp-font-scale));
+    --mcp-fs-h2:    calc(14px * 1.5 * var(--mcp-font-scale));
+    --mcp-fs-h3:    calc(14px * 1.3 * var(--mcp-font-scale));
+    --mcp-fs-h4:    calc(14px * 1.2 * var(--mcp-font-scale));
+    --mcp-fs-h5:    calc(14px * 1.1 * var(--mcp-font-scale));
+    --mcp-fs-title: calc(28px * var(--mcp-font-scale));   /* калибрираните 28px; EE е 33.6 (= --mcp-fs-h1) */
+    --mcp-ls-tight:     -0.01em;
+    --mcp-ls-caps:      0.06em;
+    --mcp-ls-caps-wide: 0.1em;
+
+    /* ── Етикети във формата · EE по подразбиране, HUD пресет връща mono/caps ── */
+    --mcp-form-label-font:     var(--mcp-font-family);
+    --mcp-form-label-size:     var(--mcp-fs-13);
+    --mcp-form-label-weight:   var(--mcp-fw-medium);
+    --mcp-form-label-case:     none;
+    --mcp-form-label-tracking: 0;
+    --mcp-form-title-font:     var(--mcp-font-family);
+
+    /* ── Бутони · роли ── */
+    --mcp-btn-radius:       var(--mcp-r-control);
+    --mcp-btn-border-w:     var(--mcp-bw-1);
+    --mcp-btn-border-color: var(--mcp-control-border);
+    --mcp-btn-bg:           var(--mcp-bg);
+    --mcp-btn-color:        var(--mcp-ink-2);
+    --mcp-btn-shadow:       var(--mcp-shadow-sm);   /* Росен: лека сянка на всички бутони */
+    --mcp-btn-case:         none;
+    --mcp-btn-tracking:     0;
+
+    /* ── Значки и тагове ── */
+    --mcp-badge-tint: 15%;
+    /* 12-те цвята на Odoo (o_tag_color_N / o_kanban_color_N) — наши нюанси в реда на Odoo;
+       0 = само за тагове; в kanban 0 означава „без цвят“ */
+    /* редът е като в избора на цвят на Odoo (colorlist.js): 0 без цвят, 1 червено,
+       2 оранжево, 3 жълто, 4 циан, 5 лилаво, 6 бадемово, 7 тюркоазено, 8 синьо,
+       9 малиново, 10 зелено, 11 виолетово — иначе името в избора не съвпада с цвета */
+    --mcp-color-0: #6b7280;  --mcp-color-1: #ef4444;  --mcp-color-2: #f97316;
+    --mcp-color-3: #eab308;  --mcp-color-4: #4f9ae0;  --mcp-color-5: #9f628f;
+    --mcp-color-6: #e08a66;  --mcp-color-7: #14b8a6;  --mcp-color-8: #3b5bdb;
+    --mcp-color-9: #ec4899;  --mcp-color-10: #22c55e; --mcp-color-11: #8b5cf6;
+
+    /* ── Карти и изгледи ── */
+    --mcp-card-pad-y:      var(--mcp-sp-10);
+    --mcp-card-pad-x:      var(--mcp-sp-14);
+    --mcp-card-border:     var(--mcp-rule);
+    --mcp-card-border-hover: var(--mcp-rule-strong);
+    --mcp-card-accent-w:   3px;
+    --mcp-view-card-bg:    var(--mcp-form-sheet-bg);
+    --mcp-table-total-bg:  var(--mcp-surface-2);
+    --mcp-state-stripe:    var(--mcp-sp-3);
+
+    /* ── Горна лента ── */
+    --mcp-navbar-entry-h:     calc(var(--mcp-navbar-height) - 2 * var(--mcp-sp-5));
+    --mcp-navbar-entry-pad-x: var(--mcp-sp-8);
+    --mcp-navbar-entry-gap:   var(--mcp-sp-1);
+    --mcp-navbar-shadow:      0 var(--mcp-sp-4) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-8)) var(--mcp-accent-a12);
+    --mcp-navbar-scan-opacity: 0;
+    --mcp-navbar-systray-font: var(--mcp-font-family);
+    --mcp-navbar-badge-fs:    calc(10px * var(--mcp-font-scale));
+    --mcp-focus-ring:         var(--mcp-bw-1) solid var(--mcp-accent);
+    --mcp-app-tile-icon:      var(--mcp-sp-54);
+    --mcp-app-tile-pad:       var(--mcp-sp-8);
+    --mcp-app-tile-bg:        var(--mcp-bg);
+    --mcp-app-tile-shadow:
+        0 0 0 var(--mcp-bw-1) color-mix(in srgb, var(--mcp-elev-color) 7.5%, transparent),
+        0 var(--mcp-sp-1) var(--mcp-sp-2) color-mix(in srgb, var(--mcp-elev-color) 4%, transparent),
+        0 var(--mcp-sp-4) var(--mcp-sp-8) calc(-1 * var(--mcp-sp-2)) color-mix(in srgb, var(--mcp-elev-color) 4%, transparent),
+        0 var(--mcp-sp-12) var(--mcp-sp-20) calc(-1 * var(--mcp-sp-6)) color-mix(in srgb, var(--mcp-elev-color) 4%, transparent);
+    --mcp-app-tile-shadow-hover:
+        0 0 0 var(--mcp-bw-1) color-mix(in srgb, var(--mcp-elev-color) 10%, transparent),
+        0 var(--mcp-sp-4) var(--mcp-sp-8) calc(-1 * var(--mcp-sp-2)) color-mix(in srgb, var(--mcp-elev-color) 20%, transparent);
+    --mcp-dash-scan-opacity: 0;
+
+    /* ── Контролен панел (рамката и ореолът са решение на Росен — само токенизирани) ── */
+    --mcp-accent-a14:      color-mix(in srgb, var(--mcp-accent) 14%, transparent);
+    --mcp-cp-panel-shadow:
+        0 var(--mcp-sp-2) var(--mcp-sp-14) calc(-1 * var(--mcp-sp-3)) var(--mcp-accent-a18),
+        0 var(--mcp-sp-8) var(--mcp-sp-28) calc(-1 * var(--mcp-sp-12)) var(--mcp-accent-a14);
+    --mcp-cp-pad:          var(--mcp-sp-8) var(--mcp-sp-16) var(--mcp-sp-12);
+    --mcp-switcher-pad:    var(--mcp-sp-2);
+    --mcp-dropdown-bg:     var(--mcp-cp-bg);   /* идентичност; EE = var(--mcp-surface-raised) */
     /* Cut-corner notch for "HUD panel" surfaces (use via clip-path) */
     --mcp-notch:  6px;
 
@@ -87,10 +214,13 @@
     --mcp-shadow-sm:          0 1px 2px rgba(15, 23, 42, 0.04);
     --mcp-shadow-md:          0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px -6px rgba(15, 23, 42, 0.08);
     --mcp-shadow-card:        0 1px 2px rgba(15, 23, 42, 0.04);
-    --mcp-shadow-glow:        0 0 0 1px rgba(15, 82, 186, 0.20), 0 0 16px rgba(15, 82, 186, 0.45), 0 8px 32px -8px rgba(15, 82, 186, 0.45);
-    --mcp-shadow-glow-strong: 0 0 0 1px var(--mcp-accent), 0 0 32px rgba(15, 82, 186, 0.75), 0 0 64px rgba(15, 82, 186, 0.50);
-    --mcp-shadow-modal:       0 0 0 1px var(--mcp-accent), 0 16px 48px -8px rgba(37, 99, 235, 0.30), 0 4px 12px rgba(0, 0, 0, 0.14);
-    --mcp-shadow-panel:       0 0 0 1px var(--mcp-accent-soft), 0 16px 48px -8px rgba(37, 99, 235, 0.20);
+    /* сенките следват акцента на пресета (без твърд сапфир); модал/панел — неутрални */
+    --mcp-shadow-glow:        0 0 0 var(--mcp-bw-1) var(--mcp-accent-a20),
+                              0 var(--mcp-sp-4) var(--mcp-sp-16) calc(-1 * var(--mcp-sp-4)) var(--mcp-accent-a25);
+    --mcp-shadow-glow-strong: 0 0 0 var(--mcp-bw-1) var(--mcp-accent-a30),
+                              0 var(--mcp-sp-2) var(--mcp-sp-8) var(--mcp-accent-a20);
+    --mcp-shadow-modal:       0 0 0 var(--mcp-bw-1) var(--mcp-rule-strong), var(--mcp-shadow-dialog);
+    --mcp-shadow-panel:       0 0 0 var(--mcp-bw-1) var(--mcp-rule), var(--mcp-shadow-float);
 
     /* ── Transitions ─────────────────────────────────────────── */
     --mcp-t-fast:   120ms cubic-bezier(.2,.6,.2,1);
@@ -330,4 +460,15 @@
         0 1px 0 0 var(--mcp-rule),
         0 0 0 1px var(--mcp-accent-soft);
     --mcp-sheet-shadow: 0 1px 2px rgba(0,0,0, 0.32), 0 8px 24px -8px rgba(0,0,0, 0.40);
+    /* в тъмен режим сянката е черна и по-плътна, иначе изчезва */
+    --mcp-elev-color: #000000;
+    --mcp-shadow-float:
+        0 var(--mcp-sp-1) var(--mcp-sp-2) color-mix(in srgb, var(--mcp-elev-color) 30%, transparent),
+        0 var(--mcp-sp-5) var(--mcp-sp-16) color-mix(in srgb, var(--mcp-elev-color) 40%, transparent);
+    --mcp-shadow-dialog:
+        0 var(--mcp-sp-2) var(--mcp-sp-6) color-mix(in srgb, var(--mcp-elev-color) 32%, transparent),
+        0 var(--mcp-sp-16) var(--mcp-sp-48) calc(-1 * var(--mcp-sp-8)) color-mix(in srgb, var(--mcp-elev-color) 55%, transparent);
+    --mcp-modal-scrim: color-mix(in srgb, var(--mcp-ink) 14%, transparent);
+    --mcp-app-tile-bg: var(--mcp-surface-2);
+    --mcp-link-hover:  var(--mcp-accent-2);
 }

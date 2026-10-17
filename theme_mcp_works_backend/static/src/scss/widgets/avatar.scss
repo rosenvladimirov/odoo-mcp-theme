@@ -3,17 +3,33 @@
 
 :root { --Avatar-size: var(--mcp-sp-20); }
 
-/* Base avatar — image or letter */
-.o_avatar,
-.o_avatar img {
+/* Размерът е САМО за снимката: в O19 `.o_avatar` е и обвивка с текст
+   (avatar tag в many2many_tags_avatar, редовете в autocomplete) — старото
+   правило `.o_avatar, .o_avatar img {width/height}` ги режеше. */
+.o_avatar > img,
+img.o_avatar,
+.o_avatar_empty {
     width: var(--Avatar-size);
     height: var(--Avatar-size);
     aspect-ratio: 1;
     border-radius: var(--mcp-r-pill) !important;
     object-fit: cover;
     flex-shrink: 0;
-    display: inline-block;
     vertical-align: middle;
+}
+/* обвивката — ред снимка + текст */
+.o_avatar:not(img) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--mcp-sp-4);
+    min-width: 0;
+}
+/* аватар-тагът е без капсула: снимка + име */
+.o_tag.o_avatar {
+    background: transparent !important;
+    border-color: transparent !important;
+    padding: 0 !important;
+    color: var(--mcp-ink) !important;
 }
 
 /* Empty avatar — letter placeholder */

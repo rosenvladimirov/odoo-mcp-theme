@@ -31,130 +31,153 @@
 
 /* ── Kanban columns (grouped kanban) ────────────────────────── */
 .o_kanban_view .o_kanban_group {
-    background: var(--mcp-surface-2) !important;
-    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-    border-radius: 0 !important;
+    /* колоната — прозрачна, без рамка и без сянка (EE 20); картите стоят
+       директно върху фона на изгледа. Халото от layout.scss се гаси тук. */
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: var(--mcp-r-surface) !important;
+    box-shadow: none !important;
     display: flex !important;
     flex-direction: column !important;
     min-width: var(--mcp-sp-240);
 
     .o_kanban_header {
-        background: var(--mcp-surface) !important;
-        border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
+        background: transparent !important;
+        border-bottom: 0 !important;
         padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
         position: relative;
 
+        /* акцентната лента остава (идентичност), но плътна и без glow */
         &::before {
             content: "";
             position: absolute;
             inset: 0 auto 0 0;
             width: var(--mcp-sp-3);
             background: var(--mcp-accent);
-            opacity: 0.6;
-            box-shadow: 0 0 var(--mcp-sp-6) var(--mcp-accent-glow);
+            opacity: 1;
+            box-shadow: none;
         }
 
         .o_kanban_header_title,
         .o_column_title {
             font-family: var(--mcp-font-mono) !important;
-            font-size: var(--mcp-fs-11) !important;
-            font-weight: 700 !important;
-            letter-spacing: 0.12em !important;
+            /* mono caps остават (идентичност), но една стъпка по-едро — йерархия по EE 20 */
+            font-size: var(--mcp-fs-12) !important;
+            font-weight: var(--mcp-fw-semibold) !important;
+            letter-spacing: var(--mcp-ls-caps) !important;
             text-transform: uppercase !important;
-            color: var(--mcp-ink) !important;
+            color: var(--mcp-ink-2) !important;
         }
 
-        .o_kanban_counter,
-        .o_column_count {
-            display: inline-flex;
-            align-items: center;
-            height: var(--mcp-sp-18);
-            padding: 0 var(--mcp-sp-8);
-            background: var(--mcp-accent-soft);
-            color: var(--mcp-accent);
-            font-family: var(--mcp-font-mono);
-            font-size: var(--mcp-fs-10);
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            border-radius: 0;
-            box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20);
+        /* .o_kanban_counter в O19 е целият ред progress + брояч, не чип
+           (.o_column_count не съществува в O19 — махнат) */
+        .o_kanban_counter {
+            height: auto;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+            gap: var(--mcp-sp-8);
+
+            /* сумата на колоната — четима цифра, не телеметрия (EE 20: голям тотал) */
+            .o_animated_number {
+                font-family: var(--mcp-font-mono);
+                font-size: var(--mcp-fs-h5) !important;
+                font-weight: var(--mcp-fw-semibold) !important;
+                color: var(--mcp-ink) !important;
+            }
+        }
+
+        .o_column_progress {
+            height: var(--mcp-sp-4);
+            border-radius: var(--mcp-r-pill);
+            background: var(--mcp-surface-3) !important;
+        }
+
+        /* „+“ в заглавката на колоната — гола икона, не кутийка */
+        .o_kanban_quick_add {
+            border: 0 !important;
+            background: transparent !important;
+            color: var(--mcp-ink-3) !important;
+            &:hover { color: var(--mcp-accent) !important; }
         }
     }
+}
+
+/* drag / фокус / избор на колона — през нашия акцент. Удвоеният клас вдига
+   специфичността над нативния .o_kanban_renderer (kanban_controller.scss:86),
+   без да зависим от реда на зареждане на бъндъла. */
+.o_kanban_renderer.o_kanban_renderer {
+    --KanbanColumn__highlight-background: var(--mcp-accent-soft);
+    --KanbanColumn__highlight-border: var(--mcp-accent);
+    --KanbanColumn__highlight-selected: var(--mcp-accent-a08);
+    --KanbanColumn__highlight-selected-border: var(--mcp-accent-a45);
 }
 
 /* ── Kanban cards ───────────────────────────────────────────── */
 .o_kanban_view .o_kanban_record:not(.o_kanban_ghost):not(.o_kanban_demo),
 .o_kanban_view .o_kanban_card {
-    background: var(--mcp-surface) !important;
-    border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-    border-radius: 0 !important;
-    padding: var(--mcp-sp-10) var(--mcp-sp-12) !important;
+    /* карта по EE 20: отстъп 10/14, тиха рамка, hover само сгъстява рамката */
+    /* бялата повдигната повърхност — контраст спрямо фона на изгледа (EE 20) */
+    background: var(--mcp-surface-raised) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-card-border) !important;
+    /* снимката отстрани (Контакти: aside.o_kanban_aside_full) — най-много 64px,
+       вместо нативните 95px; o_kanban_image_fill наследява ширината от тук */
+    --KanbanRecord__image--fill-width: var(--mcp-sp-64);
+    border-radius: var(--mcp-r-surface) !important;
+    padding: var(--mcp-card-pad-y) var(--mcp-card-pad-x) !important;
+    font-size: var(--mcp-fs-11);
     position: relative;
     cursor: pointer;
+    /* анимират се само цветове, никога transform */
     transition:
-        transform var(--mcp-t-fast),
         border-color var(--mcp-t-fast),
         background var(--mcp-t-fast),
         box-shadow var(--mcp-t-fast);
+
+    &:hover { border-color: var(--mcp-card-border-hover) !important; }
 
     /* Hover = САМО лявата сапфир линия — за ВСИЧКИ kanban карти (Rosen:
        "ховърът само лява синя линия"). Без border-акцент, без lift, без
        glow (иначе всяка карта "скача"/свети). Линията се показва само на
        НЕцветните карти; цветните (native ::after + theme border-left ляв
        цвят) си пазят цвета и не се покриват със синьо (Rosen: "има едни
-       с цвят, запази цвета"). Нищо на hover вече не пипа border-*-color,
-       затова левият цвят на цветните карти оцелява. */
-    &:not([class*="o_kanban_color_"]):hover::before {
+       с цвят, запази цвета"). Цветната лента вече е ::after (color_picker.scss),
+       така че hover-ът на рамката не я пипа. O19 слага o_kanban_color_0 на
+       ВСЯКА карта в табло с цветово поле — без това условие линията липсваше
+       изцяло в таблото и в CRM/Project. Без glow (EE 20 е без сияние). */
+    &:not([class*="o_kanban_color_"]):hover::before,
+    &.o_kanban_color_0:hover::before {
         content: "";
         position: absolute;
         inset: 0 auto 0 0;
         width: var(--mcp-sp-2);
         background: var(--mcp-accent);
-        box-shadow: 0 0 var(--mcp-sp-4) var(--mcp-accent-glow);
+        border-radius: inherit;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
     }
 
-    /* Card title / record-id-style first field.
-       (.oe_kanban_text removed — a pre-v17 class Odoo 19 no longer renders.) */
-    .o_kanban_record_title {
-        font-family: var(--mcp-font-mono) !important;
-        font-size: var(--mcp-fs-11) !important;
-        font-weight: 700 !important;
-        color: var(--mcp-accent) !important;
-        letter-spacing: 0.02em !important;
-        /* text-shadow glow removed — 10px blur made the card title fuzzy. */
-    }
+    /* (.o_kanban_record_title / _subtitle / _bottom — изтрити: нямат нито
+       едно попадение в XML на O19, правилата бяха мъртви.) */
 
-    /* Card body text */
-    .o_kanban_record_subtitle {
-        font-size: var(--mcp-fs-13) !important;
-        font-weight: 500 !important;
-        color: var(--mcp-ink) !important;
-    }
-
-    /* Card footer (metadata).
-       (.oe_kanban_bottom removed — dead pre-v17 class in Odoo 19.) */
-    .o_kanban_record_bottom {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--mcp-sp-8);
-        font-family: var(--mcp-font-mono);
-        font-size: var(--mcp-fs-10);
-        color: var(--mcp-ink-3);
-        letter-spacing: 0.04em;
-    }
-
-    /* Priority widget — sharp bars instead of stars */
+    /* Приоритет — квадратчета вместо звезди (идентичност). Видимият квадрат е
+       12px, а зоната за клик — 16px: прозрачен padding + background-clip.
+       Нативният padding-left 0.2em между звездите се гаси — разстоянието
+       идва от padding-а и gap-а. */
     .o_priority {
         display: inline-flex !important;
+        align-items: center !important;
         gap: var(--mcp-sp-2) !important;
 
         a.o_priority_star,
         .o_priority_star {
-            width: var(--mcp-sp-8) !important;
-            height: var(--mcp-sp-8) !important;
+            width: var(--mcp-sp-16) !important;
+            height: var(--mcp-sp-16) !important;
+            padding: var(--mcp-sp-2) !important;
+            box-sizing: border-box !important;
+            background-clip: content-box !important;
             display: inline-block !important;
-            background: var(--mcp-rule-strong) !important;
+            background-color: var(--mcp-rule-strong) !important;
             color: transparent !important;
             border-radius: 0 !important;
             position: relative;
@@ -164,19 +187,75 @@
             &.fa-star,
             &[data-pressed="true"],
             &.o_priority_filled {
-                background: var(--mcp-warn) !important;
+                background-color: var(--mcp-warn) !important;
             }
         }
     }
 
     /* Avatar (assignee) */
-    .o_field_widget.o_field_avatar,
-    .o_kanban_image_inner_pic {
+    .o_field_widget.o_field_avatar {
         width: var(--mcp-sp-18) !important;
         height: var(--mcp-sp-18) !important;
         border-radius: 0 !important;
         border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
     }
+
+    aside.o_kanban_aside_full {
+        max-width: var(--mcp-sp-64);
+    }
+
+    /* броячите в долния ред (Контакти: contact_statistics; общо — badge без
+       o_tag в footer) — тихи: без фон и рамка, вторично мастило. Таговете
+       (o_tag) извън броячите и бутоните (oe_kanban_action в таблото на
+       журналите) не се пипат. */
+    /* само неутралните броячи; оцветените (просрочие, предупреждение) пазят сигнала си */
+    footer .badge:not(.o_tag):not([class*="text-bg-"]):not([class*="bg-"]),
+    .o_field_contact_statistics .badge {
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        color: var(--mcp-ink-2) !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* снимката на записа — радиус на контрол, тих пръстен вместо рамка */
+    .o_kanban_image_inner_pic {
+        width: var(--mcp-sp-18) !important;
+        height: var(--mcp-sp-18) !important;
+        border-radius: var(--mcp-r-control) !important;
+        border: 0;
+        box-shadow: 0 0 0 var(--mcp-bw-1) var(--mcp-card-border);
+    }
+}
+
+/* ── Табло на журналите (account) ──────────────────────────────
+   Заглавие = връзка 16.8/500 (измерено в EE 20); KPI редовете —
+   връзка вляво, mono сума вдясно. */
+.o_account_kanban .o_kanban_record a.fs-4.fw-bold {
+    font-size: var(--mcp-fs-h4) !important;
+    font-weight: var(--mcp-fw-medium) !important;
+    color: var(--mcp-link) !important;
+}
+.o_account_kanban [name="kanban_primary_right"] > .row,
+.o_account_kanban #dashboard_general_right .row {
+    a {
+        color: var(--mcp-link);
+        font-weight: var(--mcp-fw-regular);
+    }
+    .col-auto.text-end {
+        font-family: var(--mcp-font-mono);
+        font-feature-settings: "tnum";
+        color: var(--mcp-ink);
+    }
+}
+.o_kanban_card_manage_title {
+    font-family: var(--mcp-font-mono);
+    font-size: var(--mcp-fs-10);
+    font-weight: var(--mcp-fw-semibold);
+    letter-spacing: var(--mcp-ls-caps);
+    text-transform: uppercase;
+    color: var(--mcp-ink-3);
 }
 
 /* ── Kanban view background — no card, full-bleed columns ──── */
@@ -245,12 +324,12 @@
     text-overflow: ellipsis !important;
 }
 
-/* ── Quick-create / "+" column add ──────────────────────────── */
-.o_kanban_view .o_kanban_quick_add,
+/* ── Quick-create (формата за бързо създаване в колоната) ───────
+   .o_kanban_quick_add е иконата „+“ в заглавката — стилът ѝ е горе. */
 .o_kanban_view .o_kanban_quick_create {
     background: var(--mcp-surface) !important;
     border: var(--mcp-sp-1) dashed var(--mcp-rule-strong) !important;
-    border-radius: 0 !important;
+    border-radius: var(--mcp-r-surface) !important;
     color: var(--mcp-ink-3) !important;
     font-family: var(--mcp-font-mono) !important;
     font-size: var(--mcp-fs-11) !important;
@@ -262,4 +341,11 @@
         color: var(--mcp-accent) !important;
         background: var(--mcp-accent-soft) !important;
     }
+}
+
+/* Броячите в картите на Контакти — по-четими (икона + число), както в еталона */
+.o_kanban_record .o_field_contact_statistics .badge {
+    font-size: var(--mcp-fs-13) !important;
+    gap: var(--mcp-sp-4);
+    .fa { font-size: var(--mcp-fs-13); color: var(--mcp-ink-3); }
 }

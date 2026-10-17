@@ -360,7 +360,8 @@
         line-height: 1.55 !important;
     }
     .o-mail-Message-avatar {
-        border-radius: 0 !important;
+        /* семантичен радиус на повърхност (измерено в EE: 8px) */
+        border-radius: var(--mcp-r-surface) !important;
         border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
     }
 }

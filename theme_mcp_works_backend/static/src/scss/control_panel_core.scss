@@ -28,14 +28,14 @@
 .o_control_panel {
     /* control buttons panel = solid white + thin border + glow (Rosen). */
     background: var(--mcp-bg) !important;
-    border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    border-radius: 0 !important;
-    box-shadow:
-        0 var(--mcp-sp-2) var(--mcp-sp-14) calc(-1 * var(--mcp-sp-3)) var(--mcp-accent-a18),
-        0 var(--mcp-sp-8) var(--mcp-sp-28) calc(-1 * var(--mcp-sp-12)) rgba(15, 82, 186, 0.14) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-rule) !important;
+    border-radius: var(--mcp-r-control) !important;
+    /* ореолът е решение на Росен — вече изцяло през акцента (токен) */
+    box-shadow: var(--mcp-cp-panel-shadow) !important;
     margin: 0 0 var(--mcp-sp-6) 0 !important;
     min-height: var(--mcp-sp-38) !important;
-    padding: var(--mcp-sp-8) !important;
+    /* ритъмът на EE: по-плътно горе, по-въздушно долу и по страните (8/16/12) */
+    padding: var(--mcp-cp-pad) !important;
 }
 
 .o_control_panel_main {
@@ -58,10 +58,11 @@
     background: var(--mcp-accent) !important;
     color: var(--mcp-surface) !important;
     border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
-    border-radius: 0 !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.02em !important;
-    text-transform: uppercase !important;
+    border-radius: var(--mcp-r-control) !important;
+    font-weight: var(--mcp-fw-semibold) !important;
+    /* регистърът и разредката — през токен (Robot пресет може да върне caps) */
+    letter-spacing: var(--mcp-btn-tracking) !important;
+    text-transform: var(--mcp-btn-case) !important;
     padding: 0 var(--mcp-sp-12) !important;
     /* No spread/glow ring — it rendered OUTSIDE the box and made
        "Нов" look taller than "Качване" at equal height (Rosen:
@@ -84,17 +85,26 @@
     height: var(--mcp-btn-h) !important;
     min-height: var(--mcp-btn-h) !important;
     color: var(--mcp-ink-2) !important;
-    background: transparent !important;
+    background: var(--mcp-bg) !important;
     border: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
-    border-radius: 0 !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.02em !important;
+    border-radius: var(--mcp-r-control) !important;
+    font-weight: var(--mcp-fw-medium) !important;
+    letter-spacing: var(--mcp-btn-tracking) !important;
     padding: 0 var(--mcp-sp-12) !important;
 
+    /* тих ховър: само неутрален фон, рамката и текстът не светват */
     &:hover {
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-ink) !important;
+        border-color: var(--mcp-rule-strong) !important;
+        background: var(--mcp-hover-bg) !important;
+    }
+    /* акцентът остава само за избрано/отворено състояние */
+    &.active,
+    &.show,
+    &[aria-expanded="true"] {
+        color: var(--mcp-ink) !important;
         border-color: var(--mcp-accent) !important;
-        background: var(--mcp-accent-soft) !important;
+        background: var(--mcp-active-bg) !important;
     }
 }
 
@@ -106,9 +116,12 @@
    glyphs ARE rendered via ::before → icon vanished (Rosen: "тази
    иконка не се вижда"). Only the toggle BUTTON stays (its own
    ::before/::after caret-kill doesn't touch the child <i>). */
-.o_control_panel .o_cp_action_menus .dropdown-toggle,
-.o_control_panel .o_cp_action_menus > .dropdown > button,
-.o_control_panel .o_cp_action_menus button.dropdown-toggle,
+/* :not(:has(.o_dropdown_title)) — само иконното зъбно колело; бутоните с
+   надпис (Печат / Действия при избрани редове) живеят в същия контейнер и
+   иначе се свиваха до 26px без отстъп → текстът опираше в рамката */
+.o_control_panel .o_cp_action_menus .dropdown-toggle:not(:has(.o_dropdown_title)),
+.o_control_panel .o_cp_action_menus > .dropdown > button:not(:has(.o_dropdown_title)),
+.o_control_panel .o_cp_action_menus button.dropdown-toggle:not(:has(.o_dropdown_title)),
 .o_optional_columns_dropdown .dropdown-toggle {
     display: inline-flex !important;
     align-items: center !important;
@@ -131,6 +144,23 @@
     &::before { display: none !important; content: none !important; }
     .fa, .oi { font-size: var(--mcp-fs-13) !important; line-height: 1 !important; }
 }
+/* Менютата за действия в CP: радиус от пресета и неутрален ховър.
+   Отделно правило, за да остане .o_optional_columns_dropdown (списъкът,
+   замразен) точно както е. */
+.o_control_panel .o_cp_action_menus .dropdown-toggle,
+.o_control_panel .o_cp_action_menus > .dropdown > button,
+.o_control_panel .o_cp_action_menus button.dropdown-toggle {
+    border-radius: var(--mcp-r-control) !important;
+
+    &:hover {
+        background: var(--mcp-hover-bg) !important;
+        color: var(--mcp-ink) !important;
+    }
+    &.show {
+        background: var(--mcp-active-bg) !important;
+        color: var(--mcp-accent) !important;
+    }
+}
 
 /* ── Search bar ──────────────────────────────────────────────── */
 .o_searchview {
@@ -148,11 +178,10 @@
     align-items: center !important;
     transition: border-color var(--mcp-t-fast), box-shadow var(--mcp-t-fast);
 
+    /* фокус = само цветът на рамката, без ореол (EE 20) */
     &:focus-within {
-        border-color: var(--mcp-accent) !important;
-        box-shadow:
-            0 0 0 var(--mcp-sp-2) var(--mcp-accent-soft),
-            0 0 var(--mcp-sp-8) var(--mcp-accent-a30) !important;
+        border-color: var(--mcp-focus-border) !important;
+        box-shadow: none !important;
     }
 
     input {
@@ -194,32 +223,46 @@
     align-self: center !important;
     /* override Odoo 19 Bootstrap utilities .rounded-2 .bg-200 */
     border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    font-family: var(--mcp-font-mono) !important;
-    font-size: var(--mcp-fs-10) !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.04em !important;
+    /* спокоен чип: обикновен шрифт, неутрален фон, пръстен само на ховър */
+    border-radius: var(--mcp-r-control-sm) !important;
+    background: var(--mcp-surface-3) !important;
+    font-family: var(--mcp-font-family) !important;
+    font-size: var(--mcp-fs-11) !important;
+    font-weight: var(--mcp-fw-medium) !important;
+    letter-spacing: 0 !important;
     overflow: hidden;
     margin-right: var(--mcp-sp-4);
 
+    &:hover { box-shadow: 0 0 0 var(--mcp-bw-1) var(--mcp-rule-strong) !important; }
+
+    /* етикетът: тинт на акцента вместо плътна заливка (измерено в EE:
+       #714b67 върху #e3dbe1). Вариантите .btn / .btn-primary / :hover
+       бият CP правилата за бутони (0,4,0)–(0,5,0). */
     .o_searchview_facet_label,
-    .o_searchview_facet_label.btn {
-        background: var(--mcp-accent) !important;
-        color: var(--mcp-surface) !important;
+    .o_searchview_facet_label.btn,
+    .o_searchview_facet_label.btn:hover {
+        background: color-mix(in srgb, var(--mcp-accent) 18%, var(--mcp-bg)) !important;
+        color: var(--mcp-accent) !important;
         border: 0 !important;
-        border-radius: 0 !important;
+        border-radius: var(--mcp-r-control-sm) 0 0 var(--mcp-r-control-sm) !important;
         padding: 0 var(--mcp-sp-6) !important;
-        font-family: var(--mcp-font-mono) !important;
+        font-family: var(--mcp-font-family) !important;
         font-size: var(--mcp-fs-10) !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.06em !important;
-        text-transform: uppercase !important;
+        font-weight: var(--mcp-fw-semibold) !important;
+        letter-spacing: 0 !important;
+        text-transform: none !important;
         line-height: 1 !important;
         height: var(--mcp-btn-h) !important;
         display: inline-flex !important;
         align-items: center !important;
-        box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
+        box-shadow: none !important;               /* без ореол */
+    }
+    /* групиране — вторичният акцент, за да се различава от филтъра */
+    .o_searchview_facet_label.text-bg-action,
+    .o_searchview_facet_label.text-bg-action.btn,
+    .o_searchview_facet_label.text-bg-action.btn:hover {
+        background: color-mix(in srgb, var(--mcp-accent-2) 18%, var(--mcp-bg)) !important;
+        color: var(--mcp-accent-2) !important;
     }
 
     /* Hover edit-писалка overlay: Odoo я слага в абсолютно позициониран span
@@ -233,12 +276,12 @@
         justify-content: center !important;
     }
 
+    /* стойността е тих текст върху неутралния фон на чипа */
     .o_facet_values {
-        background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
-        border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
-        border-left: 0 !important;
-        border-radius: 0 !important;
+        background: transparent !important;
+        color: var(--mcp-ink) !important;
+        border: 0 !important;
+        border-radius: 0 var(--mcp-r-control-sm) var(--mcp-r-control-sm) 0 !important;
         padding: 0 var(--mcp-sp-8) !important;
         height: var(--mcp-btn-h) !important;
         line-height: 1 !important;
@@ -257,7 +300,8 @@
     gap: var(--mcp-sp-6);
     font-family: var(--mcp-font-mono) !important;
     font-size: var(--mcp-fs-11) !important;
-    letter-spacing: 0.06em !important;
+    /* mono цифрите остават (телеметрия), само без разредката */
+    letter-spacing: 0 !important;
 }
 .o_pager_counter,
 .o_pager_value,
@@ -282,10 +326,31 @@
     margin: 0 !important;
 
     &:hover {
-        background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
-        border-color: var(--mcp-accent) !important;
+        background: var(--mcp-hover-bg) !important;
+        color: var(--mcp-ink) !important;
+        border-color: var(--mcp-rule-strong) !important;
     }
+}
+/* Двата бутона на пейджъра — една група на общата височина --mcp-btn-h
+   (22px чупеше линията). .btn в селектора бие CP правилото за бутони. */
+.o_control_panel .o_pager .btn.o_pager_previous,
+.o_control_panel .o_pager .btn.o_pager_next {
+    width: var(--mcp-btn-h) !important;
+    height: var(--mcp-btn-h) !important;
+    background: var(--mcp-bg) !important;
+
+    &:hover {
+        background: var(--mcp-hover-bg) !important;
+        border-color: var(--mcp-rule-strong) !important;
+        color: var(--mcp-ink) !important;
+    }
+}
+.o_control_panel .o_pager .btn.o_pager_previous {
+    border-radius: var(--mcp-r-control) 0 0 var(--mcp-r-control) !important;
+}
+.o_control_panel .o_pager .btn.o_pager_next {
+    border-radius: 0 var(--mcp-r-control) var(--mcp-r-control) 0 !important;
+    margin-left: calc(-1 * var(--mcp-bw-1)) !important;   /* една обща рамка по средата */
 }
 
 /* ── View switcher ───────────────────────────────────────────── */
@@ -346,19 +411,31 @@
 .o_cp_switch_buttons  + .o_cp_pager,
 .o_cp_action_menus    + .o_cp_switch_buttons,
 .o_cp_switch_buttons  + .o_cp_action_menus {
-    margin-left: var(--mcp-sp-8);
-    padding-left: var(--mcp-sp-8);
-    border-left: var(--mcp-sp-1) solid var(--mcp-rule-strong);
+    /* клъстерите се разделят с въздух, не с линии (ритъмът на EE) */
+    margin-left: var(--mcp-sp-12);
+    padding-left: 0;
+    border-left: 0;
 }
 
 /* ── Kill residual Bootstrap .btn-group rounding (O19 wraps the
    view-switcher / pager in a .btn-group whose first/last child keep
    $btn-border-radius — the only computed radius leak left). ─────── */
 .o_control_panel .btn-group,
-.o_control_panel .btn-group > .btn,
 .o_cp_switch_buttons .btn-group,
 .o_pager .btn-group {
     border-radius: 0 !important;
+}
+/* групите държат радиуса на пресета само по външните ръбове (при scale 0
+   изходът е 0 навсякъде, както преди). Превключвателят на изгледи е
+   сегментиран контрол със собствени радиуси — изключен е тук. */
+.o_control_panel .btn-group:not(.o_cp_switch_buttons) > .btn:not(:first-child):not(:last-child) {
+    border-radius: 0 !important;
+}
+.o_control_panel .btn-group:not(.o_cp_switch_buttons) > .btn:first-child:not(:last-child) {
+    border-radius: var(--mcp-r-control) 0 0 var(--mcp-r-control) !important;
+}
+.o_control_panel .btn-group:not(.o_cp_switch_buttons) > .btn:last-child:not(:first-child) {
+    border-radius: 0 var(--mcp-r-control) var(--mcp-r-control) 0 !important;
 }
 
 /* ── Button-GROUP wrappers — transparent, borderless, even height ──
@@ -378,6 +455,43 @@
     height: var(--mcp-btn-h) !important;
     display: inline-flex !important;
     align-items: center !important;
+}
+/* Превключвателят на изгледи = сегментиран контрол: една рамка, неутрално
+   палче, без разделители (EE 20 switcher, само с CSS — без плъзгането на
+   техния JS). Външната височина остава --mcp-btn-h. (0,2,1) бие
+   обвивките (0,2,0) горе; бутоните (0,4,1) бият CP правилата (0,4,0). */
+.o_control_panel nav.o_cp_switch_buttons {
+    box-sizing: border-box !important;
+    padding: var(--mcp-switcher-pad) !important;
+    gap: var(--mcp-switcher-pad) !important;
+    background: var(--mcp-bg) !important;
+    border: var(--mcp-bw-1) solid var(--mcp-rule-strong) !important;
+    border-radius: calc(var(--mcp-r-control) + var(--mcp-switcher-pad)) !important;
+
+    .o_switch_view.btn {
+        height: calc(var(--mcp-btn-h) - 2 * var(--mcp-switcher-pad) - 2 * var(--mcp-bw-1)) !important;
+        min-height: 0 !important;
+        border: 0 !important;
+        border-radius: var(--mcp-r-control) !important;
+        background: transparent !important;
+        color: var(--mcp-ink-3) !important;
+        box-shadow: none !important;
+        transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
+
+        & + .o_switch_view { border-left: 0 !important; }
+        &:hover {
+            background: var(--mcp-hover-bg) !important;
+            color: var(--mcp-ink) !important;
+        }
+        &.active,
+        &[aria-pressed="true"],
+        &.o_active {
+            background: var(--mcp-surface-3) !important;
+            color: var(--mcp-accent) !important;   /* идентичността — само иконата */
+            box-shadow: none !important;
+            &::after { content: none !important; }
+        }
+    }
 }
 /* The search widget keeps ONE outer frame (its own .o_searchview
    block: rule-strong border, accent+glow only on :focus-within).
@@ -414,7 +528,9 @@
     min-height: var(--mcp-btn-h) !important;
     padding: 0 !important;
     border: var(--mcp-bw-1) solid var(--mcp-toggler-border) !important;
-    border-radius: 0 !important;
+    /* дясната половина на хапчето търсачка + превключвател */
+    border-radius: 0 var(--mcp-r-pill) var(--mcp-r-pill) 0 !important;
+    background: var(--mcp-bg) !important;
     outline: none !important;
     box-shadow: none !important;
     display: inline-flex !important;
@@ -423,10 +539,29 @@
     flex: 0 0 auto !important;
 }
 .o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret:hover {
-    border-color: var(--mcp-accent) !important;
-    background: var(--mcp-accent-soft) !important;
-    color: var(--mcp-accent) !important;
+    border-color: var(--mcp-rule-strong) !important;
+    background: var(--mcp-hover-bg) !important;
+    color: var(--mcp-ink) !important;
 }
+/* Търсачката + превключвателят = едно поле-хапче (EE 20): лявата половина,
+   без двоен шев до превключвателя. */
+.o_control_panel .o_cp_searchview .o_searchview {
+    background: var(--mcp-bg) !important;
+    border-radius: var(--mcp-r-pill) 0 0 var(--mcp-r-pill) !important;
+    border-inline-end: 0 !important;
+    padding-inline: var(--mcp-sp-12) var(--mcp-sp-8) !important;
+}
+/* фокус или отворено меню = само цветът на рамката, на двете половини */
+.o_control_panel .o_cp_searchview .o_searchview:focus-within,
+.o_control_panel .o_cp_searchview:has(.o_searchview_dropdown_toggler.show) .o_searchview {
+    border-color: var(--mcp-focus-border) !important;
+    box-shadow: none !important;
+}
+.o_control_panel .o_cp_searchview:has(.o_searchview:focus-within) .o_searchview_dropdown_toggler.btn,
+.o_control_panel .o_cp_searchview .o_searchview_dropdown_toggler.btn.show {
+    border-color: var(--mcp-focus-border) !important;
+}
+.o_control_panel .o_searchview input { font-weight: var(--mcp-fw-regular) !important; }
 /* Centre the caret glyph — o-dropdown-caret's ::after/icon sat off
    to one side (Rosen: "разместена иконата в средата"). */
 .o_control_panel .o_searchview_dropdown_toggler.btn.dropdown-toggle.o-dropdown-caret::after,
@@ -500,7 +635,9 @@
     padding: 0 !important;
     margin: 0 !important;
     border: 0 !important;
-    border-radius: 0 !important;
+    /* „✕“ следва радиуса на чипа; фонът е прозрачен — CP бутоните вече са бели */
+    border-radius: 0 var(--mcp-r-control-sm) var(--mcp-r-control-sm) 0 !important;
+    background: transparent !important;
     box-shadow: none !important;
     outline: 0 !important;
     display: inline-flex !important;
@@ -536,11 +673,54 @@
 .o_control_panel .btn.dropdown-toggle.border-0.p-0:not(.o_searchview_dropdown_toggler):hover {
     box-sizing: border-box !important;
     border: var(--mcp-bw-1) solid var(--mcp-rule-strong) !important;
-    border-radius: 0 !important;
+    border-radius: var(--mcp-r-control) !important;
 }
+/* неутрален ховър; акцентът — само при отворено меню */
 .o_control_panel .btn.o-dropdown.dropdown-toggle.border-0.p-0:hover,
 .o_control_panel .btn.dropdown-toggle.border-0.p-0:not(.o_searchview_dropdown_toggler):hover {
+    border-color: var(--mcp-rule-strong) !important;
+    background: var(--mcp-hover-bg) !important;
+    color: var(--mcp-ink) !important;
+}
+.o_control_panel .btn.o-dropdown.dropdown-toggle.border-0.p-0.show,
+.o_control_panel .btn.dropdown-toggle.border-0.p-0.show:not(.o_searchview_dropdown_toggler) {
     border-color: var(--mcp-accent) !important;
-    background: var(--mcp-accent-soft) !important;
+    background: var(--mcp-active-bg) !important;
     color: var(--mcp-accent) !important;
+}
+
+/* Менюто Filters / Group By / Favorites: без отделен фон — наследява
+   общото правило за падащи менюта (B2); тук само заглавията и
+   неутралният ховър. */
+.o-dropdown--menu.o_search_bar_menu {
+    .o_dropdown_title { font-weight: var(--mcp-fw-medium) !important; }
+    .dropdown-item:hover,
+    .o-dropdown-item:hover { background: var(--mcp-hover-bg) !important; }
+}
+
+/* Лупата: в O19 тя е <i> в собствен <button class="btn border-0 p-0"> директно
+   в .o_searchview. Общото CP правило за бутони му даваше фон, отстъп 12px и
+   ховър-фон → полето се четеше като три кутии (лупа | вход | превключвател).
+   Тук бутонът става част от полето: без фон/рамка/отстъп и в нито едно
+   състояние. (0,5,0)–(0,6,0) бие CP правилото (0,4,0)/(0,5,0) с :hover.
+   Чиповете (фасетите) не се пипат. */
+.o_control_panel .o_searchview > .btn.border-0.p-0,
+.o_control_panel .o_searchview > .btn.border-0.p-0:hover,
+.o_control_panel .o_searchview > .btn.border-0.p-0:focus,
+.o_control_panel .o_searchview > .btn.border-0.p-0:focus-visible,
+.o_control_panel .o_searchview > .btn.border-0.p-0:active {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    color: inherit !important;
+    flex: 0 0 auto !important;
+}
+/* лупата светва само в цвета на иконата, без кутия */
+.o_control_panel .o_searchview > .btn.border-0.p-0:hover .o_searchview_icon {
+    color: var(--mcp-ink) !important;
+    opacity: 1;
 }

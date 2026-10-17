@@ -75,13 +75,15 @@
        иконата на секцията — минимален indent, нищо не го "избутва"
        надясно; right 8 за брояча. */
     padding: var(--mcp-sp-4) var(--mcp-sp-8) var(--mcp-sp-4) 0 !important;
-    border-radius: 0 !important;
+    /* радиусът идва от пресета (при scale 0 остава 0) */
+    border-radius: var(--mcp-r-control-sm) !important;
     transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
 
-    &:hover { background: var(--mcp-accent-soft) !important; color: var(--mcp-ink) !important; }
+    /* ховърът е неутрален, акцентът е само за активното (ролите на EE) */
+    &:hover { background: var(--mcp-hover-bg) !important; color: var(--mcp-ink) !important; }
 
     &.active {
-        background: var(--mcp-accent-soft) !important;
+        background: var(--mcp-active-bg) !important;
         color: var(--mcp-accent) !important;
 
         .o_search_panel_label_title { font-weight: 600; color: var(--mcp-accent) !important; }
@@ -120,7 +122,8 @@
 .o_search_panel_counter {
     font-family: var(--mcp-font-mono) !important;
     font-size: var(--mcp-fs-10) !important;
-    font-weight: 700 !important;
+    /* по-тих брояч: 500 вместо 700; цветът остава ink-3 (ink-dim е под AA) */
+    font-weight: var(--mcp-fw-medium) !important;
     color: var(--mcp-ink-3) !important;
     margin: 0 var(--mcp-sp-10) 0 var(--mcp-sp-6) !important;
     flex-shrink: 0;

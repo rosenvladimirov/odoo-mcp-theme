@@ -9,20 +9,21 @@
 .o_priority .o_priority_star,
 .o_priority .fa-star,
 .o_priority .fa-star-o {
-    font-size: var(--mcp-sp-14) !important;
+    font-size: var(--mcp-fs-13) !important;
     cursor: pointer;
-    transition: color var(--mcp-t-fast), transform var(--mcp-t-fast);
+    /* анимира се само цветът — без transform (езикът на дизайна) */
+    transition: color var(--mcp-t-fast);
     color: var(--mcp-rule-strong) !important;
 
-    /* scale ONLY on hover — binding it to &.fa-star also scaled every FILLED
-       star at rest, so filled/empty stars rendered mismatched. Resting filled
-       colour is handled by `.o_priority .fa-star` below. */
+    /* hover — само цвят, без уголемяване; запълненият цвят в покой идва
+       от `.o_priority .fa-star` по-долу */
     &:hover {
         color: var(--mcp-warn) !important;
-        transform: scale(1.15);
     }
 }
 
 /* All stars up to and including selected */
 .o_priority .fa-star { color: var(--mcp-warn) !important; }
-.o_priority .fa-star-o { color: var(--mcp-rule-strong) !important; }
+/* празна звезда — неутрален мастил; избледняването е на Odoo (opacity-25) */
+.o_priority .fa-star-o,
+.o_priority .o_priority_star.fa-star-o { color: var(--mcp-ink-3) !important; }

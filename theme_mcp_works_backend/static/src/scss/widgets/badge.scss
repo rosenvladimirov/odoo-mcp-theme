@@ -25,31 +25,58 @@
 .o_field_badge .badge { vertical-align: middle; }
 
 /* ── Odoo 12-color map (o_tag_color_* / o_badge_color_*) ──────
-   Matches Odoo's $o-colors palette (0-11)                       */
-$mcp-badge-colors: (
-    0:  (#6b7280, #f3f4f6),   /* gray      */
-    1:  (#ef4444, #fef2f2),   /* red       */
-    2:  (#f97316, #fff7ed),   /* orange    */
-    3:  (#eab308, #fefce8),   /* yellow    */
-    4:  (#22c55e, #f0fdf4),   /* green     */
-    5:  (#14b8a6, #f0fdfa),   /* teal      */
-    6:  (#38bdf8, #f0f9ff),   /* light-blue*/
-    7:  (#3b82f6, #eff6ff),   /* blue      */
-    8:  (#6366f1, #eef2ff),   /* indigo    */
-    9:  (#a855f7, #faf5ff),   /* purple    */
-    10: (#ec4899, #fdf2f8),   /* pink      */
-    11: (#f59e0b, #fffbeb),   /* amber     */
-);
-
-@each $i, $pair in $mcp-badge-colors {
-    $fg: nth($pair, 1);
-    $bg: nth($pair, 2);
-
+   Цветовете идват от --mcp-color-0..11 (tokens.scss). Фонът се смесва с
+   фона на изгледа → в тъмен режим е тъмен тинт, не бяло петно.
+   Тоналните семантични значки (.bg-success… като pill) са в §4-А на плана
+   (замразен списък) — чакат „да“ от Росен, затова горе остават както са. */
+@for $i from 0 through 11 {
     .o_tag.o_tag_color_#{$i},
     .badge.o_badge_color_#{$i},
     .o_tag_color_#{$i} {
-        background: rgba(red($bg), green($bg), blue($bg), 0.75) !important;
-        color: $fg !important;
-        border-color: rgba(red($fg), green($fg), blue($fg), 0.25) !important;
+        background: color-mix(in srgb, var(--mcp-color-#{$i}) var(--mcp-badge-tint), var(--mcp-bg)) !important;
+        color: color-mix(in srgb, var(--mcp-color-#{$i}) 65%, var(--mcp-ink)) !important;
+        border: var(--mcp-bw-1) solid color-mix(in srgb, var(--mcp-color-#{$i}) 45%, transparent) !important;
+    }
+}
+
+/* ── Етикети (many2many tags) в kanban карта ─────────────────────
+   Дълъг етикет („Търговец / Производители на бюра“) излизаше извън
+   дясната граница на картата. Както в EE: етикетите се пренасят на нов
+   ред вътре в картата, дългият се реже с многоточие, шрифтът е по-малък.
+   Odoo 19: div.o_field_widget.o_field_many2many_tags > div.o_field_tags >
+   span.o_tag > div.o_tag_badge_text.text-truncate. */
+.o_kanban_record {
+    .o_field_many2many_tags,
+    .o_field_tags {
+        display: flex;
+        flex-wrap: wrap;
+        min-width: 0;
+        max-width: 100%;
+        min-height: 0;
+    }
+
+    .o_field_many2many_tags > .o_field_tags {
+        flex: 1 1 100%;
+    }
+
+    .o_tag {
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: var(--mcp-fs-10) !important;
+        padding: 0 var(--mcp-sp-6) !important;
+    }
+
+    /* текстът е flex-дете на .o_tag → без min-width:0 не се свива и
+       многоточието не се появява */
+    .o_tag .o_tag_badge_text,
+    .o_tag .o_badge_text {
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 }
