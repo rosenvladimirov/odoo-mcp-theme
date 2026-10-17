@@ -164,14 +164,17 @@
 /* Секция-хедъри / групови разделители в dropdown менютата (напр. Inventory >
    Configuration: „Warehouse Management" / „Products"). Odoo им слага inline
    `padding-left: 20px` (изместени надясно спрямо items-ите на 12px) + сиво.
-   Rosen: подравнени ВЛЯВО (до items), удебелени, ИНДИГО. `!important` надбива
-   inline padding-а. */
+   Rosen: подравнени ВЛЯВО (до items), удебелени. `!important` надбива
+   inline padding-а. Цветът беше твърдо индиго и не се връзваше с пресетите
+   (Rosen, 17.10) — сега неутрален вторичен текст като в EE: различава се от
+   редовете по тегло и тон, а акцентът остава само за избраното. */
 .dropdown-menu_group.dropdown-header,
 .o-dropdown--menu .dropdown-header,
 .dropdown-menu .dropdown-header {
     padding-left: var(--mcp-sp-12) !important;
-    font-weight: var(--mcp-fw-bold) !important;
-    color: var(--mcp-c-indigo) !important;
+    font-size: var(--mcp-fs-12) !important;
+    font-weight: var(--mcp-fw-semibold) !important;
+    color: var(--mcp-ink-3) !important;
     text-transform: none;
 }
 
