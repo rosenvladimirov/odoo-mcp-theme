@@ -331,8 +331,8 @@
     width: var(--mcp-sp-26); height: var(--mcp-sp-26); font-size: var(--mcp-fs-11);
 }
 /* иконката от темата — същите размери като img/буквата в трите режима */
-.mcp_dash_modal.is-list .mcp_dash_item .mcp_app_icon { --mcp-app-icon-size: var(--mcp-sp-26); }
-.mcp_dash_modal.is-grid .mcp_dash_item .mcp_app_icon {
+.mcp_dash_modal.is-list .mcp_dash_item .mcp_app_tile { --mcp-app-icon-size: var(--mcp-sp-26); }
+.mcp_dash_modal.is-grid .mcp_dash_item .mcp_app_tile {
     --mcp-app-icon-size: var(--mcp-app-tile-icon); /* img е border-box: размерът включва отстъпа */
     border-radius: var(--mcp-r-surface);
 }

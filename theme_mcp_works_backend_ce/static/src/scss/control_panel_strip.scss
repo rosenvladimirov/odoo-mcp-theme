@@ -89,6 +89,11 @@
         &:focus, &:focus-visible { outline: 0 !important; box-shadow: none !important; }
     }
 
+    /* плочката от темата в марката — малко над 16px, за да се чете глифът */
+    .mcp_app_tile {
+        --mcp-app-icon-size: var(--mcp-sp-20);
+    }
+
     .mcp_app_brand_icon {
         width: var(--mcp-sp-16) !important;
         height: var(--mcp-sp-16) !important;
@@ -133,6 +138,9 @@
         padding: 0 !important;
         min-width: 0 !important;
         flex: 0 0 auto !important;
+        /* Odoo дава на <ol> --breadcrumb-bg (бяло) → при пресет с цветна
+           лента зад трохите стоеше бяла ивица (Rosen) */
+        background: transparent !important;
     }
     .o_breadcrumb .breadcrumb-item,
     .breadcrumb .breadcrumb-item {
@@ -147,9 +155,10 @@
     .breadcrumb .breadcrumb-item a {
         color: var(--mcp-accent) !important;
         font-family: var(--mcp-font-family) !important;
-        /* предишните трохи — по-малки и по-тихи (EE: малък размер) */
-        font-size: var(--mcp-fs-11) !important;
-        font-weight: var(--mcp-fw-regular) !important;
+        /* предишните трохи — като името на приложението вляво (fs-12),
+           с една степен по-леки; с fs-11 изглеждаха смалени (Rosen) */
+        font-size: var(--mcp-fs-12) !important;
+        font-weight: var(--mcp-fw-medium) !important;
         text-decoration: none !important;
         letter-spacing: 0;
         &:hover { color: var(--mcp-accent-2) !important; }
@@ -163,7 +172,7 @@
     .o_breadcrumb .o_last_breadcrumb_item::before {
         content: "/" !important;
         color: var(--mcp-ink-dim) !important;
-        font-size: var(--mcp-fs-11) !important;
+        font-size: var(--mcp-fs-12) !important;
         padding: 0 var(--mcp-sp-6) !important;
         display: inline-block !important;
         flex: 0 0 auto !important;

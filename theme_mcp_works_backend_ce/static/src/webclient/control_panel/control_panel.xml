@@ -12,10 +12,8 @@
                 onSelected="() => this.onNavBarDropdownItemSelection(app)"
                 attrs="{ href: getMenuItemHref(app), 'data-menu-xmlid': app.xmlid, 'data-section': app.id }"
             >
-                <img t-if="app.webIconData"
-                     class="mcp_app_icon"
-                     t-att-src="app.webIconData"
-                     t-att-alt="app.name"/>
+                <!-- иконката от темата; без нея — родната (или общата на base) -->
+                <McpAppIcon t-if="app.webIconData" app="app" imgClass="'mcp_app_icon'"/>
                 <img t-else=""
                      class="mcp_app_icon"
                      src="/base/static/description/icon.png"
@@ -41,10 +39,8 @@
                    t-att-data-menu-xmlid="mcpCurrentApp.xmlid"
                    t-att-data-section="mcpCurrentApp.id"
                    t-att-title="mcpCurrentApp.name">
-                    <img t-if="mcpCurrentApp.webIconData"
-                         class="mcp_app_brand_icon"
-                         t-att-src="mcpCurrentApp.webIconData"
-                         t-att-alt="mcpCurrentApp.name"/>
+                    <!-- иконката от темата; без нея — родната, а без родна — маркер -->
+                    <McpAppIcon t-if="mcpCurrentApp.webIconData" app="mcpCurrentApp" imgClass="'mcp_app_brand_icon'"/>
                     <i t-else="" class="fa fa-map-marker" aria-hidden="true"/>
                     <span class="mcp_app_brand_name" t-esc="mcpCurrentApp.name"/>
                 </a>
