@@ -1,10 +1,12 @@
 /* MCP Works backend — иконка на приложение, рисувана от темата
-   (McpAppIcon, webclient/app_icon). Плочка: тинт на цветовата група върху
+   (McpAppIcon, webclient/app_icon). Класът е .mcp_app_tile, защото
+   .mcp_app_icon вече е на <img> в менюто на приложенията на CE.
+   Плочка: тинт на цветовата група върху
    повърхността + глиф в същия цвят. color-mix върху --mcp-surface дава
    правилния тинт и в тъмния режим, без отделни стойности. Размерът идва
    от --mcp-app-icon-size, който задава мястото, където е сложена (Dash,
    решетката, началното меню на EE). */
-.mcp_app_icon {
+.mcp_app_tile {
     --mcp-app-icon-size: var(--mcp-sp-38);
     width: var(--mcp-app-icon-size);
     height: var(--mcp-app-icon-size);
@@ -24,7 +26,7 @@
     }
 }
 /* посочване / активно приложение — по-плътен тинт, глифът остава */
-a:hover > .mcp_app_icon,
-.is-active > .mcp_app_icon {
+a:hover > .mcp_app_tile,
+.is-active > .mcp_app_tile {
     background: color-mix(in srgb, var(--mcp-app-hue, var(--mcp-accent)) 24%, var(--mcp-surface));
 }

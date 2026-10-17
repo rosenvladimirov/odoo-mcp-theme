@@ -111,7 +111,8 @@ export const APP_ICONS = {
 
 export class McpAppIcon extends Component {
     static template = "theme_mcp_works_backend.McpAppIcon";
-    static props = { app: Object };
+    // imgClass — класът на родната <img>, когато приложението не е в картата
+    static props = { app: Object, imgClass: { type: String, optional: true } };
 
     get entry() {
         // изключено от Настройки → иконките на Odoo

@@ -6,10 +6,10 @@
     <!-- Плочка с глиф, ако приложението е в картата; иначе родната иконка
          на модула, а без нея — първата буква (както досега в Dash) -->
     <t t-name="theme_mcp_works_backend.McpAppIcon">
-        <span t-if="glyph" class="mcp_app_icon" t-att-style="hueStyle">
+        <span t-if="glyph" class="mcp_app_tile" t-att-style="hueStyle">
             <i t-attf-class="fa {{ glyph }}" aria-hidden="true"/>
         </span>
-        <img t-elif="props.app.webIconData" t-att-src="props.app.webIconData" t-att-alt="props.app.name"/>
+        <img t-elif="props.app.webIconData" t-att-class="props.imgClass" t-att-src="props.app.webIconData" t-att-alt="props.app.name"/>
         <span t-else="" class="o_app_letter" t-esc="letter"/>
     </t>
 
