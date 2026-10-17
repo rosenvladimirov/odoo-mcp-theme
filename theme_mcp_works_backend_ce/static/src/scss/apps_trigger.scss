@@ -4,29 +4,38 @@
 .o-overlay-container .o-dropdown--menu:has(.o_app),
 .o-overlay-container .dropdown-menu:has(.o_app) { display: none !important; }
 
-/* ── Trigger button in navbar ────────────────────────────────── */
-.mcp_apps_trigger {
+/* ── Бутонът в лентата ─────────────────────────────────────────
+   Вписан като останалите записи (кутия = --mcp-navbar-entry-h), акцентът е
+   на иконата. Префиксът .o_main_navbar + :not() в navbar.scss правят hover и
+   is-active реално видими. Без подскачане (scale) — анимират се само цветове. */
+.o_main_navbar .mcp_apps_trigger {
+    position: relative;
+    z-index: 2;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--mcp-sp-36);
-    height: var(--mcp-sp-36);
-    background: transparent;
-    border: none;
-    border-radius: var(--mcp-r-md);
-    cursor: pointer;
-    color: var(--o-navbar-color, var(--mcp-ink));
-    font-size: var(--mcp-sp-18);
+    width: var(--mcp-navbar-entry-h);
+    height: var(--mcp-navbar-entry-h);
+    margin: 0 var(--mcp-sp-4) 0 var(--mcp-sp-8);
     padding: 0;
+    border: var(--mcp-bw-1) solid transparent;
+    border-radius: var(--mcp-r-control);
+    background: transparent;
+    color: var(--mcp-accent);
+    font-size: var(--mcp-sp-16);
     flex-shrink: 0;
-    transition: background var(--mcp-t-fast), color var(--mcp-t-fast), transform var(--mcp-t-fast);
+    cursor: pointer;
+    transition: background-color var(--mcp-t-fast), border-color var(--mcp-t-fast);
 }
-.mcp_apps_trigger:hover {
-    background: var(--mcp-accent-soft);
-    color: var(--mcp-accent);
+.o_main_navbar .mcp_apps_trigger:hover {
+    background: var(--mcp-hover-bg);
 }
-.mcp_apps_trigger.is-active {
-    background: var(--mcp-accent-glow);
-    color: var(--mcp-accent);
-    transform: scale(0.92);
+/* отворен док: същото състояние като отворена секция */
+.o_main_navbar .mcp_apps_trigger.is-active {
+    background: var(--mcp-active-bg);
+    border-color: var(--mcp-accent);
+}
+.o_main_navbar .mcp_apps_trigger:focus-visible {
+    outline: var(--mcp-focus-ring);
+    outline-offset: calc(-1 * var(--mcp-bw-1));
 }

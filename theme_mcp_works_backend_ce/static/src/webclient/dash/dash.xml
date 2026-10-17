@@ -4,18 +4,23 @@
     <t t-name="theme_mcp_works_backend.McpDash">
 
         <!-- Backdrop — closes modal on click -->
-        <div t-if="state.appsOpen"
+        <div t-if="state.appsOpen and !state.pinned"
              class="mcp_modal_backdrop"
              t-on-click="() => { state.appsOpen = false; }"/>
 
         <!-- Modal panel -->
         <nav class="mcp_dash_modal d-print-none"
              t-att-class="{
-                 'is-open':    state.appsOpen,
-                 'is-compact': state.viewMode === 0,
-                 'is-list':    state.viewMode === 1,
-                 'is-grid':    state.viewMode === 2
+                 'is-open':     state.appsOpen or state.pinned,
+                 'is-pinned':   state.pinned,
+                 'is-autohide': state.pinned and state.autoHide,
+                 'is-peek':     state.pinned and state.autoHide and state.peek,
+                 'is-compact':  state.viewMode === 0,
+                 'is-list':     state.viewMode === 1,
+                 'is-grid':     state.viewMode === 2
              }"
+             t-on-mouseenter="onDockEnter"
+             t-on-mouseleave="onDockLeave"
              t-ref="dock">
 
             <!-- Header: title (hidden in compact) + optional pager (grid) + toggle button always top-right -->
@@ -70,7 +75,8 @@
                        t-on-mouseleave="onAppMouseLeave">
                         <img t-if="app.webIconData" t-att-src="app.webIconData" t-att-alt="app.name"/>
                         <span t-else="" class="o_app_letter" t-esc="app.name.charAt(0).toUpperCase()"/>
-                        <span t-if="state.viewMode === 1" class="mcp_dash_label" t-esc="app.name"/>
+                        <!-- надписът е в списъка (1) и в решетката (2); компактният (0) показва балонче -->
+                        <span t-if="state.viewMode !== 0" class="mcp_dash_label" t-esc="app.name"/>
                     </a>
                 </t>
             </div>
@@ -81,6 +87,26 @@
                     t-on-click="onScrollDown">
                 <i class="fa fa-chevron-down" aria-hidden="true"/>
             </button>
+
+            <!-- Закачане и автоскриване (решетката е модал — там няма закачане) -->
+            <div t-if="state.viewMode !== 2" class="mcp_dash_footer">
+                <button type="button"
+                        class="mcp_dash_footer_btn mcp_dash_pin"
+                        t-att-class="{ 'is-on': state.pinned }"
+                        t-att-title="pinTitle"
+                        t-att-aria-pressed="state.pinned ? 'true' : 'false'"
+                        t-on-click.stop="onTogglePin">
+                    <i class="fa fa-thumb-tack" aria-hidden="true"/>
+                </button>
+                <button t-if="state.pinned" type="button"
+                        class="mcp_dash_footer_btn mcp_dash_autohide"
+                        t-att-class="{ 'is-on': state.autoHide }"
+                        t-att-title="autoHideTitle"
+                        t-att-aria-pressed="state.autoHide ? 'true' : 'false'"
+                        t-on-click.stop="onToggleAutoHide">
+                    <i class="fa fa-eye-slash" aria-hidden="true"/>
+                </button>
+            </div>
 
             <!-- Compact mode: name bubble to the right -->
             <div t-if="state.viewMode === 0 and state.hoveredAppName"

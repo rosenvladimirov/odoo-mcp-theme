@@ -249,48 +249,42 @@
     to { transform: rotate(360deg); }
 }
 
-/* High-specificity selector chain so Bootstrap .btn defaults
-   (border: 1px solid transparent + focus ring + active fill) lose. */
-button.mcp_show_desktop_btn,
-.o_main_navbar button.mcp_show_desktop_btn,
-.o_menu_systray button.mcp_show_desktop_btn,
-.o_main_navbar .mcp_show_desktop_btn,
-.o_menu_systray .mcp_show_desktop_btn,
-button.mcp_show_desktop_btn:focus,
-button.mcp_show_desktop_btn:focus-visible,
-button.mcp_show_desktop_btn:active,
-button.mcp_show_desktop_btn:hover {
+/* Базовото състояние е без псевдокласове, за да не потиска hover/active
+   (общото правило в navbar.scss вече изключва бутона). Специфичността
+   .o_main_navbar + .mcp_show_desktop_btn.btn бие Bootstrap .btn без !important.
+   Държи се като останалите записи: неутрален hover, тинт при натискане. */
+.o_main_navbar .mcp_show_desktop_btn.btn {
+    position: relative;
+    z-index: 2;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--mcp-sp-32);
-    height: var(--mcp-sp-32);
-    padding: 0 !important;
-    margin: 0 var(--mcp-sp-4);
-    border: 0 !important;
-    outline: 0 !important;
-    border-radius: var(--mcp-r-sm);
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    color: var(--mcp-ink-2) !important;
+    width: var(--mcp-navbar-entry-h);
+    height: var(--mcp-navbar-entry-h);
+    padding: 0;
+    margin: 0;
+    border: var(--mcp-bw-1) solid transparent;
+    border-radius: var(--mcp-r-control);
+    background: transparent;
+    background-image: none;
+    color: var(--mcp-ink-2);
     cursor: pointer;
-    box-shadow: none !important;
+    box-shadow: none;
     -webkit-tap-highlight-color: transparent;
-    transition:
-        background var(--mcp-t-fast),
-        color var(--mcp-t-fast),
-        transform var(--mcp-t-spring);
+    transition: background-color var(--mcp-t-fast), color var(--mcp-t-fast), border-color var(--mcp-t-fast);
+}
+.o_main_navbar .mcp_show_desktop_btn.btn:hover {
+    background: var(--mcp-hover-bg);
+    color: var(--mcp-ink);
+}
+.o_main_navbar .mcp_show_desktop_btn.btn:active {
+    background: var(--mcp-active-bg);
+    border-color: var(--mcp-accent);
+    color: var(--mcp-ink);
+}
+.o_main_navbar .mcp_show_desktop_btn.btn:focus { box-shadow: none; }
+.o_main_navbar .mcp_show_desktop_btn.btn:focus-visible {
+    outline: var(--mcp-focus-ring);
+    outline-offset: calc(-1 * var(--mcp-bw-1));
 }
 .mcp_show_desktop_btn .fa { font-size: var(--mcp-sp-14); line-height: 1; }
-
-.mcp_show_desktop_btn:hover {
-    background: var(--mcp-accent-soft) !important;
-    color: var(--mcp-accent) !important;
-    transform: translateY(calc(-1 * var(--mcp-sp-1)));
-}
-.mcp_show_desktop_btn:active {
-    transform: translateY(0);
-    background: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
-}

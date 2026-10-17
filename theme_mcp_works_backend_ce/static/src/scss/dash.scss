@@ -58,7 +58,9 @@
             transparent 0 var(--mcp-sp-3),
             var(--mcp-scan-color) var(--mcp-sp-3) var(--mcp-sp-4)
         );
-        opacity: .8;
+        /* текстурата е изключена по подразбиране (токен = 0); сянката е
+           --mcp-shadow-modal, която след B0 е неутрална */
+        opacity: var(--mcp-dash-scan-opacity);
         pointer-events: none;
         z-index: 0;
     }
@@ -132,9 +134,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0;
+    border-radius: var(--mcp-r-control);
     cursor: pointer;
-    transition: transform var(--mcp-t-base);
+    transition: background-color var(--mcp-t-fast);
     text-decoration: none;
     position: relative;
     background: transparent;
@@ -144,7 +146,11 @@
     white-space: nowrap;
     color: var(--mcp-ink-2);
 }
-.mcp_dash_item:hover { transform: translateY(calc(-1 * var(--mcp-sp-2))); }
+/* компактен и списъчен режим: неутрален фон при hover вместо подскачане */
+.mcp_dash_modal:not(.is-grid) .mcp_dash_item:hover {
+    transform: none;
+    background: var(--mcp-hover-bg);
+}
 .mcp_dash_item img {
     width: var(--mcp-sp-38);
     height: var(--mcp-sp-38);
@@ -182,14 +188,22 @@
     color: var(--mcp-accent);
 }
 
-/* Active indicator HUD bar — REMOVED (Rosen: махни всички HUD
-   декорации). Active app still shown by the icon/letter recolor
-   below. */
-.mcp_dash_item.is-active img,
+/* Активното приложение: лек тинт и тънък акцентен контур около записа,
+   вместо плътно оцветяване (HUD лентата отдавна е махната по Росен).
+   Буквата остава в акцента. */
+/* :not(.is-grid) вдига специфичността над hover — активното не губи тинта */
+.mcp_dash_modal:not(.is-grid) .mcp_dash_item.is-active {
+    background: var(--mcp-active-bg);
+    box-shadow: inset 0 0 0 var(--mcp-bw-1) var(--mcp-accent-a30);
+}
 .mcp_dash_item.is-active .o_app_letter {
-    border-color: var(--mcp-accent);
-    background: var(--mcp-accent);
-    color: var(--mcp-surface);
+    background: var(--mcp-accent-soft);
+    color: var(--mcp-accent);
+}
+/* видим фокус от клавиатура */
+.mcp_dash_item:focus-visible {
+    outline: var(--mcp-focus-ring);
+    outline-offset: calc(-1 * var(--mcp-bw-1));
 }
 
 /* ── Labels (list mode) ─────────────────────────────────────── */
@@ -309,11 +323,9 @@
     width: var(--mcp-sp-212);
     height: var(--mcp-sp-40);
     justify-content: flex-start;
-    border-radius: 0;
     padding: 0 var(--mcp-sp-8);
     gap: var(--mcp-sp-10);
 }
-.mcp_dash_modal.is-list .mcp_dash_item:hover { transform: translateX(var(--mcp-sp-2)); }
 .mcp_dash_modal.is-list .mcp_dash_item img,
 .mcp_dash_modal.is-list .mcp_dash_item .o_app_letter {
     width: var(--mcp-sp-26); height: var(--mcp-sp-26); font-size: var(--mcp-fs-11);
@@ -341,32 +353,64 @@
 .mcp_dash_modal.is-grid .mcp_dash_apps_scroll {
     display: grid !important;
     grid-template-columns: repeat(var(--mcp-dash-grid-cols, 5), 1fr);
-    gap: 0;
+    gap: var(--mcp-sp-8);
     background: var(--mcp-surface);
     max-height: #{"min(420px, calc(var(--mcp-modal-max-h, 100vh) - var(--mcp-sp-88)))"};
-    padding: 0;
+    padding: var(--mcp-sp-8) var(--mcp-sp-4);
     width: 100%;
 }
+/* Решетката като app grid: иконата стои на подложка с мека неутрална
+   сянка (елевация само тук), при hover сянката се сгъстява. Радиусът е
+   от пресета (при scale 0 подложката е квадратна). */
 .mcp_dash_modal.is-grid .mcp_dash_item {
     flex-direction: column;
     width: 100%;
-    height: var(--mcp-sp-80);
-    border-radius: 0;
-    padding: var(--mcp-sp-10);
+    height: auto;
+    border-radius: var(--mcp-r-control);
+    padding: var(--mcp-sp-10) var(--mcp-sp-4);
     justify-content: center;
     align-items: center;
-    gap: 0;
-    background: var(--mcp-surface);
+    gap: var(--mcp-sp-6);
+    background: transparent;
+    overflow: visible;
 }
 .mcp_dash_modal.is-grid .mcp_dash_item:hover {
-    background: var(--mcp-accent-soft);
+    background: transparent;
     transform: none;
 }
 .mcp_dash_modal.is-grid .mcp_dash_item img,
 .mcp_dash_modal.is-grid .mcp_dash_item .o_app_letter {
-    width: var(--mcp-sp-48); height: var(--mcp-sp-48);
-    border-radius: 0;
-    font-size: var(--mcp-sp-18);
+    width: var(--mcp-app-tile-icon);
+    height: var(--mcp-app-tile-icon);
+    padding: var(--mcp-app-tile-pad);
+    background: var(--mcp-app-tile-bg);
+    border-radius: var(--mcp-r-surface);
+    box-shadow: var(--mcp-app-tile-shadow);
+    filter: none;
+    font-size: var(--mcp-sp-20);
+    transition: box-shadow var(--mcp-t-fast);
+}
+.mcp_dash_modal.is-grid .mcp_dash_item:hover img,
+.mcp_dash_modal.is-grid .mcp_dash_item:hover .o_app_letter {
+    box-shadow: var(--mcp-app-tile-shadow-hover);
+}
+/* активното в решетката: тънък акцентен пръстен около подложката */
+.mcp_dash_modal.is-grid .mcp_dash_item.is-active {
+    background: transparent;
+    box-shadow: none;
+}
+.mcp_dash_modal.is-grid .mcp_dash_item.is-active img,
+.mcp_dash_modal.is-grid .mcp_dash_item.is-active .o_app_letter {
+    box-shadow: 0 0 0 var(--mcp-bw-2) var(--mcp-accent), var(--mcp-app-tile-shadow);
+}
+/* надписът под иконата (dash.xml го рендира и в решетката) */
+.mcp_dash_modal.is-grid .mcp_dash_label {
+    flex: 0 0 auto;
+    max-width: 100%;
+    text-align: center;
+    font-size: var(--mcp-fs-12);
+    font-weight: var(--mcp-fw-medium);
+    color: var(--mcp-ink);
 }
 
 /* ── Compact name bubble — plain tooltip (HUD tag REMOVED) ───── */
@@ -387,3 +431,102 @@
     /* notched arrow-tag edge REMOVED (Rosen: махни всички HUD
        декорации) — no clip-path, no mono/uppercase. */
 }
+
+/* ── Закачен док (pin) ──────────────────────────────────────── */
+/* Закаченият док е колона под навигацията, на цялата височина, без рамката
+   на модала. Стои под диалозите на Odoo (те са от 1050 нагоре). */
+.mcp_dash_modal.is-pinned {
+    top: var(--mcp-navbar-height);
+    left: 0;
+    bottom: 0;
+    max-height: none;
+    z-index: calc(var(--mcp-z-actions) - 10);
+    border-width: 0 var(--mcp-sp-1) 0 0;
+    box-shadow: none;
+    clip-path: none;
+    transform: none;
+    animation: none;
+}
+.mcp_dash_modal.is-pinned .mcp_dash_apps_scroll {
+    flex: 1 1 auto;
+    max-height: none;
+}
+
+/* Съдържанието отстъпва с ширината на дока (JS я слага в променливата). */
+.o_web_client.mcp_dash_pinned > .o_action_manager {
+    margin-left: var(--mcp-dash-pinned-w, 0);
+}
+
+/* ── Автоскриване ───────────────────────────────────────────── */
+/* Прибира се наляво и оставя видима ивица по ръба: посочването ѝ показва
+   дока отгоре, без да измества съдържанието. */
+.mcp_dash_modal.is-autohide {
+    transform: translateX(calc(-100% + var(--mcp-sp-6)));
+    transition:
+        transform var(--mcp-t-base),
+        box-shadow var(--mcp-t-base),
+        width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: var(--mcp-sp-6);
+        background: var(--mcp-accent);
+        opacity: .35;
+        transition: opacity var(--mcp-t-base);
+    }
+    &:hover::after { opacity: .6; }
+}
+.mcp_dash_modal.is-autohide.is-peek {
+    transform: none;
+    box-shadow: var(--mcp-shadow-modal);
+    &::after { opacity: 0; }
+}
+
+/* ── Долна лента: закачане / автоскриване ───────────────────── */
+/* Отвореният (незакачен) модал има таван на височината: списъкът трябва да
+   остави място и за лентата, иначе тя излиза под ръба и се отрязва. */
+.mcp_dash_modal:not(.is-grid):not(.is-pinned) .mcp_dash_apps_scroll {
+    max-height: calc(var(--mcp-modal-max-h, calc(100vh - var(--mcp-sp-72))) - var(--mcp-sp-88) - var(--mcp-sp-48));
+}
+.mcp_dash_footer {
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    gap: var(--mcp-sp-4);
+    justify-content: center;
+    padding-top: var(--mcp-sp-6);
+    border-top: var(--mcp-sp-1) solid var(--mcp-rule);
+    margin-top: auto;
+}
+.mcp_dash_modal.is-compact .mcp_dash_footer { flex-direction: column; align-items: center; }
+.mcp_dash_modal.is-list .mcp_dash_footer { justify-content: flex-start; }
+.mcp_dash_footer_btn {
+    width: var(--mcp-sp-32);
+    height: var(--mcp-sp-32);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: var(--mcp-sp-1) solid var(--mcp-rule-strong);
+    border-radius: 0;
+    color: var(--mcp-ink-2);
+    cursor: pointer;
+    font-size: var(--mcp-sp-16);
+    transition: background var(--mcp-t-fast), color var(--mcp-t-fast), border-color var(--mcp-t-fast);
+    &:hover { background: var(--mcp-accent-soft); color: var(--mcp-accent); }
+    &:active { background: var(--mcp-accent-glow); }
+    &:focus-visible {
+        outline: var(--mcp-bw-2) solid var(--mcp-accent);
+        outline-offset: var(--mcp-bw-1);
+    }
+    &.is-on {
+        color: var(--mcp-accent);
+        border-color: var(--mcp-accent);
+        background: var(--mcp-accent-soft);
+    }
+}
+.mcp_dash_pin.is-on i { transform: rotate(-45deg); }

@@ -1,13 +1,14 @@
-/* MCP Works backend — Robot Theme · top navbar
-   White surface, electric-blue 1px border-bottom, subtle HUD accent
-   strip on top, animated horizontal scan, sharp 0-radius buttons. */
+/* MCP Works backend — Robot Theme · горна лента
+   Бяла повърхност, 1px линия отдолу и тиха сянка; вписани записи с
+   неутрален hover (EE 20 ритъм), радиус от пресета. */
 
 .o_main_navbar {
     /* white surface + bottom hairline + downward glow shadow
        (Rosen: "нав менюто бяло с бордер отдолу и гроу сянка отдолу"). */
     background: var(--mcp-bg) !important;
     border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    box-shadow: 0 var(--mcp-sp-4) var(--mcp-sp-16) calc(-1 * var(--mcp-sp-6)) var(--mcp-accent-a20) !important;
+    /* сянката отдолу остава (Росен), но по-тиха и в токен — пресет може да я върне */
+    box-shadow: var(--mcp-navbar-shadow) !important;
     color: var(--mcp-ink) !important;
     height: var(--mcp-navbar-height) !important;
     min-height: var(--mcp-navbar-height) !important;
@@ -26,21 +27,30 @@
             var(--mcp-accent-soft) 50%,
             transparent 100%
         );
-        opacity: .5;
+        /* сканирането е изключено по подразбиране (токен = 0): в покой хромът
+           не мърда; пресет с > 0 го връща */
+        opacity: var(--mcp-navbar-scan-opacity);
         mix-blend-mode: screen;
         animation: mcp-navbar-scan 6s linear infinite;
         z-index: 0;
     }
 
-    a, .nav-link, .dropdown-toggle, button {
+    /* Общото правило изключва собствените ни бутони — иначе техните
+       hover/is-active губят по специфичност и !important. Hover е неутрален. */
+    :is(a, .nav-link, .dropdown-toggle, button):not(.mcp_apps_trigger, .mcp_show_desktop_btn) {
         color: var(--mcp-ink-2) !important;
         background: transparent !important;
         position: relative;
         z-index: 2;
     }
-    a:hover, .nav-link:hover, .dropdown-toggle:hover, button:hover {
-        color: var(--mcp-accent) !important;
-        background: var(--mcp-accent-soft) !important;
+    :is(a, .nav-link, .dropdown-toggle, button):not(.mcp_apps_trigger, .mcp_show_desktop_btn):hover {
+        color: var(--mcp-ink) !important;
+        background: var(--mcp-hover-bg) !important;
+    }
+    /* видим фокус от клавиатура за всеки запис в лентата, без ореол */
+    :is(a, .dropdown-toggle, button):focus-visible {
+        outline: var(--mcp-focus-ring);
+        outline-offset: calc(-1 * var(--mcp-bw-1));
     }
 
     /* Стилизирането на нативния apps бутон (`.o_navbar_apps_menu` и неговите
@@ -53,46 +63,82 @@
     /* App brand relocated to .mcp_breadcrumb_strip .mcp_app_brand */
     .o_menu_brand { display: none !important; }
 
-    /* ── Section dropdowns — sharp, no rounding, accent underline ── */
-    .o_menu_sections .dropdown-toggle,
-    .o_menu_sections > * {
-        font-size: var(--mcp-fs-12) !important;
-        font-weight: 500;
-        letter-spacing: 0.01em;
-        padding: 0 var(--mcp-sp-14) !important;
-        height: var(--mcp-navbar-height);
-        line-height: var(--mcp-navbar-height);
-        border-radius: 0 !important;
+    /* ── Секции: вписани записи с въздух горе и долу (EE ритъм) ──
+       Радиусът идва от пресета: при scale 0 (Robot, Silver Partner) остава остър. */
+    .o_menu_sections {
+        align-items: center;
+        gap: var(--mcp-navbar-entry-gap);
+        padding-left: var(--mcp-sp-4);
+    }
+    .o_menu_sections > .dropdown-toggle,
+    .o_menu_sections > .o_nav_entry,
+    .o_menu_sections_more > .dropdown-toggle {
+        height: var(--mcp-navbar-entry-h);
+        line-height: calc(var(--mcp-navbar-entry-h) - 2 * var(--mcp-bw-1));
+        padding: 0 var(--mcp-navbar-entry-pad-x) !important;
         margin: 0;
-        position: relative;
+        border: var(--mcp-bw-1) solid transparent;
+        border-radius: var(--mcp-r-control) !important;
+        font-size: var(--mcp-fs-12) !important;
+        font-weight: var(--mcp-fw-regular);
+        letter-spacing: 0;
+        color: var(--mcp-ink-2) !important;
+        transition: background-color var(--mcp-t-fast), color var(--mcp-t-fast), border-color var(--mcp-t-fast);
     }
-    .o_menu_sections .dropdown-toggle.active,
-    .o_menu_sections .dropdown-toggle[aria-expanded='true'] {
-        color: var(--mcp-accent) !important;
-        background: var(--mcp-accent-mute) !important;
+    /* hover е неутрален; акцентът е само за отвореното меню */
+    .o_menu_sections > .dropdown-toggle:hover,
+    .o_menu_sections > .o_nav_entry:hover,
+    .o_menu_sections_more > .dropdown-toggle:hover {
+        background: var(--mcp-hover-bg) !important;
+        color: var(--mcp-ink) !important;
     }
-    .o_menu_sections .dropdown-toggle.active::after,
-    .o_menu_sections .dropdown-toggle[aria-expanded='true']::after {
-        content: "";
-        position: absolute;
-        left: var(--mcp-sp-6); right: var(--mcp-sp-6); bottom: 0;
-        height: var(--mcp-sp-2);
-        background: var(--mcp-accent);
-        box-shadow: 0 calc(-1 * var(--mcp-sp-1)) var(--mcp-sp-6) var(--mcp-accent-glow);
+    /* отворено меню: лек акцентен тинт, 1px акцентен ръб, тегло 500 */
+    .o_menu_sections > .dropdown-toggle.show,
+    .o_menu_sections > .dropdown-toggle[aria-expanded='true'],
+    .o_menu_sections_more > .dropdown-toggle.show,
+    .o_menu_sections_more > .dropdown-toggle[aria-expanded='true'] {
+        background: var(--mcp-active-bg) !important;
+        border-color: var(--mcp-accent);
+        color: var(--mcp-ink) !important;
+        font-weight: var(--mcp-fw-medium);
     }
 
-    /* ── Systray (right side) — JetBrains Mono for tighter HUD ──── */
+    /* ── Systray (дясно): UI шрифт по подразбиране (моно = опция на пресета
+       през --mcp-navbar-systray-font), половин padding, вписани кутии ── */
     .o_menu_systray {
-        gap: 0;
+        align-items: center;
+        gap: var(--mcp-navbar-entry-gap);
+        padding-right: var(--mcp-sp-4);
 
-        > * { min-height: var(--mcp-sp-30); display: flex; align-items: center; }
+        > * { min-height: var(--mcp-navbar-entry-h); display: flex; align-items: center; }
 
-        .dropdown-toggle, button, a {
-            padding: 0 var(--mcp-sp-10) !important;
-            border-radius: 0 !important;
+        :is(.dropdown-toggle, button, a):not(.mcp_show_desktop_btn) {
+            padding: 0 var(--mcp-sp-4) !important;
+            border-radius: var(--mcp-r-control) !important;
             font-size: var(--mcp-fs-12);
-            font-family: var(--mcp-font-mono);
-            letter-spacing: 0.04em;
+            font-family: var(--mcp-navbar-systray-font);
+            letter-spacing: 0;
+        }
+        :is(.dropdown-toggle, .o_nav_entry):not(.mcp_show_desktop_btn) {
+            height: var(--mcp-navbar-entry-h);
+        }
+        /* името на базата остава в mono (идентичност) */
+        .oe_topbar_name mark { font-family: var(--mcp-font-mono); }
+
+        /* Броячите: малки, вдигнати над иконата, в цвета за опасност.
+           Само тук — глобалното .badge (форма, списък) не се пипа. */
+        .badge {
+            font-size: var(--mcp-navbar-badge-fs) !important;
+            font-weight: var(--mcp-fw-semibold) !important;
+            line-height: 1;
+            padding: var(--mcp-sp-2) var(--mcp-sp-4) !important;
+            border: 0;
+            border-radius: var(--mcp-r-pill) !important;
+            background-color: var(--mcp-danger) !important;
+            color: var(--mcp-paper-light) !important;
+            text-shadow: none;
+            letter-spacing: 0;
+            transform: translate(calc(-1 * var(--mcp-sp-2)), -45%);
         }
     }
 }
@@ -100,4 +146,9 @@
 @keyframes mcp-navbar-scan {
     0%   { transform: translateX(-100%); }
     100% { transform: translateX(100%);  }
+}
+
+/* уважение към намалено движение */
+@media (prefers-reduced-motion: reduce) {
+    .o_main_navbar::after { animation: none; }
 }

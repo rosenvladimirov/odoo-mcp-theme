@@ -4,6 +4,7 @@ import { Component, useState, useRef, onWillStart, onMounted, onWillUnmount, onP
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { browser } from "@web/core/browser/browser";
+import { _t } from "@web/core/l10n/translation";
 
 export class McpDash extends Component {
     static template = "theme_mcp_works_backend.McpDash";
@@ -20,6 +21,9 @@ export class McpDash extends Component {
             hoveredAppName: "",
             hoveredY: 0,
             gridPage: 0,
+            pinned: false,    /* закачен вляво: стои постоянно, съдържанието се измества */
+            autoHide: false,  /* само при закачен: прибира се до ръба, показва се при посочване */
+            peek: false,      /* автоскрит док, временно показан */
         });
         this.appsScroll = useRef("appsScroll");
         this.dock = useRef("dock");
@@ -36,7 +40,12 @@ export class McpDash extends Component {
         try {
             const saved = browser.localStorage.getItem("mcp_view_mode");
             if (saved !== null) this.state.viewMode = parseInt(saved, 10) || 0;
+            this.state.pinned = browser.localStorage.getItem("mcp_dash_pinned") === "1";
+            this.state.autoHide = browser.localStorage.getItem("mcp_dash_autohide") === "1";
         } catch (e) {}
+        /* Решетката е центриран модал — закачен док не може да е решетка. */
+        if (this.state.pinned && this.state.viewMode === 2) this.state.viewMode = 1;
+        this._hideTimer = null;
 
         onWillStart(async () => {
             try {
@@ -93,10 +102,19 @@ export class McpDash extends Component {
                 if (trigger) {
                     ev.stopPropagation();
                     ev.preventDefault();
+                    if (this.state.pinned) {
+                        /* Закачен: бутонът само показва/прибира автоскрития док. */
+                        if (this.state.autoHide) this.state.peek = !this.state.peek;
+                        return;
+                    }
                     this.state.appsOpen = !this.state.appsOpen;
                     return;
                 }
 
+                if (this.state.pinned) {
+                    if (this.state.peek && !inDock) this.state.peek = false;
+                    return;
+                }
                 if (!this.state.appsOpen) return;
 
                 if (!inDock) {
@@ -106,14 +124,23 @@ export class McpDash extends Component {
             document.addEventListener("click", this._globalClickHandler, true);
         });
 
+        onMounted(() => {
+            this._syncPinnedLayout();
+            /* Ширината се анимира при смяна на режима — измести съдържанието
+               отново, когато анимацията свърши, а не по междинната ширина. */
+            this._onDockTransition = (ev) => {
+                if (ev.target === this.dock.el && ev.propertyName === "width") {
+                    this._syncPinnedLayout();
+                }
+            };
+            if (this.dock.el) this.dock.el.addEventListener("transitionend", this._onDockTransition);
+        });
+
         onPatched(() => {
             if (this._updateScrollBtns) this._updateScrollBtns();
+            this._syncPinnedLayout();
 
-            /* Sync active class on trigger button */
-            const trigger = document.querySelector(".mcp_apps_trigger");
-            if (trigger) {
-                trigger.classList.toggle("is-active", this.state.appsOpen);
-            }
+            /* is-active на бутона се синхронизира в _syncPinnedLayout */
 
             if (this.state.appsOpen && !this._prevAppsOpen) {
                 /* Restart modal + item animations on each open */
@@ -140,15 +167,98 @@ export class McpDash extends Component {
             if (this._triggerEl && this._triggerEl.parentNode) {
                 this._triggerEl.parentNode.removeChild(this._triggerEl);
             }
+            clearTimeout(this._hideTimer);
+            if (this._onDockTransition && this.dock.el) {
+                this.dock.el.removeEventListener("transitionend", this._onDockTransition);
+            }
+            this._setPinnedLayout(false, 0);
         });
+    }
+
+    /* Закаченият док измества съдържанието наляво с ширината си през клас и
+       CSS променлива на .o_web_client. Автоскритият отстъпва само ивицата по
+       ръба: показаният док лежи отгоре като панел, за да не скача изгледът. */
+    _syncPinnedLayout() {
+        let width = 0;
+        if (this.state.pinned && this.dock.el) {
+            width = this.state.autoHide
+                ? parseFloat(getComputedStyle(this.dock.el).getPropertyValue("--mcp-sp-6")) || 6
+                : this.dock.el.offsetWidth;
+        }
+        this._setPinnedLayout(this.state.pinned, width);
+        const trigger = document.querySelector(".mcp_apps_trigger");
+        if (trigger) {
+            trigger.classList.toggle("is-active",
+                this.state.pinned ? this.state.peek : this.state.appsOpen);
+        }
+    }
+
+    _setPinnedLayout(pinned, width) {
+        const wc = document.querySelector(".o_web_client");
+        if (!wc) return;
+        wc.classList.toggle("mcp_dash_pinned", pinned && width > 0);
+        if (pinned && width > 0) {
+            wc.style.setProperty("--mcp-dash-pinned-w", width + "px");
+        } else {
+            wc.style.removeProperty("--mcp-dash-pinned-w");
+        }
+    }
+
+    _store(key, on) {
+        try {
+            browser.localStorage.setItem(key, on ? "1" : "0");
+        } catch (e) {}
+    }
+
+    get pinTitle() {
+        return this.state.pinned ? _t("Unpin") : _t("Pin to the left");
+    }
+
+    get autoHideTitle() {
+        return this.state.autoHide ? _t("Auto-hide: on") : _t("Auto-hide: off");
+    }
+
+    onTogglePin() {
+        this.state.pinned = !this.state.pinned;
+        this.state.appsOpen = false;
+        this.state.peek = false;
+        if (this.state.pinned && this.state.viewMode === 2) {
+            this.state.viewMode = 1;
+            try { browser.localStorage.setItem("mcp_view_mode", "1"); } catch (e) {}
+        }
+        this._store("mcp_dash_pinned", this.state.pinned);
+    }
+
+    onToggleAutoHide() {
+        this.state.autoHide = !this.state.autoHide;
+        this.state.peek = false;
+        this._store("mcp_dash_autohide", this.state.autoHide);
+    }
+
+    /* Автоскриване: показва се при посочване на ръба/дока, прибира се с
+       малко закъснение след излизане, за да не трепти при бегло минаване. */
+    onDockEnter() {
+        if (!this.state.pinned || !this.state.autoHide) return;
+        clearTimeout(this._hideTimer);
+        this.state.peek = true;
+    }
+
+    onDockLeave() {
+        if (!this.state.pinned || !this.state.autoHide) return;
+        clearTimeout(this._hideTimer);
+        this._hideTimer = setTimeout(() => {
+            this.state.peek = false;
+            this.state.hoveredAppName = "";
+        }, 400);
     }
 
     _injectTrigger() {
         if (document.querySelector(".mcp_apps_trigger")) return;
         const btn = document.createElement("button");
         btn.className = "mcp_apps_trigger d-print-none";
-        btn.title = "Приложения";
-        btn.setAttribute("aria-label", "Приложения");
+        /* преводимо: „Приложения“ идва от i18n */
+        btn.title = _t("Apps");
+        btn.setAttribute("aria-label", _t("Apps"));
         btn.innerHTML = '<i class="oi oi-apps"></i>';
         /* Insert before o_navbar_apps_menu, or as first child of o_main_navbar */
         const anchor = document.querySelector(".o_navbar_apps_menu") ||
@@ -191,7 +301,10 @@ export class McpDash extends Component {
     }
 
     onToggleViewMode() {
-        this.state.viewMode = (this.state.viewMode + 1) % 3;
+        /* Закачен: само компактен ↔ с имена (решетката е модал). */
+        this.state.viewMode = this.state.pinned
+            ? (this.state.viewMode === 0 ? 1 : 0)
+            : (this.state.viewMode + 1) % 3;
         this.state.gridPage = 0;
         try {
             browser.localStorage.setItem("mcp_view_mode", String(this.state.viewMode));
@@ -200,6 +313,7 @@ export class McpDash extends Component {
 
     onAppClick(app) {
         this.state.appsOpen = false;
+        this.state.peek = false;
         this.state.hoveredAppName = "";
         try {
             this.menu.selectMenu(app);
