@@ -31,6 +31,38 @@
         </xpath>
     </t>
 
+    <!-- „Още“ (секциите, които не се побират в навбара): същата кутия със
+         стрелки, а секциите с подменюта са акордеон като групите -->
+    <t t-name="theme_mcp_works_backend.NavBar.SectionsMenu.MoreDropdown" t-inherit="web.NavBar.SectionsMenu.MoreDropdown" t-inherit-mode="extension">
+        <xpath expr="//t[@t-set-slot='content']/t[@t-foreach='sections']" position="replace">
+            <McpScrollBox>
+                <t t-foreach="sections" t-as="section" t-key="section.id">
+                    <t t-if="!section.childrenTree.length">
+                        <DropdownItem
+                            class="'o_more_dropdown_section'"
+                            onSelected="() => this.onNavBarDropdownItemSelection(section)"
+                            t-esc="section.name"
+                            attrs="{ href: getMenuItemHref(section), 'data-menu-xmlid': section.xmlid, 'data-section': section.id }"
+                        />
+                    </t>
+                    <t t-else="">
+                        <div class="o_more_dropdown_section o_more_dropdown_section_group dropdown-header bg-100 mcp_nav_group_toggle"
+                             role="button"
+                             t-att-aria-expanded="mcpNavGroups[section.id] ? 'true' : 'false'"
+                             t-on-click.stop="() => this.mcpToggleNavGroup(section.id)"
+                             t-esc="section.name"/>
+                        <div t-if="mcpNavGroups[section.id]" class="mcp_nav_group_items">
+                            <t t-call="web.NavBar.SectionsMenu.Dropdown.MenuSlot">
+                                <t t-set="items" t-value="section.childrenTree"/>
+                                <t t-set="decalage" t-value="20"/>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </McpScrollBox>
+        </xpath>
+    </t>
+
     <!-- групите — акордеон: заглавието отваря/затваря подменютата -->
     <t t-name="theme_mcp_works_backend.NavBar.MenuSlot" t-inherit="web.NavBar.SectionsMenu.Dropdown.MenuSlot" t-inherit-mode="extension">
         <xpath expr="//t[@t-else]" position="replace">
