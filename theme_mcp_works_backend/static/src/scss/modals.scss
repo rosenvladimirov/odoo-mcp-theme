@@ -138,6 +138,16 @@
 .o-dropdown--menu:has(.dropdown-item.active:not(.dropdown-item_active_noarrow)) .dropdown-item {
     padding-left: var(--mcp-sp-24) !important;
 }
+/* SelectMenu (полетата selection/many2one в O19): Odoo крие отметката —
+   избраното се вижда по удебеления текст и фона. Тук го потвърждаваме
+   изрично (иначе нашето правило за ::before я показваше под текста,
+   Rosen 18.10) и връщаме обикновения отстъп, без място за отметка. */
+.o_select_menu_menu .o_select_menu_item::before {
+    display: none !important;
+}
+.o-dropdown--menu.o_select_menu_menu.dropdown-menu .dropdown-item.o-dropdown-item.o_select_menu_item {  /* 0,6,0 — бие :has(.selected) правилото по-горе (0,5,0) */
+    padding-left: var(--mcp-sp-12) !important;
+}
 .o-dropdown--menu .o_accordion_values .dropdown-item {
     padding-left: var(--mcp-sp-36) !important;
 }

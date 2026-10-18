@@ -5,7 +5,7 @@
     "summary": "Independent hi-tech minimalist Odoo CE backend — robot "
                "theme, electric sapphire accents, sharp corners, "
                "light/dark mode, vertical Dash dock",
-    "version": "19.0.1.242.0",
+    "version": "19.0.1.243.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -95,6 +95,7 @@
             # иконките на приложенията, рисувани от темата (Dash CE/EE)
             "theme_mcp_works_backend/static/src/webclient/app_icon/app_icon.js",
             "theme_mcp_works_backend/static/src/webclient/app_icon/app_icon.xml",
+            "theme_mcp_works_backend/static/src/webclient/app_icon/settings_page_patch.js",
         ],
     },
     "installable": True,

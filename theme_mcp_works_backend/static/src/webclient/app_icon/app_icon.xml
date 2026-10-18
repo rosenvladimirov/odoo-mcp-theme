@@ -13,4 +13,18 @@
         <span t-else="" class="o_app_letter" t-esc="letter"/>
     </t>
 
+    <t t-name="theme_mcp_works_backend.McpModuleIcon">
+        <span t-if="entry" class="mcp_app_tile d-none d-md-inline-flex" t-att-style="hueStyle">
+            <i t-attf-class="fa {{ entry[0] }}" aria-hidden="true"/>
+        </span>
+        <span t-else="" class="icon d-none d-md-block" t-attf-style="background : url('{{props.imgurl}}') no-repeat center;background-size:contain;"/>
+    </t>
+
+    <!-- Табовете в Настройки: плочката от темата вместо картинката на модула -->
+    <t t-name="theme_mcp_works_backend.SettingsPage" t-inherit="web.SettingsPage" t-inherit-mode="extension">
+        <xpath expr="//a[hasclass('tab')]/span[hasclass('icon')]" position="replace">
+            <McpModuleIcon module="module.key" imgurl="module.imgurl"/>
+        </xpath>
+    </t>
+
 </templates>

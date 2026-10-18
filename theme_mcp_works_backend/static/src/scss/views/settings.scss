@@ -69,6 +69,13 @@
         background-position: center !important;
         flex-shrink: 0;
     }
+
+    /* плочката от темата (McpModuleIcon) — малко над 16px, за да се чете
+       глифът; същата като в марката на трохите */
+    .mcp_app_tile {
+        --mcp-app-icon-size: var(--mcp-sp-20);
+        flex-shrink: 0;
+    }
 }
 
 /* ── Settings content blocks ────────────────────────────────── */

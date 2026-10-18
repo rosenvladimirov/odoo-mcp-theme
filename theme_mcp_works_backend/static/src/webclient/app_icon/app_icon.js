@@ -109,6 +109,50 @@ export const APP_ICONS = {
     "ai_agent_console.menu_ai_agent_root": ["fa-magic", "work"],
 };
 
+/* Табовете в Настройки носят техническото име на модула (<app name="…">),
+   не xmlid на меню. Картата по модул се извежда от APP_ICONS (префиксът на
+   xmlid-а; първото меню на модула печели) + няколко имена, които не
+   съвпадат с модула на менюто. */
+const MODULE_ALIASES = {
+    general_settings: "base",
+    sale_management: "sale",
+    theme_mcp_works: "theme_mcp_works_backend_config",
+};
+const MODULE_EXTRA = {
+    l10n_bg_config: ["fa-flag", "finance"],
+};
+const MODULE_ICONS = {};
+for (const [xmlid, entry] of Object.entries(APP_ICONS)) {
+    const module = xmlid.split(".")[0];
+    MODULE_ICONS[module] ??= entry;
+}
+
+export function mcpModuleIconEntry(module) {
+    if (session.mcp_app_icons === "odoo") {
+        return null;
+    }
+    return MODULE_EXTRA[module] || MODULE_ICONS[MODULE_ALIASES[module] || module] || null;
+}
+
+function hueStyleOf(entry) {
+    const hue = HUE[entry[1]] ?? 0;
+    return `--mcp-app-hue: var(--mcp-color-${hue});`;
+}
+
+// Иконката на таб в Настройки: плочка от темата или родната картинка
+export class McpModuleIcon extends Component {
+    static template = "theme_mcp_works_backend.McpModuleIcon";
+    static props = { module: String, imgurl: { type: String, optional: true } };
+
+    get entry() {
+        return mcpModuleIconEntry(this.props.module);
+    }
+
+    get hueStyle() {
+        return hueStyleOf(this.entry);
+    }
+}
+
 export class McpAppIcon extends Component {
     static template = "theme_mcp_works_backend.McpAppIcon";
     // imgClass — класът на родната <img>, когато приложението не е в картата
@@ -127,8 +171,7 @@ export class McpAppIcon extends Component {
     }
 
     get hueStyle() {
-        const hue = HUE[this.entry[1]] ?? 0;
-        return `--mcp-app-hue: var(--mcp-color-${hue});`;
+        return hueStyleOf(this.entry);
     }
 
     get letter() {
