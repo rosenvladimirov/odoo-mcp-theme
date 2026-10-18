@@ -206,3 +206,29 @@ $mcpf-btn-roles: (
 #{$mcpf-float}[data-mcp-mode="dark"] :where(.modal, .offcanvas, .popover, .toast) .btn-fill-danger {
     --mcpf-btn-danger-ink: #{$mcpf-btn-ink-dark};
 }
+
+// ── 10. Формата от утилити класовете в шаблоните на website ──
+// Кръглите бутони в хедъра (кошница, търсене, потребител), търсачката-хапче
+// и значките носят rounded-circle / rounded-pill / rounded-*-pill, т.е.
+// литерали 50% и 50rem с !important, и не следваха радиуса на пресета
+// (Silver Partner с radius_scale 0 оставаше с кръгли бутони, Rosen 18.10).
+// --mcp-r-pill = скала × 999px: при остър пресет е 0 → квадрат; иначе
+// хапчето остава хапче, а кръгът — кръг (min с 50%). Аватарите и снимките
+// в съдържанието (img.rounded-circle) не се пипат — те са избор на автора.
+#{mcpf-btn-both('.btn.rounded-circle', '.o_navlink_background.rounded-circle', 'i.fa.rounded-circle')} {
+    border-radius: #{"min(50%, var(--mcp-r-pill))"} !important; // !important: оригиналът е !important (.rounded-circle, bootstrap utilities)
+}
+
+#{mcpf-btn-both('.btn.rounded-pill', '.o_navlink_background.rounded-pill', '.badge.rounded-pill')} {
+    border-radius: var(--mcp-r-pill) !important; // !important: оригиналът е !important (.rounded-pill, bootstrap utilities)
+}
+
+#{mcpf-btn-both('.rounded-start-pill')} {
+    border-top-left-radius: var(--mcp-r-pill) !important; // !important: оригиналът е !important (.rounded-start-pill)
+    border-bottom-left-radius: var(--mcp-r-pill) !important; // !important: оригиналът е !important (.rounded-start-pill)
+}
+
+#{mcpf-btn-both('.rounded-end-pill')} {
+    border-top-right-radius: var(--mcp-r-pill) !important; // !important: оригиналът е !important (.rounded-end-pill)
+    border-bottom-right-radius: var(--mcp-r-pill) !important; // !important: оригиналът е !important (.rounded-end-pill)
+}
