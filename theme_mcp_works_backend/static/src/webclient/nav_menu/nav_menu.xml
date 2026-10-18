@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2026 Rosen Vladimirov <vladimirov.rosen@gmail.com>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<templates xml:space="preserve">
+
+    <t t-name="theme_mcp_works_backend.McpScrollBox">
+        <div class="mcp_nav_scrollbox">
+            <button t-if="state.up" type="button" class="mcp_nav_scroll_btn mcp_nav_scroll_up" tabindex="-1"
+                    t-on-click.stop="() => this.scrollBy(-120)">
+                <i class="fa fa-chevron-up" aria-hidden="true"/>
+            </button>
+            <div class="mcp_nav_scroll_body" t-ref="body" t-attf-style="max-height: {{ state.maxHeight }}px;">
+                <div><t t-slot="default"/></div>
+            </div>
+            <button t-if="state.down" type="button" class="mcp_nav_scroll_btn mcp_nav_scroll_down" tabindex="-1"
+                    t-on-click.stop="() => this.scrollBy(120)">
+                <i class="fa fa-chevron-down" aria-hidden="true"/>
+            </button>
+        </div>
+    </t>
+
+    <!-- съдържанието на секцията — в кутията със стрелките -->
+    <t t-name="theme_mcp_works_backend.NavBar.SectionsMenu" t-inherit="web.NavBar.SectionsMenu" t-inherit-mode="extension">
+        <xpath expr="//t[@t-call='web.NavBar.SectionsMenu.Dropdown.MenuSlot']" position="replace">
+            <McpScrollBox>
+                <t t-call="web.NavBar.SectionsMenu.Dropdown.MenuSlot">
+                    <t t-set="items" t-value="section.childrenTree"/>
+                    <t t-set="decalage" t-value="20"/>
+                </t>
+            </McpScrollBox>
+        </xpath>
+    </t>
+
+    <!-- групите — акордеон: заглавието отваря/затваря подменютата -->
+    <t t-name="theme_mcp_works_backend.NavBar.MenuSlot" t-inherit="web.NavBar.SectionsMenu.Dropdown.MenuSlot" t-inherit-mode="extension">
+        <xpath expr="//t[@t-else]" position="replace">
+            <t t-else="">
+                <div class="dropdown-menu_group dropdown-header mcp_nav_group_toggle" role="button"
+                     t-att-style="style"
+                     t-att-aria-expanded="mcpNavGroups[item.id] ? 'true' : 'false'"
+                     t-on-click.stop="() => this.mcpToggleNavGroup(item.id)"
+                     t-esc="item.name"/>
+                <div t-if="mcpNavGroups[item.id]" class="mcp_nav_group_items">
+                    <t t-call="web.NavBar.SectionsMenu.Dropdown.MenuSlot">
+                        <t t-set="items" t-value="item.childrenTree"/>
+                        <t t-set="decalage" t-value="decalage + 12"/>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

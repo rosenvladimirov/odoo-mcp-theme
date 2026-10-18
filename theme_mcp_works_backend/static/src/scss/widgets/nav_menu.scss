@@ -1,0 +1,58 @@
+/* MCP Works backend — навбар: акордеон на групите и стрелки за скролиране
+   в падащите менюта на секциите (nav_menu.js). */
+
+/* кутията: скролира се, без видим скролбар — стрелките са навигацията */
+.mcp_nav_scrollbox {
+    display: flex;
+    flex-direction: column;
+}
+.mcp_nav_scroll_body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+}
+.mcp_nav_scroll_btn {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: var(--mcp-sp-22);
+    background: var(--mcp-accent-soft);
+    color: var(--mcp-accent);
+    border: 0;
+    border-radius: var(--mcp-r-float-item);
+    font-size: var(--mcp-fs-10);
+    cursor: pointer;
+    transition: background var(--mcp-t-fast);
+    &:hover { background: var(--mcp-accent-glow); }
+}
+.mcp_nav_scroll_up { margin-bottom: var(--mcp-sp-4); }
+.mcp_nav_scroll_down { margin-top: var(--mcp-sp-4); }
+
+/* заглавието на групата е бутон: шеврон вдясно, hover като редовете */
+.o-dropdown--menu .dropdown-header.mcp_nav_group_toggle {
+    position: relative;
+    display: block;
+    padding-right: var(--mcp-sp-32) !important;
+    border-radius: var(--mcp-r-float-item);
+    cursor: pointer;
+    user-select: none;
+    &:hover { background: var(--mcp-hover-bg); }
+    &::after {
+        content: "\f107"; /* fa-angle-down */
+        font-family: FontAwesome;
+        position: absolute;
+        right: var(--mcp-sp-12);
+        top: 50%;
+        transform: translateY(-50%) rotate(-90deg);
+        transition: transform var(--mcp-t-fast);
+        color: var(--mcp-ink-3);
+    }
+    &[aria-expanded="true"]::after { transform: translateY(-50%); }
+}
+/* подменютата на отворената група — едно ниво навътре */
+.o-dropdown--menu .mcp_nav_group_items .dropdown-item {
+    padding-left: var(--mcp-sp-24) !important;
+}

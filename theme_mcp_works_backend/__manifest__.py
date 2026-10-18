@@ -5,7 +5,7 @@
     "summary": "Independent hi-tech minimalist Odoo CE backend — robot "
                "theme, electric sapphire accents, sharp corners, "
                "light/dark mode, vertical Dash dock",
-    "version": "19.0.1.243.0",
+    "version": "19.0.1.244.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -67,6 +67,7 @@
             "theme_mcp_works_backend/static/src/scss/widgets/html.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/translation.scss",
             "theme_mcp_works_backend/static/src/scss/widgets/app_icon.scss",
+            "theme_mcp_works_backend/static/src/scss/widgets/nav_menu.scss",
 
             # ── 5. View-specific overrides ─────────────────────────────
             "theme_mcp_works_backend/static/src/scss/views/form.scss",
@@ -96,6 +97,9 @@
             "theme_mcp_works_backend/static/src/webclient/app_icon/app_icon.js",
             "theme_mcp_works_backend/static/src/webclient/app_icon/app_icon.xml",
             "theme_mcp_works_backend/static/src/webclient/app_icon/settings_page_patch.js",
+            # навбар: акордеон на групите + стрелки за скролиране
+            "theme_mcp_works_backend/static/src/webclient/nav_menu/nav_menu.js",
+            "theme_mcp_works_backend/static/src/webclient/nav_menu/nav_menu.xml",
         ],
     },
     "installable": True,
