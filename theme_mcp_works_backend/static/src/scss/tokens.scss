@@ -178,7 +178,7 @@
 
     /* ── Горна лента ── */
     --mcp-navbar-entry-h:     calc(var(--mcp-navbar-height) - 2 * var(--mcp-sp-5));
-    --mcp-navbar-entry-pad-x: var(--mcp-sp-8);
+    --mcp-navbar-entry-pad-x: var(--mcp-sp-6); /* 8 → 6: по-тесни секции (Rosen 18.10) */
     --mcp-navbar-entry-gap:   var(--mcp-sp-1);
     --mcp-navbar-shadow:      0 var(--mcp-sp-4) var(--mcp-sp-12) calc(-1 * var(--mcp-sp-8)) var(--mcp-accent-a12);
     --mcp-navbar-scan-opacity: 0;

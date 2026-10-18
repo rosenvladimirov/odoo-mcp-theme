@@ -77,6 +77,10 @@
         line-height: calc(var(--mcp-navbar-entry-h) - 2 * var(--mcp-bw-1));
         padding: 0 var(--mcp-navbar-entry-pad-x) !important;
         margin: 0;
+        /* не се свиват и не се пренасят: иначе лентата никога не „прелива“
+           и „Още“ не се появява (мерим десните ръбове в nav_menu.js) */
+        flex-shrink: 0;
+        white-space: nowrap;
         border: var(--mcp-bw-1) solid transparent;
         border-radius: var(--mcp-r-control) !important;
         font-size: var(--mcp-fs-12) !important;

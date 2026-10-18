@@ -68,6 +68,8 @@ export class McpScrollBox extends Component {
     }
 }
 
+const rectOf = (el) => Element.prototype.getBoundingClientRect.call(el);
+
 patch(NavBar.prototype, {
     setup() {
         super.setup();
@@ -75,6 +77,68 @@ patch(NavBar.prototype, {
     },
     mcpToggleNavGroup(id) {
         this.mcpNavGroups[id] = !this.mcpNavGroups[id];
+    },
+
+    /* Кои секции отиват в „Още“. Оригиналът сумира ширините на секциите и
+       ги сравнява с ширината на лентата: не брои gap-а и padding-а на темата,
+       а за „Още“ ползва твърди 46px. При много секции сметката излизаше
+       „побира се“, „Още“ не се показваше и секциите отиваха под systray-а
+       (Rosen 18.10). Тук мерим истинските десни ръбове спрямо вътрешния ръб
+       на лентата, а ширината на „Още“ — от самия бутон, когато е на екрана. */
+    async adapt() {
+        if (!this.root.el) {
+            return;
+        }
+        const sectionsMenu = this.appSubMenus.el;
+        if (!sectionsMenu) {
+            return;
+        }
+        const initialExtra = this.currentAppSectionsExtra;
+        const initialAppId = initialExtra[0] && initialExtra[0].appID;
+
+        const sections = [
+            ...sectionsMenu.querySelectorAll(":scope > *:not(.o_menu_sections_more)"),
+        ];
+        for (const section of sections) {
+            section.classList.remove("d-none");
+        }
+        this.currentAppSectionsExtra = [];
+
+        const cs = getComputedStyle(sectionsMenu);
+        const box = rectOf(sectionsMenu);
+        const innerRight =
+            box.right - parseFloat(cs.paddingRight || 0) - parseFloat(cs.borderRightWidth || 0);
+        const last = sections[sections.length - 1];
+        if (last && rectOf(last).right > innerRight + 0.5) {
+            const moreEl = sectionsMenu.querySelector(":scope > .o_menu_sections_more");
+            const moreWidth = moreEl && rectOf(moreEl).width;
+            if (moreWidth) {
+                this.mcpMoreWidth = moreWidth;
+            }
+            const gap = parseFloat(cs.columnGap) || 0;
+            const limit = innerRight - (this.mcpMoreWidth || 46) - gap;
+            const firstOut = sections.findIndex((s) => rectOf(s).right > limit);
+            for (const s of sections.slice(Math.max(firstOut, 0))) {
+                s.classList.add("d-none");
+                const sectionId =
+                    s.dataset.section ||
+                    s.querySelector("[data-section]").getAttribute("data-section");
+                const appSection = this.currentAppSections.find(
+                    (a) => a.id.toString() === sectionId
+                );
+                this.currentAppSectionsExtra.push(appSection);
+            }
+        }
+
+        const currentAppId =
+            this.currentAppSectionsExtra[0] && this.currentAppSectionsExtra[0].appID;
+        if (
+            initialExtra.length === this.currentAppSectionsExtra.length &&
+            initialAppId === currentAppId
+        ) {
+            return;
+        }
+        return this.render();
     },
 });
 NavBar.components = { ...NavBar.components, McpScrollBox };
