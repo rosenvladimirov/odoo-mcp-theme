@@ -1,0 +1,93 @@
+// theme_mcp_works_frontend — B7 · футър (PLAN §4 B7, D7)
+// Всяко правило минава през пазачите от _mixins.scss (PLAN §2.5).
+//
+// Оригиналът: website.scss:536-546 — „.o_footer“ и „.o_footer .o_footer_copyright“
+// са @extend на .o_ccN през o-apply-colors('footer' / 'copyright'). Номерът на
+// cc е компилиран, затова изборът --footer / --copyright от builder-а тук се
+// засенчва (D7): футърът идва от --mcp-fe-footer-*.
+// Тук се пишат СЪЩИТЕ селектори като компилираните разширения (+0,0,1).
+// Бутоните (.o_footer .btn-primary …) са на B2 — тук само им даваме
+// договорните --mcpf-sec-* на секцията.
+
+// Договорът за секцията (PLAN §3.2) за футъра: като cc2 в §3.3, но с
+// токените на футъра.
+@mixin mcpf-footer-section {
+    --mcpf-sec-bg: var(--mcp-fe-footer-bg);
+    --mcpf-sec-ink: var(--mcp-fe-footer-ink);
+    --mcpf-sec-heading: var(--mcp-fe-footer-ink);
+    --mcpf-sec-link: var(--mcp-fe-footer-link);
+    --mcpf-sec-link-hover: color-mix(in srgb, var(--mcp-fe-footer-link) 80%, var(--mcp-fe-footer-ink));
+    --mcpf-sec-btn-bg: var(--mcp-accent);
+    --mcpf-sec-btn-ink: var(--mcp-on-accent);
+    --mcpf-sec-btn-hover: var(--mcp-accent-dark);
+    --mcpf-sec-btn-hover-ink: var(--mcp-on-accent-dark);
+    --mcpf-sec-btn2-bg: var(--mcp-fe-cc1-bg);
+    --mcpf-sec-btn2-ink: var(--mcp-ink);
+    --mcpf-sec-btn2-border: var(--mcp-fe-cc1-bg);
+    --mcpf-sec-rule: var(--mcp-rule);
+    // компилираните свойства на o-apply-colors
+    --background-color: var(--mcpf-sec-bg);
+    --color: var(--mcpf-sec-ink);
+    --o-cc-bg: var(--mcpf-sec-bg);
+    background-color: var(--mcpf-sec-bg);
+    color: var(--mcpf-sec-ink);
+}
+
+// Съдържанието на секцията: заглавия, линкове, приглушен текст (същите
+// наследници като при .o_ccN в оригинала).
+@mixin mcpf-footer-content($s) {
+    #{$s} h1, #{$s} .h1, #{$s} h2, #{$s} .h2, #{$s} h3, #{$s} .h3,
+    #{$s} h4, #{$s} .h4, #{$s} h5, #{$s} .h5, #{$s} h6, #{$s} .h6 {
+        color: var(--mcpf-sec-heading);
+    }
+    #{$s} a:not(.btn), #{$s} .btn-link {
+        color: var(--mcpf-sec-link);
+    }
+    #{$s} a:not(.btn):hover, #{$s} .btn-link:hover {
+        color: var(--mcpf-sec-link-hover);
+    }
+    #{$s} .text-muted {
+        color: color-mix(in srgb, var(--mcpf-sec-ink) 70%, transparent) !important; // !important: оригиналът е !important (html_editor.common.scss, o-apply-colors → .text-muted)
+    }
+    // nav-pills и list-group (вкл. активния ред — мекият вариант) са в
+    // components.scss: един собственик за всички секции (D5)
+}
+
+// --- футърът ---------------------------------------------------------------
+#{$mcpf-site} .o_footer {
+    @include mcpf-footer-section;
+}
+@include mcpf-footer-content('#{$mcpf-site} .o_footer');
+
+// --- copyright -------------------------------------------------------------
+// EE 20: същият фон като футъра, 1px линия отгоре. Оригиналът дава на
+// copyright собствен cc само при някои палитри (copyright: 5 / black-15) —
+// при follow винаги е фонът на футъра.
+// Линията: #footer (oe_structure … border) вече има 1px долна рамка от
+// съдържанието. За да не стане двойна, copyright се качва с 1px върху нея —
+// непрозрачният му фон я покрива и остава само неговата border-top.
+// Размерът на шрифта не се задава на контейнера: текстът е в .small (0.875em
+// от body = 14px × font_scale), а 14px на контейнера би свил .small до 12.25.
+#{$mcpf-site} .o_footer .o_footer_copyright {
+    @include mcpf-footer-section;
+    border-top: var(--mcp-bw-1) solid var(--mcpf-sec-rule);
+    // (без „*“ в calc — статичната проверка §5.3 го чете като глобален селектор)
+    margin-top: calc(0px - var(--mcp-bw-1));
+}
+@include mcpf-footer-content('#{$mcpf-site} .o_footer .o_footer_copyright');
+
+// --- бутонът „нагоре“ ------------------------------------------------------
+// Шаблонът: a#o_footer_scrolltop.btn.btn-primary.rounded-circle
+// (website_templates.xml:2470). Оригиналът (website.scss:2211) му дава цвета
+// на футъра; тук — повърхност, а не акцент. Задава се променливата на бутона
+// (правило 2 от §2.5); id-то бие „.o_footer .btn-primary“ на B2.
+#{$mcpf-site} #o_footer_scrolltop {
+    @include mcpf-btn-vars(var(--mcp-surface-2), var(--mcp-ink-3), var(--mcp-hover-bg), var(--mcpf-sec-rule));
+    background-color: var(--btn-bg);
+    color: var(--btn-color);
+    border-radius: var(--mcp-r-pill) !important; // !important: оригиналът е !important (.rounded-circle, bootstrap utilities)
+    &:hover, &:focus {
+        background-color: var(--btn-hover-bg);
+        color: var(--mcp-ink);
+    }
+}

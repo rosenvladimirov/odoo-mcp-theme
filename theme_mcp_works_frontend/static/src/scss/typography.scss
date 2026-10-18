@@ -1,0 +1,41 @@
+// theme_mcp_works_frontend — B1 · типография: body, h1–h6, display, lead
+// (PLAN §4 B1, D3, D4). Всяко правило минава през пазачите от _mixins.scss
+// (PLAN §2.5): същият селектор като компилирания оригинал + 0,0,1.
+//
+// body: шрифтът, размерът и височината на реда вече идват от моста
+// (--body-font-family / --body-font-size / --body-line-height в
+// bridge_root.scss), защото Bootstrap компилира body с var(--body-*).
+// Затова тук няма правило за body (проверено в DOM: 16px / 24px).
+//
+// Размерите на заглавията НЕ се пипат: стълбата на Odoo 48/40/32/24/20/16 с
+// адаптивните calc е същата като в EE (D4). small и .small също не се пипат.
+
+// Заглавията: оригиналът е Bootstrap _reboot/_type
+// (h1..h6, .h1...h6 с литерален font-family „Inter Tight“, 500, 1.2).
+#{$mcpf} h1, #{$mcpf} .h1,
+#{$mcpf} h2, #{$mcpf} .h2,
+#{$mcpf} h3, #{$mcpf} .h3,
+#{$mcpf} h4, #{$mcpf} .h4,
+#{$mcpf} h5, #{$mcpf} .h5,
+#{$mcpf} h6, #{$mcpf} .h6 {
+    font-family: var(--mcp-fe-font-heading);
+    font-weight: var(--mcp-fe-heading-weight);
+    line-height: var(--mcp-lh-heading);
+}
+
+// Display: тегло 300 (EE), шрифтът е този на заглавията. Размерът и
+// височината на реда остават от Bootstrap.
+#{$mcpf} .display-1,
+#{$mcpf} .display-2,
+#{$mcpf} .display-3,
+#{$mcpf} .display-4,
+#{$mcpf} .display-5,
+#{$mcpf} .display-6 {
+    font-family: var(--mcp-fe-font-heading);
+    font-weight: var(--mcp-fw-light);
+}
+
+// Lead: 300 (EE), шрифтът е на текста (наследен от body).
+#{$mcpf} .lead {
+    font-weight: var(--mcp-fw-light);
+}

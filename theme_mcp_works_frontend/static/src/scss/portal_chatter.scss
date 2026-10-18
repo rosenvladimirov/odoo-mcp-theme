@@ -1,0 +1,65 @@
+// theme_mcp_works_frontend — B11 · чатът в портала. Зарежда се в portal.assets_chatter_style БЕЗ _mixins.scss: тук пазачите се пишат буквално (PLAN §2.6).
+// Чатът е в shadow root: селекторът html[data-mcp-site] не стига дотук, но
+// custom properties се наследяват. Затова пазачът е style query: --mcpf-on: 1
+// идва от bridge_root.scss само при site_mode=follow, а --mcpf-chat-* са
+// резолвнати на <html> в portal.scss. Без поддръжка на style queries
+// (Firefox) целият блок се пропуска и чатът остава стоков — безвреден
+// fallback (D13). Специфичността е оригиналът + един клас (.o-portal-Chatter).
+// Оригиналите: mail/static/src/core/common/*.scss (композер, балончета),
+// portal/static/src/chatter/scss/shadow.scss (:host шрифт).
+
+@container style(--mcpf-on: 1) {
+    // ── шрифтът: :host дава бекенд стека; тук — шрифтът на пресета ──
+    .o-portal-Chatter {
+        --font-sans-serif: var(--mcpf-chat-font);
+        --body-font-family: var(--mcpf-chat-font);
+        font-family: var(--mcpf-chat-font);
+    }
+
+    // ── радиус на балончетата и полето (.o-rounded-bubble е 7.5px
+    //    литерал, задължителна декларация) → радиусът на контрола от пресета ──
+    .o-portal-Chatter .o-rounded-bubble {
+        border-radius: var(--mcpf-chat-radius) !important; // !important: оригиналът е !important (.o-rounded-bubble, mail core common)
+    }
+
+    // ── полето за съобщение: рамка на контрола, фон на полето ──
+    .o-portal-Chatter .o-mail-Composer-inputContainer {
+        --border-color: var(--mcpf-chat-border);
+        transition: border-color var(--mcp-t-fast, 120ms), box-shadow var(--mcp-t-fast, 120ms);
+    }
+
+    .o-portal-Chatter .o-mail-Composer-bg {
+        background-color: var(--mcpf-chat-bg);
+        color: var(--mcpf-chat-ink);
+    }
+
+    // текстът в полето носи .o-discuss-text-body ($gray-700) → в тъмен
+    // режим 2.3:1 (B16); тук мастилото на пресета
+    .o-portal-Chatter .o-discuss-text-body {
+        color: var(--mcpf-chat-ink) !important; // !important: оригиналът е !important (.o-discuss-text-body, mail core common)
+    }
+
+    // фокус: рамка tint 50% + пръстен 4px (D6), вместо лилавото на mail
+    .o-portal-Chatter .o-mail-Composer-inputContainer:has(textarea:focus),
+    .o-portal-Chatter .o-mail-Composer-inputContainer:has(.o-mail-Composer-html:focus) {
+        --border-color: var(--mcpf-chat-focus-border);
+        box-shadow: var(--mcpf-chat-focus-ring);
+    }
+
+    // ── бутоните primary (Изпрати, Запази при редакция): акцентът ──
+    .o-portal-Chatter .btn-primary {
+        --btn-bg: var(--mcpf-chat-btn-bg);
+        --btn-border-color: var(--mcpf-chat-btn-bg);
+        --btn-color: var(--mcpf-chat-btn-ink);
+        --btn-hover-bg: var(--mcpf-chat-btn-hover);
+        --btn-hover-border-color: var(--mcpf-chat-btn-hover);
+        --btn-hover-color: var(--mcpf-chat-btn-hover-ink);
+        --btn-active-bg: var(--mcpf-chat-btn-hover);
+        --btn-active-border-color: var(--mcpf-chat-btn-hover);
+        --btn-active-color: var(--mcpf-chat-btn-hover-ink);
+        --btn-disabled-bg: var(--mcpf-chat-btn-bg);
+        --btn-disabled-border-color: var(--mcpf-chat-btn-bg);
+        --btn-disabled-color: var(--mcpf-chat-btn-ink);
+        --btn-border-radius: var(--mcpf-chat-btn-radius);
+    }
+}

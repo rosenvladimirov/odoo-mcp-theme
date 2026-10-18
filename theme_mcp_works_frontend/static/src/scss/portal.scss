@@ -1,0 +1,79 @@
+// theme_mcp_works_frontend — B11 · портал /my и документи
+// Всяко правило минава през пазачите от _mixins.scss (PLAN §2.5).
+// Оригиналите: portal/static/src/scss/portal.scss (.o_portal_wrap …),
+// web/static/src/scss/bootstrap_review_frontend.scss (.bg-100), Bootstrap
+// utilities (.rounded, .rounded-top). Таблицата, трохите, бутоните в
+// страничната лента, значките и alert-ите са на B4/B2 — тук не се пипат.
+// .o_avatar (плочката с инициал) не се пипа: цветът ѝ е от данните.
+
+// ── договорът за чата в портала (shadow DOM, PLAN §2.6) ──────────────────
+// Стойностите се резолвват тук, на <html>, и се наследяват през shadow
+// границата; portal_chatter.scss ги консумира само при --mcpf-on: 1.
+#{$mcpf} {
+    --mcpf-chat-font: var(--mcp-font-family);
+    --mcpf-chat-radius: var(--mcp-r-control);
+    --mcpf-chat-bg: var(--mcp-fe-control-bg);
+    --mcpf-chat-ink: var(--mcp-ink);
+    --mcpf-chat-border: var(--mcp-control-border);
+    --mcpf-chat-focus-border: var(--mcp-focus-border);
+    --mcpf-chat-focus-ring: var(--mcp-fe-focus-ring);
+    --mcpf-chat-btn-radius: var(--mcp-fe-btn-radius-sm);
+    --mcpf-chat-btn-bg: var(--mcp-accent);
+    --mcpf-chat-btn-ink: var(--mcp-on-accent);
+    --mcpf-chat-btn-hover: var(--mcp-accent-dark);
+    --mcpf-chat-btn-hover-ink: var(--mcp-on-accent-dark);
+}
+
+// ── картичките в /my (portal_templates.xml:240: „… rounded bg-100“ или
+//    „… rounded alert alert-primary“ за подчертаните) ────────────────────
+// Радиусът е на повърхност и за двата вида (EE: 6.4 = радиусът на картата).
+// .rounded задава --box-border-radius като задължителна декларация, затова и тук.
+#{$mcpf-site} .o_portal_wrap .o_portal_index_card > a.rounded {
+    --box-border-radius: var(--mcp-r-surface) !important; // !important: оригиналът е !important (.rounded, bootstrap utilities)
+}
+
+// Обикновената картичка: без рамка, мек фон (EE o_cc2 #F6F5F4), hover
+// с hover-bg на пресета вместо литерала #dae0e5. Анимира се само цветът.
+#{$mcpf-site} .o_portal_wrap .o_portal_index_card > a.bg-100 {
+    --background-color: var(--mcp-fe-surface-muted);
+    --color: var(--mcp-ink);
+    background-color: var(--mcp-fe-surface-muted) !important; // !important: оригиналът е !important (.bg-100, bootstrap_review_frontend.scss)
+    color: var(--mcp-ink);
+    transition: background-color var(--mcp-t-fast);
+}
+
+#{$mcpf-site} .o_portal_wrap .o_portal_index_card > a.bg-100:hover,
+#{$mcpf-site} .o_portal_wrap .o_portal_index_card > a.bg-100:focus {
+    --background-color: var(--mcp-hover-bg);
+    background-color: var(--mcp-hover-bg) !important; // !important: оригиналът е !important (a.bg-100:hover, bootstrap_review_frontend.scss)
+    color: var(--mcp-ink);
+}
+
+// ── останалите .bg-100 в портала (хедър на документ „bg-100 border
+//    rounded-top“, thead в покупките) → мек фон, рамка и радиус от пресета.
+//    Рамката на .border вече е var(--border-color) = --mcp-rule (мостът). ──
+#{$mcpf-site} .o_portal_wrap .bg-100 {
+    --background-color: var(--mcp-fe-surface-muted);
+    --color: var(--mcp-ink);
+    background-color: var(--mcp-fe-surface-muted) !important; // !important: оригиналът е !important (.bg-100, bootstrap_review_frontend.scss)
+    color: var(--mcp-ink);
+}
+
+#{$mcpf-site} .o_portal_wrap .bg-100.rounded-top {
+    border-top-left-radius: var(--mcp-r-surface) !important; // !important: оригиналът е !important (.rounded-top = 0.4rem, bootstrap utilities)
+    border-top-right-radius: var(--mcp-r-surface) !important; // !important: оригиналът е !important (.rounded-top = 0.4rem, bootstrap utilities)
+}
+
+// Приглушеният текст върху .bg-100 е литерал rgba(33,37,41,.7) — следва
+// мастилото на пресета (иначе е тъмен в тъмен режим).
+#{$mcpf-site} .o_portal_wrap .bg-100 .text-muted {
+    color: color-mix(in srgb, var(--mcp-ink) 70%, transparent) !important; // !important: оригиналът е !important (.bg-100 .text-muted, bootstrap_review_frontend.scss)
+}
+
+// ── мобилното подменю на портала: литерален фон #E9ECEF → surface-2;
+//    горната линия вече е var(--o-border-color) (portal.scss:320+) ─────────
+@media (max-width: 991.98px) {
+    #{$mcpf-site} .o_portal_wrap #o_portal_navbar_content {
+        background-color: var(--mcp-surface-2);
+    }
+}

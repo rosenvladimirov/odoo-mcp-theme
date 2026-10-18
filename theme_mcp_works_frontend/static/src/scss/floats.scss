@@ -1,0 +1,138 @@
+// theme_mcp_works_frontend — B5 · dropdown, modal, offcanvas, popover, toast, .o_dialog
+// PLAN §4 B5. Всяко правило минава през пазачите от _mixins.scss (PLAN §2.5).
+// Правило 2: задават се локалните променливи на Bootstrap (--dropdown-*,
+// --modal-*, …), а не свойствата. Свойство се пише само там, където
+// компилираният оригинал го няма (box-shadow: Odoo е с $enable-shadows: false,
+// затова --*-box-shadow е дефинирана, но никой не я консумира).
+// EE 20 (research/04 §1): dropdown бял, рамка 1px 15%, радиус 6.4,
+// сянка 0 4px 16px .12, hover #e9e9ea; модал радиус 9.6.
+// Нашият език: радиус --mcp-r-float / --mcp-r-surface, сенките на ядрото.
+
+// ── Dropdown (в #wrapwrap: потребителското меню, езикът, сортирането) ──
+// Оригинал: „.dropdown-menu, .o_dropdown_menu“ (0,1,0) → тук 0,1,1.
+// .dropdown-menu-dark е изключен през :where() — без добавена специфичност,
+// иначе 0,1,1 би бил тъмното меню (0,1,0).
+#{$mcpf-site} .dropdown-menu:where(:not(.dropdown-menu-dark)),
+#{$mcpf-site} .o_dropdown_menu:where(:not(.dropdown-menu-dark)) {
+    --dropdown-bg: var(--mcp-bg);
+    --dropdown-border-color: var(--mcp-rule);
+    --dropdown-border-radius: var(--mcp-r-float);
+    --dropdown-inner-border-radius: calc(var(--mcp-r-float) - var(--dropdown-border-width));
+    --dropdown-box-shadow: var(--mcp-shadow-float);
+    --dropdown-link-hover-bg: var(--mcp-hover-bg);
+    --dropdown-link-active-bg: var(--mcp-active-bg);
+    --dropdown-link-active-color: var(--mcp-accent-dark);
+    // вложен радиус: редът е отместен с --mcp-float-pad и закръглен с
+    // радиуса на менюто минус отместването (BREF §2a; 0 при scale 0)
+    --dropdown-padding-x: var(--mcp-float-pad);
+    --dropdown-item-border-radius: var(--mcp-r-float-item);
+    // днес менюто е без сянка (R3 §2): оригиналът не консумира променливата
+    box-shadow: var(--dropdown-box-shadow);
+}
+
+// Оригинал: „.dropdown-menu .dropdown-item.active“ (0,2,0) задава на самия
+// ред сапфир #0F52BA / бяло — наследеното от менюто не стига дотам.
+#{$mcpf-site} .dropdown-menu .dropdown-item.active,
+#{$mcpf-site} .o_dropdown_menu .dropdown-item.active {
+    --dropdown-link-active-bg: var(--mcp-active-bg);
+    --dropdown-link-active-color: var(--mcp-accent-dark);
+}
+
+// ── Модал (Bootstrap и Owl .o_dialog > .modal; извън #wrapwrap) ──
+// Оригинал: „.modal“ (0,1,0); в @media (min-width: 576px) пак „.modal“
+// подменя --modal-box-shadow → тук 0,1,1 бие и двете.
+#{$mcpf-float} .modal {
+    --modal-bg: var(--mcp-bg);
+    --modal-border-color: var(--mcp-rule);
+    --modal-border-radius: var(--mcp-fe-modal-radius);
+    --modal-inner-border-radius: calc(var(--mcp-fe-modal-radius) - var(--modal-border-width));
+    --modal-box-shadow: var(--mcp-shadow-dialog);
+}
+
+// Оригинал: „.modal-content“ (0,1,0) — без box-shadow ($enable-shadows: false).
+// .s_popup (0,3,0) и .modal-fullscreen (0,2,0) остават по-специфични.
+#{$mcpf-float} .modal-content {
+    box-shadow: var(--modal-box-shadow);
+    // компилираният цвят е литерал #212529 (bootstrap_review_frontend) →
+    // в тъмен режим тъмен текст върху тъмен фон (1.28:1, B16)
+    color: var(--mcp-ink);
+}
+
+// Оригинал: „.modal-backdrop“ (0,1,0): #000 при .5.
+// Цветът идва готов с прозрачността от ядрото (--mcp-modal-scrim: ink 24% в
+// светъл, 14% в тъмен режим), затова opacity е 1 — .fade/.show анимират
+// същата променлива и преходът остава непокътнат.
+#{$mcpf-float} .modal-backdrop {
+    --backdrop-bg: var(--mcp-modal-scrim);
+    --backdrop-opacity: 1;
+}
+
+// Owl диалозите (.o_dialog, напр. конфигураторът на продукта) нямат
+// .modal-backdrop: затъмнява самият .modal. Оригинал:
+// „.modal:not([data-bs-backdrop="false"])“ (0,2,0), background-color
+// rgba(0,0,0,.5) — свойство, не променлива → тук 0,2,1, същият scrim.
+#{$mcpf-float} .modal:not([data-bs-backdrop="false"]) {
+    background-color: var(--mcp-modal-scrim);
+}
+
+// ── Offcanvas (мобилното меню, филтрите на магазина) ──
+// Оригинал: „.offcanvas, .offcanvas-xxl, … .offcanvas-sm“ (0,1,0).
+#{$mcpf-float} .offcanvas,
+#{$mcpf-float} .offcanvas-xxl,
+#{$mcpf-float} .offcanvas-xl,
+#{$mcpf-float} .offcanvas-lg,
+#{$mcpf-float} .offcanvas-md,
+#{$mcpf-float} .offcanvas-sm {
+    --offcanvas-bg: var(--mcp-bg);
+    --offcanvas-border-color: var(--mcp-rule);
+    --offcanvas-box-shadow: var(--mcp-shadow-dialog);
+}
+
+// Сянката само докато панелът е отворен/се движи: в „.navbar-expand-* .offcanvas“
+// панелът е статичен (вграден в навбара) и сянка там не трябва.
+#{$mcpf-float} .offcanvas:where(.show, .showing, .hiding),
+#{$mcpf-float} .offcanvas-xxl:where(.show, .showing, .hiding),
+#{$mcpf-float} .offcanvas-xl:where(.show, .showing, .hiding),
+#{$mcpf-float} .offcanvas-lg:where(.show, .showing, .hiding),
+#{$mcpf-float} .offcanvas-md:where(.show, .showing, .hiding),
+#{$mcpf-float} .offcanvas-sm:where(.show, .showing, .hiding) {
+    box-shadow: var(--offcanvas-box-shadow);
+}
+
+// Оригинал: „.offcanvas-backdrop“ (0,1,0) #000 и „.offcanvas-backdrop.show“
+// (0,2,0) opacity .3 — литерали, без променливи. Същият scrim като при
+// модала; .fade (opacity 0) → .show (1) запазва прехода.
+#{$mcpf-float} .offcanvas-backdrop {
+    background-color: var(--mcp-modal-scrim);
+}
+#{$mcpf-float} .offcanvas-backdrop.show {
+    opacity: 1;
+}
+
+// ── Popover ──
+// Оригинал: „.popover“ (0,1,0). Owl tooltip-ът (.o_popover с .o-tooltip
+// вътре) има собствен тъмен фон — изключен е, без добавена специфичност.
+#{$mcpf-float} .popover:where(:not(:has(> .o-tooltip))) {
+    --popover-bg: var(--mcp-bg);
+    --popover-border-color: var(--mcp-rule);
+    --popover-border-radius: var(--mcp-r-float);
+    --popover-inner-border-radius: calc(var(--mcp-r-float) - var(--popover-border-width));
+    --popover-box-shadow: var(--mcp-shadow-float);
+    box-shadow: var(--popover-box-shadow);
+}
+
+// ── Toast и известията на Owl ──
+// Оригинал: „.toast“ (0,1,0); тя вече консумира --toast-box-shadow.
+#{$mcpf-float} .toast {
+    --toast-bg: var(--mcp-bg);
+    --toast-header-bg: var(--mcp-bg);
+    --toast-border-color: var(--mcp-rule);
+    --toast-border-radius: var(--mcp-r-surface);
+    --toast-box-shadow: var(--mcp-shadow-float);
+}
+
+// Оригинал: „.o_notification_manager .o_notification“ (0,2,0) задава
+// --Notification__background-color: #FFFFFF.
+#{$mcpf-float} .o_notification_manager .o_notification {
+    --Notification__background-color: var(--mcp-bg);
+}

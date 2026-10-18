@@ -1,0 +1,93 @@
+// theme_mcp_works_frontend — B6 · хедър (PLAN §4 B6, EE 20: R4 §1 navbar)
+// Всяко правило минава през пазачите от _mixins.scss (PLAN §2.5).
+//
+// Обхват: header#top на #wrapwrap БЕЗ прозрачния хедър над корица.
+// Оригиналът (website.scss:2036-2070) прави навбара прозрачен само за
+// „#wrapwrap.o_header_overlay > header:not(.o_header_affixed):not(.o_header_sidebar)“;
+// затова при overlay вземаме само закачения (affixed) и страничния хедър.
+// :where() пази специфичността: html + header#top = (1,0,2) + селектора.
+// Builder-ът оцветява навбара с компилиран @extend на .o_ccN през
+// .navbar-light (website.scss:364-392, „--menu“): при follow се засенчва (D7).
+$mcpf-header: 'html:where([data-mcp-site="follow"]) :where(#wrapwrap:not(.o_header_overlay)) > header#top, html:where([data-mcp-site="follow"]) :where(#wrapwrap.o_header_overlay) > header#top:where(.o_header_affixed, .o_header_sidebar)';
+
+#{$mcpf-header} {
+    // ── лентата (десктоп .o_main_nav и мобилната .o_header_mobile) ──
+    .navbar {
+        // договорът за секциите (PLAN §3.2): хедърът е своя секция
+        --mcpf-sec-bg: var(--mcp-fe-header-bg);
+        --mcpf-sec-ink: var(--mcp-fe-header-ink);
+        --mcpf-sec-heading: var(--mcp-fe-header-ink);
+        // линковете в хедъра са приглушени като менюто (EE .65 / .8)
+        --mcpf-sec-link: var(--mcp-fe-nav-link);
+        --mcpf-sec-link-hover: var(--mcp-fe-nav-link-hover);
+        --mcpf-sec-btn-bg: var(--mcp-accent);
+        --mcpf-sec-btn-ink: var(--mcp-on-accent);
+        --mcpf-sec-btn-hover: var(--mcp-accent-dark);
+        --mcpf-sec-btn-hover-ink: var(--mcp-on-accent-dark);
+        --mcpf-sec-btn2-bg: var(--mcp-fe-secondary);
+        --mcpf-sec-btn2-ink: var(--mcp-fe-secondary-ink);
+        --mcpf-sec-btn2-border: var(--mcp-fe-secondary);
+        --mcpf-sec-rule: var(--mcp-rule);
+
+        // променливите на o_cc (o-apply-colors), които четат вложените компоненти
+        --background-color: var(--mcp-fe-header-bg);
+        --color: var(--mcp-fe-header-ink);
+        --o-cc-bg: var(--mcp-fe-header-bg);
+
+        // локалните на Bootstrap .navbar (правило 2 от §2.5); оригиналът е
+        // rgba(var(--emphasis-color-rgb), .65/.8/1), т.е. черно, не ink
+        --navbar-color: var(--mcp-fe-nav-link);
+        --navbar-hover-color: var(--mcp-fe-nav-link-hover);
+        --navbar-active-color: var(--mcp-fe-nav-link-active);
+        --navbar-disabled-color: color-mix(in srgb, var(--mcp-fe-header-ink) 30%, transparent);
+        --navbar-brand-color: var(--mcp-fe-header-ink);
+        --navbar-brand-hover-color: var(--mcp-fe-header-ink);
+
+        // .navbar-light: компилиран литерал #FFF / #212529 (website.scss:364)
+        background-color: var(--mcp-fe-header-bg);
+        color: var(--mcp-fe-header-ink);
+        border-bottom: 0;
+        // класът .shadow-sm идва от menu-shadow-class на website
+        box-shadow: var(--mcp-fe-header-shadow) !important; // !important: оригиналът е !important (.shadow-sm, bootstrap _utilities.scss)
+    }
+
+    // Логото-текст: „.navbar-light a:not(.btn)“ (o_cc1 линк, компилиран
+    // сапфир) бие „.navbar-brand { color: var(--navbar-brand-color) }“.
+    .navbar-brand {
+        color: var(--navbar-brand-color);
+
+        &:hover, &:focus {
+            color: var(--navbar-brand-hover-color);
+        }
+    }
+
+    // „.navbar-light .text-muted“ е компилиран rgba(33,37,41,.7)
+    .navbar .text-muted {
+        color: color-mix(in srgb, var(--mcp-fe-header-ink) 70%, transparent) !important; // !important: оригиналът е !important (o-apply-colors, website.scss)
+    }
+
+    // Бутонът „Вход“ (рамка): .border чете --border-color, радиусът е
+    // var(--border-radius) от .o_nav_link_btn (website.scss:3267)
+    .o_nav_link_btn {
+        --border-color: var(--mcp-control-border);
+        border-radius: var(--mcp-fe-btn-radius);
+    }
+
+    // Мобилното меню (offcanvas в хедъра): компилиран #FFFFFF и #f2f2f2
+    // (website.scss:490+). Сянката и радиусите на offcanvas са в B5/B15.
+    .o_navbar_mobile {
+        background-color: var(--mcp-fe-header-bg);
+
+        .top_menu > .accordion .accordion-button:not(.collapsed) {
+            background-color: var(--mcp-hover-bg);
+        }
+    }
+}
+
+// Кръглите иконни бутони (количка, търсене): rgba(0,0,0,.05) / .1.
+// Нарочно с ниска специфичност (0,1,1): опцията на builder-а
+// „.o_navlink_no_background .navbar-light“ (0,2,0) трябва да печели.
+#{$mcpf-site} .navbar {
+    --NavLinkWithBackground-bg-color: var(--mcp-fe-nav-icon-bg);
+    --NavLinkWithBackground-bg-color--hover: color-mix(in srgb, var(--mcp-fe-header-ink) 10%, transparent);
+}

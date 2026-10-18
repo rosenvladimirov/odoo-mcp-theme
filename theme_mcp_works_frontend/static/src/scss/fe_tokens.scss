@@ -1,0 +1,86 @@
+// theme_mcp_works_frontend — нови frontend токени (B0, PLAN §3.2).
+// Огледало на tokens.scss на ядрото: светъл блок на :root и тъмен на
+// :root[data-mcp-mode="dark"]. Inline стилът от сървъра на <html> бие и
+// двата, както в бекенда. Всички са --mcp-*, затова пресет може да ги
+// настрои през cfg.advanced. Тук няма пазач: нови имена, без ефект без
+// консуматор (консуматорите са под html:where([data-mcp-site="follow"])).
+
+:root,
+:root[data-mcp-mode="light"] {
+    // ── производни на акцента (сървърът ги подменя при зададен hex) ──
+    --mcp-accent-rgb: 15, 82, 186;
+    --mcp-accent-dark-rgb: 10, 63, 140;
+    --mcp-link-rgb: var(--mcp-accent-rgb);
+    --mcp-on-accent: #ffffff;
+    // текст върху hover фона на основния бутон (--mcp-accent-dark); сървърът
+    // го избира по контраст ≥ 4.5 (ADR 0001, D2)
+    --mcp-on-accent-dark: #ffffff;
+
+    // ── типография ──
+    --mcp-fw-light: 300;
+    --mcp-fe-fs-base: calc(16px * var(--mcp-font-scale));
+    --mcp-fe-fs-sm: calc(14px * var(--mcp-font-scale));
+    --mcp-fe-font-heading: var(--mcp-font-family);
+    --mcp-fe-heading-weight: var(--mcp-fw-medium);
+
+    // ── вторичен цвят (замества бежовото #F0CDA8) ──
+    --mcp-fe-secondary: var(--mcp-surface-3);
+    --mcp-fe-secondary-ink: var(--mcp-ink);
+
+    // ── бутони и фокус ──
+    --mcp-fe-btn-radius: var(--mcp-r-control);
+    --mcp-fe-btn-radius-sm: var(--mcp-r-control-sm);
+    --mcp-fe-btn-radius-lg: var(--mcp-r-pill);
+    --mcp-fe-btn-shadow: none;
+    --mcp-fe-focus-ring: 0 0 0 4px color-mix(in srgb, var(--mcp-accent) 25%, transparent);
+    // полетата и хедърът са повърхност (бели като EE), страницата е --mcp-bg (D3)
+    --mcp-fe-control-bg: var(--mcp-surface);
+
+    // ── хедър ──
+    --mcp-fe-header-bg: var(--mcp-surface);
+    --mcp-fe-header-ink: var(--mcp-ink);
+    --mcp-fe-header-shadow: var(--mcp-elev-sm);
+    --mcp-fe-nav-link: color-mix(in srgb, var(--mcp-fe-header-ink) 65%, transparent);
+    --mcp-fe-nav-link-hover: color-mix(in srgb, var(--mcp-fe-header-ink) 80%, transparent);
+    --mcp-fe-nav-link-active: var(--mcp-fe-header-ink);
+    --mcp-fe-nav-icon-bg: color-mix(in srgb, var(--mcp-ink) 5%, transparent);
+
+    // ── футър ──
+    --mcp-fe-footer-bg: var(--mcp-surface-2);
+    --mcp-fe-footer-ink: var(--mcp-ink);
+    --mcp-fe-footer-link: var(--mcp-accent-dark);
+
+    // ── повърхности и секции o_ccN ──
+    --mcp-fe-surface-muted: var(--mcp-surface-2);
+    --mcp-fe-cc1-bg: var(--mcp-bg);
+    --mcp-fe-cc2-bg: var(--mcp-surface-2);
+    --mcp-fe-cc3-bg: color-mix(in srgb, var(--mcp-accent) 8%, var(--mcp-bg));
+    --mcp-fe-cc4-bg: var(--mcp-accent);
+    --mcp-fe-cc5-bg: var(--mcp-fe-inverse-bg);
+    --mcp-fe-inverse-bg: var(--mcp-ink);
+    --mcp-fe-inverse-ink: var(--mcp-bg);
+    --mcp-fe-inverse-link: color-mix(in srgb, var(--mcp-accent) 45%, #fff);
+
+    // ── сенки, линкове, таблици, значки ──
+    --mcp-elev-sm: 0 1px 3px color-mix(in srgb, var(--mcp-elev-color) 10%, transparent);
+    --mcp-fe-link-decoration-hover: underline;
+    --mcp-fe-cell-pad: 12px;
+    --mcp-fe-th-weight: var(--mcp-fw-semibold);
+    --mcp-fe-badge-weight: var(--mcp-fw-semibold);
+    --mcp-fe-badge-tint: 10%;
+    --mcp-fe-pager-size: 40px;
+    --mcp-fe-card-shadow: none;
+    --mcp-fe-modal-radius: var(--mcp-r-surface);
+}
+
+// Тъмен режим: само токените, които се различават от светлия блок.
+:root[data-mcp-mode="dark"] {
+    --mcp-fe-focus-ring: 0 0 0 4px color-mix(in srgb, var(--mcp-accent) 35%, transparent);
+    --mcp-fe-nav-icon-bg: color-mix(in srgb, var(--mcp-ink) 8%, transparent);
+    --mcp-fe-footer-bg: var(--mcp-surface);
+    --mcp-fe-footer-link: var(--mcp-accent-2);
+    --mcp-fe-inverse-bg: var(--mcp-surface-raised);
+    --mcp-fe-inverse-ink: var(--mcp-ink);
+    --mcp-elev-sm: 0 1px 3px color-mix(in srgb, var(--mcp-elev-color) 40%, transparent);
+    --mcp-fe-badge-tint: 18%;
+}

@@ -1,0 +1,135 @@
+// theme_mcp_works_frontend — мост :root → Bootstrap/Odoo runtime
+// променливи (B0, PLAN §3.1). Odoo е с празен префикс ($variable-prefix: '',
+// bootstrap_overridden.scss:51): --primary, --body-bg, … без --bs-.
+// Селекторът е $mcpf-root (0,1,0), защото оригиналите са на :root.
+// Правило 6 от §2.5: --menu, --footer, --copyright, --header-sales_*,
+// --*-custom, --color-palettes-name, шрифтовите и шаблонните променливи на
+// builder-а НЕ се пипат — той ги чете като конфигурация.
+
+#{$mcpf-root} {
+    color-scheme: light;
+    // гейт за shadow DOM на чата в портала (PLAN §2.6)
+    --mcpf-on: 1;
+
+    // ── фон и текст ──
+    --body-bg: var(--mcp-bg);
+    --body-color: var(--mcp-ink);
+    --emphasis-color: var(--mcp-ink);
+    --secondary-color: var(--mcp-ink-3);
+    --tertiary-color: var(--mcp-ink-dim);
+    --secondary-bg: var(--mcp-surface-2);
+    --tertiary-bg: var(--mcp-hover-bg);
+
+    // ── акцент и линкове (rgb идва от сървъра, PLAN §2.3) ──
+    --primary: var(--mcp-accent);
+    --primary-rgb: var(--mcp-accent-rgb);
+    --link-color: var(--mcp-link);
+    --link-color-rgb: var(--mcp-link-rgb);
+    --link-hover-color: var(--mcp-link-hover);
+    --link-hover-color-rgb: var(--mcp-accent-dark-rgb);
+
+    // ── шрифт (следва data-mcp-font, D3; размер 16px × font_scale, D4) ──
+    --font-sans-serif: var(--mcp-font-family);
+    --body-font-family: var(--mcp-font-family);
+    --body-line-height: var(--mcp-lh-base);
+
+    // ── линии, сенки, фокус ──
+    --o-border-color: var(--mcp-rule);
+    --border-color: var(--mcp-rule);
+    --box-shadow-sm: var(--mcp-elev-sm);
+    --box-shadow: var(--mcp-shadow-float);
+    --box-shadow-lg: var(--mcp-shadow-dialog);
+    --focus-ring-color: color-mix(in srgb, var(--mcp-accent) 25%, transparent);
+
+    // ── палитрата на website (swatch-овете на builder-а и JS на снипетите;
+    //    семантиката на base-1, R2 §1.1) ──
+    --o-color-1: var(--mcp-accent);
+    --o-color-2: var(--mcp-fe-secondary);
+    --o-color-3: var(--mcp-fe-cc2-bg);
+    --o-color-4: var(--mcp-fe-cc1-bg);
+    --o-color-5: var(--mcp-fe-cc5-bg);
+
+    // ── комбинациите o_cc1..5 (builder-ът ги копира в --hb-cp-*; PLAN §3.3) ──
+    --o-cc1-bg: var(--mcp-fe-cc1-bg);
+    --o-cc1-text: var(--mcp-ink);
+    --o-cc1-headings: var(--mcp-ink);
+    --o-cc1-link: var(--mcp-link);
+    --o-cc1-btn-primary: var(--mcp-accent);
+    --o-cc1-btn-primary-text: var(--mcp-on-accent);
+    --o-cc1-btn-secondary: var(--mcp-fe-secondary);
+    --o-cc1-btn-secondary-text: var(--mcp-ink);
+
+    --o-cc2-bg: var(--mcp-fe-cc2-bg);
+    --o-cc2-text: var(--mcp-ink);
+    --o-cc2-headings: var(--mcp-ink);
+    --o-cc2-link: var(--mcp-accent-dark);
+    --o-cc2-btn-primary: var(--mcp-accent);
+    --o-cc2-btn-primary-text: var(--mcp-on-accent);
+    --o-cc2-btn-secondary: var(--mcp-fe-cc1-bg);
+    --o-cc2-btn-secondary-text: var(--mcp-ink);
+
+    --o-cc3-bg: var(--mcp-fe-cc3-bg);
+    --o-cc3-text: var(--mcp-ink);
+    --o-cc3-headings: var(--mcp-ink);
+    --o-cc3-link: var(--mcp-accent-dark);
+    --o-cc3-btn-primary: var(--mcp-accent);
+    --o-cc3-btn-primary-text: var(--mcp-on-accent);
+    --o-cc3-btn-secondary: var(--mcp-fe-cc1-bg);
+    --o-cc3-btn-secondary-text: var(--mcp-ink);
+
+    --o-cc4-bg: var(--mcp-fe-cc4-bg);
+    --o-cc4-text: var(--mcp-on-accent);
+    --o-cc4-headings: var(--mcp-on-accent);
+    --o-cc4-link: var(--mcp-on-accent);
+    --o-cc4-btn-primary: var(--mcp-bg);
+    --o-cc4-btn-primary-text: var(--mcp-accent);
+    --o-cc4-btn-secondary: transparent;
+    --o-cc4-btn-secondary-text: var(--mcp-on-accent);
+
+    --o-cc5-bg: var(--mcp-fe-cc5-bg);
+    --o-cc5-text: var(--mcp-fe-inverse-ink);
+    --o-cc5-headings: var(--mcp-fe-inverse-ink);
+    --o-cc5-link: var(--mcp-fe-inverse-link);
+    --o-cc5-btn-primary: var(--mcp-accent);
+    --o-cc5-btn-primary-text: var(--mcp-on-accent);
+    --o-cc5-btn-secondary: transparent;
+    --o-cc5-btn-secondary-text: var(--mcp-fe-inverse-ink);
+}
+
+// Размерът на шрифта и радиусите са на body, НЕ на :root: табът „Тема“ на
+// builder-а чете тези променливи (и --btn-/--input-border-radius, които
+// website извежда на :root като var(--border-radius)) от :root на iframe-а
+// и очаква число; изразът calc(2 * 6px) го чупеше (TypeError … 'groups' в
+// BuilderNumberInput, verify_wave1 D1). На body стойността стига до цялата
+// страница, а :root остава стоков за редактора.
+#{$mcpf} body {
+    --body-font-size: var(--mcp-fe-fs-base);
+
+    // ── радиуси ──
+    --border-radius: var(--mcp-r-control);
+    --border-radius-sm: var(--mcp-r-control-sm);
+    --border-radius-lg: var(--mcp-r-surface);
+    --border-radius-xl: var(--mcp-r-float);
+    --border-radius-xxl: var(--mcp-r-2xl);
+    --border-radius-pill: var(--mcp-r-pill);
+}
+
+// Договорът за секциите (--mcpf-sec-*, PLAN §3.2): default = cc1.
+// B1 ги презаписва в .o_cc1..5, B6 в хедъра, B7 във футъра; B2 и B4 само
+// ги консумират. Вътрешни имена (--mcpf-), пресетът не ги настройва.
+#{$mcpf} {
+    --mcpf-sec-bg: var(--mcp-fe-cc1-bg);
+    --mcpf-sec-ink: var(--mcp-ink);
+    --mcpf-sec-heading: var(--mcp-ink);
+    --mcpf-sec-link: var(--mcp-link);
+    --mcpf-sec-link-hover: var(--mcp-link-hover);
+    --mcpf-sec-btn-bg: var(--mcp-accent);
+    --mcpf-sec-btn-ink: var(--mcp-on-accent);
+    --mcpf-sec-btn-hover: var(--mcp-accent-dark);
+    // текстът върху hover фона (D2: отделен цвят по контраст)
+    --mcpf-sec-btn-hover-ink: var(--mcp-on-accent-dark);
+    --mcpf-sec-btn2-bg: var(--mcp-fe-secondary);
+    --mcpf-sec-btn2-ink: var(--mcp-fe-secondary-ink);
+    --mcpf-sec-btn2-border: var(--mcp-fe-secondary);
+    --mcpf-sec-rule: var(--mcp-rule);
+}

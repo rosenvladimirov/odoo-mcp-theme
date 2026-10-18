@@ -1,0 +1,251 @@
+// theme_mcp_works_frontend — B1 · палитра: o_cc1..5, bg-/text-o-color-N, utility primary
+// (PLAN §4 B1, §3.3). Всяко правило минава през пазачите от _mixins.scss
+// (PLAN §2.5): същият селектор като компилирания оригинал + 0,0,1.
+// Оригиналите: html_editor.common.scss (o_cc), website.scss (bg-o-color-N),
+// Bootstrap utilities (text-/bg-/link-primary). Градиентите на o_ccN не се
+// пипат — те са избор на съдържанието.
+
+// ── договорът за секциите по cc (PLAN §3.3) ──
+// Ключове: bg, ink, heading, link, link-hover, btn-bg, btn-ink, btn-hover,
+// btn-hover-ink, btn2-bg, btn2-ink, btn2-border, rule. Стойностите са само --mcp-* токени.
+$mcpf-cc: (
+    1: (
+        bg: var(--mcp-fe-cc1-bg),
+        ink: var(--mcp-ink),
+        heading: var(--mcp-ink),
+        link: var(--mcp-link),
+        link-hover: var(--mcp-link-hover),
+        btn-bg: var(--mcp-accent),
+        btn-ink: var(--mcp-on-accent),
+        btn-hover: var(--mcp-accent-dark),
+        btn-hover-ink: var(--mcp-on-accent-dark),
+        btn2-bg: var(--mcp-fe-secondary),
+        btn2-ink: var(--mcp-fe-secondary-ink),
+        btn2-border: var(--mcp-fe-secondary),
+        rule: var(--mcp-rule),
+    ),
+    2: (
+        bg: var(--mcp-fe-cc2-bg),
+        ink: var(--mcp-ink),
+        heading: var(--mcp-ink),
+        link: var(--mcp-accent-dark),
+        link-hover: color-mix(in srgb, var(--mcp-accent-dark) 70%, var(--mcp-ink)),
+        btn-bg: var(--mcp-accent),
+        btn-ink: var(--mcp-on-accent),
+        btn-hover: var(--mcp-accent-dark),
+        btn-hover-ink: var(--mcp-on-accent-dark),
+        // бял бутон върху светлосив фон: рамката е линията, иначе се губи
+        btn2-bg: var(--mcp-fe-cc1-bg),
+        btn2-ink: var(--mcp-ink),
+        btn2-border: var(--mcp-rule),
+        rule: var(--mcp-rule),
+    ),
+    3: (
+        bg: var(--mcp-fe-cc3-bg),
+        ink: var(--mcp-ink),
+        heading: var(--mcp-ink),
+        link: var(--mcp-accent-dark),
+        link-hover: color-mix(in srgb, var(--mcp-accent-dark) 70%, var(--mcp-ink)),
+        btn-bg: var(--mcp-accent),
+        btn-ink: var(--mcp-on-accent),
+        btn-hover: var(--mcp-accent-dark),
+        btn-hover-ink: var(--mcp-on-accent-dark),
+        btn2-bg: var(--mcp-fe-cc1-bg),
+        btn2-ink: var(--mcp-ink),
+        btn2-border: var(--mcp-rule),
+        rule: var(--mcp-rule),
+    ),
+    4: (
+        bg: var(--mcp-fe-cc4-bg),
+        ink: var(--mcp-on-accent),
+        heading: var(--mcp-on-accent),
+        link: var(--mcp-on-accent),
+        link-hover: var(--mcp-on-accent),
+        btn-bg: var(--mcp-bg),
+        btn-ink: var(--mcp-accent-dark),
+        btn-hover: color-mix(in srgb, var(--mcp-bg) 85%, var(--mcp-accent)),
+        // hover фонът е светъл (фонът + 15% акцент) → текстът остава тъмният акцент
+        btn-hover-ink: var(--mcp-accent-dark),
+        btn2-bg: transparent,
+        btn2-ink: var(--mcp-on-accent),
+        btn2-border: color-mix(in srgb, var(--mcp-on-accent) 40%, transparent),
+        rule: color-mix(in srgb, currentColor 15%, transparent),
+    ),
+    5: (
+        bg: var(--mcp-fe-cc5-bg),
+        ink: var(--mcp-fe-inverse-ink),
+        heading: var(--mcp-fe-inverse-ink),
+        link: var(--mcp-fe-inverse-link),
+        link-hover: color-mix(in srgb, var(--mcp-fe-inverse-link) 70%, var(--mcp-fe-inverse-ink)),
+        btn-bg: var(--mcp-accent),
+        btn-ink: var(--mcp-on-accent),
+        btn-hover: var(--mcp-accent-dark),
+        btn-hover-ink: var(--mcp-on-accent-dark),
+        btn2-bg: transparent,
+        btn2-ink: var(--mcp-fe-inverse-ink),
+        btn2-border: color-mix(in srgb, var(--mcp-fe-inverse-ink) 40%, transparent),
+        rule: color-mix(in srgb, currentColor 15%, transparent),
+    ),
+);
+
+// Двойките „.o_ccN X“ и „.o_colored_level .o_ccN X“ (така е компилиран
+// оригиналът — вторият вариант е с 0,1,0 по-специфичен).
+@function mcpf-cc-pairs($tails) {
+    $out: ();
+    @each $n in 1, 2, 3, 4, 5 {
+        @each $t in $tails {
+            $out: append($out, '.o_cc#{$n} #{$t}', comma);
+            $out: append($out, '.o_colored_level .o_cc#{$n} #{$t}', comma);
+        }
+    }
+    @return $out;
+}
+
+// ── 1. Секциите: договорът + компилираните свойства ──
+@each $n, $v in $mcpf-cc {
+    #{$mcpf-site} .o_cc#{$n} {
+        --mcpf-sec-bg: #{map-get($v, bg)};
+        --mcpf-sec-ink: #{map-get($v, ink)};
+        --mcpf-sec-heading: #{map-get($v, heading)};
+        --mcpf-sec-link: #{map-get($v, link)};
+        --mcpf-sec-link-hover: #{map-get($v, link-hover)};
+        --mcpf-sec-btn-bg: #{map-get($v, btn-bg)};
+        --mcpf-sec-btn-ink: #{map-get($v, btn-ink)};
+        --mcpf-sec-btn-hover: #{map-get($v, btn-hover)};
+        --mcpf-sec-btn-hover-ink: #{map-get($v, btn-hover-ink)};
+        --mcpf-sec-btn2-bg: #{map-get($v, btn2-bg)};
+        --mcpf-sec-btn2-ink: #{map-get($v, btn2-ink)};
+        --mcpf-sec-btn2-border: #{map-get($v, btn2-border)};
+        --mcpf-sec-rule: #{map-get($v, rule)};
+        // компилираните свойства на оригинала
+        --background-color: var(--mcpf-sec-bg);
+        --color: var(--mcpf-sec-ink);
+        --o-cc-bg: var(--mcpf-sec-bg);
+        background-color: var(--mcpf-sec-bg);
+        color: var(--mcpf-sec-ink);
+    }
+}
+
+// Тъмните секции: рамките следват текста (EE: currentColor 15%).
+#{$mcpf-site} .o_cc4,
+#{$mcpf-site} .o_cc5 {
+    --o-border-color: color-mix(in srgb, currentColor 15%, transparent);
+}
+
+// ── 2. Заглавия, линкове, приглушен текст в секцията ──
+// Едно правило за всички cc: стойността идва от НАЙ-БЛИЗКАТА секция през
+// --mcpf-sec-*, затова вложените секции са коректни и без реда в CSS.
+$mcpf-headings: h1, h2, h3, h4, h5, h6, '.h1', '.h2', '.h3', '.h4', '.h5', '.h6';
+
+#{$mcpf-site} {
+    #{mcpf-cc-pairs($mcpf-headings)} {
+        color: var(--mcpf-sec-heading);
+    }
+
+    #{mcpf-cc-pairs(('a:not(.btn)', '.btn-link'))} {
+        color: var(--mcpf-sec-link);
+    }
+
+    #{mcpf-cc-pairs(('a:not(.btn):hover', '.btn-link:hover'))} {
+        color: var(--mcpf-sec-link-hover);
+    }
+
+    #{mcpf-cc-pairs(('.text-muted',))} {
+        color: color-mix(in srgb, var(--mcpf-sec-ink) 70%, transparent) !important; // !important: оригиналът е !important (html_editor.common.scss, o-cc .text-muted)
+    }
+    // nav-pills и list-group в секциите са в components.scss (един собственик, D5)
+}
+
+// ── 4. bg-o-color-N / text-o-color-N (website.scss, палитрата на builder-а) ──
+// --o-color-N идват от моста (PLAN §3.1); текстът върху всяка — по двойката.
+$mcpf-o-color-ink: (
+    1: var(--mcp-on-accent),
+    2: var(--mcp-fe-secondary-ink),
+    3: var(--mcp-ink),
+    4: var(--mcp-ink),
+    5: var(--mcp-fe-inverse-ink),
+);
+
+@each $n, $ink in $mcpf-o-color-ink {
+    #{$mcpf} .bg-o-color-#{$n} {
+        --background-color: var(--o-color-#{$n});
+        --color: #{$ink};
+        background-color: var(--o-color-#{$n}) !important; // !important: оригиналът е !important (website.scss, bg-o-color-N)
+        color: #{$ink};
+    }
+
+    #{$mcpf} .bg-o-color-#{$n} .text-muted,
+    #{$mcpf} .o_colored_level .bg-o-color-#{$n} .text-muted {
+        color: color-mix(in srgb, #{$ink} 70%, transparent) !important; // !important: оригиналът е !important (website.scss, bg-o-color-N .text-muted)
+    }
+
+    #{$mcpf} a.bg-o-color-#{$n}:hover,
+    #{$mcpf} a.bg-o-color-#{$n}:focus,
+    #{$mcpf} button.bg-o-color-#{$n}:hover,
+    #{$mcpf} button.bg-o-color-#{$n}:focus {
+        --background-color: color-mix(in srgb, var(--o-color-#{$n}) 88%, var(--mcp-ink));
+        --color: #{$ink};
+        background-color: color-mix(in srgb, var(--o-color-#{$n}) 88%, var(--mcp-ink)) !important; // !important: оригиналът е !important (website.scss, a.bg-o-color-N:hover)
+        color: #{$ink};
+    }
+
+    #{$mcpf} .text-o-color-#{$n} {
+        color: var(--o-color-#{$n}) !important; // !important: оригиналът е !important (website.scss, text-o-color-N)
+    }
+}
+
+// ── 5. Utility primary (Bootstrap) ──
+// .bg-primary, .border-primary и .text-primary (първото правило) вече са
+// през --primary-rgb от моста; тук са само тези с компилиран литерал.
+#{$mcpf} .text-primary {
+    color: var(--mcp-accent) !important; // !important: оригиналът е !important (website: второ .text-primary с компилиран сапфир)
+}
+
+#{$mcpf} .text-bg-primary {
+    color: var(--mcp-on-accent) !important; // !important: оригиналът е !important (bootstrap utilities, text-bg-primary)
+    background-color: RGBA(var(--mcp-accent-rgb), var(--bg-opacity, 1)) !important; // !important: оригиналът е !important
+}
+
+#{$mcpf} .link-primary {
+    color: RGBA(var(--mcp-link-rgb), var(--link-opacity, 1)) !important; // !important: оригиналът е !important (bootstrap helpers/colored-links)
+    text-decoration-color: RGBA(var(--mcp-link-rgb), var(--link-underline-opacity, 1)) !important; // !important: оригиналът е !important
+}
+
+#{$mcpf} .link-primary:hover,
+#{$mcpf} .link-primary:focus {
+    color: RGBA(var(--mcp-accent-dark-rgb), var(--link-opacity, 1)) !important; // !important: оригиналът е !important (bootstrap helpers/colored-links)
+    text-decoration-color: RGBA(var(--mcp-accent-dark-rgb), var(--link-underline-opacity, 1)) !important; // !important: оригиналът е !important
+}
+
+#{$mcpf} .bg-primary-subtle {
+    background-color: var(--mcp-active-bg) !important; // !important: оригиналът е !important (bootstrap utilities, bg-primary-subtle)
+}
+
+#{$mcpf} .border-primary-subtle {
+    border-color: var(--mcp-active-border) !important; // !important: оригиналът е !important (bootstrap utilities, border-primary-subtle)
+}
+
+#{$mcpf} .text-primary-emphasis {
+    color: var(--mcp-accent-dark) !important; // !important: оригиналът е !important (bootstrap utilities, text-primary-emphasis)
+}
+
+// website: .bg-primary-light е rgba(<сапфир>, .1), без important в оригинала
+#{$mcpf} .bg-primary-light {
+    background-color: rgba(var(--mcp-accent-rgb), 0.1);
+}
+
+// ── 6. Фонът на страницата ──
+// body вече е var(--body-bg) (мостът), тук само за сигурност срещу
+// force-opaque-bg-color на website (website.scss, body) при boxed layout.
+#{$mcpf} body {
+    background-color: var(--mcp-bg);
+}
+
+// ── .bg-body: utility с „важен“ флаг върху rgba(var(--body-bg-rgb)) ──
+// Мостът не може да изведе тройката rgb от --mcp-bg в CSS, затова .bg-body
+// оставаше бяло (обобщението на чекаута на мобилно, B14/B15/B16). Тук е
+// фонът на страницата; тъмният режим ползва същото (dark.scss).
+#{$mcpf-site} .bg-body,
+#{$mcpf-float} .bg-body {
+    background-color: var(--mcp-bg) !important; // !important: оригиналът е !important (bootstrap utilities .bg-body)
+}

@@ -1,0 +1,134 @@
+// theme_mcp_works_frontend — B9 · продуктова страница (PLAN §4 B9).
+// Цена, брояч за количество, избор на вариант (цветни суочове, суочове с
+// картинка, хапчета), миниатюрите на галерията и конфигураторът на продукта
+// (Owl модал извън #wrapwrap). Пише се същият селектор като компилирания
+// оригинал (website_sale/product_configurator.scss, website_sale.scss,
+// sale/product_template_attribute_line.scss), предшестван от пазача →
+// специфичност = оригиналът + 0,0,1 (PLAN §2.5).
+// Не се пипат: цветът на суоча (данни, inline background), мрежата и
+// височините, „Add to compare“ / wishlist (B2), таблицата на спецификацията
+// (B4), значката с надценката text-bg-primary (B1/B4), радиусът на снимките
+// (следва опцията image_radius на builder-а: none = 0; small/medium/big
+// минават през --border-radius-sm/--border-radius/--border-radius-lg,
+// които bridge_root мости към токените на пресета).
+
+// Обхватът: съдържанието на сайта и модалът на конфигуратора/offcanvas.
+// :where() не добавя специфичност; плаващият клон е изключен в edit mode.
+@mixin mcpf-product-scope {
+    #{$mcpf-site},
+    #{$mcpf-float} :where(.modal, .offcanvas) {
+        @content;
+    }
+}
+
+@include mcpf-product-scope {
+    // ── цената (EE: Inter Tight 20/500; размерът идва от .h5 на контейнера) ──
+    .o_wsale_product_details_content_section_price .oe_price {
+        font-family: var(--mcp-fe-font-heading);
+        font-weight: var(--mcp-fw-medium);
+    }
+
+    // ── броячът за количество: input-group с utility .border ──
+    // utility-то .border е задължително (с най-висок приоритет) и чете
+    // var(--border-color) → задава се локалната променлива (правило 2), без
+    // да се надвиква. Рамката е тази на полето, не на повърхността (EE: 1px 15%).
+    .css_quantity {
+        --border-color: var(--mcp-control-border);
+        border-radius: var(--mcp-r-control);
+    }
+    // големият вариант на CTA (оригинал: 2rem) → хапче като btn-lg (D9)
+    #o_wsale_cta_wrapper.o_wsale_cta_wrapper_large .css_quantity {
+        border-radius: var(--mcp-r-pill);
+    }
+    // иконките ± носят .text-600 (оригинал: #6C757D) → приглушеният текст
+    .css_quantity .text-600 {
+        color: var(--mcp-ink-3) !important; // !important: оригиналът е !important (bootstrap utilities, .text-600)
+    }
+
+    // ── цветен суоч: рамка в акцента при избор, вътрешен пръстен във фона ──
+    // (оригинал: --o-wsale-attribute-color-border-color #0F52BA и
+    // inset 0 0 0 2px #FFFFFF = компилиран $body-bg)
+    .css_attribute_color:hover,
+    .css_attribute_color.active,
+    .css_attribute_color.active:hover {
+        box-shadow: inset 0 0 0 2px var(--body-bg);
+    }
+    .css_attribute_color.active,
+    .css_attribute_color.active:hover {
+        --o-wsale-attribute-color-border-color: var(--mcp-accent);
+    }
+    // ореолът при фокус от клавиатура (оригинал: rgba(15,82,186,.25))
+    .css_attribute_color:has(input:focus-visible)::before {
+        background-color: color-mix(in srgb, var(--mcp-accent) 25%, transparent);
+    }
+
+    // ── суоч с картинка (оригинал: outline #0F52BA, рамка #FFFFFF) ──
+    .css_attribute_image {
+        border-color: var(--body-bg);
+    }
+    .css_attribute_image:hover,
+    .css_attribute_image.active {
+        outline-color: var(--mcp-accent);
+    }
+
+    // ── хапчетата на вариантите: рамката е var(--o-border-color) (мост),
+    //    избраното е през utility-тата на B1 (bg-primary-subtle и т.н.);
+    //    тук само фокусът (оригинал: 0 0 0 .25rem rgba(15,82,186,.25)) ──
+    .variant_attribute .o_variant_pills:has(input:focus-visible) {
+        box-shadow: var(--mcp-fe-focus-ring);
+    }
+
+    // ── конфигураторът на продукта (sale, в модала) ──
+    // цветен суоч: hover/избран (оригинал: рамка #0F52BA)
+    .o_sale_product_configurator_ptav_color:hover,
+    .o_sale_product_configurator_ptav_color:hover .form-check-input:not(:disabled):not(.o_wysiwyg_loader) {
+        border-color: var(--mcp-accent);
+    }
+    .o_sale_product_configurator_ptav_color.active {
+        border-color: var(--mcp-accent);
+    }
+    // суоч с картинка (оригинал: outline #0F52BA; рамка #FFFFFF)
+    .o_sale_product_configurator_ptav_image {
+        border-color: var(--mcp-surface);
+    }
+    .o_sale_product_configurator_ptav_image:hover,
+    .o_sale_product_configurator_ptav_image.active,
+    .o_sale_product_configurator_ptav_image.css_not_available:hover,
+    .o_sale_product_configurator_ptav_image.css_not_available.active {
+        outline-color: var(--mcp-accent);
+    }
+    // избрано хапче (оригинал: компилираният secondary на бекенда —
+    // #dddbe8 / #71639e / #000000, т.е. лилавото на Odoo)
+    .o_sale_product_configurator_ptav_pills.active label {
+        background-color: var(--mcp-active-bg);
+        border-color: var(--mcp-active-border);
+        color: var(--mcp-accent-dark);
+    }
+}
+
+// ── блокът с опционалните продукти в конфигуратора ──
+// Оригинал: „.o_sale_optional_products“ (0,1,0), литерал
+// darken($modal-content-bg, 2%) = #fafafa (sale product_list.scss) →
+// бяла лента в тъмен режим (B16).
+#{$mcpf-float} .o_sale_optional_products {
+    background: var(--mcp-fe-surface-muted);
+}
+
+// ── точките на галерията под lg: активната в акцента ──
+// Оригинал: „#o-carousel-product .carousel-indicators li.active“ в
+// media-breakpoint-down(lg), рамка и фон $primary (сапфир при всички пресети).
+@media (max-width: 991.98px) {
+    #{$mcpf-site} #o-carousel-product .carousel-indicators li.active {
+        border-color: var(--mcp-accent);
+        background-color: var(--mcp-accent);
+    }
+}
+
+// ── миниатюрите на галерията: рамка на активната ──
+// Оригиналът е само от lg нагоре (под lg индикаторите са стоковите ленти на
+// Bootstrap с прозрачни рамки — там рамка в акцента би ги оцветила).
+@media (min-width: 992px) {
+    #{$mcpf-site} #o-carousel-product .o_carousel_product_indicators .carousel-indicators li.active {
+        border-color: var(--mcp-accent);
+    }
+}

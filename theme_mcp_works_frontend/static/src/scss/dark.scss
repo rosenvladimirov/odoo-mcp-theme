@@ -1,0 +1,208 @@
+// theme_mcp_works_frontend — B14 · тъмен режим (последен в бъндъла, PLAN §4).
+// Токените се обръщат сами (тъмният блок на tokens.scss в ядрото и на
+// fe_tokens.scss). Тук са САМО компилираните литерали, които не следват
+// токените: utility класове с „важен“ флаг, SVG-та с вграден цвят, филтри.
+//
+// Пазачите са локални: и режимът е в :where(), затова към оригинала се
+// добавя пак точно 0,0,1 (правилото от §2.5), а при равенство печелим по
+// реда, защото dark.scss е последен в бъндъла.
+$mcpf-dark-root:  ':root:where([data-mcp-site="follow"][data-mcp-mode="dark"])';
+$mcpf-dark-site:  'html:where([data-mcp-site="follow"][data-mcp-mode="dark"]) :where(#wrapwrap)';
+$mcpf-dark-float: 'html:where([data-mcp-site="follow"][data-mcp-mode="dark"]):where(:not([data-editable])) :where(.modal, .offcanvas, .popover, .toast, .o_dialog)';
+
+// Цветовете на SVG в data URI не могат да четат CSS променливи. Ползваме
+// тъмните стойности на ядрото (tokens.scss, тъмният блок): при mode=dark
+// конфигураторът не подава светлите неутрали (ADR 0001, D4), затова те са
+// реалните --mcp-ink-3 / --mcp-ink-2 на страницата.
+$mcpf-dark-chevron: '%236b7c95'; // --mcp-ink-3 (тъмен)
+$mcpf-dark-knob:    '%2394a3b8'; // --mcp-ink-2 (тъмен)
+$mcpf-dark-ink-rgb: '230, 237, 247'; // --mcp-ink (тъмен, #e6edf7)
+$mcpf-dark-bg-rgb:  '5, 10, 20';     // --mcp-bg (тъмен, #050a14)
+
+// Нативните контроли и скролбарите. Мостът дава light на :root (0,1,0),
+// затова и тук е :root, а не html: същата специфичност, печелим по реда.
+#{$mcpf-dark-root} {
+    color-scheme: dark;
+    // Тройките *-rgb, които мостът не задава (не се извеждат от hex в CSS):
+    // Bootstrap/website ги ползват в rgba(var(--…-rgb), α) — .navbar
+    // (--navbar-active-color/-disabled-color: черно върху тъмно в лентата
+    // на блога), .text-body, .bg-body, линии и сенки. Стойностите са
+    // тъмните --mcp-ink / --mcp-bg на ядрото (виж бележката за SVG по-горе).
+    --emphasis-color-rgb: #{$mcpf-dark-ink-rgb};
+    --body-color-rgb: #{$mcpf-dark-ink-rgb};
+    --body-bg-rgb: #{$mcpf-dark-bg-rgb};
+    // фонът зад модала: scrim-ът на ядрото е ink 14%, а в тъмен режим ink е
+    // светъл → страницата изсветляваше (B16); тук тъмно затъмняване
+    --mcp-modal-scrim: color-mix(in srgb, #000 55%, transparent);
+}
+
+// ── приглушеният текст: тъмният --mcp-ink-3 на ядрото (#6b7c95) е 4.34:1
+//    върху --mcp-surface и 4.02:1 върху --mcp-surface-2 (картите на
+//    чекаута, портала). На сайта е --mcp-ink-2 85% върху --mcp-bg (само
+//    токени; самият --mcp-ink-3 би дал цикъл) → 5.8 / 5.4 / 5.0 / 4.55:1
+//    върху bg, surface, surface-2 и surface-3. Само в съдържанието и слоевете;
+//    бекендът и :root (табът „Тема“) не се пипат. --secondary-color е
+//    резолвнат на :root, затова се задава наново тук.
+#{$mcpf-dark-site},
+#{$mcpf-dark-float} {
+    --mcp-ink-3: color-mix(in srgb, var(--mcp-ink-2) 85%, var(--mcp-bg));
+    --secondary-color: var(--mcp-ink-3);
+}
+
+// ── бутонът за затваряне: черно SVG → светло през филтъра на Bootstrap ──
+// .btn-close-white вече е филтриран; двоен филтър би го върнал в черно.
+// website връща filter: unset в .o_cc/.navbar-light/.o_footer (0,2,0), затова
+// тези три контекста са изброени със същите селектори.
+#{$mcpf-dark-site} .btn-close:where(:not(.btn-close-white)),
+#{$mcpf-dark-site} .o_cc .btn-close:where(:not(.btn-close-white)),
+#{$mcpf-dark-site} .navbar-light .btn-close:where(:not(.btn-close-white)),
+#{$mcpf-dark-site} .o_footer .btn-close:where(:not(.btn-close-white)),
+#{$mcpf-dark-float} .btn-close:where(:not(.btn-close-white)),
+#{$mcpf-dark-float} .o_cc .btn-close:where(:not(.btn-close-white)) {
+    filter: var(--btn-close-white-filter);
+}
+
+// ── иконата на мобилното меню: SVG с тъмна линия → маска в currentColor
+//    (цветът на бутона = --navbar-color), както Odoo прави при overlay ──
+#{$mcpf-dark-site} .navbar-toggler-icon {
+    background-color: currentColor;
+    background-image: none;
+    mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='black' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") center / 100% no-repeat;
+}
+
+// ── шевронът на form-select: Bootstrap (%23212529) и website (триъгълник
+//    в css_attribute_select, също %23212529) → ink-3 на тъмния режим ──
+#{$mcpf-dark-site} .form-select,
+#{$mcpf-dark-float} .form-select {
+    --form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='#{$mcpf-dark-chevron}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+#{$mcpf-dark-site} select.form-select.css_attribute_select:not([multiple]):where(:not([size]), [size="1"]),
+#{$mcpf-dark-float} select.form-select.css_attribute_select:not([multiple]):where(:not([size]), [size="1"]) {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='175' height='100' fill='#{$mcpf-dark-chevron}'><polygon points='0,0 100,0 50,50'/></svg>");
+}
+
+// ── чекбокс/радио/суич: неотметнатото поле е фонът на полето; топчето на
+//    суича (литерално %23212529) → ink-2, иначе е тъмно върху тъмно ──
+#{$mcpf-dark-site} .form-check-input,
+#{$mcpf-dark-float} .form-check-input {
+    --form-check-bg: var(--mcp-fe-control-bg);
+}
+#{$mcpf-dark-site} .form-switch .form-check-input:where(:not(:checked):not(:focus)),
+#{$mcpf-dark-float} .form-switch .form-check-input:where(:not(:checked):not(:focus)) {
+    --form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='#{$mcpf-dark-knob}'/%3e%3c/svg%3e");
+}
+
+// ── utility фонове (Bootstrap/website, всички с „важен“ флаг) ──
+// .bg-white/.bg-light/.bg-body четат --white-rgb/--light-rgb/--body-bg-rgb,
+// които мостът не задава (а --white-rgb ползва и .text-white), затова се
+// подменя свойството.
+#{$mcpf-dark-site} .bg-white,
+#{$mcpf-dark-float} .bg-white {
+    background-color: var(--mcp-surface) !important; // !important: оригиналът е !important (bootstrap utilities .bg-white)
+}
+#{$mcpf-dark-site} .bg-light,
+#{$mcpf-dark-float} .bg-light,
+#{$mcpf-dark-site} .bg-100,
+#{$mcpf-dark-float} .bg-100 {
+    background-color: var(--mcp-surface-2) !important; // !important: оригиналът е !important (bootstrap utilities .bg-light, website .bg-100)
+}
+#{$mcpf-dark-site} .bg-200,
+#{$mcpf-dark-float} .bg-200 {
+    --background-color: var(--mcp-surface-3);
+    --color: var(--mcp-ink);
+    background-color: var(--mcp-surface-3) !important; // !important: оригиналът е !important (website .bg-200)
+    color: var(--mcp-ink);
+}
+#{$mcpf-dark-site} .bg-body,
+#{$mcpf-dark-float} .bg-body {
+    background-color: var(--mcp-bg) !important; // !important: оригиналът е !important (bootstrap utilities .bg-body)
+}
+#{$mcpf-dark-site} .text-bg-light,
+#{$mcpf-dark-float} .text-bg-light {
+    color: var(--mcp-ink) !important; // !important: оригиналът е !important (bootstrap .text-bg-light, #212529)
+    background-color: var(--mcp-surface-2) !important; // !important: оригиналът е !important (bootstrap .text-bg-light)
+}
+// полупрозрачните бели слоеве (блог, корици) → повърхността със същата плътност
+#{$mcpf-dark-site} .bg-white-85,
+#{$mcpf-dark-site} .bg-white-75 {
+    --background-color: color-mix(in srgb, var(--mcp-surface) 85%, transparent);
+    --color: var(--mcp-ink);
+    background-color: color-mix(in srgb, var(--mcp-surface) 85%, transparent) !important; // !important: оригиналът е !important (website .bg-white-85/-75)
+    color: var(--mcp-ink);
+}
+
+// ── utility текст: тъмните литерали → мастилото на пресета ──
+#{$mcpf-dark-site} .text-dark,
+#{$mcpf-dark-float} .text-dark,
+#{$mcpf-dark-site} .text-black,
+#{$mcpf-dark-float} .text-black,
+#{$mcpf-dark-site} .text-body,
+#{$mcpf-dark-float} .text-body,
+#{$mcpf-dark-site} .text-900,
+#{$mcpf-dark-float} .text-900,
+#{$mcpf-dark-site} .text-800,
+#{$mcpf-dark-float} .text-800 {
+    color: var(--mcp-ink) !important; // !important: оригиналът е !important (bootstrap .text-dark/-black/-body, website .text-800/-900)
+}
+#{$mcpf-dark-site} .text-700,
+#{$mcpf-dark-float} .text-700 {
+    color: var(--mcp-ink-2) !important; // !important: оригиналът е !important (website .text-700)
+}
+#{$mcpf-dark-site} .text-black-50,
+#{$mcpf-dark-float} .text-black-50,
+#{$mcpf-dark-site} .text-black-75,
+#{$mcpf-dark-float} .text-black-75 {
+    color: var(--mcp-ink-3) !important; // !important: оригиналът е !important (bootstrap .text-black-50/-75)
+}
+#{$mcpf-dark-site} .bg-100 .text-muted,
+#{$mcpf-dark-site} .bg-white-85 .text-muted {
+    color: var(--mcp-ink-3) !important; // !important: оригиналът е !important (website .bg-100 .text-muted, rgba(33,37,41,.7))
+}
+
+// ── таблица на ивици: 2% мастило от B4 е невидимо върху тъмния фон ──
+#{$mcpf-dark-site} .table,
+#{$mcpf-dark-float} .table {
+    --table-striped-bg: color-mix(in srgb, var(--mcp-ink) 4%, transparent);
+}
+
+// ── иконите в рамка (.fa.rounded-circle …): website ги пълни с $gray-100
+//    (#F8F9FA) → бели петна върху тъмната страница ──
+#{$mcpf-dark-site} .fa.rounded-circle,
+#{$mcpf-dark-site} .fa.rounded-empty-circle,
+#{$mcpf-dark-site} .fa.rounded,
+#{$mcpf-dark-site} .fa.rounded-0,
+#{$mcpf-dark-site} .fa.rounded-leaf,
+#{$mcpf-dark-site} .fa.img-thumbnail,
+#{$mcpf-dark-site} .fa.shadow {
+    background-color: var(--mcp-surface-2);
+}
+// Марковите икони в s_social_media носят свой цвят (#3B5999, #000, #0077B5 …,
+// с „важен“ флаг в website). Върху тъмен кръг са под 3:1, затова кръгът под
+// тях остава светъл (мастилото на тъмния режим), като чип на марката.
+#{$mcpf-dark-site} .s_social_media:not(.no_icon_color) :where(.s_social_media_facebook, .s_social_media_twitter, .s_social_media_linkedin, .s_social_media_google, .s_social_media_youtube, .s_social_media_github, .s_social_media_instagram, .s_social_media_whatsapp, .s_social_media_pinterest, .s_social_media_tiktok, .s_social_media_discord) .fa.rounded-circle {
+    background-color: var(--mcp-ink);
+}
+
+// ── продуктът: миниатюрите в галерията (Bootstrap .carousel-indicators
+//    [data-bs-target] с фон #FFF) → фонът на снимката от B8 ──
+#{$mcpf-dark-site} #o-carousel-product .carousel-indicators [data-bs-target] {
+    background-color: var(--mcp-fe-surface-muted);
+}
+// белият пръстен около цветния суоч в конфигуратора (border white) → фонът
+// на модала, за да остане „прорез“, а не бял кръг
+#{$mcpf-dark-float} .o_sale_product_configurator_ptav_color:before,
+#{$mcpf-dark-site} .o_sale_product_configurator_ptav_color:before {
+    border-color: var(--modal-bg, var(--mcp-bg));
+}
+
+// неизбраният цветен суоч: рамката --mcp-rule (16%) губи тъмните цветове
+// върху тъмната страница → по-плътната линия на темата
+#{$mcpf-dark-site} .css_attribute_color:where(:not(.active)) {
+    --o-wsale-attribute-color-border-color: var(--mcp-rule-strong);
+}
+
+// лентата на блога ползва .nav-link.disabled като етикет („Blogs:“), а не
+// като забранен линк: 30% мастило е 2.37:1 → приглушеният текст на темата
+#{$mcpf-dark-site} .website_blog .navbar {
+    --navbar-disabled-color: var(--mcp-ink-3);
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Rosen Vladimirov <vladimirov.rosen@gmail.com>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <!-- Слага пресета на <html> на всяка frontend страница (сайт, портал,
+         вход, /my, iframe-ът на builder-а). Priority 99 > website.layout (16):
+         нашият t-set идва след неговия и разширява готовия html_data.
+         Изрично <record model="ir.ui.view">, а НЕ <template>: името на модула
+         почва с theme_ и convert.py (_tag_template) прави от <template>
+         theme.ir.ui.view, който се прилага само при тема на уебсайта. -->
+    <record id="frontend_layout_mcp" model="ir.ui.view">
+        <field name="name">theme_mcp_works_frontend.frontend_layout_mcp</field>
+        <field name="key">theme_mcp_works_frontend.frontend_layout_mcp</field>
+        <field name="type">qweb</field>
+        <field name="inherit_id" ref="web.frontend_layout"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//html" position="before">
+                    <t t-set="html_data" t-value="request and request.env['ir.http']._mcp_frontend_html_data(html_data) or html_data"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

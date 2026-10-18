@@ -1,0 +1,41 @@
+// theme_mcp_works_frontend — пазачите и помощните mixin-и (B0, PLAN §2.5).
+// Файлът не дава CSS: само променливи и mixin-и за следващите файлове
+// в същия бъндъл (web.assets_frontend се компилира като едно цяло).
+
+// Пазачите: :where() не добавя специфичност, „html“ добавя точно 0,0,1 →
+// печелим равенството с компилирания оригинал независимо от реда на
+// модулите в бъндъла, а губим от всичко по-специфично.
+$mcpf:       'html:where([data-mcp-site="follow"])';
+// съдържание и хром на сайта
+$mcpf-site:  'html:where([data-mcp-site="follow"]) :where(#wrapwrap)';
+// слоеве извън #wrapwrap (модали, offcanvas, .o_dialog, toast) — не и в
+// edit mode на builder-а
+$mcpf-float: 'html:where([data-mcp-site="follow"]):where(:not([data-editable]))';
+// Променливите на :root. Bootstrap и website ги дефинират на
+// „:root, [data-bs-theme=light]“ и „:root“ (0,1,0), затова тук трябва
+// същото 0,1,0, а не 0,0,1: така печелим по реда в бъндъла (ние сме след
+// website). Ползва се САМО за декларации на custom properties.
+$mcpf-root:  ':root:where([data-mcp-site="follow"])';
+
+// Локалните променливи на бутон на Bootstrap (правило 2 от §2.5:
+// задава се променливата, не свойството). $border по подразбиране = $bg.
+@mixin mcpf-btn-vars($bg, $ink, $hover, $border: null) {
+    $border: if($border == null, $bg, $border);
+    --btn-bg: #{$bg};
+    --btn-border-color: #{$border};
+    --btn-color: #{$ink};
+    --btn-hover-bg: #{$hover};
+    --btn-hover-border-color: #{$hover};
+    --btn-hover-color: #{$ink};
+    --btn-active-bg: #{$hover};
+    --btn-active-border-color: #{$hover};
+    --btn-active-color: #{$ink};
+    --btn-disabled-bg: #{$bg};
+    --btn-disabled-border-color: #{$border};
+    --btn-disabled-color: #{$ink};
+}
+
+// Мек тон на роля върху фона (значки, alert-и, o_tag): $pct от цвета.
+@function mcpf-tint($color, $pct, $base: var(--mcp-bg)) {
+    @return color-mix(in srgb, #{$color} #{$pct}, #{$base});
+}

@@ -1,0 +1,210 @@
+// theme_mcp_works_frontend — B3 · форми (PLAN §4 B3).
+// Полета, form-select, чекбокс/радио, input-group, етикети, валидация, търсачката
+// на магазина и блога. Пише се същият селектор като компилирания оригинал
+// (Bootstrap 5 + web/website, web.assets_frontend), предшестван от пазача →
+// специфичност = оригиналът + 0,0,1 (PLAN §2.5). Височините и отстъпите на
+// полетата НЕ се пипат (EE = Odoo: 38px, 6/12, R4 §1; правило 5).
+// Шевронът на form-select (литерално SVG %23212529) е за B14 (тъмен режим).
+
+// Обхватът: съдържанието на сайта (#wrapwrap) и слоевете извън него —
+// модали (Owl .o_dialog → .modal, конфигураторът на продукта) и offcanvas.
+// :where() не добавя специфичност, затова и двата клона са оригинал + 0,0,1.
+// Плаващият клон е изключен в edit mode на builder-а ($mcpf-float).
+@mixin mcpf-forms-scope {
+    #{$mcpf-site},
+    #{$mcpf-float} :where(.modal, .offcanvas) {
+        @content;
+    }
+}
+
+// Пръстенът при грешка/успех — същата форма като фокуса (4px, 25%), но в
+// цвета на ролята (оригиналът: rgba(var(--danger-rgb) / --success-rgb), .25).
+$mcpf-ring-danger: 0 0 0 4px color-mix(in srgb, var(--mcp-danger) 25%, transparent);
+$mcpf-ring-ok:     0 0 0 4px color-mix(in srgb, var(--mcp-ok) 25%, transparent);
+
+@include mcpf-forms-scope {
+    // ── цветовете на валидацията: Bootstrap ги чете от променливи на :root
+    //    (--form-valid-*/--form-invalid-*) → задава се променливата
+    //    (правило 2), наследява се от .invalid-feedback, рамките и етикетите ──
+    --form-valid-color: var(--mcp-ok);
+    --form-valid-border-color: var(--mcp-ok);
+    --form-invalid-color: var(--mcp-danger);
+    --form-invalid-border-color: var(--mcp-danger);
+
+    // ── поле и form-select (оригинал: color #212529, bg #FFFFFF, рамка
+    //    var(--o-border-color), радиус var(--border-radius)) ──
+    .form-control,
+    .form-select {
+        color: var(--mcp-ink);
+        background-color: var(--mcp-fe-control-bg);
+        border-color: var(--mcp-control-border);
+        border-radius: var(--mcp-r-control);
+    }
+
+    // по-малкият/по-големият размер: иначе горното правило (0,1,1) бие
+    // компилираните .form-control-sm/-lg (0,1,0) и радиусът се изравнява
+    .form-control-sm,
+    .form-select-sm {
+        border-radius: var(--mcp-r-control-sm);
+    }
+    .form-control-lg,
+    .form-select-lg {
+        border-radius: var(--mcp-r-surface);
+    }
+
+    // в модалите web дава бял фон и тъмен текст (0,2,0)
+    .modal-content:where(:not(.oe_structure)) .form-control,
+    .modal-content:where(:not(.oe_structure)) .form-select {
+        color: var(--mcp-ink);
+        background-color: var(--mcp-fe-control-bg);
+    }
+    .modal-content:where(:not(.oe_structure)) .form-check-input:not(:checked) {
+        background-color: var(--mcp-fe-control-bg);
+    }
+
+    // поле с .bg-light (търсачките): оригиналът връща само текста
+    .form-control.bg-light {
+        color: var(--mcp-ink);
+    }
+
+    // ── hover (оригинал при form-select: рамка #0F52BA; при полето няма) ──
+    .form-control:where(:not(:disabled):not([readonly]):not(.o_wysiwyg_loader)):hover,
+    .form-select:where(:not(:disabled)):hover {
+        border-color: var(--mcp-control-border-hover);
+    }
+
+    // ── фокус (оригинал: рамка #87a9dd + 0 0 0 .25rem rgba(15,82,186,.25)) ──
+    // след hover, за да печели при задържана мишка върху фокусирано поле
+    .form-control:focus,
+    .form-select:focus {
+        color: var(--mcp-ink);
+        background-color: var(--mcp-fe-control-bg);
+        border-color: var(--mcp-focus-border);
+        box-shadow: var(--mcp-fe-focus-ring);
+    }
+
+    // ── placeholder (оригинал: #909294 = смес на фона и текста) ──
+    .form-control::placeholder {
+        color: var(--mcp-ink-dim);
+    }
+
+    // ── забранено и само за четене (оригинал: bg #e9e9ea, текст #909294) ──
+    .form-control:disabled,
+    .form-control.o_wysiwyg_loader,
+    .form-control[readonly],
+    .form-select:disabled,
+    .form-select.o_wysiwyg_loader {
+        color: var(--mcp-ink-3);
+        background-color: var(--mcp-surface-2);
+        border-color: var(--mcp-control-border);
+    }
+
+    // ── бутонът за избор на файл (оригинал: whitesmoke / #dededf) ──
+    .form-control::file-selector-button {
+        color: var(--mcp-ink);
+        background-color: var(--mcp-surface-2);
+    }
+    .form-control:hover:not(:disabled):not(.o_wysiwyg_loader):not([readonly])::file-selector-button {
+        background-color: var(--mcp-hover-bg);
+    }
+
+    // ── плаващ етикет: подложката зад смаления етикет (оригинал: #FFFFFF) ──
+    .form-floating > .form-control:focus ~ label::after,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+    .form-floating > .form-control-plaintext ~ label::after,
+    .form-floating > .form-select ~ label::after {
+        background-color: var(--mcp-fe-control-bg);
+    }
+    .form-floating > :disabled ~ label::after,
+    .form-floating > .form-control:disabled ~ label::after {
+        background-color: var(--mcp-surface-2);
+    }
+
+    // ── чекбокс и радио ──
+    // фонът е през локалната променлива на Bootstrap (правило 2)
+    .form-check-input {
+        --form-check-bg: var(--mcp-fe-control-bg);
+        border-color: var(--mcp-control-border);
+    }
+    // Радиус на чекбокса: --mcp-r-control-sm, но не повече от 0.3em — при
+    // scale 2 (Muk) токенът е 8px и 16px квадратче ще стане кръг, т.е.
+    // неразличимо от радио. Интерполация, защото libsass смята min() за
+    // своя функция и гърми на var().
+    .form-check-input[type="checkbox"] {
+        border-radius: #{"min(var(--mcp-r-control-sm), 0.3em)"};
+    }
+    .form-check-input:focus {
+        border-color: var(--mcp-focus-border);
+        box-shadow: var(--mcp-fe-focus-ring);
+    }
+    // оригинал: bg и рамка #0F52BA (hex в свойството)
+    .form-check-input:checked,
+    .form-check-input[type="checkbox"]:indeterminate {
+        background-color: var(--mcp-accent);
+        border-color: var(--mcp-accent);
+    }
+    // оригинал: рамка #0F52BA при hover на целия ред (web, frontend)
+    .form-check:hover,
+    .form-check:hover .form-check-input:not(:disabled):not(.o_wysiwyg_loader) {
+        border-color: var(--mcp-accent);
+    }
+    .form-check-input:disabled:not(:checked),
+    .form-check-input.o_wysiwyg_loader:not(:checked) {
+        background-color: var(--mcp-surface-2);
+    }
+
+    // ── input-group (оригинал: bg var(--tertiary-bg), текст #212529) ──
+    .input-group-text {
+        color: var(--mcp-ink);
+        background-color: var(--mcp-surface-2);
+        border-color: var(--mcp-control-border);
+    }
+    // „subtle“ вариантът е част от полето: фонът на полето
+    .input-group-text.input-group-text-subtle {
+        color: var(--mcp-ink);
+        background-color: var(--mcp-fe-control-bg);
+        border-color: var(--mcp-control-border);
+    }
+
+    // ── етикети (EE: 16/400, R4 §1) ──
+    .form-label,
+    .col-form-label,
+    .s_website_form_label {
+        color: var(--mcp-ink-2);
+        font-weight: var(--mcp-fw-regular);
+    }
+    // звездичката на задължителното поле във формата на сайта
+    .s_website_form_mark {
+        color: var(--mcp-danger);
+    }
+
+    // ── валидация: пръстенът при фокус в цвета на ролята ──
+    // (рамките и текстът идват от --form-*-color по-горе)
+    .was-validated .form-control:invalid:focus,
+    .form-control.is-invalid:focus,
+    .was-validated .form-select:invalid:focus,
+    .form-select.is-invalid:focus,
+    .was-validated .form-check-input:invalid:focus,
+    .form-check-input.is-invalid:focus {
+        box-shadow: $mcpf-ring-danger;
+    }
+    .was-validated .form-control:valid:focus,
+    .form-control.is-valid:focus,
+    .was-validated .form-select:valid:focus,
+    .form-select.is-valid:focus,
+    .was-validated .form-check-input:valid:focus,
+    .form-check-input.is-valid:focus {
+        box-shadow: $mcpf-ring-ok;
+    }
+    .is-invalid ~ .input-group-text.input-group-text-subtle,
+    .input-group-text.input-group-text-subtle:has(~ .is-invalid) {
+        border-color: var(--mcp-danger);
+    }
+
+    // ── търсачката (магазин: „oe_search_box text-bg-light border-0“, блог:
+    //    „oe_search_box border-0 bg-light“) → светла повърхност на пресета ──
+    .oe_search_box {
+        background-color: var(--mcp-surface-2) !important; // !important: оригиналът е !important (.bg-light / .text-bg-light, bootstrap utilities)
+        color: var(--mcp-ink) !important; // !important: оригиналът е !important (.text-bg-light, color #212529)
+    }
+}

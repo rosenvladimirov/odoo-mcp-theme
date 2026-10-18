@@ -1,0 +1,40 @@
+// theme_mcp_works_frontend — B12 · блог (PLAN §4 B12).
+// Всяко правило минава през пазачите от _mixins.scss (PLAN §2.5): същият
+// селектор като компилирания оригинал на website_blog, предшестван от
+// $mcpf-site (+0,0,1).
+//
+// Какво НЕ е тук (по плана):
+// - таговете (.o_tag) са на B4, търсенето (.oe_search_box) на B3, бутоните на
+//   филтрите на B2, заглавията h1–h6/.h1–.h6 на B1 (.o_blog_post_title и
+//   .o_wblog_post_name винаги носят hN клас, затова тук не се пипат);
+// - .o_wblog_post_content_field и .o_wblog_normalize_font са съдържание
+//   (чете ги o_wblog_normalize_font) и не се пипат;
+// - класът shadow на корицата е избор на шаблона и остава;
+// - .o_wblog_post_list_author стои ВЪРХУ снимката (text-white върху scrim
+//   градиента на website_blog), затова не става ink-3: там би бил нечетим.
+//   Когато корицата е скрита, шаблонът сам дава „by автор“ с text-muted
+//   (website_blog_posts_loop.xml:159), а то вече е ink-3 през моста.
+
+// Корицата в списъка с публикации: радиус на повърхност (като картата в B4),
+// не на контрол. Шаблонът слага utility .rounded (border-radius:
+// var(--border-radius) !important), затова по правило 2 от §2.5 задаваме
+// локално променливата, която utility-то чете, а не свойството. Вътре в
+// корицата няма други елементи, които ползват --border-radius.
+#{$mcpf-site} .o_wblog_post .o_record_cover_container {
+    --border-radius: var(--mcp-r-surface);
+}
+
+// Мета редът под публикацията: датата е тиха (EE: автор • дата в muted),
+// а не fw-bold в цвета на текста. Линкът към блога в същия ред остава
+// линк (B2). Оригинал: website_blog_posts_loop.xml:168, без SCSS правило,
+// затова пазим реда на website_blog: .website_blog #o_wblog_posts_loop.
+#{$mcpf-site} .website_blog #o_wblog_posts_loop .o_wblog_post time {
+    color: var(--mcp-ink-3);
+}
+
+// „Следваща публикация“ под статията: компилираният фон е литерал
+// $body-bg (#FFF, website_blog.scss:215), т.е. бяла лента върху --mcp-bg и
+// в тъмен режим. Следваме фона на страницата.
+#{$mcpf-site} .website_blog #o_wblog_next_container {
+    background-color: var(--mcp-bg);
+}

@@ -1,0 +1,208 @@
+// theme_mcp_works_frontend — B2 · бутони (PLAN §4 B2, EE 20 мерки R4 §1).
+// Всяко правило минава през пазачите от _mixins.scss (PLAN §2.5): същият
+// селектор като компилирания оригинал + 0,0,1. Задаваме САМО локалните
+// променливи на Bootstrap (--btn-*), не свойствата (правило 2).
+// Оригиналите: web/bootstrap (.btn, .btn-lg, .btn-sm, button-variant),
+// html_editor.common.scss (o_ccN разширенията), website.scss (.navbar-light,
+// .o_footer, прозрачният хедър над корица).
+// Цветовете идват от договора на секциите --mcpf-sec-* (B1/B6/B7 ги
+// задават, тук само се консумират) — стойността е от НАЙ-БЛИЗКАТА секция.
+// Отстъпите и височините НЕ се пипат (EE = Odoo: 38px, 6/16, правило 5).
+
+// ── помощни: компилираните разширения на варианта ──
+// Прозрачният хедър започва с #wrapwrap, затова там пазачът е $mcpf, а не
+// $mcpf-site (иначе „#wrapwrap … #wrapwrap“ не хваща нищо).
+$mcpf-btn-overlay: '#wrapwrap.o_header_overlay > header:not(.o_header_affixed):not(.o_header_sidebar):not(.o_top_menu_collapse_shown) > .navbar';
+
+// Слоевете извън #wrapwrap (Owl диалозите като конфигуратора на продукта,
+// модалите, offcanvas, popover, toast). :where() не добавя специфичност →
+// пак оригиналът + 0,0,1 (правило 1 от §2.5); edit mode е изключен от пазача.
+$mcpf-btn-float: '#{$mcpf-float} :where(.modal, .offcanvas, .popover, .toast)';
+
+// Същият селектор в двата обхвата: сайтът и плаващите слоеве.
+@function mcpf-btn-both($tails...) {
+    $out: ();
+    @each $t in $tails {
+        $out: append($out, '#{$mcpf-site} #{$t}', comma);
+        $out: append($out, '#{$mcpf-btn-float} #{$t}', comma);
+    }
+    @return $out;
+}
+
+// Селекторите на компилирания вариант (напр. primary → .btn-primary,
+// .btn-fill-primary, .o_ccN …, .navbar-light …, .o_footer …, overlay).
+// $fill: дали има .btn-fill-<v>; $cc: дали има o_ccN разширения.
+@function mcpf-btn-sel($v, $fill: true, $cc: true) {
+    $tails: ('.btn-#{$v}',);
+    @if $fill {
+        $tails: append($tails, '.btn-fill-#{$v}', comma);
+    }
+    $out: ();
+    @each $t in $tails {
+        $out: append($out, '#{$mcpf-site} #{$t}', comma);
+        $out: append($out, '#{$mcpf-btn-float} #{$t}', comma);
+    }
+    @if $cc {
+        @each $t in $tails {
+            $out: append($out, '#{$mcpf-site} .navbar-light #{$t}', comma);
+            $out: append($out, '#{$mcpf-site} .o_footer #{$t}', comma);
+            $out: append($out, '#{$mcpf} #{$mcpf-btn-overlay} #{$t}', comma);
+            @each $n in 1, 2, 3, 4, 5 {
+                $out: append($out, '#{$mcpf-site} .o_cc#{$n} #{$t}', comma);
+                $out: append($out, '#{$mcpf-site} .o_colored_level .o_cc#{$n} #{$t}', comma);
+            }
+        }
+    }
+    @return $out;
+}
+
+// ── 1. Основата .btn: радиус, сянка, тегло, фокус ──
+// Изключенията в :where() са оригинали с 0,1,0 и собствен transition
+// (.nav-link.btn, .page-link, …): без тях нашето 0,1,1 би ги надвило.
+#{mcpf-btn-both('.btn')} {
+    --btn-border-radius: var(--mcp-fe-btn-radius);
+    --btn-box-shadow: var(--mcp-fe-btn-shadow);
+    --btn-font-weight: var(--mcp-fw-regular);
+    --btn-focus-box-shadow: var(--mcp-fe-focus-ring);
+}
+
+#{mcpf-btn-both('.btn:where(:not(.nav-link, .page-link, .accordion-button, .navbar-toggler, .transition-none, .o_wish_rm))')} {
+    // само цветовете се анимират (BREF §1), без transform
+    transition: color var(--mcp-t-fast), background-color var(--mcp-t-fast), border-color var(--mcp-t-fast), box-shadow var(--mcp-t-fast);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #{mcpf-btn-both('.btn:where(:not(.nav-link, .page-link, .accordion-button, .navbar-toggler, .transition-none, .o_wish_rm))')} {
+        transition: none;
+    }
+}
+
+// btn-lg = хапче (D9; website литерал 2rem), btn-sm = малкият радиус.
+// Трябват изрично: иначе нашето „.btn“ (0,1,1) бие оригиналните 0,1,0.
+#{mcpf-btn-both('.btn-lg', '.btn-group-lg > .btn')} {
+    --btn-border-radius: var(--mcp-fe-btn-radius-lg);
+}
+
+#{mcpf-btn-both('.btn-sm', '.btn-group-sm > .btn')} {
+    --btn-border-radius: var(--mcp-fe-btn-radius-sm);
+}
+
+// ── 2. Primary: фонът е акцентът на секцията, hover = по-тъмният ──
+// Текстът при hover/active е отделен (D2): върху --mcp-accent-dark светлият
+// on-accent на светлите пресети пада под 4.5, затова секцията дава свой.
+#{mcpf-btn-sel(primary)} {
+    @include mcpf-btn-vars(var(--mcpf-sec-btn-bg), var(--mcpf-sec-btn-ink), var(--mcpf-sec-btn-hover));
+    --btn-hover-color: var(--mcpf-sec-btn-hover-ink);
+    --btn-active-color: var(--mcpf-sec-btn-hover-ink);
+}
+
+// ── 3. Secondary: неутралният бутон на секцията (вместо бежовото) ──
+#{mcpf-btn-sel(secondary)} {
+    @include mcpf-btn-vars(
+        var(--mcpf-sec-btn2-bg),
+        var(--mcpf-sec-btn2-ink),
+        color-mix(in srgb, var(--mcpf-sec-btn2-bg) 85%, var(--mcpf-sec-ink)),
+        var(--mcpf-sec-btn2-border)
+    );
+    --btn-hover-border-color: var(--mcpf-sec-btn2-border);
+    --btn-active-border-color: var(--mcpf-sec-btn2-border);
+}
+
+// ── 4. Outline primary: текст и рамка в цвета на линка; hover се запълва ──
+// Текстът при hover: --mcpf-btn-on-link (по секция, вж. долу), иначе
+// --mcp-on-accent (светлите секции, хедърът).
+#{mcpf-btn-sel(outline-primary, $fill: false)} {
+    $link: var(--mcpf-sec-link);
+    $on: var(--mcpf-btn-on-link, var(--mcp-on-accent));
+    --btn-color: #{$link};
+    --btn-border-color: #{$link};
+    --btn-hover-color: #{$on};
+    --btn-hover-bg: #{$link};
+    --btn-hover-border-color: #{$link};
+    --btn-active-color: #{$on};
+    --btn-active-bg: #{$link};
+    --btn-active-border-color: #{$link};
+    --btn-disabled-color: #{$link};
+    --btn-disabled-bg: transparent;
+    --btn-disabled-border-color: #{$link};
+}
+
+// В cc2..cc5 и във футъра линкът е тъмен/инверсен спрямо акцента, затова
+// текстът при запълване е фонът на секцията (контраст, не on-accent).
+@function mcpf-btn-cc-sel($tail, $ns) {
+    $out: ('#{$mcpf-site} .o_footer #{$tail}',);
+    @each $n in $ns {
+        $out: append($out, '#{$mcpf-site} .o_cc#{$n} #{$tail}', comma);
+        $out: append($out, '#{$mcpf-site} .o_colored_level .o_cc#{$n} #{$tail}', comma);
+    }
+    @return $out;
+}
+
+#{mcpf-btn-cc-sel('.btn-outline-primary', (2, 3, 4, 5))} {
+    --mcpf-btn-on-link: var(--mcpf-sec-bg);
+}
+
+// ── 5. Outline secondary: като secondary, но без фон в покой ──
+#{mcpf-btn-sel(outline-secondary, $fill: false)} {
+    $ink: var(--mcpf-sec-btn2-ink);
+    $border: var(--mcpf-sec-btn2-border);
+    $hover: color-mix(in srgb, var(--mcpf-sec-btn2-bg) 85%, var(--mcpf-sec-ink));
+    --btn-color: #{$ink};
+    --btn-border-color: #{$border};
+    --btn-hover-color: #{$ink};
+    --btn-hover-bg: #{$hover};
+    --btn-hover-border-color: #{$border};
+    --btn-active-color: #{$ink};
+    --btn-active-bg: #{$hover};
+    --btn-active-border-color: #{$border};
+    --btn-disabled-color: #{$ink};
+    --btn-disabled-bg: transparent;
+    --btn-disabled-border-color: #{$border};
+}
+
+// ── 6. Light: неутралният бутон (Apply в количката, Download, филтри) ──
+// Оригиналът е само .btn-light / .btn-fill-light (без o_ccN разширения).
+#{mcpf-btn-sel(light, $cc: false)} {
+    @include mcpf-btn-vars(var(--mcp-surface-2), var(--mcp-ink), var(--mcp-hover-bg));
+}
+
+// ── 7. Link: цветът на линка в секцията ──
+#{mcpf-btn-both('.btn-link')} {
+    --btn-color: var(--mcpf-sec-link);
+    --btn-hover-color: var(--mcpf-sec-link-hover);
+    --btn-active-color: var(--mcpf-sec-link-hover);
+    --btn-disabled-color: var(--mcp-ink-dim);
+}
+
+// ── 8. Избран неутрален бутон (EE: блог „All“, превключватели) ──
+// Само за неутралните варианти: .btn-primary.active остава в акцента.
+#{mcpf-btn-both('.btn-check:checked + .btn-light', '.btn-light.active', '.btn-check:checked + .btn-secondary', '.btn-secondary.active', '.btn-check:checked + .btn-outline-secondary', '.btn-outline-secondary.active')} {
+    --btn-active-bg: var(--mcp-active-bg);
+    --btn-active-border-color: var(--mcp-active-border);
+    --btn-active-color: var(--mcp-accent-dark);
+}
+
+// ── 9. Семантичните: danger / success / warning ──
+// Текстът е по контраст: #10b981 и #f59e0b са светли (бяло ~2.5:1), затова
+// там тъмен текст; червеното носи бяло (4.8:1). Тъмният режим — по-долу.
+$mcpf-btn-ink-dark: #111827;
+$mcpf-btn-roles: (
+    danger: (var(--mcp-danger), #ffffff),
+    success: (var(--mcp-ok), $mcpf-btn-ink-dark),
+    warning: (var(--mcp-warn), $mcpf-btn-ink-dark),
+);
+
+@each $role, $pair in $mcpf-btn-roles {
+    $bg: nth($pair, 1);
+    #{mcpf-btn-sel($role, $cc: false)} {
+        @include mcpf-btn-vars($bg, var(--mcpf-btn-#{$role}-ink, #{nth($pair, 2)}), color-mix(in srgb, #{$bg} 85%, #000));
+    }
+}
+
+// В тъмен режим червеното е светло (#f87171) → тъмен текст и там.
+#{$mcpf}[data-mcp-mode="dark"] :where(#wrapwrap) .btn-danger,
+#{$mcpf}[data-mcp-mode="dark"] :where(#wrapwrap) .btn-fill-danger,
+#{$mcpf-float}[data-mcp-mode="dark"] :where(.modal, .offcanvas, .popover, .toast) .btn-danger,
+#{$mcpf-float}[data-mcp-mode="dark"] :where(.modal, .offcanvas, .popover, .toast) .btn-fill-danger {
+    --mcpf-btn-danger-ink: #{$mcpf-btn-ink-dark};
+}

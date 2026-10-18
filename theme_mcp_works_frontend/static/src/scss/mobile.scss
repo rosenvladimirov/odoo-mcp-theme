@@ -1,0 +1,64 @@
+// theme_mcp_works_frontend — B15 · мобилен изглед (PLAN §4 B15, EE 20: R4 §1)
+// Всяко правило минава през пазачите от _mixins.scss (PLAN §2.5).
+// Мрежата, отстъпите на секциите и височините на контролите не се пипат
+// (правило 5): тук само преливането, разделителите и лепкавите ленти.
+
+@include media-breakpoint-down(lg) {
+    // ── /shop: лентата с инструменти над продуктите ──
+    // Оригиналът „.products_header.btn-toolbar.flex-nowrap“ (website_sale
+    // templates.xml) държи търсене, „Ценова листа“, „Подреждане по“ и бутона
+    // за филтри на един ред; дългите етикети на български избутват бутона
+    // за филтри до 420px при 390 (R3 §1.8). Решение без промяна на HTML:
+    // падащите менюта могат да се свиват (min-width: 0), а текстът им се
+    // реже с многоточие, така че бутонът за филтри остава в екрана.
+    #{$mcpf-site} .products_header > .dropdown {
+        min-width: 0;
+    }
+
+    // Превключвателят става flex, за да остане стрелката (::after) видима,
+    // а да се реже само текстът. Празните текстови възли между span-овете
+    // изчезват във flex, затова разстоянието идва от gap.
+    #{$mcpf-site} .products_header > .dropdown > .dropdown-toggle {
+        display: flex;
+        align-items: center;
+        column-gap: .25em;
+        max-width: 100%;
+
+        > span,
+        > small {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &::after {
+            flex: 0 0 auto;
+        }
+    }
+
+    // ── мобилното меню (offcanvas в хедъра) ──
+    // Редовете „.nav-link.p-3“ са на цялата ширина с радиус 0, разделени
+    // с „.border-top“ (той вече чете --border-color = --mcp-rule от моста).
+    // Hover фонът е мекият неутрален на темата, с радиуса на контролите.
+    #{$mcpf-site} .o_navbar_mobile .top_menu > .nav-item > .nav-link {
+        border-radius: var(--mcp-r-control);
+        transition: background-color .15s ease, color .15s ease;
+
+        &:hover,
+        &:focus-visible {
+            background-color: var(--mcp-hover-bg);
+        }
+    }
+
+    #{$mcpf-site} .o_navbar_mobile .top_menu > .nav-item {
+        border-color: var(--mcp-rule);
+    }
+
+    // ── лепкавите ленти ──
+    // Под lg лепкавото е само „.o_mobile_summary.sticky-bottom“ на чекаута:
+    // total картата и колоните на продукта (.o_wsale_sticky_object) са
+    // static (принудено „top: 0“ под lg, website_sale.scss:1093), а
+    // .o_cta_navigation_container е скрит в картата. Фонът и сянката на
+    // .o_mobile_summary са на B10 (checkout.scss), затова тук няма правило.
+}

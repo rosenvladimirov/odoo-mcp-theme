@@ -1,0 +1,299 @@
+// theme_mcp_works_frontend — B4 · card, badge, alert, table, pagination, breadcrumb, list-group, accordion, nav, o_tag
+// PLAN §4 B4. Всяко правило минава през пазачите от _mixins.scss (§2.5):
+// същият селектор като компилирания оригинал + 0,0,1. Където Bootstrap има
+// локална CSS променлива, задаваме променливата, не свойството (правило 2).
+// Отстъпите, височините и размерите не се пипат (правило 5).
+
+// Обхватът на компонентите: съдържанието на сайта (#wrapwrap) и слоевете
+// извън него (модал, offcanvas, popover, toast) — без edit mode на builder-а.
+// :where() не добавя специфичност → и двете части са оригинала + 0,0,1.
+$mcpf-cmp: '#{$mcpf-site}, #{$mcpf-float} :where(.modal, .offcanvas, .popover, .toast)';
+
+// Ролите → токените на ядрото (PLAN §4 B4).
+// Делът на ролята в текста на меките значки, таговете и alert-ите. Планът
+// предлага 80%, но при 80% жълтото е 2.5:1, оранжевото 3.4:1 (под WCAG 4.5)
+// → 50% дава ≥ 4.5 за всичките 12 цвята и шестте роли (мерено в 8169).
+$mcpf-soft-ink: 50%;
+
+$mcpf-roles: (
+    "primary": var(--mcp-accent),
+    "secondary": var(--mcp-ink-3),
+    "success": var(--mcp-ok),
+    "info": var(--mcp-accent-2),
+    "warning": var(--mcp-warn),
+    "danger": var(--mcp-danger),
+);
+// Текстът върху плътния цвят на ролята. Не зависи от режима (тъмният ink е
+// светъл): тъмен тон на самата роля или бяло (червеното).
+$mcpf-solid-ink: (
+    "primary": var(--mcp-on-accent),
+    "secondary": var(--mcp-fe-secondary-ink),
+    "success": color-mix(in srgb, var(--mcp-ok) 25%, #000),
+    "info": color-mix(in srgb, var(--mcp-accent-2) 25%, #000),
+    "warning": color-mix(in srgb, var(--mcp-warn) 25%, #000),
+    "danger": #fff,
+);
+
+#{$mcpf-cmp} {
+
+    // ── card ─────────────────────────────────────────────────────────────
+    // .s_card в снипетите е съдържание: следва само през тези променливи.
+    // Вътрешният радиус в оригинала е от --border-radius (контрола), а не от
+    // радиуса на картата → изчисляваме го наново от --card-border-radius.
+    .card {
+        --card-bg: var(--mcp-bg);
+        --card-border-color: var(--mcp-card-border);
+        --card-border-radius: var(--mcp-r-surface);
+        --card-inner-border-radius: calc(var(--card-border-radius) - var(--card-border-width));
+        --card-box-shadow: var(--mcp-fe-card-shadow);
+        --card-cap-bg: var(--mcp-surface-2);
+    }
+
+    // ── badge ────────────────────────────────────────────────────────────
+    // website.scss рисува значката през --badge-bg/--badge-color/
+    // --badge-border-color (свойствата в оригинала са important) → тук основно тях;
+    // свойствата се повтарят само при меките значки (виж долу).
+    .badge {
+        --badge-border-radius: var(--mcp-r-pill);
+        --badge-font-weight: var(--mcp-fe-badge-weight);
+    }
+
+    @each $role, $c in $mcpf-roles {
+        // мека значка: тон на ролята върху фона, рамка в пълния цвят
+        .badge.text-bg-#{$role} {
+            --badge-bg: #{mcpf-tint($c, var(--mcp-fe-badge-tint))};
+            --badge-color: color-mix(in srgb, #{$c} #{$mcpf-soft-ink}, var(--mcp-ink));
+            --badge-border-color: #{$c};
+            --badge-color-hover: var(--mcp-on-accent);
+            // без important тук .text-bg-* на палитрата (B1, 0,1,1, също
+            // important) прави значката плътна
+            background: var(--badge-bg) !important; // !important: оригиналът е !important (website.scss .badge)
+            color: var(--badge-color) !important; // !important: оригиналът е !important (website.scss .badge)
+        }
+        // плътна значка (брояч на количката). --mcp-on-accent е сметнат от
+        // сървъра САМО за акцента → за другите роли текстът е по ролята
+        // (виж $mcpf-solid-ink), иначе червеното с тъмен текст е 3.7:1.
+        $ink: map-get($mcpf-solid-ink, $role);
+        .badge.bg-#{$role} {
+            --badge-bg: #{$c};
+            --badge-color: #{$ink};
+            --badge-border-color: #{$c};
+            --badge-color-hover: #{$ink};
+        }
+    }
+
+    // светлата и тъмната значка (website ги компилира от $light/$dark)
+    .badge.text-bg-light {
+        --badge-bg: var(--mcp-surface-2);
+        --badge-color: var(--mcp-ink-2);
+        --badge-color-hover: var(--mcp-ink);
+        --badge-border-color: var(--mcp-rule);
+        background: var(--badge-bg) !important; // !important: оригиналът е !important (website.scss .badge)
+        color: var(--badge-color) !important; // !important: оригиналът е !important (website.scss .badge)
+    }
+    .badge.bg-light {
+        --badge-bg: var(--mcp-surface-2);
+        --badge-color: var(--mcp-ink);
+        --badge-border-color: var(--mcp-surface-2);
+        --badge-color-hover: var(--mcp-ink);
+    }
+    .badge.text-bg-dark {
+        --badge-bg: #{mcpf-tint(var(--mcp-fe-inverse-bg), var(--mcp-fe-badge-tint))};
+        --badge-color: var(--mcp-ink);
+        --badge-color-hover: var(--mcp-fe-inverse-ink);
+        --badge-border-color: var(--mcp-fe-inverse-bg);
+        background: var(--badge-bg) !important; // !important: оригиналът е !important (website.scss .badge)
+        color: var(--badge-color) !important; // !important: оригиналът е !important (website.scss .badge)
+    }
+    .badge.bg-dark {
+        --badge-bg: var(--mcp-fe-inverse-bg);
+        --badge-color: var(--mcp-fe-inverse-ink);
+        --badge-border-color: var(--mcp-fe-inverse-bg);
+        --badge-color-hover: var(--mcp-fe-inverse-ink);
+    }
+    // текстът върху жълто не може да е бял; вторичната плътна значка е
+    // неутралната повърхност, която замества бежовото #F0CDA8
+    .badge.text-bg-warning {
+        --badge-color-hover: var(--mcp-ink);
+    }
+    .badge.text-bg-secondary {
+        --badge-color-hover: var(--mcp-fe-secondary-ink);
+    }
+    .badge.bg-secondary {
+        --badge-bg: var(--mcp-fe-secondary);
+        --badge-color: var(--mcp-fe-secondary-ink);
+        --badge-border-color: var(--mcp-fe-secondary);
+        --badge-color-hover: var(--mcp-fe-secondary-ink);
+    }
+
+    // hover на линк-значка: оригиналът е 0,2,1 и губи от горните 0,2,1 по
+    // реда в бъндъла → повтаряме го (+0,0,1), за да остане hover-ът
+    a.badge:hover,
+    a:not(.dropdown-item):hover > .badge,
+    .o_badge_clickable.badge:hover {
+        --badge-bg: var(--badge-border-color);
+        --badge-color: var(--badge-color-hover);
+    }
+
+    // ── o_tag (таговете в блога: badge o_tag o_color_N) ──────────────────
+    // Оригиналът (.o_color_N, website.scss) задава --background-color/--color/
+    // --badge-border-color; значката ги чете. Цветовете са 12-те на ядрото.
+    // Тъмен текст при hover за светлите тонове (както в оригинала).
+    @for $n from 0 through 11 {
+        .o_tag.o_color_#{$n} {
+            --background-color: #{mcpf-tint(var(--mcp-color-#{$n}), var(--mcp-fe-badge-tint))};
+            --color: color-mix(in srgb, var(--mcp-color-#{$n}) #{$mcpf-soft-ink}, var(--mcp-ink));
+            --badge-border-color: var(--mcp-color-#{$n});
+            @if index((0, 2, 3, 6, 7, 10), $n) {
+                --badge-color-hover: color-mix(in srgb, var(--mcp-color-#{$n}) 25%, #000);
+            } @else {
+                --badge-color-hover: #fff;
+            }
+        }
+    }
+
+    // ── alert ────────────────────────────────────────────────────────────
+    .alert {
+        --alert-border-radius: var(--mcp-r-surface);
+    }
+    // secondary също: оригиналът е бежовото #F0CDA8
+    @each $role, $c in $mcpf-roles {
+        .alert-#{$role} {
+            --alert-bg: #{mcpf-tint($c, 10%)};
+            --alert-border-color: #{mcpf-tint($c, 30%)};
+            --alert-color: color-mix(in srgb, #{$c} #{$mcpf-soft-ink}, var(--mcp-ink));
+            --alert-link-color: color-mix(in srgb, #{$c} 35%, var(--mcp-ink));
+        }
+    }
+
+    // ── table ────────────────────────────────────────────────────────────
+    // Отстъпът на клетките не се пипа (EE = Odoo .75rem; порталът има свой).
+    .table {
+        --table-bg: transparent;
+        --table-border-color: var(--mcp-rule);
+        --table-hover-bg: var(--mcp-table-hover-bg);
+        --table-striped-bg: color-mix(in srgb, var(--mcp-ink) 2%, transparent);
+    }
+    // th в оригинала няма тегло (браузърът дава bold) → 600 (D8)
+    .table th {
+        font-weight: var(--mcp-fe-th-weight);
+    }
+
+    // ── pagination ───────────────────────────────────────────────────────
+    // Оригиналът е с hex (#FFFFFF, #F6F5F4, #0F52BA) → всичко през токени.
+    .pagination {
+        --pagination-color: var(--mcp-ink-2);
+        --pagination-bg: transparent;
+        --pagination-border-radius: var(--mcp-r-pill);
+        --pagination-hover-color: var(--mcp-ink);
+        --pagination-hover-bg: var(--mcp-surface-2);
+        --pagination-hover-border-color: var(--mcp-surface-2);
+        --pagination-focus-color: var(--mcp-ink);
+        --pagination-focus-bg: var(--mcp-surface-2);
+        --pagination-focus-box-shadow: var(--mcp-fe-focus-ring);
+        --pagination-active-color: var(--mcp-on-accent);
+        --pagination-active-bg: var(--mcp-accent);
+        --pagination-active-border-color: var(--mcp-accent);
+        --pagination-disabled-color: var(--mcp-ink-dim);
+        --pagination-disabled-bg: transparent;
+    }
+    // pagination-lg/-sm пренаписват радиуса с литерал 50rem
+    .pagination-lg,
+    .pagination-sm {
+        --pagination-border-radius: var(--mcp-r-pill);
+    }
+
+    // ── breadcrumb ───────────────────────────────────────────────────────
+    .breadcrumb {
+        --breadcrumb-item-active-color: var(--mcp-ink-3);
+        --breadcrumb-divider-color: var(--mcp-ink-dim);
+    }
+
+    // ── list-group ───────────────────────────────────────────────────────
+    .list-group {
+        --list-group-color: var(--mcp-ink);
+        --list-group-bg: var(--mcp-bg);
+        --list-group-border-color: var(--mcp-rule);
+        --list-group-action-hover-bg: var(--mcp-hover-bg);
+        --list-group-disabled-bg: var(--mcp-bg);
+        --list-group-active-bg: var(--mcp-active-bg);
+        --list-group-active-color: var(--mcp-accent-dark);
+        --list-group-active-border-color: var(--mcp-active-border);
+    }
+
+    // ── accordion ────────────────────────────────────────────────────────
+    .accordion {
+        --accordion-border-color: var(--mcp-rule);
+        --accordion-active-color: var(--mcp-ink);
+        --accordion-active-bg: var(--mcp-surface-2);
+        --accordion-inner-border-radius: calc(var(--accordion-border-radius) - var(--accordion-border-width));
+        --accordion-btn-focus-box-shadow: none;
+    }
+    // снипетът s_accordion връща фокус-пръстен в сапфир → същият в акцента
+    .s_accordion .accordion {
+        --accordion-btn-focus-box-shadow: inset 0 0 0 4px color-mix(in srgb, var(--mcp-accent) 25%, transparent);
+    }
+
+    // ── nav ──────────────────────────────────────────────────────────────
+    .nav-tabs {
+        --nav-tabs-link-active-border-color: var(--mcp-rule) var(--mcp-rule) var(--mcp-bg);
+    }
+    .nav-pills {
+        --nav-pills-link-active-bg: var(--mcp-accent);
+        --nav-pills-link-active-color: var(--mcp-on-accent);
+    }
+    // фокус-пръстенът на nav-link е компилиран rgba(сапфир)
+    .nav-link:focus-visible {
+        box-shadow: var(--mcp-fe-focus-ring);
+    }
+    .s_tabs_common .nav-link:focus-visible {
+        box-shadow: inset 0 0 0 4px color-mix(in srgb, var(--mcp-accent) 25%, transparent);
+    }
+
+    // ── progress ─────────────────────────────────────────────────────────
+    .progress,
+    .progress-stacked {
+        --progress-bg: var(--mcp-surface-2);
+        --progress-bar-bg: var(--mcp-accent);
+        --progress-bar-color: var(--mcp-on-accent);
+    }
+
+    // ── компилираните разширения в секциите o_ccN (website, hex) ─────────
+    // nav-pills: активният е бутонът на секцията (договорът --mcpf-sec-*);
+    // list-group има собствен фон (--mcp-bg) → линкът е --mcp-link, а не
+    // линкът на секцията (в cc4 той е бял).
+    @for $n from 1 through 5 {
+        .o_cc#{$n} .nav-pills .nav-link.active,
+        .o_cc#{$n} .nav-pills .show > .nav-link,
+        .o_colored_level .o_cc#{$n} .nav-pills .nav-link.active,
+        .o_colored_level .o_cc#{$n} .nav-pills .show > .nav-link {
+            background-color: var(--mcpf-sec-btn-bg);
+            color: var(--mcpf-sec-btn-ink);
+        }
+        .o_cc#{$n} a.list-group-item,
+        .o_colored_level .o_cc#{$n} a.list-group-item {
+            color: var(--mcp-link);
+        }
+        .o_cc#{$n} a.list-group-item.active,
+        .o_colored_level .o_cc#{$n} a.list-group-item.active {
+            background-color: var(--mcp-active-bg);
+            color: var(--mcp-accent-dark);
+            border-color: var(--mcp-active-border);
+        }
+    }
+    .navbar-light .nav-pills .nav-link.active,
+    .navbar-light .nav-pills .show > .nav-link {
+        background-color: var(--mcpf-sec-btn-bg);
+        color: var(--mcpf-sec-btn-ink);
+    }
+    .navbar-light a.list-group-item,
+    .o_footer a.list-group-item {
+        color: var(--mcp-link);
+    }
+    .navbar-light a.list-group-item.active,
+    .o_footer a.list-group-item.active {
+        background-color: var(--mcp-active-bg);
+        color: var(--mcp-accent-dark);
+        border-color: var(--mcp-active-border);
+    }
+}

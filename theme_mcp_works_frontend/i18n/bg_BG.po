@@ -1,0 +1,79 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* theme_mcp_works_frontend
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260811\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-17 21:10+0000\n"
+"PO-Revision-Date: 2026-10-17 21:10+0000\n"
+"Last-Translator: Rosen Vladimirov <vladimirov.rosen@gmail.com>\n"
+"Language-Team: \n"
+"Language: bg_BG\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: theme_mcp_works_frontend
+#: model_terms:ir.ui.view,arch_db:theme_mcp_works_frontend.res_config_settings_view_form_mcp_frontend
+msgid ""
+"Apply the MCP backend preset (accent, light/dark, radius, font) to the "
+"website, portal, shop, blog and login. Off restores the Website Builder "
+"theme."
+msgstr ""
+"Прилага пресета на MCP бекенда (акцент, светъл/тъмен режим, радиус, шрифт) "
+"към сайта, портала, магазина, блога и входа. „Изключено“ връща темата от "
+"Website Builder."
+
+#. module: theme_mcp_works_frontend
+#: model:ir.model,name:theme_mcp_works_frontend.model_res_config_settings
+msgid "Config Settings"
+msgstr "Настройки"
+
+#. module: theme_mcp_works_frontend
+#: model:ir.model.fields,field_description:theme_mcp_works_frontend.field_ir_http__display_name
+#: model:ir.model.fields,field_description:theme_mcp_works_frontend.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Име за показване"
+
+#. module: theme_mcp_works_frontend
+#: model:ir.model.fields.selection,name:theme_mcp_works_frontend.selection__res_config_settings__mcp_site_mode__follow
+msgid "Follow the MCP preset"
+msgstr "Следва пресета на MCP"
+
+#. module: theme_mcp_works_frontend
+#: model:ir.model.fields,help:theme_mcp_works_frontend.field_res_config_settings__mcp_site_mode
+msgid ""
+"Follow: the public website, portal, shop, blog and login use the accent, "
+"light/dark mode, radius and font of the backend preset; colours, fonts and "
+"button shapes chosen in the Website Builder Theme tab are overridden. Off: "
+"the website looks exactly as without this module."
+msgstr ""
+"Следва: публичният сайт, порталът, магазинът, блогът и входът ползват "
+"акцента, светлия/тъмния режим, радиуса и шрифта на бекенд пресета; "
+"цветовете, шрифтовете и формата на бутоните от таба „Тема“ на Website "
+"Builder се засенчват. Изключено: сайтът изглежда точно както без този модул."
+
+#. module: theme_mcp_works_frontend
+#: model:ir.model,name:theme_mcp_works_frontend.model_ir_http
+msgid "HTTP Routing"
+msgstr "HTTP маршрутизиране"
+
+#. module: theme_mcp_works_frontend
+#: model:ir.model.fields,field_description:theme_mcp_works_frontend.field_ir_http__id
+#: model:ir.model.fields,field_description:theme_mcp_works_frontend.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: theme_mcp_works_frontend
+#: model:ir.model.fields.selection,name:theme_mcp_works_frontend.selection__res_config_settings__mcp_site_mode__off
+msgid "Off (Odoo Website Builder styles)"
+msgstr "Изключено (стиловете на Odoo Website Builder)"
+
+#. module: theme_mcp_works_frontend
+#: model:ir.model.fields,field_description:theme_mcp_works_frontend.field_res_config_settings__mcp_site_mode
+#: model_terms:ir.ui.view,arch_db:theme_mcp_works_frontend.res_config_settings_view_form_mcp_frontend
+msgid "Website follows MCP theme"
+msgstr "Сайтът следва MCP темата"

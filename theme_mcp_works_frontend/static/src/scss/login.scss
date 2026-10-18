@@ -1,0 +1,56 @@
+// theme_mcp_works_frontend — B13 · вход и регистрация (PLAN §4 B13).
+// Екрани: /web/login, /web/signup, /web/reset_password, превключвателят на
+// потребители (Owl web.user_switch) и смяната на паролата в /my/security.
+// Полетата идват от B3 (forms.scss), бутоните от B2 (buttons.scss), list-group
+// от B4: тук са само разликите, които са специфични за формите за вход.
+// Мерено в EE 20 (/web/login, 8201): бутонът „око“ има рамката на полето,
+// редът за passkey е бял с рамката на полето, без карта около формата.
+// Карта около формата няма в шаблоните на O19 → нищо за .card (B4 я покрива).
+// Всичко е в #wrapwrap (website.login_layout), затова пазачът е $mcpf-site.
+
+#{$mcpf-site} {
+    // ── бутонът „покажи паролата“ (web, auth_signup, portal /my/security):
+    //    btn btn-sm border border-start-0 o_show_password ──
+    // Фонът е фонът на полето, за да продължава бялото поле и върху
+    // страница в --mcp-bg (D3); локалните променливи на бутона (правило 2).
+    .o_show_password.btn {
+        --btn-bg: var(--mcp-fe-control-bg);
+        --btn-color: var(--mcp-ink-3);
+        --btn-hover-bg: var(--mcp-hover-bg);
+        --btn-hover-color: var(--mcp-ink);
+        --btn-active-bg: var(--mcp-hover-bg);
+        --btn-active-color: var(--mcp-ink);
+        border-color: var(--mcp-control-border) !important; // !important: оригиналът е !important (bootstrap utilities .border, border-color от --border-color)
+    }
+    // докато полето е на фокус, рамката на окото следва рамката на полето
+    // (иначе половината група е в акцента, а другата половина е сива)
+    .input-group:focus-within > .o_show_password.btn {
+        border-color: var(--mcp-focus-border) !important; // !important: оригиналът е !important (bootstrap utilities .border)
+    }
+
+    // ── list-group във формите: passkey / OAuth (.o_login_auth) и списъкът
+    //    на запомнените потребители (.o_user_switch) ──
+    // B4 дава на list-group фона на страницата (--mcp-bg); тук редът е
+    // бял и с рамката на полето, както в EE (там е #FFF и 1px 15%).
+    :is(.oe_login_form, .oe_signup_form, .oe_reset_password_form) .list-group {
+        --list-group-bg: var(--mcp-fe-control-bg);
+        --list-group-border-color: var(--mcp-control-border);
+        --list-group-border-radius: var(--mcp-r-control);
+        --list-group-color: var(--mcp-ink);
+        --list-group-action-color: var(--mcp-ink);
+        --list-group-action-hover-color: var(--mcp-ink);
+        --list-group-action-hover-bg: var(--mcp-hover-bg);
+        --list-group-action-active-bg: var(--mcp-active-bg);
+        --list-group-action-active-color: var(--mcp-accent-dark);
+    }
+
+    // ── вторичните линкове („Reset Password“, „Don't have an account?“,
+    //    „Already have an account?“, „Back to Login“) ──
+    // btn-link взема --mcpf-sec-link от B2; тук само изрично --mcp-link
+    // (PLAN B13), защото формата може да стои в снипет с друг cc.
+    :is(.oe_login_form, .oe_signup_form, .oe_reset_password_form) .btn-link.btn-sm {
+        --btn-color: var(--mcp-link);
+        --btn-hover-color: var(--mcp-link-hover);
+        --btn-active-color: var(--mcp-link-hover);
+    }
+}

@@ -1,0 +1,115 @@
+// theme_mcp_works_frontend — B10 · количка и чекаут (PLAN §4 B10).
+// Екрани: /shop/cart, /shop/checkout, /shop/address, /shop/payment,
+// /shop/confirmation. Всяко правило минава през пазача (PLAN §2.5): същият
+// селектор като компилирания оригинал + 0,0,1. Отстъпите не се пипат.
+// Покрито другаде (тук няма правило): .o_total_card рамка/радиус (B4 .card),
+// бутоните (B2), полетата и адресната форма (B3), броячът .o_cart_item_count
+// bg-secondary (B4 .badge.bg-secondary), трохите и list-group (B4).
+// Редовете на количката (.o_cart_product) остават БЕЗ разделител, както в
+// EE (D8b = „не“, ADR 0001 т. 5).
+
+#{$mcpf-site} {
+
+    // ── стъпките на чекаута (website.step_wizard: .o_wizard.small) ───────
+    // Размерът следва font_scale на пресета; текущата стъпка е ink 600
+    // (D8: 600 вместо 700 на EE); следващите са muted (--secondary-color →
+    // --mcp-ink-3 от моста), завършената е линк (--mcp-link от моста).
+    .o_wizard {
+        font-size: var(--mcp-fe-fs-sm);
+    }
+    .o_wizard .fw-bold {
+        color: var(--mcp-ink);
+        font-weight: var(--mcp-fw-semibold) !important; // !important: оригиналът е !important (bootstrap utilities .fw-bold)
+    }
+
+    // ── снимката на реда в количката (img.border.rounded) ───────────────
+    // Радиусът идва от .rounded (--border-radius = --mcp-r-control от моста);
+    // тук само фонът под прозрачните снимки, както в EE (gray-100).
+    .o_cart_product_image img {
+        background-color: var(--mcp-fe-surface-muted);
+    }
+
+    // В мобилния изглед картата с общата сума губи рамката, а сумата получава
+    // горна линия (оригиналът: var(--o-border-color), следва моста) → без правило.
+
+    // ── избраният адрес (portal.address_card: bg-400 border border-primary) ─
+    // Сивото gray-400 се заменя с активния фон на темата; рамката в акцента
+    // идва от .border-primary (B1).
+    .o_address_card.bg-400 {
+        --background-color: var(--mcp-active-bg);
+        --color: var(--mcp-ink);
+        background-color: var(--mcp-active-bg) !important; // !important: оригиналът е !important (website bg-400)
+        color: var(--mcp-ink);
+    }
+
+    // ── методите за доставка и плащане (list-group, избран = радио) ─────
+    // Odoo не слага .active на избрания ред: маркира се отметнатото радио.
+    // Избраният ред получава активния вид на list-group от B4.
+    #o_delivery_methods .list-group-item:has(> div > .form-check > .form-check-input:checked),
+    .o_payment_form .list-group-item:has(.form-check-input:checked) {
+        --list-group-bg: var(--mcp-active-bg);
+        background-color: var(--mcp-active-bg);
+        border-color: var(--mcp-active-border);
+    }
+    // hover на опция за плащане: оригиналът е компилиран $primary (сапфир)
+    .o_payment_form .o_outline:hover {
+        border-color: var(--mcp-accent);
+    }
+    .o_payment_form .o_outline:not(:first-child):hover {
+        box-shadow: 0 calc(0px - var(--mcp-bw-1)) 0 var(--mcp-accent);
+    }
+}
+
+// Класът .o_website_sale_checkout е на <body> (извън #wrapwrap) → тези
+// правила стъпват на $mcpf, а #wrapwrap е в :where() (без специфичност):
+// оригиналът „.o_website_sale_checkout X“ + 0,0,1.
+#{$mcpf} .o_website_sale_checkout :where(#wrapwrap) {
+
+    // ── картите на чекаута (общата сума, адресите, обобщението) ─────────
+    // В EE картите са бяла повърхност върху страницата; при пресет с цветен
+    // --mcp-bg (Muk) те са --mcp-surface, както хедърът и полетата (D3).
+    // Рамката, радиусът и сянката са от B4 (.card).
+    .card {
+        --card-bg: var(--mcp-surface);
+    }
+    // website дава на .card-body литерален фон rgba(255,255,255,.9) и цвят
+    // #212529 (website.scss, o-cc на картите) → на чекаута тялото следва
+    // картата (същият селектор като оригинала, по-тесен обхват).
+    :where(.card:not([data-vxml])) .card-body:not(.card[data-vxml] .card-body) {
+        --background-color: transparent;
+        --color: var(--mcp-ink);
+        background-color: transparent;
+        color: var(--mcp-ink);
+    }
+    // приглушеният текст в картата (етикетите на сумите, вариантът на
+    // реда) е литерал rgba(33,37,41,.7) → muted на темата (--mcp-ink-3)
+    :where(.card:not([data-vxml])) .card-body:not(.card[data-vxml] .card-body) .text-muted {
+        color: var(--mcp-ink-3) !important; // !important: оригиналът е !important (website.scss, .card-body .text-muted)
+    }
+
+    // ── мобилният изглед (същите прагове като оригинала) ────────────────
+    // .o_address_signin (< md): литерален фон gray-100 и радиус .4rem
+    @include media-breakpoint-down(md) {
+        .o_address_signin {
+            border-radius: var(--mcp-r-control);
+            background-color: var(--mcp-fe-surface-muted);
+        }
+    }
+    // Обобщението долу (.o_mobile_summary.d-lg-none.bg-body): .bg-body чете
+    // --body-bg-rgb, който мостът не задава (остава бяло, и в тъмен режим)
+    // → фонът е страницата; литералната сянка $box-shadow-lg → токенът на
+    // темата, плюс горна линия (PLAN §4 B10).
+    @include media-breakpoint-down(lg) {
+        // Под lg оригиналът маха рамката на картата с общата сума → без
+        // рамка бялата повърхност е „кръпка“ върху страницата; картата
+        // става прозрачна и се слива с фона, както в EE.
+        .o_total_card {
+            --card-bg: transparent;
+        }
+        .o_mobile_summary {
+            background-color: var(--mcp-bg) !important; // !important: оригиналът е !important (bootstrap utilities .bg-body)
+            border-top: var(--mcp-bw-1) solid var(--mcp-rule);
+            box-shadow: var(--mcp-shadow-dialog);
+        }
+    }
+}

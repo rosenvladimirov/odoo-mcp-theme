@@ -1,0 +1,205 @@
+// theme_mcp_works_frontend — B8 · магазин (решетка)
+// PLAN §4 B8. Всяко правило минава през пазачите от _mixins.scss (§2.5):
+// същият селектор като компилирания оригинал + 0,0,1. Плочката на продукта
+// в O19 (website_sale product_tile.scss) се управлява почти изцяло през
+// локални променливи --o-wsale-card-* → задаваме променливите, не свойствата
+// (правило 2). Мрежата, отстъпите и размерите не се пипат (правило 5).
+// Опциите от builder-а (дизайн, закръгляне, вид на бутоните, цвят на името)
+// се уважават: пипаме само цветовете, които оригиналът е компилирал литерално.
+
+// ── Цветовете на плочката по cc (product_tile.scss, „Colors Preset“) ────────
+// Оригиналът: .o_wsale_products_opt_ccN { --o-wsale-card-cc-* } (0,1,0) с
+// компилираните цветове на палитрата от builder-а (вкл. сапфирения линк).
+// Тук: същите роли от таблицата на секциите (§3.3). *-rgb не се пипат: от тях
+// зависи само overlay-ят на дизайна „showcase“, а сървърът не дава rgb за cc.
+$-mcpf-wsale-cc: (
+    1: (bg: var(--mcp-fe-cc1-bg), ink: var(--mcp-ink), link: var(--mcp-link)),
+    2: (bg: var(--mcp-fe-cc2-bg), ink: var(--mcp-ink), link: var(--mcp-accent-dark)),
+    3: (bg: var(--mcp-fe-cc3-bg), ink: var(--mcp-ink), link: var(--mcp-accent-dark)),
+    4: (bg: var(--mcp-fe-cc4-bg), ink: var(--mcp-on-accent), link: var(--mcp-on-accent)),
+    5: (bg: var(--mcp-fe-cc5-bg), ink: var(--mcp-fe-inverse-ink), link: var(--mcp-fe-inverse-link)),
+);
+@each $-n, $-c in $-mcpf-wsale-cc {
+    #{$mcpf-site} .o_wsale_products_opt_cc#{$-n} {
+        --o-wsale-card-cc-bg: #{map-get($-c, bg)};
+        --o-wsale-card-cc-text: #{map-get($-c, ink)};
+        --o-wsale-card-cc-muted: color-mix(in srgb, #{map-get($-c, ink)} 70%, #{map-get($-c, bg)});
+        --o-wsale-card-cc-headings: #{map-get($-c, ink)};
+        --o-wsale-card-cc-link: #{map-get($-c, link)};
+    }
+}
+
+#{$mcpf-site} {
+    // ── Решетката (контейнерът с опциите) ───────────────────────────────────
+    // Закръгляне „2“ (по подразбиране) = радиусът на повърхност (снимка и
+    // карта), като .card от B4. Другите степени вече сочат мостваните
+    // --border-radius-* и следват пресета сами; 0 остава квадрат (избор).
+    .o_wsale_products_opt_rounded_2 {
+        --o-wsale-opt-border-radius: var(--mcp-r-surface);
+    }
+
+    // Рамката на картата (дизайните cards/chips/grid/list): оригиналът пада
+    // към компилирания $card-border-color. Задаваме я на решетката, за да не
+    // бием опция, която я сменя по-навътре.
+    :where(.o_wsale_products_opt_layout_catalog, .o_wsale_products_opt_layout_list) {
+        --o-wsale-card-border-color: var(--mcp-card-border);
+    }
+
+    // Тежестта на заглавието: само когато опцията „bold“ не е избрана.
+    :where(.o_wsale_products_opt_layout_catalog, .o_wsale_products_opt_layout_list):not(.o_wsale_products_opt_name_weight_bold) {
+        --o-wsale-card-info-title-font-weight: var(--mcp-fe-heading-weight);
+    }
+
+    // Hover „рамка в основния цвят“ (литерал $primary в оригинала, 0,1,0).
+    .o_wsale_products_opt_hover_border_primary {
+        &:where(.o_wsale_products_opt_design_cards), &:where(.o_wsale_products_opt_design_chips) {
+            --o-wsale-card-border-color-hover: var(--mcp-accent);
+        }
+    }
+
+    // Дизайнът „grid“ слага литерален $gray-300 като цвят на линиите.
+    .o_wsale_products_opt_design_grid {
+        --o-border-color: var(--mcp-rule);
+        --border-color: var(--mcp-rule);
+    }
+
+    // ── Плочката ────────────────────────────────────────────────────────────
+    .oe_product_cart {
+        // Фонът на снимката: оригиналът пада към компилирания $gray-100.
+        --o-wsale-card-thumb-background: var(--mcp-fe-surface-muted);
+
+        .o_wsale_products_item_title {
+            font-family: var(--mcp-fe-font-heading);
+        }
+
+        // Цената: основната е .fw-bold (вече 600 = D8), а зачеркнатата
+        // стара цена остава 400 → тук нарочно няма правило за .product_price.
+
+        // Мини-визуализацията на вариантите: hover рамката е литерал $primary.
+        .o_wsale_attribute_previewer {
+            .css_attribute_preview_thumbnail {
+                border-color: var(--mcp-rule);
+
+                &:hover {
+                    border-color: var(--mcp-accent);
+                }
+            }
+            .btn {
+                border-color: var(--mcp-rule);
+
+                &:hover {
+                    border-color: var(--mcp-accent);
+                }
+            }
+        }
+    }
+
+    // ── Бутоните на плочката ────────────────────────────────────────────────
+    // „subtle“ (кръгли, полупрозрачни над снимката): оригиналът е
+    // .o_wsale_products_opt_ccN:where(.…_actions_subtle) .o_wsale_product_btn .btn
+    // (0,3,0) и :where(layout):not(.o_wsale_products_opt_cc):where(subtle) … (0,3,0)
+    // с компилираните rgba на cc фона и текста. Кръгът и blur-ът се пазят
+    // (избор на опцията); цветовете идват от cc-ролите на плочката (горе).
+    // „promote“ ползва същия вид за всичко без основния бутон.
+    .o_wsale_products_opt_actions_subtle .o_wsale_product_btn .btn,
+    .o_wsale_products_opt_actions_promote .o_wsale_product_btn .btn:where(:not(.o_wsale_product_btn_primary)) {
+        --btn-bg: color-mix(in srgb, var(--o-wsale-card-cc-bg) 50%, transparent);
+        --btn-border-color: var(--mcp-rule);
+        --btn-color: var(--o-wsale-card-cc-text);
+        // hover/active: тон на текста върху фона на плочката (като --mcp-hover-bg
+        // при cc1, но четим и върху тъмните cc4/cc5)
+        --btn-hover-bg: color-mix(in srgb, var(--o-wsale-card-cc-text) 8%, var(--o-wsale-card-cc-bg));
+        --btn-hover-border-color: var(--mcp-control-border-hover);
+        --btn-hover-color: var(--o-wsale-card-cc-text);
+        --btn-active-bg: color-mix(in srgb, var(--o-wsale-card-cc-text) 12%, var(--o-wsale-card-cc-bg));
+        --btn-active-border-color: var(--mcp-control-border-hover);
+        --btn-active-color: var(--o-wsale-card-cc-text);
+        --btn-disabled-bg: color-mix(in srgb, var(--o-wsale-card-cc-bg) 50%, transparent);
+        --btn-disabled-border-color: var(--mcp-rule);
+        --btn-disabled-color: var(--o-wsale-card-cc-text);
+    }
+
+    // „onhover“ в оригинала задава --btn-hover-border-color: currentColor
+    // (0,3,0) → тук същото + 0,0,1, за да остане меката рамка от горе.
+    .o_wsale_products_opt_actions_onhover:where(.o_wsale_products_opt_layout_catalog) .o_wsale_product_btn .btn {
+        --btn-hover-border-color: var(--mcp-control-border-hover);
+    }
+
+    // „promote“ / „theme“: основният бутон е button-variant с компилирания
+    // btn-primary на cc → акцентът (hover-ink по D2).
+    .o_wsale_products_opt_actions_promote .o_wsale_product_btn .o_wsale_product_btn_primary,
+    .o_wsale_products_opt_actions_theme .o_wsale_product_btn .o_wsale_product_btn_primary {
+        @include mcpf-btn-vars(var(--mcp-accent), var(--mcp-on-accent), var(--mcp-accent-dark));
+        --btn-hover-color: var(--mcp-on-accent-dark);
+        --btn-active-color: var(--mcp-on-accent-dark);
+    }
+
+    // „theme“: останалите бутони са button-variant с компилирания secondary.
+    .o_wsale_products_opt_actions_theme .o_wsale_product_btn .btn:where(:not(.o_wsale_product_btn_primary)) {
+        @include mcpf-btn-vars(var(--mcp-fe-secondary), var(--mcp-fe-secondary-ink), color-mix(in srgb, var(--mcp-fe-secondary) 85%, var(--mcp-ink)));
+    }
+
+    // ── Лентата с категории (filmstrip, website_sale.scss) ─────────────────
+    // Оригиналът: :where(#o_wsale_container) .o_wsale_filmstrip_container.o_wsale_filmstrip_<вид>
+    // (0,2,0) задава --o-wsale-filmstrip-item-*; липсващите падат към
+    // компилираните $light / $primary / $border-color.
+    .o_wsale_filmstrip_container {
+        &.o_wsale_filmstrip_default {
+            --o-wsale-filmstrip-item-bg: var(--mcp-surface-2);
+            --o-wsale-filmstrip-item-color: var(--mcp-ink);
+            --o-wsale-filmstrip-item-bg-hover: var(--mcp-hover-bg);
+            --o-wsale-filmstrip-item-border-radius: var(--mcp-r-control);
+            --o-wsale-filmstrip-item-border-color-active: var(--mcp-active-border);
+            --o-wsale-filmstrip-item-bg-active: var(--mcp-active-bg);
+            --o-wsale-filmstrip-item-color-active: var(--mcp-accent-dark);
+        }
+
+        &.o_wsale_filmstrip_bordered {
+            --o-wsale-filmstrip-item-image-bg: var(--mcp-fe-surface-muted);
+            --o-wsale-filmstrip-item-border-color: var(--mcp-rule);
+            --o-wsale-filmstrip-item-border-radius: var(--mcp-r-control);
+            --o-wsale-filmstrip-item-border-color-hover: var(--mcp-control-border-hover);
+            --o-wsale-filmstrip-item-border-color-active: var(--mcp-accent);
+            --o-wsale-filmstrip-item-bg-active: var(--mcp-active-bg);
+            --o-wsale-filmstrip-item-color-active: var(--mcp-accent-dark);
+        }
+
+        &.o_wsale_filmstrip_tabs {
+            --o-wsale-filmstrip-item-border-color-hover: var(--mcp-accent);
+            --o-wsale-filmstrip-item-color-hover: var(--mcp-accent-dark);
+            --o-wsale-filmstrip-item-box-shadow-hover: inset 0 calc(var(--mcp-bw-1) * -1) 0 var(--mcp-accent);
+            --o-wsale-filmstrip-item-border-color-active: var(--mcp-accent);
+            --o-wsale-filmstrip-item-color-active: var(--mcp-accent-dark);
+        }
+
+        &.o_wsale_filmstrip_pills {
+            --o-wsale-filmstrip-item-border-color: var(--mcp-rule);
+            --o-wsale-filmstrip-item-color-hover: var(--mcp-on-accent);
+            --o-wsale-filmstrip-item-bg-hover: var(--mcp-accent);
+            --o-wsale-filmstrip-item-border-color-hover: var(--mcp-accent);
+            --o-wsale-filmstrip-item-color-active: var(--mcp-on-accent);
+            --o-wsale-filmstrip-item-bg-active: var(--mcp-accent);
+            --o-wsale-filmstrip-item-border-color-active: var(--mcp-accent);
+        }
+
+        &.o_wsale_filmstrip_images {
+            --o-wsale-filmstrip-item-bg-hover: var(--mcp-hover-bg);
+            --o-wsale-filmstrip-item-color-hover: var(--mcp-ink);
+            --o-wsale-filmstrip-item-color-active: var(--mcp-accent-dark);
+            --o-wsale-filmstrip-item-border-color-active: var(--mcp-accent);
+            --o-wsale-filmstrip-item-bg-active: var(--mcp-active-bg);
+            --o-wsale-filmstrip-item-border-radius: var(--mcp-r-control);
+        }
+
+        &.o_wsale_filmstrip_grid {
+            --o-wsale-filmstrip-item-border-color: var(--mcp-rule);
+            --o-wsale-filmstrip-item-border-color-active: var(--mcp-rule);
+            --o-wsale-filmstrip-item-color-active: var(--mcp-ink);
+        }
+
+        // Линията под лентата: литерал $border-color в оригинала (0,3,0 с :where).
+        .o_wsale_filmstrip_wrapper {
+            border-color: var(--mcp-rule);
+        }
+    }
+}

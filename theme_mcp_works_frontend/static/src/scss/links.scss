@@ -1,0 +1,45 @@
+// theme_mcp_works_frontend — B2 · линкове (PLAN §4 B2, EE 20: без
+// подчертаване в покой, подчертаване при hover).
+// Всяко правило минава през пазачите от _mixins.scss (PLAN §2.5).
+// Цветът на линка идва от моста (--link-color-rgb / --link-hover-color-rgb
+// в bridge_root.scss), а в секциите — от B1 (.o_ccN a:not(.btn)). Тук е само
+// украсата при hover и цветните .link-* utility, които са компилирани hex.
+// .link-primary е на B1 (palette.scss) и не се дублира тук.
+
+// ── 1. a:hover ──
+// Оригиналът е „a:hover { text-decoration: underline }“ (0,1,1); нашето е
+// 0,1,2. Елементите с клас, които имат собствено „X:hover“ (0,2,0 и
+// повече: .btn, .nav-link, .dropdown-item, .page-link, .list-group-item…),
+// пак печелят по специфичност; изключваме ги и изрично, без специфичност.
+#{$mcpf-site} a:hover:where(:not(.nav-link, .dropdown-item, .page-link, .list-group-item, .btn)) {
+    text-decoration: var(--mcp-fe-link-decoration-hover);
+}
+
+// ── 2. Цветните .link-* utility ──
+// Оригиналът е RGBA(<hex>, …), important; секундарният е бежовото #F0CDA8
+// (нечетимо като текст), затова тук е приглушеният текст.
+$mcpf-link-roles: (
+    secondary: (var(--mcp-ink-3), var(--mcp-ink-2)),
+    success: (var(--mcp-ok), color-mix(in srgb, var(--mcp-ok) 80%, var(--mcp-ink))),
+    danger: (var(--mcp-danger), color-mix(in srgb, var(--mcp-danger) 80%, var(--mcp-ink))),
+    warning: (var(--mcp-warn), color-mix(in srgb, var(--mcp-warn) 80%, var(--mcp-ink))),
+    info: (var(--mcp-accent-2), color-mix(in srgb, var(--mcp-accent-2) 80%, var(--mcp-ink))),
+);
+
+// --link-opacity / --link-underline-opacity на оригинала се пазят през color-mix.
+@function mcpf-link-a($c, $var) {
+    @return color-mix(in srgb, #{$c} calc(var(#{$var}, 1) * 100%), transparent);
+}
+
+@each $role, $pair in $mcpf-link-roles {
+    #{$mcpf} .link-#{$role} {
+        color: mcpf-link-a(nth($pair, 1), --link-opacity) !important; // !important: оригиналът е !important (bootstrap helpers/_colored-links.scss)
+        text-decoration-color: mcpf-link-a(nth($pair, 1), --link-underline-opacity) !important; // !important: оригиналът е !important (bootstrap helpers/_colored-links.scss)
+    }
+
+    #{$mcpf} .link-#{$role}:hover,
+    #{$mcpf} .link-#{$role}:focus {
+        color: mcpf-link-a(nth($pair, 2), --link-opacity) !important; // !important: оригиналът е !important (bootstrap helpers/_colored-links.scss)
+        text-decoration-color: mcpf-link-a(nth($pair, 2), --link-underline-opacity) !important; // !important: оригиналът е !important (bootstrap helpers/_colored-links.scss)
+    }
+}
