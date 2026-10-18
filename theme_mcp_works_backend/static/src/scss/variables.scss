@@ -66,7 +66,13 @@ $mcp-r-xl:   0px !default;
 $mcp-r-pill: 0px !default;
 
 // ── Override Odoo core defaults ─────────────────────────────────────────
-$o-brand-odoo:             $mcp-accent;
+// Редовете без !default остават нарочно (BX, 17.10.2026). Измерено: без тях
+// 183 правила в web.assets_web падат към стоковия лилав #71639e / #714B67
+// (`--primary`, `.text-primary`, `.o_loading_indicator`, `.o_barcode`, табът
+// в Settings, progress bar-ът на качването…), които runtime токените не
+// покриват. Изтичането към сайта (`o-color-1` = сапфир) се засенчва от
+// theme_mcp_works_frontend при site_mode=follow.
+$o-brand-odoo:            $mcp-accent;
 $o-brand-primary:           $mcp-accent;
 $o-brand-secondary:         $mcp-ink-2;
 $o-enterprise-color:        $mcp-accent;

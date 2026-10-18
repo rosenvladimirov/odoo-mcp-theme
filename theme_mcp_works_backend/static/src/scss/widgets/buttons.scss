@@ -2,20 +2,29 @@
    View-specific overrides live in views/form.scss, views/list.scss etc.
    Widget-specific overrides live in widgets/statusbar.scss, widgets/stat_button.scss etc. */
 
+/* ── Пазач: хромът на Website Builder остава стоков ───────────────
+   Sidebar-ът, падащите менюта и бутоните на редактора (Save, Discard,
+   undo/redo, Edit/New в systray-я на прегледа) живеят в бекенд документа,
+   затова глобалните `.btn … !important` по-долу ги прекрасяваха: Save беше
+   бял вместо зелен, Discard — бяло хапче, „Запазете“ се режеше вдясно.
+   `:not(:where(…))` не добавя специфичност, т.е. за всички останали бутони
+   правилата важат точно както преди. */
+$mcp-btn-not-builder: ':not(:where(.o-website-builder_sidebar, .o-snippets-menu, .o_we_customize_panel, .o-hb-select-dropdown) *):not(:where(.o-hb-btn, .o-website-btn-custo-primary, .o-website-btn-custo-secondary))';
+
 /* ── Base ────────────────────────────────────────────────────── */
 /* Тих бутон по еталона: 1px неутрална рамка, бял фон, без подскачане.
    Отстъпите — през --bs-btn-*, БЕЗ !important, за да действат p-0/px-1 на Odoo;
    така реалната височина = --mcp-btn-h. */
-.btn {
+.btn#{$mcp-btn-not-builder} {
     --bs-btn-padding-y: var(--mcp-btn-pad-y);
     --bs-btn-padding-x: var(--mcp-btn-pad-x);
     --bs-btn-font-size: var(--mcp-btn-font-size);
     --bs-btn-line-height: var(--mcp-btn-line-height);
     --bs-btn-border-radius: var(--mcp-btn-radius);
 }
-.btn,
-button.btn,
-.btn-secondary {
+.btn#{$mcp-btn-not-builder},
+button.btn#{$mcp-btn-not-builder},
+.btn-secondary#{$mcp-btn-not-builder} {
     background: var(--mcp-btn-bg) !important;
     border: var(--mcp-btn-border-w) solid var(--mcp-btn-border-color) !important;
     color: var(--mcp-btn-color) !important;
@@ -31,18 +40,18 @@ button.btn,
         color var(--mcp-t-fast) !important;
 }
 /* hover — само неутрален фон, рамката остава (EE) */
-.btn:hover,
-button.btn:hover,
-.btn-secondary:hover {
+.btn#{$mcp-btn-not-builder}:hover,
+button.btn#{$mcp-btn-not-builder}:hover,
+.btn-secondary#{$mcp-btn-not-builder}:hover {
     background: var(--mcp-hover-bg) !important;
     border-color: var(--mcp-btn-border-color) !important;
     color: var(--mcp-ink) !important;
 }
 /* натиснат / отворен / избран — тинт + акцентна рамка */
-.btn:not(.btn-primary):not(.btn-link):active,
-.btn.btn-secondary.active,
-.btn.btn-secondary.show,
-.btn.btn-secondary[aria-expanded="true"] {
+.btn#{$mcp-btn-not-builder}:not(.btn-primary):not(.btn-link):active,
+.btn.btn-secondary#{$mcp-btn-not-builder}.active,
+.btn.btn-secondary#{$mcp-btn-not-builder}.show,
+.btn.btn-secondary#{$mcp-btn-not-builder}[aria-expanded="true"] {
     background: var(--mcp-active-bg) !important;
     border-color: var(--mcp-active-border) !important;
     color: var(--mcp-ink) !important;
@@ -53,24 +62,24 @@ button.btn:hover,
 /* `box-shadow: none !important` горе маха пръстена на Bootstrap, затова без
    това правило бутонът на фокус от Tab не показваше нищо. Само за клавиатура
    (`:focus-visible`), при клик остава чисто. Цветът следва акцента на пресета. */
-.btn:focus-visible,
-button.btn:focus-visible,
-.btn-secondary:focus-visible {
+.btn#{$mcp-btn-not-builder}:focus-visible,
+button.btn#{$mcp-btn-not-builder}:focus-visible,
+.btn-secondary#{$mcp-btn-not-builder}:focus-visible {
     outline: var(--mcp-bw-2) solid var(--mcp-accent) !important;
     outline-offset: var(--mcp-bw-2) !important;
 }
 
 /* ── Primary ─────────────────────────────────────────────────── */
-.btn.btn-primary,
-.btn-primary,
+.btn.btn-primary#{$mcp-btn-not-builder},
+.btn-primary#{$mcp-btn-not-builder},
 .o_form_button_save,
 button.o_form_button_save {
     background: var(--mcp-accent) !important;
     border-color: var(--mcp-accent) !important;
     color: var(--mcp-paper) !important;
 }
-.btn.btn-primary:hover,
-.btn-primary:hover,
+.btn.btn-primary#{$mcp-btn-not-builder}:hover,
+.btn-primary#{$mcp-btn-not-builder}:hover,
 .o_form_button_save:hover {
     background: var(--mcp-accent-dark) !important;
     border-color: var(--mcp-accent-dark) !important;
@@ -80,47 +89,47 @@ button.o_form_button_save {
 }
 
 /* ── Link ────────────────────────────────────────────────────── */
-.btn.btn-link {
+.btn.btn-link#{$mcp-btn-not-builder} {
     border: none !important;
     box-shadow: none !important;
     color: var(--mcp-accent) !important;
     background: transparent !important;
 }
-.btn.btn-link:hover {
+.btn.btn-link#{$mcp-btn-not-builder}:hover {
     color: var(--mcp-accent-dark) !important;
     background: var(--mcp-accent-soft) !important;
     transform: none !important;
 }
 
 /* ── Light (прозрачен иконен бутон) ──────────────────────────── */
-.btn.btn-light {
+.btn.btn-light#{$mcp-btn-not-builder} {
     background: transparent !important;
     border-color: transparent !important;
     box-shadow: none !important;
     color: var(--mcp-ink-2) !important;
 }
-.btn.btn-light:hover,
-.btn.btn-light.show {
+.btn.btn-light#{$mcp-btn-not-builder}:hover,
+.btn.btn-light#{$mcp-btn-not-builder}.show {
     background: var(--mcp-hover-bg) !important;
     color: var(--mcp-ink) !important;
 }
 
 /* ── Size variants ───────────────────────────────────────────── */
 /* през --bs-btn-* (без !important), за да не бият помощните класове на Odoo */
-.btn-sm {
+.btn-sm#{$mcp-btn-not-builder} {
     --bs-btn-padding-y: var(--mcp-sp-3);
     --bs-btn-padding-x: var(--mcp-sp-8);
     --bs-btn-font-size: var(--mcp-fs-12);
 }
-.btn-lg {
+.btn-lg#{$mcp-btn-not-builder} {
     --bs-btn-padding-y: var(--mcp-sp-8);
     --bs-btn-padding-x: var(--mcp-sp-16);
     --bs-btn-font-size: var(--mcp-fs-13);
 }
 
 /* ── Disabled ────────────────────────────────────────────────── */
-.btn:disabled,
-.btn.disabled {
+.btn#{$mcp-btn-not-builder}:disabled,
+.btn.disabled#{$mcp-btn-not-builder} {
     background: var(--mcp-paper-deep) !important;
     border-color: var(--mcp-rule-strong) !important;
     color: var(--mcp-ink-3) !important;
