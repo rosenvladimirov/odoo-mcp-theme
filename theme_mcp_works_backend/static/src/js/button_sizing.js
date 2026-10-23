@@ -186,8 +186,39 @@ function tagTruncatedTitles() {
     });
 }
 
+/* Умните бутони (23.10): етикетът се реже на 2 реда с CSS line-clamp.
+   Голият текст в .o_stat_info (напр. „История“ от string= в arch-а) се обвива
+   в span.mcp_stat_label, за да може да се реже; статичният текст не е
+   динамичен възел за Owl, затова преместването не пречи на обновяванията.
+   Скъсаните получават title с пълното име (само нашите — dataset флаг). */
+function tagStatLabels() {
+    document.querySelectorAll(".o-form-buttonbox .oe_stat_button .o_stat_info").forEach((info) => {
+        for (const node of [...info.childNodes]) {
+            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                const span = document.createElement("span");
+                span.className = "mcp_stat_label";
+                info.insertBefore(span, node);
+                span.appendChild(node);
+            }
+        }
+        const btn = info.closest(".oe_stat_button");
+        const label = info.querySelector(".o_stat_text, .mcp_stat_label");
+        if (!btn || !label) return;
+        const cut = label.scrollHeight > label.clientHeight + 1 || label.scrollWidth > label.clientWidth + 1;
+        if (cut) {
+            const full = (label.textContent || "").trim();
+            if (full && btn.getAttribute("title") !== full) btn.setAttribute("title", full);
+            btn.dataset.mcpTitle = "1";
+        } else if (btn.dataset.mcpTitle) {
+            btn.removeAttribute("title");
+            delete btn.dataset.mcpTitle;
+        }
+    });
+}
+
 function processAll() {
     tagTruncatedTitles();
+    tagStatLabels();
     const H = baseButtonHeight();
     if (!publishVars(H)) return;
     document.querySelectorAll(MANAGED).forEach((b) => sizeOne(b, H));

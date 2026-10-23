@@ -298,6 +298,7 @@
     --mcp-view-pad:      calc(8px * var(--mcp-density-scale));   /* view inset · density-scaled */
     --mcp-stat-btn-min-w: 0px;    /* като Odoo 20 EE: ширината е по съдържанието (най-широкият в групата) */
     --mcp-stat-btn-max-w: 240px;
+    --mcp-stat-btn-fixed-w: 140px; /* 23.10: умните бутони са еднакво широки; етикетът — до 2 реда, после …; 140 = „Допълнителни“ (83px) се побира цяла */
     --mcp-dash-width:    54px;
     --mcp-bcstrip-h:     30px;
     --mcp-status-h:      24px;

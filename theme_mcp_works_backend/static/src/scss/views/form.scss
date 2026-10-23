@@ -435,10 +435,44 @@
 /* 22.10.2026: умните бутони са по съдържание като в Odoo 20 EE (ядрото
    им дава min-width 7.5em, отстъп 0 10px). Изравняването по най-широкия
    ги разпъваше до 166-208px (Rosen: „по-широки са“). */
+/* 23.10.2026 (Rosen: „бутоните са различна ширина — да се врапва, ако пак
+   е по-дълго — … и тоолтип“): еднаква ширина; етикетът се пренася на два
+   реда и се реже с …; бутоните в реда растат на височина заедно. Пълното име
+   е в title (button_sizing.js tagStatLabels). Голият текст на етикета JS-ът
+   го обвива в .mcp_stat_label, за да може да се реже по редове. */
 .o_form_view .o-form-buttonbox .oe_stat_button:has(.o_stat_info) {
-    width: auto !important;
-    flex: 0 0 auto !important;
-    padding: 0 var(--mcp-sp-10) !important;
+    width: var(--mcp-stat-btn-fixed-w) !important;
+    min-width: 0 !important;
+    max-width: var(--mcp-stat-btn-fixed-w) !important;
+    flex: 0 0 var(--mcp-stat-btn-fixed-w) !important;
+    height: auto !important;
+    min-height: var(--mcp-btn-h);
+    padding: var(--mcp-sp-4) var(--mcp-sp-10) !important;
+    align-items: center !important;
+    align-self: stretch !important;  /* бутонът сам се центрира — разтягаме до реда */
+    white-space: normal !important;
+}
+.o_form_view .o-form-buttonbox .oe_stat_button:has(.o_stat_info) .o_stat_info {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    align-items: flex-start;
+    text-align: left;
+    line-height: var(--mcp-lh-tight, 1.15);
+}
+.o_form_view .o-form-buttonbox .oe_stat_button:has(.o_stat_info) :is(.o_stat_text, .mcp_stat_label) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;  /* реже дума само ако сама е по-широка от реда */
+}
+/* еднаква височина на целия ред умни бутони (иначе 2-редовите са по-високи) */
+.o_form_view .o-form-buttonbox:has(.o_stat_info) {
+    align-items: stretch !important;
 }
 /* Smart бутони на живия .o-form-buttonbox: бял фон, неутрална рамка на
    контрол, семантичен радиус; hover сменя само рамката (без акцент).
