@@ -9,6 +9,14 @@
 .o-checkbox.form-check {
     padding-left: 0 !important;
 }
+/* Отметката е float:left (Odoo 19) — vertical-align: middle не действа и тя
+   лепне за горния ръб на реда, 3px над средата на текста (Rosen 23.10: „леко
+   нагоре“). Отстъпът отгоре е горният отстъп на Bootstrap (.25em), който
+   общото margin: 0 8px 0 0 по-долу маха. В списъка обвивката е flex и центрира
+   сама — там не се пипа. */
+.o-checkbox.form-check:not(.o_list_table *) > input.form-check-input {
+    margin-top: var(--mcp-sp-3) !important;
+}
 
 /* ── Checkbox via .o_checkbox wrapper ────────────────────────────
    Unchecked: paper surface + soft inset depth + thin rule.

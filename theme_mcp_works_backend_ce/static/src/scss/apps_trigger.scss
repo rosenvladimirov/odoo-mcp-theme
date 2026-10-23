@@ -24,6 +24,8 @@
     color: var(--mcp-accent);
     font-size: var(--mcp-sp-16);
     flex-shrink: 0;
+    /* в средата на лентата като менюто (стоеше залепен горе, 5px по-високо) */
+    align-self: center;
     cursor: pointer;
     transition: background-color var(--mcp-t-fast), border-color var(--mcp-t-fast);
 }
