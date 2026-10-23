@@ -195,18 +195,21 @@ function tagTruncatedTitles() {
    динамичен възел за Owl, затова преместването не пречи на обновяванията.
    Скъсаните получават title с пълното име (само нашите — dataset флаг). */
 function tagStatLabels() {
-    document.querySelectorAll(".o-form-buttonbox .oe_stat_button .o_stat_info").forEach((info) => {
-        for (const node of [...info.childNodes]) {
-            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-                const span = document.createElement("span");
-                span.className = "mcp_stat_label";
-                info.insertBefore(span, node);
-                span.appendChild(node);
+    document.querySelectorAll(".o-form-buttonbox .oe_stat_button").forEach((btn) => {
+        // вариант (а): гол текст в .o_stat_info (не числото!) → span.mcp_stat_label
+        btn.querySelectorAll(".o_stat_info:not(.o_stat_value)").forEach((info) => {
+            for (const node of [...info.childNodes]) {
+                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                    const span = document.createElement("span");
+                    span.className = "mcp_stat_label";
+                    info.insertBefore(span, node);
+                    span.appendChild(node);
+                }
             }
-        }
-        const btn = info.closest(".oe_stat_button");
-        const label = info.querySelector(".o_stat_text, .mcp_stat_label");
-        if (!btn || !label) return;
+        });
+        // вариант (б) statinfo: етикетът е .o_stat_text до числото
+        const label = btn.querySelector(".o_stat_text, .mcp_stat_label");
+        if (!label) return;
         const cut = label.scrollHeight > label.clientHeight + 1 || label.scrollWidth > label.clientWidth + 1;
         if (cut) {
             const full = (label.textContent || "").trim();

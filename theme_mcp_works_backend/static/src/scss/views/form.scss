@@ -440,7 +440,7 @@
    реда и се реже с … (с число отдолу — един ред, виж по-долу). Пълното име
    е в title (button_sizing.js tagStatLabels). Голият текст на етикета JS-ът
    го обвива в .mcp_stat_label, за да може да се реже по редове. */
-.o_form_view .o-form-buttonbox .oe_stat_button:has(.o_stat_info) {
+.o_form_view .o-form-buttonbox .oe_stat_button:is(:has(.o_stat_info), :has(.o_stat_text)) {
     width: var(--mcp-stat-btn-fixed-w) !important;
     min-width: 0 !important;
     max-width: var(--mcp-stat-btn-fixed-w) !important;
@@ -452,7 +452,11 @@
     align-self: stretch !important;  /* бутонът сам се центрира — разтягаме до реда */
     white-space: normal !important;
 }
-.o_form_view .o-form-buttonbox .oe_stat_button:has(.o_stat_info) .o_stat_info {
+/* Два варианта в Odoo 19: (а) <div class="o_stat_info">етикет<span class="o_stat_value">
+   (б) widget="statinfo": <div class="o_field_statinfo"><span class="o_stat_info o_stat_value">0</span>
+   <span class="o_stat_text">етикет</span> — там .o_stat_info е самото число, а етикетът е съсед. */
+.o_form_view .o-form-buttonbox .oe_stat_button:is(:has(.o_stat_info), :has(.o_stat_text)) .o_field_statinfo,
+.o_form_view .o-form-buttonbox .oe_stat_button:is(:has(.o_stat_info), :has(.o_stat_text)) .o_stat_info:not(.o_stat_value) {
     min-width: 0;
     flex: 1 1 auto;
     overflow: hidden;
@@ -460,7 +464,7 @@
     text-align: left;
     line-height: var(--mcp-lh-tight, 1.15);
 }
-.o_form_view .o-form-buttonbox .oe_stat_button:has(.o_stat_info) :is(.o_stat_text, .mcp_stat_label) {
+.o_form_view .o-form-buttonbox .oe_stat_button:is(:has(.o_stat_info), :has(.o_stat_text)) :is(.o_stat_text, .mcp_stat_label) {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -472,7 +476,9 @@
 }
 /* Бутонът е най-много два реда (Rosen: „глупости на 3 реда“): има ли число
    под етикета — етикетът е на един ред с …; без число — до два реда. */
-.o_form_view .o-form-buttonbox .oe_stat_button .o_stat_info:has(.o_stat_value) :is(.o_stat_text, .mcp_stat_label) {
+.o_form_view .o-form-buttonbox .oe_stat_button .o_stat_info:has(.o_stat_value) :is(.o_stat_text, .mcp_stat_label),
+.o_form_view .o-form-buttonbox .oe_stat_button .o_stat_value ~ .o_stat_text,
+.o_form_view .o-form-buttonbox .oe_stat_button .o_stat_text:has(~ .o_stat_value) {
     display: block;
     -webkit-line-clamp: unset;
     line-clamp: none;
@@ -480,7 +486,7 @@
     text-overflow: ellipsis;
 }
 /* еднаква височина на целия ред умни бутони */
-.o_form_view .o-form-buttonbox:has(.o_stat_info) {
+.o_form_view .o-form-buttonbox:has(.o_stat_info, .o_stat_text) {
     align-items: stretch !important;
 }
 /* Smart бутони на живия .o-form-buttonbox: бял фон, неутрална рамка на
