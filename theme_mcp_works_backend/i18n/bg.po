@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* theme_mcp_works_backend
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: theme_mcp_works_backend
+#: model:ir.model.fields,field_description:theme_mcp_works_backend.field_res_config_settings__mcp_icon_set
+#: model_terms:ir.ui.view,arch_db:theme_mcp_works_backend.res_config_settings_view_form_mcp
+msgid "Icon set"
+msgstr "Набор икони"
+
+#. module: theme_mcp_works_backend
+#: model:ir.model.fields,field_description:theme_mcp_works_backend.field_res_config_settings__mcp_icon_weight
+msgid "Icon weight"
+msgstr "Дебелина на иконите"
+
+#. module: theme_mcp_works_backend
+#: model:ir.model.fields.selection,name:theme_mcp_works_backend.selection__res_config_settings__mcp_icon_set__fa
+msgid "Odoo default (Font Awesome)"
+msgstr "По подразбиране на Odoo (Font Awesome)"
+
+#. module: theme_mcp_works_backend
+#: model:ir.model.fields.selection,name:theme_mcp_works_backend.selection__res_config_settings__mcp_icon_set__phosphor
+msgid "Phosphor"
+msgstr "Phosphor"
+
+#. module: theme_mcp_works_backend
+#: model:ir.model.fields.selection,name:theme_mcp_works_backend.selection__res_config_settings__mcp_icon_weight__thin
+msgid "Thin"
+msgstr "Тънки"
+
+#. module: theme_mcp_works_backend
+#: model:ir.model.fields.selection,name:theme_mcp_works_backend.selection__res_config_settings__mcp_icon_weight__light
+msgid "Light"
+msgstr "Леки"
+
+#. module: theme_mcp_works_backend
+#: model:ir.model.fields.selection,name:theme_mcp_works_backend.selection__res_config_settings__mcp_icon_weight__regular
+msgid "Regular"
+msgstr "Нормални"
+
+#. module: theme_mcp_works_backend
+#: model:ir.model.fields.selection,name:theme_mcp_works_backend.selection__res_config_settings__mcp_icon_weight__bold
+msgid "Bold"
+msgstr "Удебелени"
