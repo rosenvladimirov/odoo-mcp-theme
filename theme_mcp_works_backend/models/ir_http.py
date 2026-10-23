@@ -75,6 +75,13 @@ class IrHttp(models.AbstractModel):
         result["mcp_app_icons"] = self.env["ir.config_parameter"].sudo().get_param(
             "theme_mcp_works_backend.app_icons", "theme"
         )
+        # наборът икони на интерфейса и тежестта им (apply_icons.js)
+        result["mcp_icon_set"] = self.env["ir.config_parameter"].sudo().get_param(
+            "theme_mcp_works_backend.icon_set", "fa"
+        )
+        result["mcp_icon_weight"] = self.env["ir.config_parameter"].sudo().get_param(
+            "theme_mcp_works_backend.icon_weight", "regular"
+        )
         return result
 
     # ── Hook за публичния сайт (theme_mcp_works_frontend) ──────────────

@@ -22,6 +22,14 @@
                                  help="Icons of the apps in the Dash and the home menu. The theme's icons follow the preset and dark mode; unknown apps keep their own icon. Save, then reload the page to apply.">
                             <field name="mcp_app_icons"/>
                         </setting>
+                        <setting string="Icon set"
+                                 help="Icons across the backend. Phosphor replaces the Font Awesome and Odoo UI icons it has a match for; any other icon keeps its original look. Save, then reload the page to apply.">
+                            <field name="mcp_icon_set"/>
+                            <div class="mt8" invisible="mcp_icon_set == 'fa'">
+                                <label for="mcp_icon_weight" class="me-2"/>
+                                <field name="mcp_icon_weight"/>
+                            </div>
+                        </setting>
                     </block>
 
                     <block title="Installation"

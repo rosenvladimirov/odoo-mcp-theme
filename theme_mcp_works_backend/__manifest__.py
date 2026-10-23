@@ -5,7 +5,7 @@
     "summary": "Independent hi-tech minimalist Odoo CE backend — robot "
                "theme, electric sapphire accents, sharp corners, "
                "light/dark mode, vertical Dash dock",
-    "version": "19.0.1.247.0",
+    "version": "19.0.1.248.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -32,6 +32,9 @@
             # ── 0. Self-hosted webfonts (must precede token refs) ──────
             "theme_mcp_works_backend/static/src/scss/fonts.scss",
             "theme_mcp_works_backend/static/src/scss/fonts_selectable.scss",
+            # набор икони по избор (Phosphor) — шрифтовете + генерираната карта
+            "theme_mcp_works_backend/static/src/scss/icons/phosphor.scss",
+            "theme_mcp_works_backend/static/src/scss/icons/phosphor_map.scss",
 
             # ── 1. Runtime design tokens ───────────────────────────────
             "theme_mcp_works_backend/static/src/scss/tokens.scss",
@@ -84,6 +87,7 @@
             # ── 7. JS utilities ────────────────────────────────────────
             # apply the Settings-chosen UI font before the client paints
             "theme_mcp_works_backend/static/src/js/apply_font.js",
+            "theme_mcp_works_backend/static/src/js/apply_icons.js",
             "theme_mcp_works_backend/static/src/js/sizing.js",
             "theme_mcp_works_backend/static/src/js/resizer.js",
             "theme_mcp_works_backend/static/src/js/button_sizing.js",

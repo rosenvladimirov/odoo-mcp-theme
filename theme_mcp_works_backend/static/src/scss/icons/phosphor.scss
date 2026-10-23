@@ -1,0 +1,33 @@
+// Набор икони Phosphor (MIT, static/lib/phosphor/LICENSE) вместо Font Awesome 4.7
+// и oi-* на Odoo 19. Включва се от Settings → MCP Theme → „Icon set“;
+// apply_icons.js слага <html data-mcp-icons="phosphor" data-mcp-icon-weight="…">.
+// Кой клас към коя икона отива — генерираният phosphor_map.scss.
+// Браузърът сваля само шрифта, който реално се ползва (font-display: block —
+// без мигване на грешния глиф).
+
+@font-face { font-family: "mcp-ph-thin"; font-display: block; src: url("/theme_mcp_works_backend/static/lib/phosphor/Phosphor-Thin.woff2") format("woff2"); }
+@font-face { font-family: "mcp-ph-light"; font-display: block; src: url("/theme_mcp_works_backend/static/lib/phosphor/Phosphor-Light.woff2") format("woff2"); }
+@font-face { font-family: "mcp-ph-regular"; font-display: block; src: url("/theme_mcp_works_backend/static/lib/phosphor/Phosphor.woff2") format("woff2"); }
+@font-face { font-family: "mcp-ph-bold"; font-display: block; src: url("/theme_mcp_works_backend/static/lib/phosphor/Phosphor-Bold.woff2") format("woff2"); }
+@font-face { font-family: "mcp-ph-fill"; font-display: block; src: url("/theme_mcp_works_backend/static/lib/phosphor/Phosphor-Fill.woff2") format("woff2"); }
+
+// собственият шрифт на темата mcp_ui_icons — oi-* на Odoo 19 без точен еквивалент
+// в Phosphor (съставни, редакторски, марки), в стила и метриките на Phosphor;
+// генерира се от claude.ai/specs/theme-mcp-icons/build_mcp_font.py
+@font-face { font-family: "mcp-ui-thin"; font-display: block; src: url("/theme_mcp_works_backend/static/lib/mcp_ui_icons/mcp-ui-thin.woff2") format("woff2"); }
+@font-face { font-family: "mcp-ui-light"; font-display: block; src: url("/theme_mcp_works_backend/static/lib/mcp_ui_icons/mcp-ui-light.woff2") format("woff2"); }
+@font-face { font-family: "mcp-ui-regular"; font-display: block; src: url("/theme_mcp_works_backend/static/lib/mcp_ui_icons/mcp-ui-regular.woff2") format("woff2"); }
+@font-face { font-family: "mcp-ui-bold"; font-display: block; src: url("/theme_mcp_works_backend/static/lib/mcp_ui_icons/mcp-ui-bold.woff2") format("woff2"); }
+
+:root {
+    // тежестта на контурните икони; пълните винаги са от mcp-ph-fill
+    --mcp-ph-font: "mcp-ph-regular";
+    --mcp-mui-font: "mcp-ui-regular";
+    // глифът на Phosphor запълва квадрата 1em, а този на FA е ~0.86em —
+    // мащабът и отместването ги изравняват по оптичен размер и по линията на текста
+    --mcp-ph-scale: 1.15em;
+    --mcp-ph-shift: -0.125em;
+}
+:root[data-mcp-icon-weight="thin"] { --mcp-ph-font: "mcp-ph-thin"; --mcp-mui-font: "mcp-ui-thin"; }
+:root[data-mcp-icon-weight="light"] { --mcp-ph-font: "mcp-ph-light"; --mcp-mui-font: "mcp-ui-light"; }
+:root[data-mcp-icon-weight="bold"] { --mcp-ph-font: "mcp-ph-bold"; --mcp-mui-font: "mcp-ui-bold"; }

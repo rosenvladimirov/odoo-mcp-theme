@@ -41,6 +41,33 @@ class ResConfigSettings(models.TransientModel):
              "does not know keep their own icon. Applied after reloading.",
     )
 
+    mcp_icon_set = fields.Selection(
+        selection=[
+            ("fa", "Odoo default (Font Awesome)"),
+            ("phosphor", "Phosphor"),
+        ],
+        string="Icon set",
+        default="fa",
+        config_parameter="theme_mcp_works_backend.icon_set",
+        help="Icons across the backend: buttons, fields, menus and messages. "
+             "Phosphor replaces the Font Awesome and Odoo UI icons it has a "
+             "match for; any other icon keeps its original look. Applied "
+             "after reloading.",
+    )
+    mcp_icon_weight = fields.Selection(
+        selection=[
+            ("thin", "Thin"),
+            ("light", "Light"),
+            ("regular", "Regular"),
+            ("bold", "Bold"),
+        ],
+        string="Icon weight",
+        default="regular",
+        config_parameter="theme_mcp_works_backend.icon_weight",
+        help="Stroke weight of the outlined icons. Filled icons (stars, "
+             "folders…) stay filled. Applies to the Phosphor set only.",
+    )
+
     # ── Installation info (read-only) ──────────────────────────────────
     mcp_db_name = fields.Char(
         string="Database", compute="_compute_mcp_info")
