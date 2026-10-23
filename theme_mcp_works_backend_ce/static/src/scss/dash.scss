@@ -536,3 +536,6 @@
     }
 }
 .mcp_dash_pin.is-on i { transform: rotate(-45deg); }
+/* катинарчето — само когато скрийнсейвърът е наличен */
+.mcp_dash_lock { display: none; }
+:root[data-mcp-ss-ready] .mcp_dash_lock { display: flex; }

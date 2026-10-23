@@ -231,6 +231,16 @@ export class McpDash extends Component {
         this._store("mcp_dash_pinned", this.state.pinned);
     }
 
+    get lockTitle() {
+        return _t("Lock screen (screen saver)");
+    }
+
+    /* Скрийнсейвърът е в конфигуратора — тук само събитието, без зависимост */
+    onLock() {
+        this.state.appsOpen = false;
+        window.dispatchEvent(new CustomEvent("mcp-screensaver-start"));
+    }
+
     onToggleAutoHide() {
         this.state.autoHide = !this.state.autoHide;
         this.state.peek = false;

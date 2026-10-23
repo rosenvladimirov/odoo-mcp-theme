@@ -106,6 +106,14 @@
                         t-on-click.stop="onToggleAutoHide">
                     <i class="fa fa-eye-slash" aria-hidden="true"/>
                 </button>
+                <!-- катинарчето пуска скрийнсейвъра; вижда се само ако има такъв
+                     (конфигураторът слага <html data-mcp-ss-ready>) -->
+                <button type="button"
+                        class="mcp_dash_footer_btn mcp_dash_lock"
+                        t-att-title="lockTitle"
+                        t-on-click.stop="onLock">
+                    <i class="fa fa-lock" aria-hidden="true"/>
+                </button>
             </div>
 
             <!-- Compact mode: name bubble to the right -->
