@@ -437,7 +437,7 @@
    ги разпъваше до 166-208px (Rosen: „по-широки са“). */
 /* 23.10.2026 (Rosen: „бутоните са различна ширина — да се врапва, ако пак
    е по-дълго — … и тоолтип“): еднаква ширина; етикетът се пренася на два
-   реда и се реже с …; бутоните в реда растат на височина заедно. Пълното име
+   реда и се реже с … (с число отдолу — един ред, виж по-долу). Пълното име
    е в title (button_sizing.js tagStatLabels). Голият текст на етикета JS-ът
    го обвива в .mcp_stat_label, за да може да се реже по редове. */
 .o_form_view .o-form-buttonbox .oe_stat_button:has(.o_stat_info) {
@@ -470,7 +470,16 @@
     white-space: normal;
     overflow-wrap: break-word;  /* реже дума само ако сама е по-широка от реда */
 }
-/* еднаква височина на целия ред умни бутони (иначе 2-редовите са по-високи) */
+/* Бутонът е най-много два реда (Rosen: „глупости на 3 реда“): има ли число
+   под етикета — етикетът е на един ред с …; без число — до два реда. */
+.o_form_view .o-form-buttonbox .oe_stat_button .o_stat_info:has(.o_stat_value) :is(.o_stat_text, .mcp_stat_label) {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+/* еднаква височина на целия ред умни бутони */
 .o_form_view .o-form-buttonbox:has(.o_stat_info) {
     align-items: stretch !important;
 }
