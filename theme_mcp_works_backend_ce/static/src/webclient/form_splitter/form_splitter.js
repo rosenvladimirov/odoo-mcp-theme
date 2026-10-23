@@ -19,10 +19,12 @@
    форма 590 срещу 1110 преглед и 1680 празно вдясно). Без запазена стойност
    сплитерът НЕ пипа flex-овете — остава ядреното разпределение, което е и
    еталонът на Enterprise: sheet 2 : преглед 1 : чатър 1. */
-const STORAGE_KEY = "mcp_form_split_ratio_v3";
+// v4 (22.10.2026): подредбата по подразбиране стана като Odoo 20 EE — старите
+// запазени съотношения (v3) се пренебрегват, за да не държат чатъра разпънат
+const STORAGE_KEY = "mcp_form_split_ratio_v4";
 const MIN_SHEET_PX   = 420;     // формата не пада под четимото — при по-малко
                                 // полетата се чупят на срички (Росен, 09.09.2026)
-const MIN_CHATTER_PX = 585;     // chatter keeps at least this — matches the natural readable size of message bubbles + actions
+const MIN_CHATTER_PX = 530;     // като $o-mail-Chatter-minWidth на Odoo 20 EE (беше 585)
 const MIN_PREVIEW_PX = 360;     // прегледът пази толкова — под това страницата на PDF-а не се чете
 const SPLITTER_CLASS = "mcp_form_splitter";
 
@@ -90,6 +92,8 @@ function applyRatio(sheet, _chatter, ratio) {
         flex: "0 0 auto",
         width: (ratio * 100).toFixed(2) + "%",
         "min-width": MIN_SHEET_PX + "px",
+        /* таванът от 1400px е само за подредбата по подразбиране */
+        "max-width": "none",
     });
     setImportant(neighbour, {
         flex: "1 1 auto",

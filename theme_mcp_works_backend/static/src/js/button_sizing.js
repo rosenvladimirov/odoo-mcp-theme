@@ -126,6 +126,10 @@ const EXCLUDE =
        ellipsis), точно като статусбар бутоните → JS да не инжектира inline
        min-width/height. Скъсените получават title tooltip по-долу. */
     ".o_modules_kanban .o_kanban_record footer .btn," +
+    /* Лентата на чатъра: размерът е по съдържание като в Odoo 20 EE
+       (текстовите 5px 10px, иконите 28x33) — CSS-owned във form.scss.
+       Квадратът 33 и min-width 91 ги разпъваха (Rosen 22.10.2026). */
+    ".o-mail-Chatter-topbar .btn," +
     "[data-mcp-no-size]";
 
 function sizeOne(btn, H) {

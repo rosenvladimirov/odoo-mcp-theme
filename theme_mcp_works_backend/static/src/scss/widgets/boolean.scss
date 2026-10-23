@@ -151,10 +151,11 @@ input[type="checkbox"].form-check-input,
     -webkit-appearance: none;
     flex: 0 0 auto !important;
     display: inline-block !important;
-    width: var(--mcp-sp-16) !important;
-    height: var(--mcp-sp-16) !important;
-    min-width: var(--mcp-sp-16);
-    max-width: var(--mcp-sp-16);
+    /* 14px като отметката на Odoo 20 EE (1em при 14px шрифт) */
+    width: var(--mcp-sp-14) !important;
+    height: var(--mcp-sp-14) !important;
+    min-width: var(--mcp-sp-14);
+    max-width: var(--mcp-sp-14);
     aspect-ratio: 1 / 1;
     /* граница ≥3:1, 1px, без вдлъбнатина (EE) */
     border: var(--mcp-bw-1) solid var(--mcp-control-border);

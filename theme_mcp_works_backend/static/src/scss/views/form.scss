@@ -88,7 +88,7 @@
         display: flex !important;
         align-items: stretch !important;
         gap: 0 !important;
-        min-height: var(--mcp-sp-32) !important;
+        min-height: var(--mcp-sp-27) !important;
         flex: 1 1 auto !important;
 
         .o_arrow_button,
@@ -104,8 +104,9 @@
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-            height: var(--mcp-sp-32) !important;
-            min-height: var(--mcp-sp-32) !important;
+            /* 27px като етапа на Odoo 20 EE (беше 32) */
+            height: var(--mcp-sp-27) !important;
+            min-height: var(--mcp-sp-27) !important;
             padding: 0 var(--mcp-sp-16) !important;
             font-family: var(--mcp-font-mono) !important;
             font-size: var(--mcp-fs-11) !important;
@@ -308,10 +309,11 @@
     /* block + line-height so text-overflow:ellipsis applies to the bare
        label (no inner span; inline-flex can't ellipsis its own text). */
     display: block !important;
-    height: var(--mcp-sp-32) !important;
-    min-height: var(--mcp-sp-32) !important;
-    line-height: calc(var(--mcp-sp-32) - 2 * var(--mcp-sp-1)) !important;
-    padding: 0 var(--mcp-sp-10) !important;
+    /* 33px и отстъп 5px 10px като бутоните на Odoo 20 EE (беше 32 / 0 10px) */
+    height: var(--mcp-btn-h) !important;
+    min-height: var(--mcp-btn-h) !important;
+    line-height: calc(var(--mcp-btn-h) - 2 * var(--mcp-sp-1) - 2 * var(--mcp-sp-5)) !important;
+    padding: var(--mcp-sp-5) var(--mcp-sp-10) !important;
     text-align: center !important;
     white-space: nowrap !important;
     overflow: hidden !important;
@@ -430,9 +432,13 @@
    responsive "More" toggler keeps its own size (activating the block above
    had ballooned it). Consumes --mcp-stat-btn-w from resizer.js; leaves the
    default Odoo look (icons, layout) otherwise untouched. */
+/* 22.10.2026: умните бутони са по съдържание като в Odoo 20 EE (ядрото
+   им дава min-width 7.5em, отстъп 0 10px). Изравняването по най-широкия
+   ги разпъваше до 166-208px (Rosen: „по-широки са“). */
 .o_form_view .o-form-buttonbox .oe_stat_button:has(.o_stat_info) {
-    width: var(--mcp-stat-btn-w, var(--mcp-sp-110)) !important;
+    width: auto !important;
     flex: 0 0 auto !important;
+    padding: 0 var(--mcp-sp-10) !important;
 }
 /* Smart бутони на живия .o-form-buttonbox: бял фон, неутрална рамка на
    контрол, семантичен радиус; hover сменя само рамката (без акцент).
@@ -1241,6 +1247,24 @@
             background: var(--mcp-accent-soft) !important;
             box-shadow: var(--mcp-shadow-md) !important;
         }
+    }
+    /* Размерите са като в Odoo 20 EE: текстовите бутони 33 висок и отстъп
+       5px 10px, иконите 28x33 (отстъп 5px 4px), иконата 14px. Рамките и
+       цветовете отгоре остават. */
+    .o-mail-Chatter-topbar .btn {
+        height: var(--mcp-btn-h) !important;
+        min-width: 0 !important;
+        width: auto !important;
+        padding: var(--mcp-sp-5) var(--mcp-sp-10) !important;
+    }
+    .o-mail-Chatter-topbar .btn-link {
+        padding: var(--mcp-sp-5) var(--mcp-sp-4) !important;
+        min-width: var(--mcp-sp-28) !important;   /* иконата 18 + 2x4 + рамка, като Odoo 20 EE */
+    }
+    .o-mail-Chatter-topbar .btn i.fa-lg {
+        font-size: inherit !important;
+        line-height: inherit !important;
+        vertical-align: baseline !important;
     }
     /* Per-message hover-action group nudged down 2px (Rosen). */
     .o-mail-ActionList-group {

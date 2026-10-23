@@ -9,7 +9,13 @@
     max-width: 100% !important;
 }
 .o_form_renderer:has(.mcp_form_splitter) > .o_form_sheet_bg {
-    max-width: none !important;
+    /* Без запазено съотношение подредбата е като в Odoo 20 EE: формата е
+       flex 2 1 990px до 1400px, чатърът flex 1 0 530px, тоест на 1920px
+       1257 / 663. Беше max-width: none без основа и чатърът взимаше
+       2/3 от екрана (измерено 22.10.2026: форма 629, чатър 1267).
+       При влачене JS-ът пише ширина и max-width: none inline с important. */
+    flex: 2 1 var(--mcp-sp-990) !important;
+    max-width: var(--mcp-sp-1400) !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
     /* 🚨 `!important` тук БИЕ inline стила, който JS-ът пише — inline без
@@ -41,10 +47,11 @@
 }
 /* Chatter docked to the right edge — override core's fixed-width rule */
 .o_form_renderer:has(.mcp_form_splitter) > .o-mail-ChatterContainer.o-aside {
-    width: auto !important;            /* let flex govern, not core's calc() */
+    flex: 1 0 var(--mcp-sp-530) !important;   /* като Odoo 20 EE: основа 530, взима 1/3 от остатъка */
+    width: auto !important;
     max-width: none !important;
     margin-right: 0 !important;
-    min-width: var(--mcp-sp-585) !important;       /* mirrors MIN_CHATTER_PX in JS — natural message-bubble width */
+    min-width: var(--mcp-sp-530) !important;       /* == MIN_CHATTER_PX в JS ($o-mail-Chatter-minWidth) */
 }
 
 .mcp_form_splitter {

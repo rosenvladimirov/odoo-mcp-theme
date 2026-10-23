@@ -296,7 +296,7 @@
     --mcp-toggler-border: var(--mcp-rule-strong);
     --mcp-cp-row-h:      calc(30px * var(--mcp-density-scale));  /* CP row · density-scaled */
     --mcp-view-pad:      calc(8px * var(--mcp-density-scale));   /* view inset · density-scaled */
-    --mcp-stat-btn-min-w: 140px;
+    --mcp-stat-btn-min-w: 0px;    /* като Odoo 20 EE: ширината е по съдържанието (най-широкият в групата) */
     --mcp-stat-btn-max-w: 240px;
     --mcp-dash-width:    54px;
     --mcp-bcstrip-h:     30px;
@@ -411,6 +411,10 @@
     --mcp-sp-300:   300px;
     --mcp-sp-360:   360px;
     --mcp-sp-585:   585px;
+    --mcp-sp-27:    27px;    /* етап в лентата за статус (Odoo 20 EE) */
+    --mcp-sp-530:   530px;   /* чатър отстрани: основа като $o-mail-Chatter-minWidth на Odoo 20 */
+    --mcp-sp-990:   990px;   /* форма до чатъра: основа на flex като в Odoo 20 */
+    --mcp-sp-1400:  1400px;  /* $o-form-view-sheet-max-width на Odoo 20 */
     --mcp-sp-2000:  2000px;
 }
 
