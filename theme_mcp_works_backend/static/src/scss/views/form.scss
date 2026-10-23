@@ -603,6 +603,20 @@
         padding-bottom: var(--mcp-sp-4);
     }
 }
+/* Заглавие с бутон вдясно („Зареждане на шаблон“, „Ново ДС“): една линия с
+   текста на заглавието, над чертата (бутонът е с h-100 и лягаше върху нея). */
+.o_form_view .o_horizontal_separator.d-flex {
+    align-items: baseline !important;
+}
+.o_form_view .o_horizontal_separator .btn {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    font-family: var(--mcp-font-family);
+    font-size: var(--mcp-fs-12) !important;
+    letter-spacing: normal;
+    line-height: 1 !important;
+}
 .o_form_view .o_field_many2one a,
 .o_form_view .o_field_email,
 .o_form_view .o_field_url {

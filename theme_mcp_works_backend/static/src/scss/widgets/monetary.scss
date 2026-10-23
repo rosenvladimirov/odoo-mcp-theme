@@ -22,8 +22,11 @@
     user-select: none;
 }
 
-/* Amount input */
-.o_field_monetary input {
+/* Amount input — дясно подравняване само в списъците. Във формата Odoo
+   рисува символа на валутата върху невидимо копие на сумата, подравнено
+   вляво; при символ СЛЕД сумата (€, лв) дясното подравняване слагаше
+   символа върху цифрите (Rosen, 23.10: „3000,00“ на Възнаграждение). */
+.o_list_renderer .o_field_monetary input {
     text-align: right !important;
     font-variant-numeric: tabular-nums;
     min-width: var(--mcp-sp-80);

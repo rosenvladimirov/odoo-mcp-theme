@@ -80,6 +80,9 @@ const MANAGED = ".btn, .o_searchview_dropdown_toggler";
  *   - anything opted out with [data-mcp-no-size] */
 const EXCLUDE =
     ".oe_stat_button, .o-form-buttonbox .btn," +
+    /* бутоните в заглавие с черта („Зареждане на шаблон“, „Ново ДС“) — с
+       височината на текста; 33px ги сваляше върху чертата (Rosen, 23.10) */
+    ".o_horizontal_separator .btn," +
     ".purchase-dashboard-card, .o_sale_dashboard .btn, .o_dashboard_card," +
     ".dropdown-toggle-split, .o_optional_columns_dropdown_toggle," +
     /* list-header optional-columns gear: the toggle CLASS sits on the
