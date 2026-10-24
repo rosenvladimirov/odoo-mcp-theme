@@ -177,3 +177,10 @@
 /* Kanban card hover glow — ПРЕМАХНАТ (v204). Hover-ът вече е само лявата
    сапфир линия (виж kanban.scss .o_kanban_record:hover::before), за всички
    карти; без glow/lift, за да не "скача"/свети всяка карта. */
+
+/* „Зареждане…“ долу вдясно: Odoo го оцветява с компилирания $primary (сапфир)
+   и пресетите не го стигаха — синьо петно при всяка друга тема. */
+.o_loading_indicator {
+    background-color: var(--mcp-accent) !important;
+    color: var(--mcp-paper) !important;
+}

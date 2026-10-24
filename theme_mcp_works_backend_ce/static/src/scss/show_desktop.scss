@@ -267,20 +267,20 @@
     border-radius: var(--mcp-r-control);
     background: transparent;
     background-image: none;
-    color: var(--mcp-ink-2);
+    color: var(--mcp-navbar-ink-2);
     cursor: pointer;
     box-shadow: none;
     -webkit-tap-highlight-color: transparent;
     transition: background-color var(--mcp-t-fast), color var(--mcp-t-fast), border-color var(--mcp-t-fast);
 }
 .o_main_navbar .mcp_show_desktop_btn.btn:hover {
-    background: var(--mcp-hover-bg);
-    color: var(--mcp-ink);
+    background: var(--mcp-navbar-hover-bg);
+    color: var(--mcp-navbar-ink);
 }
 .o_main_navbar .mcp_show_desktop_btn.btn:active {
-    background: var(--mcp-active-bg);
-    border-color: var(--mcp-accent);
-    color: var(--mcp-ink);
+    background: var(--mcp-navbar-active-bg);
+    border-color: var(--mcp-navbar-accent);
+    color: var(--mcp-navbar-ink);
 }
 .o_main_navbar .mcp_show_desktop_btn.btn:focus { box-shadow: none; }
 .o_main_navbar .mcp_show_desktop_btn.btn:focus-visible {
@@ -288,3 +288,14 @@
     outline-offset: calc(-1 * var(--mcp-bw-1));
 }
 .mcp_show_desktop_btn .fa { font-size: var(--mcp-sp-14); line-height: 1; }
+/* общото .btn правило (buttons.scss, !important) му слагаше фона и рамката на
+   страницата → бяло квадратче в тъмна лента; тук лентата командва */
+.o_main_navbar .mcp_show_desktop_btn.btn:not(:hover):not(:active) {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: var(--mcp-navbar-ink-2) !important;
+}
+.o_main_navbar .mcp_show_desktop_btn.btn:hover {
+    background: var(--mcp-navbar-hover-bg) !important;
+    color: var(--mcp-navbar-ink) !important;
+}

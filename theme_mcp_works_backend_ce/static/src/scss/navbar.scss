@@ -5,11 +5,11 @@
 .o_main_navbar {
     /* white surface + bottom hairline + downward glow shadow
        (Rosen: "нав менюто бяло с бордер отдолу и гроу сянка отдолу"). */
-    background: var(--mcp-bg) !important;
-    border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
+    background: var(--mcp-navbar-bg) !important;
+    border-bottom: var(--mcp-sp-1) solid var(--mcp-navbar-rule) !important;
     /* сянката отдолу остава (Росен), но по-тиха и в токен — пресет може да я върне */
     box-shadow: var(--mcp-navbar-shadow) !important;
-    color: var(--mcp-ink) !important;
+    color: var(--mcp-navbar-ink) !important;
     height: var(--mcp-navbar-height) !important;
     min-height: var(--mcp-navbar-height) !important;
     --o-navbar-height: var(--mcp-navbar-height);
@@ -38,14 +38,14 @@
     /* Общото правило изключва собствените ни бутони — иначе техните
        hover/is-active губят по специфичност и !important. Hover е неутрален. */
     :is(a, .nav-link, .dropdown-toggle, button):not(.mcp_apps_trigger, .mcp_show_desktop_btn) {
-        color: var(--mcp-ink-2) !important;
+        color: var(--mcp-navbar-ink-2) !important;
         background: transparent !important;
         position: relative;
         z-index: 2;
     }
     :is(a, .nav-link, .dropdown-toggle, button):not(.mcp_apps_trigger, .mcp_show_desktop_btn):hover {
-        color: var(--mcp-ink) !important;
-        background: var(--mcp-hover-bg) !important;
+        color: var(--mcp-navbar-ink) !important;
+        background: var(--mcp-navbar-hover-bg) !important;
     }
     /* видим фокус от клавиатура за всеки запис в лентата, без ореол */
     :is(a, .dropdown-toggle, button):focus-visible {
@@ -86,24 +86,24 @@
         font-size: var(--mcp-fs-12) !important;
         font-weight: var(--mcp-fw-regular);
         letter-spacing: 0;
-        color: var(--mcp-ink-2) !important;
+        color: var(--mcp-navbar-ink-2) !important;
         transition: background-color var(--mcp-t-fast), color var(--mcp-t-fast), border-color var(--mcp-t-fast);
     }
     /* hover е неутрален; акцентът е само за отвореното меню */
     .o_menu_sections > .dropdown-toggle:hover,
     .o_menu_sections > .o_nav_entry:hover,
     .o_menu_sections_more > .dropdown-toggle:hover {
-        background: var(--mcp-hover-bg) !important;
-        color: var(--mcp-ink) !important;
+        background: var(--mcp-navbar-hover-bg) !important;
+        color: var(--mcp-navbar-ink) !important;
     }
     /* отворено меню: лек акцентен тинт, 1px акцентен ръб, тегло 500 */
     .o_menu_sections > .dropdown-toggle.show,
     .o_menu_sections > .dropdown-toggle[aria-expanded='true'],
     .o_menu_sections_more > .dropdown-toggle.show,
     .o_menu_sections_more > .dropdown-toggle[aria-expanded='true'] {
-        background: var(--mcp-active-bg) !important;
-        border-color: var(--mcp-accent);
-        color: var(--mcp-ink) !important;
+        background: var(--mcp-navbar-active-bg) !important;
+        border-color: var(--mcp-navbar-accent);
+        color: var(--mcp-navbar-ink) !important;
         font-weight: var(--mcp-fw-medium);
     }
 

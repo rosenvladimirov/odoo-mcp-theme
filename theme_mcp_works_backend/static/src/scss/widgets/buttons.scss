@@ -74,16 +74,16 @@ button.btn#{$mcp-btn-not-builder}:focus-visible,
 .btn-primary#{$mcp-btn-not-builder},
 .o_form_button_save,
 button.o_form_button_save {
-    background: var(--mcp-accent) !important;
-    border-color: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
+    background: var(--mcp-btn-primary-bg) !important;
+    border-color: var(--mcp-btn-primary-bg) !important;
+    color: var(--mcp-btn-primary-ink) !important;
 }
 .btn.btn-primary#{$mcp-btn-not-builder}:hover,
 .btn-primary#{$mcp-btn-not-builder}:hover,
 .o_form_button_save:hover {
-    background: var(--mcp-accent-dark) !important;
-    border-color: var(--mcp-accent-dark) !important;
-    color: var(--mcp-paper) !important;
+    background: var(--mcp-btn-primary-hover) !important;
+    border-color: var(--mcp-btn-primary-hover) !important;
+    color: var(--mcp-btn-primary-ink) !important;
     /* primary — само потъмняване, без неонов ореол */
     box-shadow: var(--mcp-btn-shadow) !important;
 }

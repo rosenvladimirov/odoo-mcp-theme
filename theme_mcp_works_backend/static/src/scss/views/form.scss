@@ -1381,3 +1381,11 @@
     letter-spacing: 0 !important;
     color: var(--mcp-ink-2);
 }
+
+/* Odoo компилира `.o-mail-ChatterContainer, .o-mail-Form-chatter {background:
+   white}` — в тъмен пресет бяла рамка около чатъра. Фонът = листът (в светлите
+   пресети също бял). */
+.o-mail-ChatterContainer,
+.o-mail-Form-chatter {
+    background-color: var(--mcp-form-sheet-bg) !important;
+}

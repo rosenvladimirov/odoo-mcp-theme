@@ -21,7 +21,7 @@
     border: var(--mcp-bw-1) solid transparent;
     border-radius: var(--mcp-r-control);
     background: transparent;
-    color: var(--mcp-accent);
+    color: var(--mcp-navbar-accent);
     font-size: var(--mcp-sp-16);
     flex-shrink: 0;
     /* в средата на лентата като менюто (стоеше залепен горе, 5px по-високо) */
@@ -30,12 +30,12 @@
     transition: background-color var(--mcp-t-fast), border-color var(--mcp-t-fast);
 }
 .o_main_navbar .mcp_apps_trigger:hover {
-    background: var(--mcp-hover-bg);
+    background: var(--mcp-navbar-hover-bg);
 }
 /* отворен док: същото състояние като отворена секция */
 .o_main_navbar .mcp_apps_trigger.is-active {
-    background: var(--mcp-active-bg);
-    border-color: var(--mcp-accent);
+    background: var(--mcp-navbar-active-bg);
+    border-color: var(--mcp-navbar-accent);
 }
 .o_main_navbar .mcp_apps_trigger:focus-visible {
     outline: var(--mcp-focus-ring);

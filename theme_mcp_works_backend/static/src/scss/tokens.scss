@@ -176,7 +176,23 @@
     --mcp-table-total-bg:  var(--mcp-surface-2);
     --mcp-state-stripe:    var(--mcp-sp-3);
 
+    /* ── Основен бутон: по подразбиране = акцентът; пресет може да го отдели
+       (o-experts Dark: бордо бутони, лайм акцент — бордо текст върху черно не
+       се чете, бордо бутон с хартиен текст — да) ── */
+    --mcp-btn-primary-bg:    var(--mcp-accent);
+    --mcp-btn-primary-hover: var(--mcp-accent-dark);
+    --mcp-btn-primary-ink:   var(--mcp-paper);
+
     /* ── Горна лента ── */
+    /* Собствени цветове на лентата: по подразбиране = страницата; пресет може
+       да я направи тъмна при светла страница (o-experts — черна като визитката). */
+    --mcp-navbar-bg:        var(--mcp-bg);
+    --mcp-navbar-ink:       var(--mcp-ink);
+    --mcp-navbar-ink-2:     var(--mcp-ink-2);
+    --mcp-navbar-hover-bg:  var(--mcp-hover-bg);
+    --mcp-navbar-active-bg: var(--mcp-active-bg);
+    --mcp-navbar-accent:    var(--mcp-accent);
+    --mcp-navbar-rule:      var(--mcp-rule);
     --mcp-navbar-entry-h:     calc(var(--mcp-navbar-height) - 2 * var(--mcp-sp-5));
     --mcp-navbar-entry-pad-x: var(--mcp-sp-6); /* 8 → 6: по-тесни секции (Rosen 18.10) */
     --mcp-navbar-entry-gap:   var(--mcp-sp-1);

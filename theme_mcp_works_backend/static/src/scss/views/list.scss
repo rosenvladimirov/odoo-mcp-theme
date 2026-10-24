@@ -608,3 +608,11 @@ a.purchase-dashboard-card.btn {
     padding-left: var(--mcp-list-cell-pad-x-sm) !important;
     padding-right: var(--mcp-list-cell-pad-x-sm) !important;
 }
+
+/* Odoo компилира `.o_list_renderer .o_list_table { --table-bg: white }` —
+   в тъмен пресет (o-experts Dark, Slate, Nord) клетките оставаха бели с почти
+   бял текст: редовете не се виждаха (Rosen 24.10). Фонът = листът на формата
+   (в светлите пресети също бял → без промяна там). */
+.o_list_renderer .o_list_table {
+    --table-bg: var(--mcp-form-sheet-bg);
+}
