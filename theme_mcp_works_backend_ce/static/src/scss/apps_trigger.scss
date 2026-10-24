@@ -41,3 +41,16 @@
     outline: var(--mcp-focus-ring);
     outline-offset: calc(-1 * var(--mcp-bw-1));
 }
+
+/* Знак на марката (пресет: --mcp-apps-trigger-mark: url(...)) — отделен слой,
+   за да не го трие фонът при посочване; решетката изчезва с --mcp-apps-trigger-glyph: 0 */
+.o_main_navbar .mcp_apps_trigger::after {
+    content: "";
+    position: absolute;
+    inset: var(--mcp-sp-4);
+    background: var(--mcp-apps-trigger-mark) center / contain no-repeat;
+    pointer-events: none;
+}
+.o_main_navbar .mcp_apps_trigger > i {
+    opacity: var(--mcp-apps-trigger-glyph);
+}

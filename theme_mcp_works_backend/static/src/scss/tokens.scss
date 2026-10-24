@@ -193,6 +193,9 @@
     --mcp-navbar-active-bg: var(--mcp-active-bg);
     --mcp-navbar-accent:    var(--mcp-accent);
     --mcp-navbar-rule:      var(--mcp-rule);
+    /* знак на марката вместо решетката (url(...)); none = решетката */
+    --mcp-apps-trigger-mark:  none;
+    --mcp-apps-trigger-glyph: 1;
     --mcp-navbar-entry-h:     calc(var(--mcp-navbar-height) - 2 * var(--mcp-sp-5));
     --mcp-navbar-entry-pad-x: var(--mcp-sp-6); /* 8 → 6: по-тесни секции (Rosen 18.10) */
     --mcp-navbar-entry-gap:   var(--mcp-sp-1);
@@ -316,7 +319,7 @@
     --mcp-stat-btn-max-w: 240px;
     --mcp-stat-btn-fixed-w: 140px; /* 23.10: умните бутони са еднакво широки; етикетът — до 2 реда, после …; 140 = „Допълнителни“ (83px) се побира цяла */
     --mcp-dash-width:    54px;
-    --mcp-bcstrip-h:     30px;
+    --mcp-bcstrip-h:     34px;  /* 30 → 34 + 4px отдолу: чертата под пътечката слиза, текстът стои (Rosen 24.10) */
     --mcp-status-h:      24px;
 
     /* ── Spacing scale ───────────────────────────────────────────
