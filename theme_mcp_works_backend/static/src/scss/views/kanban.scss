@@ -349,3 +349,32 @@
     gap: var(--mcp-sp-4);
     .fa { font-size: var(--mcp-fs-13); color: var(--mcp-ink-3); }
 }
+
+/* Бутони с надпис в картите на всеки канбан (напр. „Страница с обява“,
+   „Конфигурирайте“ в Работни позиции): надписът излизаше от бутона или се
+   пренасяше на втори ред, който се режеше (Rosen 24.10). Същото като
+   „Приложения“: естествена ширина до 16 знака, „…“ и title с пълния надпис
+   (button_sizing.js → tagTruncatedTitles); изключени от оразмеряването. */
+.o_kanban_view:not(.o_modules_kanban) .o_kanban_record .btn:is(.btn-primary, .btn-secondary) {
+    max-width: 16ch !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    height: var(--mcp-btn-h) !important;
+    min-height: var(--mcp-btn-h) !important;
+    line-height: calc(var(--mcp-btn-h) - 2 * var(--mcp-sp-1)) !important;
+    padding: 0 var(--mcp-sp-10) !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+/* Бутон без вариант в картата (часовникът за дейности в Работни позиции) —
+   в Odoo е без рамка; общото .btn правило му слагаше рамка и фон. */
+.o_kanban_view .o_kanban_record .btn.oe_kanban_action:not([class*="btn-"]) {
+    border-color: transparent !important;
+    background: transparent !important;
+    box-shadow: none !important;
+
+    &:hover { background: var(--mcp-hover-bg) !important; }
+}

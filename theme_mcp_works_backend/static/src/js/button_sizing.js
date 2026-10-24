@@ -83,6 +83,8 @@ const EXCLUDE =
     /* бутоните в заглавие с черта („Зареждане на шаблон“, „Ново ДС“) — с
        височината на текста; 33px ги сваляше върху чертата (Rosen, 23.10) */
     ".o_horizontal_separator .btn," +
+    /* бутоните с надпис в канбан картите — размерът е в kanban.scss (ellipsis) */
+    ".o_kanban_record .btn.btn-primary, .o_kanban_record .btn.btn-secondary," +
     ".purchase-dashboard-card, .o_sale_dashboard .btn, .o_dashboard_card," +
     ".dropdown-toggle-split, .o_optional_columns_dropdown_toggle," +
     /* list-header optional-columns gear: the toggle CLASS sits on the
@@ -168,7 +170,8 @@ function sizeOne(btn, H) {
    need the full text exposed as a native tooltip. */
 const TRUNCATABLE =
     ".o_form_statusbar .o_statusbar_buttons .btn," +
-    ".o_modules_kanban .o_kanban_record footer .btn";
+    ".o_modules_kanban .o_kanban_record footer .btn," +
+    ".o_kanban_record .btn.btn-primary, .o_kanban_record .btn.btn-secondary";
 
 /* Truncated action buttons expose the full label as a native `title` so the
    browser shows a tooltip (Rosen: тоолтип на скъсените надписи). Only OUR
