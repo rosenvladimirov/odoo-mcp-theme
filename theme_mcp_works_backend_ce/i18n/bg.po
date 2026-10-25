@@ -45,3 +45,45 @@ msgstr "Откачи"
 #: code:addons/theme_mcp_works_backend_ce/static/src/webclient/dash/dash.js:0
 msgid "Lock screen (screen saver)"
 msgstr "Заключи екрана (скрийнсейвър)"
+
+#. module: theme_mcp_works_backend_ce
+#. odoo-javascript
+#: code:addons/theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml:0
+msgid "Related views"
+msgstr "Свързани изгледи"
+
+#. module: theme_mcp_works_backend_ce
+#. odoo-javascript
+#: code:addons/theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml:0
+msgid "Views"
+msgstr "Изгледи"
+
+#. module: theme_mcp_works_backend_ce
+#. odoo-javascript
+#: code:addons/theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml:0
+msgid "More"
+msgstr "Още"
+
+#. module: theme_mcp_works_backend_ce
+#. odoo-javascript
+#: code:addons/theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml:0
+msgid "Show as a separate row"
+msgstr "Показване като отделен ред"
+
+#. module: theme_mcp_works_backend_ce
+#. odoo-javascript
+#: code:addons/theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml:0
+msgid "Shared"
+msgstr "Споделено"
+
+#. module: theme_mcp_works_backend_ce
+#. odoo-javascript
+#: code:addons/theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml:0
+msgid "Save"
+msgstr "Запазване"
+
+#. module: theme_mcp_works_backend_ce
+#. odoo-javascript
+#: code:addons/theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml:0
+msgid "Make this embedded action available to other users"
+msgstr "Направете това вградено действие достъпно за други потребители"

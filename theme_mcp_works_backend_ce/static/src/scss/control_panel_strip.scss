@@ -208,3 +208,34 @@
 .o_control_panel .o_control_panel_breadcrumbs > .o_breadcrumb {
     display: none !important;
 }
+
+/* Вградените действия като меню вдясно от „Нов“ (control_panel_cp.xml, (0)).
+   Бутонът на ядрото до изгледите (плъзгачите, name="embedded_actions") вече
+   е в менюто — скрит. В задачите на проект project го заменя със свое меню
+   (подзадачи, „Главно меню“) — то остава. */
+// специфичност над „.o_control_panel .btn:not(.btn-primary):not(…)“ (inline-flex !important)
+.o_control_panel .o_control_panel_navigation > button.btn[name="embedded_actions"] {
+    display: none !important;
+}
+.mcp_embedded_toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 16rem;
+
+    .mcp_embedded_icon {
+        flex: none;
+        color: var(--bs-primary);
+    }
+    .mcp_embedded_name {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+.mcp_embedded_menu {
+    min-width: 15rem;
+    max-height: 70vh;
+    overflow-y: auto;
+}

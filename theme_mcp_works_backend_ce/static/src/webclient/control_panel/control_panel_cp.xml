@@ -8,6 +8,67 @@
          в проект) е копие без лентата и пътечката изчезва (Росен, 25.10.2026). -->
     <t t-name="theme_mcp_works_backend.ControlPanel" t-inherit="web.ControlPanel" t-inherit-mode="extension">
 
+        <!-- (0) Вградените действия (Задачи, Графици, Табло…) като падащо меню
+             вдясно от „Нов“ — версия 1 (Росен, 25.10.2026): иконата „слоеве“ и
+             името на текущото действие. Горе са избраните за лентата, под тях
+             „Още“; после отметката за отделния ред и „Запази изгледа“.
+             Бутонът на ядрото до изгледите е скрит в SCSS (control_panel_strip). -->
+        <xpath expr="//div[hasclass('o_control_panel_main_buttons')]/t[@t-slot='control-panel-always-buttons']" position="after">
+            <Dropdown t-if="state.embeddedInfos.embeddedActions?.length and !env.isSmall"
+                      menuClass="'mcp_embedded_menu'">
+                <button class="btn btn-secondary mcp_embedded_toggle" title="Related views">
+                    <svg class="mcp_embedded_icon" viewBox="0 0 24 24" width="16" height="16" fill="none"
+                         stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                         aria-hidden="true">
+                        <path d="M12 3 3 8l9 5 9-5-9-5Z"/>
+                        <path d="m3 13 9 5 9-5"/>
+                    </svg>
+                    <span t-if="state.embeddedInfos.currentEmbeddedAction?.name" class="mcp_embedded_name"
+                          t-out="state.embeddedInfos.currentEmbeddedAction.name"/>
+                    <span t-else="" class="mcp_embedded_name">Views</span>
+                    <i class="fa fa-caret-down ms-1" aria-hidden="true"/>
+                </button>
+                <t t-set-slot="content">
+                    <t t-set="mcpPinned" t-value="state.embeddedInfos.embeddedActions.filter((a) => this._isEmbeddedActionVisible(a))"/>
+                    <t t-set="mcpOther" t-value="state.embeddedInfos.embeddedActions.filter((a) => !this._isEmbeddedActionVisible(a))"/>
+                    <h6 class="dropdown-header">Related views</h6>
+                    <t t-foreach="mcpPinned" t-as="action" t-key="action.id">
+                        <DropdownItem class="{ 'selected': state.embeddedInfos.currentEmbeddedAction?.id === action.id }"
+                                      onSelected="() => this.onEmbeddedActionClick(action)">
+                            <span t-out="action.name"/>
+                        </DropdownItem>
+                    </t>
+                    <t t-if="mcpOther.length">
+                        <h6 t-if="mcpPinned.length" class="dropdown-header">More</h6>
+                        <t t-foreach="mcpOther" t-as="action" t-key="action.id">
+                            <DropdownItem class="{ 'selected': state.embeddedInfos.currentEmbeddedAction?.id === action.id }"
+                                          onSelected="() => this.onEmbeddedActionClick(action)">
+                                <span t-out="action.name"/>
+                            </DropdownItem>
+                        </t>
+                    </t>
+                    <div role="separator" class="dropdown-divider"/>
+                    <DropdownItem class="{ 'selected': state.embeddedInfos.showEmbedded, 'mcp_embedded_bar_toggle': true }"
+                                  onSelected="() => this.onClickShowEmbedded()">
+                        Show as a separate row
+                    </DropdownItem>
+                    <!-- „Запази изгледа“ като в ядрото; при показан ред е там (t-ref е един) -->
+                    <AccordionItem t-if="!state.embeddedInfos.showEmbedded" class="'o_save_current_view'" description.translate="Save View">
+                        <div class="px-2 py-2">
+                            <input type="text" t-ref="newActionNameRef" class="o_input mb-2"
+                                   t-model.trim="state.embeddedInfos.newActionName"/>
+                            <CheckBox value="state.embeddedInfos.newActionIsShared" onChange.bind="_onShareCheckboxChange">
+                                <span data-tooltip="Make this embedded action available to other users">Shared</span>
+                            </CheckBox>
+                        </div>
+                        <div class="px-3 py-2">
+                            <button class="o_save_favorite btn btn-primary w-100" t-on-click="_saveNewAction">Save</button>
+                        </div>
+                    </AccordionItem>
+                </t>
+            </Dropdown>
+        </xpath>
+
         <!-- (1) Inject the breadcrumb strip BEFORE .o_control_panel_main.
              The leading marker is the relocated .o_menu_brand: shows the
              current app's icon + name (the original in the navbar is
