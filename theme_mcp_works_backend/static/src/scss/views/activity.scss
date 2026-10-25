@@ -27,6 +27,24 @@
         font-weight: var(--mcp-fw-medium);
         border-bottom: var(--mcp-bw-1) solid var(--mcp-rule-strong) !important;
     }
+    /* Заглавието на вида дейност: ядрото дава p-3 и пази 24 + 16 px под
+       името за лентата с прогреса (.o_activity_counter, h-0 mt24 mb-3), дори
+       когато лента няма — редът ставаше 94 px (Росен, 25.10.2026). Лентата
+       заема само реалната си височина; без лента (празна колона) я няма. */
+    > thead > tr > th.o_activity_type_cell {
+        padding: var(--mcp-sp-8) var(--mcp-sp-12) !important;
+        vertical-align: top;
+
+        .o_activity_counter {
+            height: auto !important;
+            margin: var(--mcp-sp-6) 0 0 !important;
+            &:empty { display: none !important; }
+        }
+    }
+    /* бутонът за колоните (33 px) с отстъп 12 px държеше реда висок и без ленти */
+    > thead > tr > th:has(.o_optional_columns_dropdown) {
+        padding-block: var(--mcp-sp-2) !important;
+    }
     .o_activity_record:hover { background: var(--mcp-table-hover-bg) !important; }
     .o_activity_view_table_footer {
         background: var(--mcp-surface-2) !important;
