@@ -1,0 +1,32 @@
+/* MCP Works backend — Robot Theme · изгледите на o-experts (oexperts_web_*)
+   Grid, Gantt, Cohort и Map: съдържанието е тиха карта с отстъп от ръбовете,
+   както графиката и обобщената таблица (Росен, 25.10.2026). Коренът носи и
+   контролния панел, затова картата е рендерът вътре в .o_content. Правилата
+   действат само ако модулът е инсталиран (класовете са негови). */
+
+:is(.o_oexp_grid_view, .o_oexp_gantt_view, .o_oexp_cohort_view, .o_oexp_map_view) > .o_content {
+    background: transparent !important;
+}
+
+:is(.o_oexp_grid_view, .o_oexp_gantt_view, .o_oexp_cohort_view, .o_oexp_map_view) > .o_content
+    > :is(.o_oexp_grid_renderer, .o_oexp_gantt_renderer, .o_oexp_cohort_renderer, .o_oexp_map_renderer) {
+    box-sizing: border-box;
+    margin: 0 var(--mcp-view-pad) var(--mcp-view-pad);
+    background: var(--mcp-view-card-bg);
+    border: var(--mcp-bw-1) solid var(--mcp-rule-strong);
+    border-radius: var(--mcp-r-surface);
+    box-shadow: var(--mcp-shadow-surface);
+    min-height: 0;
+}
+
+/* Grid: .o_content е блок, а рендерът е с height: 100% — без отстъпа отдолу,
+   иначе картата излиза под ръба и се появява втори скрол. */
+.o_oexp_grid_view > .o_content > .o_oexp_grid_renderer {
+    height: calc(100% - var(--mcp-view-pad));
+    width: auto;
+}
+/* Map: рендерът е w-100 h-100 (Bootstrap !important) — същото */
+.o_oexp_map_view > .o_content > .o_oexp_map_renderer {
+    width: auto !important;
+    height: calc(100% - var(--mcp-view-pad)) !important;
+}
