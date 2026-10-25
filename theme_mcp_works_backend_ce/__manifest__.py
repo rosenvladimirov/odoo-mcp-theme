@@ -5,7 +5,7 @@
     "summary": "Community-edition navigation shell for the MCP Works backend "
                "theme — vertical Dash dock, apps trigger, breadcrumb strip, "
                "actions panel, desktop",
-    "version": "19.0.1.247.0",
+    "version": "19.0.1.248.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -104,6 +104,13 @@
                 "after",
                 "theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel.xml",
                 "theme_mcp_works_backend_ce/static/src/webclient/show_desktop/show_desktop.js",
+            ),
+            # лентата с пътечката: веднага след контролния панел на web, преди
+            # основните му наследници (project.ProjectTaskControlPanel и др.)
+            (
+                "after",
+                "web/static/src/search/control_panel/control_panel.xml",
+                "theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml",
             ),
             # McpAppIcon в марката на пътечката и в менюто на приложенията
             (
