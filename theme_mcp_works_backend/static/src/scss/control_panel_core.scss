@@ -40,11 +40,12 @@
 
 /* Изгледите, чийто корен е без отстъп (картата е съдържанието им, а не
    коренът): Календар, Дейност, Обобщена, Графика и EE Гант/Кохорта/Грид/
-   Карта. Панелът е в корена и без това правило е долепен до горния и
+   Карта, и нашите oexperts_web_* (o_oexp_*_view). Панелът е в корена и без това правило е долепен до горния и
    страничните ръбове — при Списък и Канбан коренът има --mcp-view-pad
    (Росен, 25.10.2026). Същото отстояние като там. */
 :is(.o_calendar_view, .o_activity_view, .o_pivot_view, .o_graph_view,
-    .o_gantt_view, .o_cohort_view, .o_grid_view, .o_map_view) > .o_control_panel {
+    .o_gantt_view, .o_cohort_view, .o_grid_view, .o_map_view,
+    .o_oexp_gantt_view, .o_oexp_cohort_view, .o_oexp_grid_view, .o_oexp_map_view) > .o_control_panel {
     margin: var(--mcp-view-pad) var(--mcp-view-pad) var(--mcp-sp-6) !important;
 }
 
