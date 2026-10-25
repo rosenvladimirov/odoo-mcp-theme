@@ -11,7 +11,7 @@
         <!-- (0) Вградените действия (Задачи, Графици, Табло…) като падащо меню
              вдясно от „Нов“ — версия 1 (Росен, 25.10.2026): иконата „слоеве“ и
              името на текущото действие. Горе са избраните за лентата, под тях
-             „Още“; после отметката за отделния ред и „Запази изгледа“.
+             „Още“; после „Запази изгледа“. Отделният ред го няма (Росен, 25.10.2026).
              Бутонът на ядрото до изгледите е скрит в SCSS (control_panel_strip). -->
         <xpath expr="//div[hasclass('o_control_panel_main_buttons')]/t[@t-slot='control-panel-always-buttons']" position="after">
             <Dropdown t-if="state.embeddedInfos.embeddedActions?.length and !env.isSmall"
@@ -48,12 +48,9 @@
                         </t>
                     </t>
                     <div role="separator" class="dropdown-divider"/>
-                    <DropdownItem class="{ 'selected': state.embeddedInfos.showEmbedded, 'mcp_embedded_bar_toggle': true }"
-                                  onSelected="() => this.onClickShowEmbedded()">
-                        Show as a separate row
-                    </DropdownItem>
-                    <!-- „Запази изгледа“ като в ядрото; при показан ред е там (t-ref е един) -->
-                    <AccordionItem t-if="!state.embeddedInfos.showEmbedded" class="'o_save_current_view'" description.translate="Save View">
+                    <!-- „Запази изгледа“ като в ядрото. Отделният ред е скрит винаги
+                         (SCSS), затова менюто в него не се отваря и t-ref е един. -->
+                    <AccordionItem class="'o_save_current_view'" description.translate="Save View">
                         <div class="px-2 py-2">
                             <input type="text" t-ref="newActionNameRef" class="o_input mb-2"
                                    t-model.trim="state.embeddedInfos.newActionName"/>
@@ -120,6 +117,12 @@
             </div>
         </xpath>
 
+    </t>
+
+    <!-- „Главно меню“ (отделният ред) в менюто на задачите на project го няма.
+         Шаблонът съществува само с project; без него разширението не се ползва. -->
+    <t t-name="theme_mcp_works_backend.ProjectTaskControlPanel" t-inherit="project.ProjectTaskControlPanel" t-inherit-mode="extension">
+        <xpath expr="//DropdownItem[@t-if='state.embeddedInfos.embeddedActions?.length and !env.isSmall']" position="replace"/>
     </t>
 
 </templates>

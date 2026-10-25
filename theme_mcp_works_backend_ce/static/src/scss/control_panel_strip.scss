@@ -217,6 +217,10 @@
 .o_control_panel .o_control_panel_navigation > button.btn[name="embedded_actions"] {
     display: none !important;
 }
+// отделният ред с действията го няма — те са само в менюто (Росен, 25.10.2026)
+.o_control_panel .o_embedded_actions {
+    display: none !important;
+}
 .mcp_embedded_toggle {
     display: inline-flex;
     align-items: center;

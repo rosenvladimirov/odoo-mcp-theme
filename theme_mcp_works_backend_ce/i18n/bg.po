@@ -64,11 +64,6 @@ msgstr "Изгледи"
 msgid "More"
 msgstr "Още"
 
-#. module: theme_mcp_works_backend_ce
-#. odoo-javascript
-#: code:addons/theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml:0
-msgid "Show as a separate row"
-msgstr "Показване като отделен ред"
 
 #. module: theme_mcp_works_backend_ce
 #. odoo-javascript
