@@ -5,7 +5,7 @@
     "summary": "Community-edition navigation shell for the MCP Works backend "
                "theme — vertical Dash dock, apps trigger, breadcrumb strip, "
                "actions panel, desktop",
-    "version": "19.0.1.250.0",
+    "version": "19.0.1.251.0",
     "category": "Themes/Backend",
     "author": "Rosen Vladimirov, BL Consulting",
     "maintainers": ["rosen-vladimirov"],
@@ -111,6 +111,12 @@
                 "after",
                 "web/static/src/search/control_panel/control_panel.xml",
                 "theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml",
+            ),
+            # ширината на колоните за часовете в таймшита (без зависимост от hr_timesheet)
+            (
+                "after",
+                "theme_mcp_works_backend_ce/static/src/webclient/control_panel/control_panel_cp.xml",
+                "theme_mcp_works_backend_ce/static/src/webclient/list/numeric_widget_widths.js",
             ),
             # McpAppIcon в марката на пътечката и в менюто на приложенията
             (
