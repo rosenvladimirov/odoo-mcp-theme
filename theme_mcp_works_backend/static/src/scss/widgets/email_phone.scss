@@ -14,7 +14,7 @@
 .o_field_email a,
 .o_field_phone a,
 .o_field_url a {
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     text-decoration: none;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -46,7 +46,7 @@
 .o_field_phone:hover .o_field_copy,
 .o_field_url:hover .o_field_copy,
 tr:hover .o_field_copy { opacity: 0.55; }
-.o_field_copy:hover    { opacity: 1 !important; color: var(--mcp-accent) !important; }
+.o_field_copy:hover    { opacity: 1 !important; color: var(--mcp-accent-ink) !important; }
 
 /* Copied confirmation flash */
 .o_field_copy.o_copied,

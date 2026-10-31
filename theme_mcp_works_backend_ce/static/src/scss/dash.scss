@@ -117,7 +117,7 @@
     align-items: center;
     justify-content: center;
     background: var(--mcp-accent-soft);
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
     border: none;
     border-radius: 0;
     cursor: pointer;
@@ -185,7 +185,7 @@
 .mcp_dash_item:hover .o_app_letter {
     background: var(--mcp-accent-soft);
     border-color: var(--mcp-accent);
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
 }
 
 /* Активното приложение: лек тинт и тънък акцентен контур около записа,
@@ -198,7 +198,7 @@
 }
 .mcp_dash_item.is-active .o_app_letter {
     background: var(--mcp-accent-soft);
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
 }
 /* видим фокус от клавиатура */
 .mcp_dash_item:focus-visible {
@@ -258,7 +258,7 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -279,7 +279,7 @@
     background: transparent;
     border: none;
     border-radius: 0;
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
     cursor: pointer;
     font-size: var(--mcp-fs-11);
     transition: background var(--mcp-t-fast);
@@ -292,7 +292,7 @@
     width: var(--mcp-sp-22); height: var(--mcp-sp-22);
     display: flex; align-items: center; justify-content: center;
     background: transparent; border: none; border-radius: 0;
-    color: var(--mcp-accent); cursor: pointer;
+    color: var(--mcp-accent-ink); cursor: pointer;
     font-size: var(--mcp-fs-10); padding: 0;
     transition: background var(--mcp-t-fast);
     &:hover:not(:disabled) { background: var(--mcp-accent-soft); }
@@ -523,14 +523,14 @@
     cursor: pointer;
     font-size: var(--mcp-sp-16);
     transition: background var(--mcp-t-fast), color var(--mcp-t-fast), border-color var(--mcp-t-fast);
-    &:hover { background: var(--mcp-accent-soft); color: var(--mcp-accent); }
+    &:hover { background: var(--mcp-accent-soft); color: var(--mcp-accent-ink); }
     &:active { background: var(--mcp-accent-glow); }
     &:focus-visible {
         outline: var(--mcp-bw-2) solid var(--mcp-accent);
         outline-offset: var(--mcp-bw-1);
     }
     &.is-on {
-        color: var(--mcp-accent);
+        color: var(--mcp-accent-ink);
         border-color: var(--mcp-accent);
         background: var(--mcp-accent-soft);
     }

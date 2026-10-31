@@ -27,7 +27,7 @@
     transition: opacity var(--mcp-t-fast), color var(--mcp-t-fast);
     transform: none !important;
 
-    &:hover { opacity: 1; color: var(--mcp-accent) !important; }
+    &:hover { opacity: 1; color: var(--mcp-accent-ink) !important; }
 }
 
 /* Datepicker popup */
@@ -55,12 +55,12 @@
     table td span:hover,
     table td .day:hover {
         background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
     }
     table td .active,
     table td span.active {
         background: var(--mcp-accent) !important;
-        color: var(--mcp-paper) !important;
+        color: var(--mcp-on-accent) !important;
     }
     table td .today::before {
         border-bottom-color: var(--mcp-accent) !important;

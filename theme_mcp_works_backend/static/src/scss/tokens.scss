@@ -100,7 +100,13 @@
     --mcp-control-border-hover: color-mix(in srgb, var(--mcp-ink-3) 60%, var(--mcp-bg));
     --mcp-focus-border:         color-mix(in srgb, var(--mcp-accent) 50%, var(--mcp-control-border));
     --mcp-table-hover-bg:       color-mix(in srgb, var(--mcp-accent) 5.5%, transparent);
-    --mcp-link:                 var(--mcp-accent);
+    /* Текстът в цвета на акцента (избраното, иконите на действия, линковете)
+       и текстът ВЪРХУ запълнен акцент. По подразбиране = акцентът и
+       повърхността, както досега; пресет със светъл акцент (лаймът на
+       o-experts върху бяло е 1.2:1) ги задава в advanced. */
+    --mcp-accent-ink:           var(--mcp-accent);
+    --mcp-on-accent:            var(--mcp-surface);
+    --mcp-link:                 var(--mcp-accent-ink);
     --mcp-link-hover:           var(--mcp-accent-dark);
 
     /* ── Елевация · неутрална, следва режима през --mcp-elev-color ── */

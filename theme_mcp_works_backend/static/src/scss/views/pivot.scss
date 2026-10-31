@@ -85,5 +85,5 @@
 }
 /* Кликаемите стойности подсказват с акцентен цвят (като връзка в EE) */
 .o_pivot_view .o_pivot > table.o_enable_linking td.o_pivot_cell_value:not(.o_empty):hover {
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
 }

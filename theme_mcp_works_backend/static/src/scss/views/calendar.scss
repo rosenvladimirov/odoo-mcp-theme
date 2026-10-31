@@ -59,12 +59,12 @@
         text-shadow: none !important;
         box-shadow: none !important;
 
-        &:hover { color: var(--mcp-accent) !important; border-color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
+        &:hover { color: var(--mcp-accent-ink) !important; border-color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
         &.fc-button-active,
         &.fc-state-active {
             background: var(--mcp-accent) !important;
             border-color: var(--mcp-accent) !important;
-            color: var(--mcp-surface) !important;
+            color: var(--mcp-on-accent) !important;
             box-shadow: 0 0 0 var(--mcp-sp-1) var(--mcp-accent-a30), 0 0 var(--mcp-sp-4) var(--mcp-accent-a20) !important;
         }
     }
@@ -123,7 +123,7 @@
     box-shadow: none !important;
 
     .fc-daygrid-day-number {
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         font-weight: 700 !important;
         /* text-shadow glow removed — blurred today's day number. */
     }
@@ -136,7 +136,7 @@
 .o_calendar_view .fc-day-today .o_cw_day_number,
 .o_calendar_view .fc-day-today .fc-day-number {
     background: transparent !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     font-weight: 700 !important;
     border-radius: 0 !important;
     padding: 0 !important;
@@ -170,7 +170,7 @@
         font-family: var(--mcp-font-mono) !important;
         font-feature-settings: "tnum","ss01";
         font-weight: 600 !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         opacity: 1;
     }
 }
@@ -211,12 +211,12 @@ button.oi-panel-right {
     background: transparent !important;
     color: var(--mcp-ink-2) !important;
 
-    &:hover { color: var(--mcp-accent) !important; background: var(--mcp-accent-soft) !important; }
+    &:hover { color: var(--mcp-accent-ink) !important; background: var(--mcp-accent-soft) !important; }
 }
 
 /* Днешният ден в малкия календар (DateTimePicker): акцент вместо червено —
    червеното е за грешка, не за „днес“ */
 .o_datetime_picker .o_today > div {
     background-color: var(--mcp-accent) !important;
-    color: var(--mcp-paper) !important;
+    color: var(--mcp-on-accent) !important;
 }

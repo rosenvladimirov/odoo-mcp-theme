@@ -37,7 +37,7 @@
     /* чакащите покани: .text-primary/.border-primary са компилирани в
        сапфир (литерал, не променлива) → акцентът на пресета */
     .o_web_settings_user.text-primary {
-        --color: var(--mcp-accent);
+        --color: var(--mcp-accent-ink);
         border-color: var(--mcp-accent) !important; // !important: оригиналът .border-primary е !important
     }
 }
@@ -70,13 +70,13 @@
 
     &:hover {
         background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
     }
 
     &.selected,
     &.o_active {
         background: var(--mcp-accent-mute) !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         border-left-color: var(--mcp-accent);
         box-shadow: inset 0 0 var(--mcp-sp-12) var(--mcp-accent-a06);
     }
@@ -153,7 +153,7 @@
     font-weight: 700 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     margin: 0 0 var(--mcp-sp-12) 0 !important;
     padding-bottom: var(--mcp-sp-8) !important;
     border-bottom: var(--mcp-sp-1) solid var(--mcp-rule) !important;
@@ -248,7 +248,7 @@
 .o_setting_box .alert,
 .app_settings_block .alert {
     background: var(--mcp-accent-soft) !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
     border-radius: 0 !important;
     font-size: var(--mcp-fs-12) !important;

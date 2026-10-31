@@ -46,7 +46,7 @@
     padding: var(--mcp-sp-4) var(--mcp-sp-10);
     border-radius: var(--mcp-r-sm);
     transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
-    &:hover { background: var(--mcp-accent-soft); color: var(--mcp-accent); }
+    &:hover { background: var(--mcp-accent-soft); color: var(--mcp-accent-ink); }
 }
 
 .mcp_actions_grid {
@@ -75,11 +75,11 @@
 .mcp_action_btn:hover {
     background: var(--mcp-paper-light);
     border-color: var(--mcp-accent);
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
     box-shadow: var(--mcp-shadow-glow);
     transform: translateY(calc(-1 * var(--mcp-sp-2)));
 }
-.mcp_action_btn .mcp_action_icon  { font-size: var(--mcp-sp-18); line-height: 1; color: var(--mcp-accent); }
+.mcp_action_btn .mcp_action_icon  { font-size: var(--mcp-sp-18); line-height: 1; color: var(--mcp-accent-ink); }
 .mcp_action_btn .mcp_action_label { font-weight: 500; }
 .mcp_action_btn .mcp_action_kind  {
     font-size: var(--mcp-fs-10);

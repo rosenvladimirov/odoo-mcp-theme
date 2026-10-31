@@ -63,7 +63,7 @@
 .o-mail-DiscussSidebarCategory-icon {
     left: -15px !important;          /* → ~x14, in the active-tick column */
     margin-left: 0 !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     font-size: var(--mcp-fs-11) !important;
 }
 .o-mail-DiscussSidebarCategory-icon.oi-chevron-right::before,
@@ -98,7 +98,7 @@
         /* no fill box on hover — the animated underline (below) is the only
            hover cue (Rosen: "само анимирано подчертаване при ховер"). */
         background: transparent !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
     }
 
     &.o-active,
@@ -107,7 +107,7 @@
            just the accent left tick (moved in toward the content, "чертичката
            да се приближи") + accent text. */
         background: transparent !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         font-weight: 600 !important;
 
         &::before {
@@ -140,7 +140,7 @@
     .o-mail-DiscussSidebarChannel-counter,
     .o-mail-Counter {
         background: var(--mcp-accent) !important;
-        color: var(--mcp-surface) !important;
+        color: var(--mcp-on-accent) !important;
         font-family: var(--mcp-font-mono) !important;
         font-size: var(--mcp-fs-10) !important;
         font-weight: 700 !important;
@@ -219,7 +219,7 @@
     &:hover,
     &:focus-visible {
         background: transparent !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         outline: none !important;
     }
     &:hover::after,
@@ -228,7 +228,7 @@
     /* active row keeps the sapphire text (this rule's base ink-2 would
        otherwise win over the .o-active color further up the file). */
     &.o-active,
-    &.o_active { color: var(--mcp-accent) !important; }
+    &.o_active { color: var(--mcp-accent-ink) !important; }
 }
 
 /* ── Sidebar action buttons (⋮ channel actions, +/gear category) ──
@@ -255,7 +255,7 @@
     i { font-size: var(--mcp-fs-11) !important; }
     &:hover {
         background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
     }
 }
 
@@ -298,12 +298,12 @@
 
     &:hover {
         background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
     }
     &.o-active,
     &.o_active {
         background: var(--mcp-accent-soft) !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         font-weight: 600 !important;
     }
 }
@@ -388,7 +388,7 @@
         box-shadow:
             0 0 var(--mcp-sp-10) var(--mcp-accent-a30),
             0 0 0 var(--mcp-sp-1) var(--mcp-accent-a20) !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
     }
 }
 /* header icons made visible & uniform — the call buttons' glyph was white */
@@ -398,7 +398,7 @@
 }
 .o-mail-DiscussContent-header button:hover i,
 .o-mail-DiscussContent-header .btn:hover i {
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
 }
 /* the call-button glyph is forced WHITE by Odoo with high specificity
    (.o-mail-ActionList button.o-tag-JOIN_LEAVE_CALL i !important) — beat it so
@@ -407,7 +407,7 @@
     color: var(--mcp-ink-2) !important;
 }
 .o-mail-DiscussContent-header .o-mail-ActionList button.o-tag-JOIN_LEAVE_CALL:hover i {
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
 }
 /* "New Meeting" button (discuss search area) — a btn-primary whose bg went
    transparent, leaving its light SVG glyph (--mcp-surface) invisible (Rosen:
@@ -415,7 +415,7 @@
 .o-mail-DiscussSearch .btn-primary,
 .o-mail-DiscussSearch .btn-primary svg,
 .o-mail-DiscussSearch .btn-primary path {
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     fill: var(--mcp-accent) !important;
 }
 
@@ -474,7 +474,7 @@
     button.o-mail-Composer-send,
     .btn-primary {
         background: var(--mcp-accent) !important;
-        color: var(--mcp-surface) !important;
+        color: var(--mcp-on-accent) !important;
         border: var(--mcp-sp-1) solid var(--mcp-accent) !important;
         border-radius: 0 !important;
         font-family: var(--mcp-font-mono) !important;
@@ -516,19 +516,19 @@
     border-radius: 0 !important;
 
     i,
-    svg { color: var(--mcp-surface) !important; }
+    svg { color: var(--mcp-on-accent) !important; }
 
     &:hover {
         background: var(--mcp-accent) !important;
         box-shadow: 0 0 var(--mcp-sp-8) var(--mcp-accent-a30) !important;
-        i, svg { color: #fff !important; }
+        i, svg { color: var(--mcp-on-accent) !important; }
     }
 }
 /* join → sapphire (theme's go colour); leave/disconnect → danger-red */
 .o-discuss-CallActionList .o-tag-JOIN_LEAVE_CALL.o-tag-SUCCESS {
     background: var(--mcp-accent) !important;
-    color: #fff !important;
-    i, svg { color: #fff !important; }
+    color: var(--mcp-on-accent) !important;
+    i, svg { color: var(--mcp-on-accent) !important; }
     &:hover {
         background: var(--mcp-accent-dark, #0a3d8f) !important;
         box-shadow: 0 0 var(--mcp-sp-8) var(--mcp-accent-a30) !important;
@@ -596,5 +596,5 @@
 .o-discuss-CallMenu-channelInfo:hover,
 .o-discuss-CallMenu-buttonContent:hover i,
 .o-discuss-CallMenu-buttonContent .btn:hover i {
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
 }

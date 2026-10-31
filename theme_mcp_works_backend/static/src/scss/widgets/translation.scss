@@ -22,7 +22,7 @@
     opacity: 0.55;
     transition: opacity var(--mcp-t-fast), color var(--mcp-t-fast);
 
-    &:hover { opacity: 1; color: var(--mcp-accent) !important; }
+    &:hover { opacity: 1; color: var(--mcp-accent-ink) !important; }
 }
 
 /* Language code badge next to field */

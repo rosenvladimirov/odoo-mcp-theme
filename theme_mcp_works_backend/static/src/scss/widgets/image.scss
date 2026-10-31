@@ -33,7 +33,7 @@
     transition: opacity var(--mcp-t-base);
     cursor: pointer;
     font-size: var(--mcp-sp-18);
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
 }
 .o_field_image:hover .o_select_file_button,
 .o_field_image:hover .o_field_widget_upload { opacity: 1; }

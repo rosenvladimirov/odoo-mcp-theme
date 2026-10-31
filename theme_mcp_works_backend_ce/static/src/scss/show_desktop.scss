@@ -116,7 +116,7 @@
     margin-top: var(--mcp-sp-2);
     transition: color var(--mcp-t-fast);
 
-    .mcp_forum_post.is-expanded & { color: var(--mcp-accent); }
+    .mcp_forum_post.is-expanded & { color: var(--mcp-accent-ink); }
 }
 
 .mcp_forum_post_main {
@@ -128,7 +128,7 @@
     font-size: var(--mcp-sp-14);
     font-weight: 600;
     line-height: 1.4;
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
     margin: 0 0 var(--mcp-sp-4) 0;
     transition: color var(--mcp-t-fast);
     white-space: nowrap;
@@ -192,7 +192,7 @@
 }
 .mcp_forum_reply_kind {
     font-weight: 700;
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
 
     .mcp_forum_reply_reply & { color: var(--mcp-ink-2); }
 }
@@ -215,7 +215,7 @@
     padding: var(--mcp-sp-6) var(--mcp-sp-12);
     border: var(--mcp-sp-1) solid var(--mcp-rule);
     border-radius: var(--mcp-r-sm);
-    color: var(--mcp-accent);
+    color: var(--mcp-accent-ink);
     font-size: var(--mcp-fs-12);
     text-decoration: none;
     transition:

@@ -34,7 +34,7 @@
     /* leading › chevron (theme.css .bc-steps) */
     &::before {
         content: "\203A";
-        color: var(--mcp-accent);
+        color: var(--mcp-accent-ink);
         font-size: var(--mcp-sp-16);
         line-height: 1;
         flex: 0 0 auto;
@@ -76,7 +76,7 @@
         outline: 0 !important;
         border: 0 !important;
         box-shadow: none !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         background: transparent !important;
         clip-path: none !important;
         font-size: var(--mcp-fs-12) !important;
@@ -153,7 +153,7 @@
     /* breadcrumb trail (theme.css .bc-trail / .bc-sep / .bc-active) */
     .o_breadcrumb .breadcrumb-item a,
     .breadcrumb .breadcrumb-item a {
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         font-family: var(--mcp-font-family) !important;
         /* предишните трохи — като името на приложението вляво (fs-12),
            с една степен по-леки; с fs-11 изглеждаха смалени (Rosen) */

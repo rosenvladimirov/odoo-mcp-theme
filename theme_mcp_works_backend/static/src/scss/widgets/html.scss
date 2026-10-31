@@ -55,10 +55,10 @@
         transform: none !important;
         transition: background var(--mcp-t-fast), color var(--mcp-t-fast);
 
-        &:hover  { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent) !important; }
+        &:hover  { background: var(--mcp-accent-soft) !important; color: var(--mcp-accent-ink) !important; }
         &.active, &[aria-pressed="true"] {
             background: var(--mcp-accent-soft) !important;
-            color: var(--mcp-accent) !important;
+            color: var(--mcp-accent-ink) !important;
         }
     }
 
@@ -81,6 +81,6 @@
     min-height: unset;
 
     h1, h2, h3, h4 { color: var(--mcp-ink); }
-    a { color: var(--mcp-accent); }
+    a { color: var(--mcp-accent-ink); }
     blockquote { border-left: var(--mcp-sp-3) solid var(--mcp-accent); padding-left: var(--mcp-sp-12); color: var(--mcp-ink-2); }
 }

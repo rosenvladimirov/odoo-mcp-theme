@@ -198,7 +198,7 @@ $mcpf-o-color-ink: (
 // .bg-primary, .border-primary и .text-primary (първото правило) вече са
 // през --primary-rgb от моста; тук са само тези с компилиран литерал.
 #{$mcpf} .text-primary {
-    color: var(--mcp-accent) !important; // !important: оригиналът е !important (website: второ .text-primary с компилиран сапфир)
+    color: var(--mcp-accent-ink) !important; // !important: оригиналът е !important (website: второ .text-primary с компилиран сапфир)
 }
 
 #{$mcpf} .text-bg-primary {

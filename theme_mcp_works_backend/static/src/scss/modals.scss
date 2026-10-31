@@ -34,7 +34,7 @@
 .modal-header .btn-close {
     color: var(--mcp-ink-2) !important;
     opacity: 0.75;
-    &:hover { opacity: 1; color: var(--mcp-accent) !important; }
+    &:hover { opacity: 1; color: var(--mcp-accent-ink) !important; }
 }
 .modal-body {
     background: var(--mcp-surface-raised) !important;
@@ -98,7 +98,7 @@
 .dropdown-item.active,
 .dropdown-item.selected {
     background: var(--mcp-active-bg) !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
 }
 /* Разрушителните действия (Изтриване в менюто с действия / зъбчатото колело)
    — в цвета на опасността и на ховър/фокус (EE 20). В O19 иконата е
@@ -169,7 +169,7 @@
     left: var(--mcp-sp-8) !important;
     transform: translateY(90%) !important;
     margin-right: 0 !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
 }
 /* Секция-хедъри / групови разделители в dropdown менютата (напр. Inventory >
    Configuration: „Warehouse Management" / „Products"). Odoo им слага inline

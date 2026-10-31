@@ -98,7 +98,7 @@
             border: 0 !important;
             background: transparent !important;
             color: var(--mcp-ink-3) !important;
-            &:hover { color: var(--mcp-accent) !important; }
+            &:hover { color: var(--mcp-accent-ink) !important; }
         }
     }
 }
@@ -277,7 +277,7 @@
         border: 0 !important;
         box-shadow: none !important;
         background: transparent !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
     }
 }
 
@@ -338,7 +338,7 @@
 
     &:hover {
         border-color: var(--mcp-accent) !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         background: var(--mcp-accent-soft) !important;
     }
 }

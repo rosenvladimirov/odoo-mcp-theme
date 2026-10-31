@@ -101,7 +101,7 @@
                 &.o_list_field_reference {
                     font-family: var(--mcp-font-mono) !important;
                     font-weight: 600 !important;
-                    color: var(--mcp-accent) !important;
+                    color: var(--mcp-accent-ink) !important;
                 }
 
                 /* Number columns — right-aligned mono */
@@ -203,13 +203,13 @@
     &.bg-info,
     &.text-bg-info,
     &.o_status_bubble {
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         background: var(--mcp-accent-soft) !important;
     }
     &.bg-primary,
     &.text-bg-primary,
     &.o_status_blue {
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         background: var(--mcp-accent-soft) !important;
     }
     &.bg-warning,
@@ -234,14 +234,14 @@
     font-weight: 700 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     border-bottom: var(--mcp-sp-1) solid var(--mcp-rule-strong) !important;
 }
 
 /* ── Selection bar (when rows checked) ──────────────────────── */
 .o_list_view .o_list_selection_box {
     background: var(--mcp-accent) !important;
-    color: var(--mcp-surface) !important;
+    color: var(--mcp-on-accent) !important;
     font-family: var(--mcp-font-mono) !important;
     font-size: var(--mcp-fs-11) !important;
     letter-spacing: 0.06em !important;
@@ -396,7 +396,7 @@ a.purchase-dashboard-card.btn {
     &:hover {
         background: var(--mcp-accent-soft) !important;
         border: 0 !important;
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
     }
     /* unfold the paper corner (flap + crease border) on hover */
     &:hover::before,
@@ -465,7 +465,7 @@ a.purchase-dashboard-card.btn {
    base white. */
 .o_purchase_dashboard .purchase-dashboard-card.bg-info-subtle {
     background: var(--mcp-accent-soft) !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
 }
 .o_purchase_dashboard .purchase-dashboard-card.bg-warning-subtle {
     background: var(--mcp-warn-a08) !important;
@@ -489,7 +489,7 @@ a.purchase-dashboard-card.btn {
 /* tint the big number to the card's state colour too (original
    text-*-emphasis); (0,4,0) beats the ink big-number rule. */
 .o_purchase_dashboard .purchase-dashboard-card.bg-info-subtle [class*="fs-"] span,
-.o_purchase_dashboard .purchase-dashboard-card.bg-info-subtle [class*="fs-"] { color: var(--mcp-accent) !important; }
+.o_purchase_dashboard .purchase-dashboard-card.bg-info-subtle [class*="fs-"] { color: var(--mcp-accent-ink) !important; }
 .o_purchase_dashboard .purchase-dashboard-card.bg-warning-subtle [class*="fs-"] span,
 .o_purchase_dashboard .purchase-dashboard-card.bg-warning-subtle [class*="fs-"] { color: var(--mcp-warn) !important; }
 .o_purchase_dashboard .purchase-dashboard-card.bg-danger-subtle [class*="fs-"] span,
@@ -500,7 +500,7 @@ a.purchase-dashboard-card.btn {
    the generic &:hover. */
 .o_purchase_dashboard .purchase-dashboard-card.bg-info-subtle:hover {
     background: var(--mcp-accent-a12) !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
 }
 .o_purchase_dashboard .purchase-dashboard-card.bg-warning-subtle:hover {
     background: var(--mcp-warn-a10) !important;
@@ -556,7 +556,7 @@ a.purchase-dashboard-card.btn {
 }
 .o_list_view th.o_list_controller .o_optional_columns_dropdown .btn:hover,
 .o_list_view th.o_list_controller .o_optional_columns_dropdown .dropdown-toggle:hover {
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     background: transparent !important;
 }
 .o_list_view th.o_list_controller .o_optional_columns_dropdown_toggle,

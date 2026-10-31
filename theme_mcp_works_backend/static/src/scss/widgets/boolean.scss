@@ -79,7 +79,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: var(--mcp-paper);
+        background: var(--mcp-on-accent);
         clip-path: polygon(
             18%  48%,  /* tail start  */
             8%   58%,  /* tail outer  */
@@ -230,7 +230,7 @@ input[type="checkbox"].form-check-input,
             content: "";
             position: absolute;
             inset: 0;
-            background: var(--mcp-paper);
+            background: var(--mcp-on-accent);
             clip-path: polygon(
                 18% 48%, 8% 58%, 42% 88%, 92% 24%, 82% 14%, 42% 68%
             );
@@ -245,7 +245,7 @@ input[type="checkbox"].form-check-input,
             content: "";
             position: absolute;
             inset: 0;
-            background: var(--mcp-paper);
+            background: var(--mcp-on-accent);
             clip-path: polygon(20% 42%, 80% 42%, 80% 58%, 20% 58%);
         }
     }

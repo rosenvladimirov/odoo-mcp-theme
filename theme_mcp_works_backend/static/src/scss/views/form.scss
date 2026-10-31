@@ -186,7 +186,7 @@
             &[aria-pressed="true"],
             &.btn-primary,
             &.disabled[aria-pressed="true"] {
-                color: var(--mcp-surface) !important;
+                color: var(--mcp-on-accent) !important;
                 background: var(--mcp-accent) !important;
                 /* box-shadow renders a RECTANGULAR halo on a clip-path
                    chevron; drop-shadow follows the shape. none!important
@@ -260,7 +260,7 @@
     box-shadow: var(--mcp-shadow-sm) !important;
 
     &:hover {
-        color: var(--mcp-accent) !important;
+        color: var(--mcp-accent-ink) !important;
         border-color: var(--mcp-accent) !important;
         background: var(--mcp-accent-soft) !important;
         box-shadow: var(--mcp-shadow-md) !important;
@@ -365,7 +365,7 @@
 .o_form_status_indicator_buttons .o_form_button_save .fa,
 .o_form_status_indicator_buttons .o_form_button_save i,
 .o_control_panel .o_form_status_indicator_buttons .o_form_button_save.btn {
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
 }
 /* discard ✕ = red */
 .o_form_status_indicator_buttons .o_form_button_cancel,
@@ -414,7 +414,7 @@
             font-family: var(--mcp-font-mono) !important;
             font-size: var(--mcp-sp-16) !important;
             font-weight: 700 !important;
-            color: var(--mcp-accent) !important;
+            color: var(--mcp-accent-ink) !important;
             line-height: 1 !important;
         }
         .o_stat_info {
@@ -494,7 +494,7 @@
    Стойността е mono с таблични цифри, 600 (KPI броячът). */
 .o_form_view .o-form-buttonbox {
     --o-stat-text-color: var(--mcp-ink);
-    --o-stat-button-color: var(--mcp-accent);
+    --o-stat-button-color: var(--mcp-accent-ink);
 }
 .o_form_view .o-form-buttonbox .oe_stat_button.btn-outline-secondary {
     background: var(--mcp-bg) !important;
@@ -626,7 +626,7 @@
 .o_form_view .o_field_many2one a,
 .o_form_view .o_field_email,
 .o_form_view .o_field_url {
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     /* text-shadow glow removed — the 10px blur on m2o/email/url link text
        made link-heavy areas (e.g. the invoice payments box) look blurred
        ("размазано"). Keep the sapphire colour, drop the fuzz. */
@@ -766,7 +766,7 @@
                 color: var(--mcp-ink) !important;
             }
             &.active {
-                color: var(--mcp-accent) !important;
+                color: var(--mcp-accent-ink) !important;
                 background: transparent !important;
 
                 /* долната линия на Росен остава, glow-ът отпада */
@@ -953,7 +953,7 @@
     font-weight: 600 !important;
     letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     text-decoration: none !important;
 
     &:hover { background: var(--mcp-accent-soft) !important; }
@@ -971,11 +971,11 @@
     border: 0 !important;
     box-shadow: none !important;
     background: transparent !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
 }
 .o_form_view .o_field_x2many .o_data_cell .btn .o_button_icon,
 .o_form_view .o_field_x2many .o_list_record_remove .btn.fa {
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
 }
 .o_form_view .o_field_x2many .o_data_cell .btn:hover,
 .o_form_view .o_field_x2many .o_list_record_remove .btn:hover {
@@ -1183,7 +1183,7 @@
 .o_form_view .oe_subtotal_footer.px-4 .btn,
 .o_form_view .oe_subtotal_footer.px-4 a.btn {
     border: var(--mcp-sp-1) solid var(--mcp-rule) !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     background: transparent !important;
     &:hover {
         border-color: var(--mcp-accent) !important;
@@ -1198,13 +1198,13 @@
 .o_form_view .o_total .o_total_amount,
 .o_form_view .o_total .o_total_total {
     background: transparent !important;
-    color: var(--mcp-accent) !important;
+    color: var(--mcp-accent-ink) !important;
     font-family: var(--mcp-font-mono) !important;
     font-weight: var(--mcp-fw-semibold) !important;
     letter-spacing: 0.04em !important;
     box-shadow: none !important;
 
-    * { color: var(--mcp-accent) !important; }
+    * { color: var(--mcp-accent-ink) !important; }
 }
 /* Редът „Общо“ — по-голям (--mcp-fs-h4) и полудебел, като в EE; !important
    бие inline font-size:1.3em / bold на ядрото. Етикетът на същия ред следва
@@ -1276,7 +1276,7 @@
         letter-spacing: normal !important;
 
         &:hover {
-            color: var(--mcp-accent) !important;
+            color: var(--mcp-accent-ink) !important;
             border-color: var(--mcp-accent) !important;
             background: var(--mcp-accent-soft) !important;
             box-shadow: var(--mcp-shadow-md) !important;
@@ -1305,7 +1305,7 @@
         box-shadow: var(--mcp-shadow-sm) !important;
 
         &:hover {
-            color: var(--mcp-accent) !important;
+            color: var(--mcp-accent-ink) !important;
             border-color: var(--mcp-accent) !important;
             background: var(--mcp-accent-soft) !important;
             box-shadow: var(--mcp-shadow-md) !important;
@@ -1364,7 +1364,7 @@
 
         .o-mail-Message-trackingOld { color: var(--mcp-ink-3) !important; }
         .o-mail-Message-trackingNew {
-            color: var(--mcp-accent) !important;
+            color: var(--mcp-accent-ink) !important;
             font-weight: var(--mcp-fw-medium) !important;
         }
     }
