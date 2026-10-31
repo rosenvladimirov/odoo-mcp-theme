@@ -1,0 +1,95 @@
+// theme_mcp_works_frontend — ъгълът „към приложенията“ (.o_frontend_to_backend_nav)
+// Всяко правило минава през пазачите от _mixins.scss (PLAN §2.5).
+//
+// Шаблонът е на website (website_templates.xml, website.layout): вижда го само
+// вътрешен потребител, когато отвори сайта направо, не през /odoo/website.
+// Оригиналът (website.ui.scss) е синият ъгъл на Odoo ($o-enterprise-color) и
+// решетката fa-th. Тук ъгълът става горната лента на бекенда: цветовете
+// --mcp-navbar-* и иконата oi-apps, както .mcp_apps_trigger в
+// theme_mcp_works_backend_ce. Шаблонът не се пипа.
+//
+// Ъгълът е извън #wrapwrap, затова пазачът е $mcpf (0,0,1 + селектора).
+// Оригиналът е 0,1,1 за ъгъла и 0,2,0 / 0,3,0 за бутоните → печелим с html.
+
+#{$mcpf} .o_frontend_to_backend_nav {
+    font-family: var(--mcp-font-family);
+
+    // триъгълникът: border-top/left са цветът, другите два са прозрачни
+    &::before {
+        border-top-color: var(--mcp-navbar-bg);
+        border-left-color: var(--mcp-navbar-bg);
+    }
+
+    // знакът ⌟ в ъгъла: fill като CSS бие атрибута fill="#FFF" на path
+    .o_frontend_to_backend_icon path {
+        fill: var(--mcp-navbar-accent);
+    }
+
+    .o_frontend_to_backend_buttons > a {
+        color: var(--mcp-navbar-ink);
+        transition: background-color var(--mcp-t-fast);
+    }
+
+    // последният бутон закръглен долу вдясно, ъгълът към ръба остава прав;
+    // overflow: hidden на контейнера би отрязал падащото меню
+    .o_frontend_to_backend_buttons > a:last-of-type {
+        border-bottom-right-radius: var(--mcp-r-control);
+    }
+
+    // ── бутонът за приложенията: решетката на бекенда, акцентът на иконата ──
+    // „.o_frontend_to_backend_buttons >“ изравнява специфичността с правилото
+    // за всички бутони по-горе (0,2,2), иначе то взима цвета.
+    // Без знака на марката: --mcp-apps-trigger-mark е url(), а валидаторът на
+    // inline стила (_mcp_css_value_ok) не пуска url() — затова и
+    // --mcp-apps-trigger-glyph не се ползва, иначе бутонът остава празен.
+    .o_frontend_to_backend_buttons > .o_frontend_to_backend_apps_btn {
+        background-color: var(--mcp-navbar-bg);
+        color: var(--mcp-navbar-accent);
+
+        &:hover, &[aria-expanded="true"] {
+            background-color: var(--mcp-navbar-hover-bg);
+        }
+
+        // fa-th → oi-apps (шрифтът odoo_ui_icons е в web.assets_frontend)
+        &::before {
+            font-family: "odoo_ui_icons";
+            content: "\e80d";
+        }
+
+        &:focus-visible {
+            outline: var(--mcp-focus-ring);
+            outline-offset: calc(-1 * var(--mcp-bw-1));
+        }
+    }
+
+    // ── „Editor“: тонът на активна секция в лентата ──
+    .o_frontend_to_backend_buttons > .o_frontend_to_backend_edit_btn {
+        background-color: var(--mcp-navbar-active-bg);
+
+        &:hover {
+            background-color: var(--mcp-navbar-hover-bg);
+        }
+
+        > img {
+            border-radius: var(--mcp-r-control-sm);
+        }
+    }
+
+    // ── падащото меню с приложенията: като менютата на сайта (floats.scss) ──
+    .o_frontend_to_backend_apps_menu {
+        --dropdown-bg: var(--mcp-bg);
+        --dropdown-color: var(--mcp-ink);
+        --dropdown-link-color: var(--mcp-ink);
+        --dropdown-border-color: var(--mcp-rule);
+        --dropdown-border-radius: var(--mcp-r-float);
+        --dropdown-inner-border-radius: calc(var(--mcp-r-float) - var(--dropdown-border-width));
+        --dropdown-box-shadow: var(--mcp-shadow-float);
+        --dropdown-link-hover-bg: var(--mcp-hover-bg);
+        --dropdown-link-hover-color: var(--mcp-ink);
+        --dropdown-link-active-bg: var(--mcp-active-bg);
+        --dropdown-link-active-color: var(--mcp-accent-dark);
+        --dropdown-padding-x: var(--mcp-float-pad);
+        --dropdown-item-border-radius: var(--mcp-r-float-item);
+        box-shadow: var(--dropdown-box-shadow);
+    }
+}
