@@ -8,6 +8,40 @@
     padding: var(--mcp-view-pad);
 }
 
+/* ── Цветовете на изгледа от Odoo 19 ────────────────────────────
+   web/settings_form_view.scss задава светлите си цветове през променливи
+   (grays 100/200) и бял $o-view-background-color на .settings → тъмните
+   пресети оставаха с бяла рамка около блоковете и светли ленти на
+   секциите, по които светлият текст не се чете. Подаваме им токените;
+   .o_form_view отпред е +0,1,0 над оригинала. */
+.o_form_view.o_base_settings_view .o_form_renderer {
+    --settings__tab-bg: var(--mcp-surface);
+    --settings__tab-bg--active: var(--mcp-active-bg);
+    --settings__tab-color: var(--mcp-ink-2);
+    --settings__title-bg: var(--mcp-surface-2);
+
+    .o_setting_container .settings {
+        background-color: var(--mcp-bg);
+
+        > .app_settings_block h2 {
+            color: var(--mcp-ink);
+            border-bottom: var(--mcp-sp-1) solid var(--mcp-rule);
+        }
+
+        .settingSearchHeader {
+            background-color: var(--mcp-surface-2);
+            color: var(--mcp-ink);
+        }
+    }
+
+    /* чакащите покани: .text-primary/.border-primary са компилирани в
+       сапфир (литерал, не променлива) → акцентът на пресета */
+    .o_web_settings_user.text-primary {
+        --color: var(--mcp-accent);
+        border-color: var(--mcp-accent) !important; // !important: оригиналът .border-primary е !important
+    }
+}
+
 /* ── Settings sidebar (section list) ────────────────────────── */
 .settings_tab,
 .o_setting_search_panel,
