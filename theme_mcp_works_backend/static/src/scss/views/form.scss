@@ -1087,18 +1087,39 @@
 /* Височината на текстовото поле я смята resizeTextArea (web/core/utils/
    autoresize.js): мери scrollHeight с ВРЕМЕННО нулиран inline padding и
    прибавя padding-а отгоре. Затова тук padding-ът по вертикала е БЕЗ
-   !important (иначе бие inline нулата и се брои два пъти) и полето няма
-   min-height (тя надува scrollHeight). Padding = (btn-h − ред) / 2 ⇒ един
-   ред текст = точно btn-h, всеки следващ ред добавя по един ред (Росен,
+   !important (иначе бие inline нулата и се брои два пъти) — тук изобщо не
+   се задава, ядрото го нулира в избрания ред — и полето няма min-height
+   (тя надува scrollHeight). Един ред текст стои в клетка btn-h, всеки
+   следващ ред добавя по един ред (Росен,
    31.10.2026: „нормално висок ред, при повече редове да се увеличава“). */
 .o_form_view .o_field_x2many .o_data_row .o_data_cell textarea.o_input {
     min-height: 0 !important;
-    padding-top: calc((var(--mcp-btn-h) - var(--mcp-list-line-height)) / 2);
-    padding-bottom: calc((var(--mcp-btn-h) - var(--mcp-list-line-height)) / 2);
     padding-left: var(--mcp-sp-1) !important;
     padding-right: var(--mcp-sp-1) !important;
-    overflow: hidden !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
     resize: none !important;
+}
+/* Етикетът расте до 5 реда, после спира: при писане полето се превърта,
+   при четене текстът се реже с „…“ на петия ред. Без черта под него —
+   нито пунктира на o2m полетата, нито акцентната линия на фокуса
+   (Росен, 31.10.2026: „махни чертата … но максимум 5 реда“).
+   :not(.o_field_invalid) — червената линия на грешка остава; и вдига
+   специфичността над пунктира (hover вариантът му е 8 класа). */
+.o_form_view .o_field_x2many .o_data_row .o_data_cell
+    .o_field_widget.o_field_section_and_note_text.o_field_text:not(.o_field_invalid) {
+    border-bottom: 0 !important;
+}
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_section_and_note_text textarea.o_input {
+    /* --mcp-list-line-height е без единица (1.5) ⇒ × 1em, иначе calc е невалиден */
+    max-height: calc(5em * var(--mcp-list-line-height)) !important;
+    box-shadow: none !important;
+}
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_section_and_note_text > span {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden !important;
 }
 /* many2one dropdown caret + external-link icon — vertically centre
    them in the btn-h row. Odoo absolutely-positions the caret with a
