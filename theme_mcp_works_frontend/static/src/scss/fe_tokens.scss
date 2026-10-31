@@ -5,6 +5,16 @@
 // настрои през cfg.advanced. Тук няма пазач: нови имена, без ефект без
 // консуматор (консуматорите са под html:where([data-mcp-site="follow"])).
 
+// ── основният бутон: пресетът може да го отдели от акцента (o-experts —
+// бордо бутони при лаймов акцент) през --mcp-btn-primary-*; без тях е
+// акцентът, както досега. Блок без режим: светлият и тъмният не ги пипат.
+:root {
+    --mcp-fe-btn-bg: var(--mcp-btn-primary-bg, var(--mcp-accent));
+    --mcp-fe-btn-hover: var(--mcp-btn-primary-hover, var(--mcp-accent-dark));
+    --mcp-fe-btn-ink: var(--mcp-btn-primary-ink, var(--mcp-on-accent));
+    --mcp-fe-btn-hover-ink: var(--mcp-btn-primary-ink, var(--mcp-on-accent-dark));
+}
+
 :root,
 :root[data-mcp-mode="light"] {
     // ── производни на акцента (сървърът ги подменя при зададен hex) ──

@@ -17,10 +17,10 @@
     --mcpf-sec-heading: var(--mcp-fe-footer-ink);
     --mcpf-sec-link: var(--mcp-fe-footer-link);
     --mcpf-sec-link-hover: color-mix(in srgb, var(--mcp-fe-footer-link) 80%, var(--mcp-fe-footer-ink));
-    --mcpf-sec-btn-bg: var(--mcp-accent);
-    --mcpf-sec-btn-ink: var(--mcp-on-accent);
-    --mcpf-sec-btn-hover: var(--mcp-accent-dark);
-    --mcpf-sec-btn-hover-ink: var(--mcp-on-accent-dark);
+    --mcpf-sec-btn-bg: var(--mcp-fe-btn-bg);
+    --mcpf-sec-btn-ink: var(--mcp-fe-btn-ink);
+    --mcpf-sec-btn-hover: var(--mcp-fe-btn-hover);
+    --mcpf-sec-btn-hover-ink: var(--mcp-fe-btn-hover-ink);
     --mcpf-sec-btn2-bg: var(--mcp-fe-cc1-bg);
     --mcpf-sec-btn2-ink: var(--mcp-ink);
     --mcpf-sec-btn2-border: var(--mcp-fe-cc1-bg);

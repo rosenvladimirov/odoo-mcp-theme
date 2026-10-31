@@ -126,12 +126,12 @@ $-mcpf-wsale-cc: (
     }
 
     // „promote“ / „theme“: основният бутон е button-variant с компилирания
-    // btn-primary на cc → акцентът (hover-ink по D2).
+    // btn-primary на cc → основният бутон на пресета (hover-ink по D2).
     .o_wsale_products_opt_actions_promote .o_wsale_product_btn .o_wsale_product_btn_primary,
     .o_wsale_products_opt_actions_theme .o_wsale_product_btn .o_wsale_product_btn_primary {
-        @include mcpf-btn-vars(var(--mcp-accent), var(--mcp-on-accent), var(--mcp-accent-dark));
-        --btn-hover-color: var(--mcp-on-accent-dark);
-        --btn-active-color: var(--mcp-on-accent-dark);
+        @include mcpf-btn-vars(var(--mcp-fe-btn-bg), var(--mcp-fe-btn-ink), var(--mcp-fe-btn-hover));
+        --btn-hover-color: var(--mcp-fe-btn-hover-ink);
+        --btn-active-color: var(--mcp-fe-btn-hover-ink);
     }
 
     // „theme“: останалите бутони са button-variant с компилирания secondary.

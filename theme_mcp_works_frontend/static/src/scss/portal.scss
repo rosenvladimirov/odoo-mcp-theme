@@ -18,10 +18,10 @@
     --mcpf-chat-focus-border: var(--mcp-focus-border);
     --mcpf-chat-focus-ring: var(--mcp-fe-focus-ring);
     --mcpf-chat-btn-radius: var(--mcp-fe-btn-radius-sm);
-    --mcpf-chat-btn-bg: var(--mcp-accent);
-    --mcpf-chat-btn-ink: var(--mcp-on-accent);
-    --mcpf-chat-btn-hover: var(--mcp-accent-dark);
-    --mcpf-chat-btn-hover-ink: var(--mcp-on-accent-dark);
+    --mcpf-chat-btn-bg: var(--mcp-fe-btn-bg);
+    --mcpf-chat-btn-ink: var(--mcp-fe-btn-ink);
+    --mcpf-chat-btn-hover: var(--mcp-fe-btn-hover);
+    --mcpf-chat-btn-hover-ink: var(--mcp-fe-btn-hover-ink);
 }
 
 // ── картичките в /my (portal_templates.xml:240: „… rounded bg-100“ или

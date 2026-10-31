@@ -20,10 +20,10 @@ $mcpf-header: 'html:where([data-mcp-site="follow"]) :where(#wrapwrap:not(.o_head
         // линковете в хедъра са приглушени като менюто (EE .65 / .8)
         --mcpf-sec-link: var(--mcp-fe-nav-link);
         --mcpf-sec-link-hover: var(--mcp-fe-nav-link-hover);
-        --mcpf-sec-btn-bg: var(--mcp-accent);
-        --mcpf-sec-btn-ink: var(--mcp-on-accent);
-        --mcpf-sec-btn-hover: var(--mcp-accent-dark);
-        --mcpf-sec-btn-hover-ink: var(--mcp-on-accent-dark);
+        --mcpf-sec-btn-bg: var(--mcp-fe-btn-bg);
+        --mcpf-sec-btn-ink: var(--mcp-fe-btn-ink);
+        --mcpf-sec-btn-hover: var(--mcp-fe-btn-hover);
+        --mcpf-sec-btn-hover-ink: var(--mcp-fe-btn-hover-ink);
         --mcpf-sec-btn2-bg: var(--mcp-fe-secondary);
         --mcpf-sec-btn2-ink: var(--mcp-fe-secondary-ink);
         --mcpf-sec-btn2-border: var(--mcp-fe-secondary);

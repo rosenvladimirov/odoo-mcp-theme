@@ -54,8 +54,8 @@
     --o-cc1-text: var(--mcp-ink);
     --o-cc1-headings: var(--mcp-ink);
     --o-cc1-link: var(--mcp-link);
-    --o-cc1-btn-primary: var(--mcp-accent);
-    --o-cc1-btn-primary-text: var(--mcp-on-accent);
+    --o-cc1-btn-primary: var(--mcp-fe-btn-bg);
+    --o-cc1-btn-primary-text: var(--mcp-fe-btn-ink);
     --o-cc1-btn-secondary: var(--mcp-fe-secondary);
     --o-cc1-btn-secondary-text: var(--mcp-ink);
 
@@ -63,8 +63,8 @@
     --o-cc2-text: var(--mcp-ink);
     --o-cc2-headings: var(--mcp-ink);
     --o-cc2-link: var(--mcp-accent-dark);
-    --o-cc2-btn-primary: var(--mcp-accent);
-    --o-cc2-btn-primary-text: var(--mcp-on-accent);
+    --o-cc2-btn-primary: var(--mcp-fe-btn-bg);
+    --o-cc2-btn-primary-text: var(--mcp-fe-btn-ink);
     --o-cc2-btn-secondary: var(--mcp-fe-cc1-bg);
     --o-cc2-btn-secondary-text: var(--mcp-ink);
 
@@ -72,8 +72,8 @@
     --o-cc3-text: var(--mcp-ink);
     --o-cc3-headings: var(--mcp-ink);
     --o-cc3-link: var(--mcp-accent-dark);
-    --o-cc3-btn-primary: var(--mcp-accent);
-    --o-cc3-btn-primary-text: var(--mcp-on-accent);
+    --o-cc3-btn-primary: var(--mcp-fe-btn-bg);
+    --o-cc3-btn-primary-text: var(--mcp-fe-btn-ink);
     --o-cc3-btn-secondary: var(--mcp-fe-cc1-bg);
     --o-cc3-btn-secondary-text: var(--mcp-ink);
 
@@ -90,8 +90,8 @@
     --o-cc5-text: var(--mcp-fe-inverse-ink);
     --o-cc5-headings: var(--mcp-fe-inverse-ink);
     --o-cc5-link: var(--mcp-fe-inverse-link);
-    --o-cc5-btn-primary: var(--mcp-accent);
-    --o-cc5-btn-primary-text: var(--mcp-on-accent);
+    --o-cc5-btn-primary: var(--mcp-fe-btn-bg);
+    --o-cc5-btn-primary-text: var(--mcp-fe-btn-ink);
     --o-cc5-btn-secondary: transparent;
     --o-cc5-btn-secondary-text: var(--mcp-fe-inverse-ink);
 }
@@ -123,11 +123,11 @@
     --mcpf-sec-heading: var(--mcp-ink);
     --mcpf-sec-link: var(--mcp-link);
     --mcpf-sec-link-hover: var(--mcp-link-hover);
-    --mcpf-sec-btn-bg: var(--mcp-accent);
-    --mcpf-sec-btn-ink: var(--mcp-on-accent);
-    --mcpf-sec-btn-hover: var(--mcp-accent-dark);
+    --mcpf-sec-btn-bg: var(--mcp-fe-btn-bg);
+    --mcpf-sec-btn-ink: var(--mcp-fe-btn-ink);
+    --mcpf-sec-btn-hover: var(--mcp-fe-btn-hover);
     // текстът върху hover фона (D2: отделен цвят по контраст)
-    --mcpf-sec-btn-hover-ink: var(--mcp-on-accent-dark);
+    --mcpf-sec-btn-hover-ink: var(--mcp-fe-btn-hover-ink);
     --mcpf-sec-btn2-bg: var(--mcp-fe-secondary);
     --mcpf-sec-btn2-ink: var(--mcp-fe-secondary-ink);
     --mcpf-sec-btn2-border: var(--mcp-fe-secondary);

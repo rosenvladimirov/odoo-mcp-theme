@@ -5,7 +5,7 @@
     "summary": "Applies the MCP Works backend preset (accent, light/dark, "
                "radius, font) to the public website, portal, shop, blog "
                "and login — server-rendered, no flash, no new classes",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     # НЕ Theme/*: website/models/ir_asset.py изрязва assets на всяка тема,
     # която не е website.theme_id (PLAN §1.1, ADR theme-mcp-frontend/0001).
     "category": "Website/Website",
