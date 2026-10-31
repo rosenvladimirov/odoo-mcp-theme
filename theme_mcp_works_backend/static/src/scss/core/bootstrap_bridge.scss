@@ -1,0 +1,36 @@
+/* MCP Works backend — мост към компилираните цветове на Bootstrap/Odoo.
+   В Odoo 19 .text-primary, .border-primary, отметнатото радио и .text-muted
+   са компилирани с литерали (сапфирът от $o-brand-primary, сиво с alpha,
+   мислено за светъл фон) → не следват пресета, а в тъмен режим сивото пада
+   на 2:1. :root отпред = +0,1,0 над оригинала; !important само където и
+   оригиналът е !important. Връзките (a → --link-color-rgb) ги дава
+   applyBootstrapAccent в theme_mcp_works_backend_config. */
+
+:root .text-primary {
+    --color: var(--mcp-accent-ink);
+}
+
+:root .border-primary {
+    border-color: var(--mcp-accent) !important; // !important: оригиналът .border-primary е !important
+}
+
+:root .text-muted {
+    color: var(--mcp-ink-3) !important; // !important: оригиналът .text-muted е !important
+}
+
+/* Отметнатото радио: пълнеж в акцента с вътрешен пръстен от повърхността —
+   бялата точка на Bootstrap (background-image) не се вижда върху светъл
+   акцент като пастелното синьо на тъмните пресети. */
+:root .form-check-input[type="radio"]:checked {
+    background-color: var(--mcp-accent);
+    background-image: none;
+    border-color: var(--mcp-accent);
+    box-shadow: inset 0 0 0 3px var(--mcp-surface);
+}
+
+/* .text-bg-primary (значките „предприятие“ и пр.): фонът е --primary-rgb
+   (акцентът, от applyBootstrapAccent), а текстът е компилирано бяло — върху
+   пастелния акцент на тъмните пресети 1.8:1 → текстът върху акцента. */
+:root .text-bg-primary {
+    color: var(--mcp-on-accent) !important; // !important: оригиналът .text-bg-primary е !important
+}

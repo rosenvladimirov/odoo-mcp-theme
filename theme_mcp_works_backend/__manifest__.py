@@ -45,6 +45,7 @@
             "theme_mcp_works_backend/static/src/scss/modals.scss",
 
             # ── 3. Core components ─────────────────────────────────────
+            "theme_mcp_works_backend/static/src/scss/core/bootstrap_bridge.scss",
             "theme_mcp_works_backend/static/src/scss/core/notifications.scss",
             "theme_mcp_works_backend/static/src/scss/core/popover.scss",
             "theme_mcp_works_backend/static/src/scss/core/search_panel.scss",
