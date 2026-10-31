@@ -1125,6 +1125,18 @@
     -webkit-line-clamp: 5;
     overflow: hidden !important;
 }
+/* Мострата на цвят (widget="color") — квадратче 17×17 като в ядрото
+   (list_renderer.scss). Пинът на `.o_field_widget > div` я разпъваше
+   на btn-h ⇒ тесни високи капсули в „Цветове на темата секции“
+   (Росен, 31.10.2026). :not(.o_field_invalid) — специфичност над пина. */
+.o_form_view .o_field_x2many .o_data_row .o_data_cell
+    .o_field_widget.o_field_color:not(.o_field_invalid) > .o_field_color {
+    width: 17px !important;
+    height: 17px !important;
+    min-height: 0 !important;
+    max-height: 17px !important;
+    flex: 0 0 17px !important;
+}
 /* Забележката под продукта (СО/ПО/фактура) при четене е div.o_input —
    пинът на .o_input:not(textarea) я заковаваше на btn-h с line-height
    btn-h ⇒ вторият ред изчезваше. Същото като етикета: расте до 5 реда. */

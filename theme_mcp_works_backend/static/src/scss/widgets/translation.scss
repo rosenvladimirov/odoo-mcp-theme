@@ -1,7 +1,12 @@
 /* MCP Works backend — Translation button & dialog */
 
 /* ── Inline translate trigger ────────────────────────────────── */
-.o_field_translate,
+/* САМО бутонът (.btn.o_field_translate). В 19 същият клас носи и
+   ОБВИВКАТА на преводимите HTML полета (div.h-100.o_field_translate) —
+   inline-flex я свиваше до съдържанието и празното поле (Tagline в
+   оформлението на документите) оставаше широко 54px, подсказката падаше
+   буква по буква (Росен, 31.10.2026: „таг линията е смачкана“). */
+.btn.o_field_translate,
 .o_translation_button {
     display: inline-flex;
     align-items: center;
