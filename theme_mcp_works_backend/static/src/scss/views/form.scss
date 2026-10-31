@@ -1084,9 +1084,17 @@
     line-height: var(--mcp-list-line-height) !important;
     align-items: flex-start !important;
 }
+/* Височината на текстовото поле я смята resizeTextArea (web/core/utils/
+   autoresize.js): мери scrollHeight с ВРЕМЕННО нулиран inline padding и
+   прибавя padding-а отгоре. Затова тук padding-ът по вертикала е БЕЗ
+   !important (иначе бие inline нулата и се брои два пъти) и полето няма
+   min-height (тя надува scrollHeight). Padding = (btn-h − ред) / 2 ⇒ един
+   ред текст = точно btn-h, всеки следващ ред добавя по един ред (Росен,
+   31.10.2026: „нормално висок ред, при повече редове да се увеличава“). */
 .o_form_view .o_field_x2many .o_data_row .o_data_cell textarea.o_input {
-    padding-top: var(--mcp-sp-4) !important;
-    padding-bottom: var(--mcp-sp-4) !important;
+    min-height: 0 !important;
+    padding-top: calc((var(--mcp-btn-h) - var(--mcp-list-line-height)) / 2);
+    padding-bottom: calc((var(--mcp-btn-h) - var(--mcp-list-line-height)) / 2);
     padding-left: var(--mcp-sp-1) !important;
     padding-right: var(--mcp-sp-1) !important;
     overflow: hidden !important;
