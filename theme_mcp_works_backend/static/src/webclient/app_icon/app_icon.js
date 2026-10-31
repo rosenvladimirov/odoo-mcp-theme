@@ -107,6 +107,10 @@ export const APP_ICONS = {
     "l10n_bg_license_server.l10n_bg_license_menu_root": ["fa-shield", "system"],
     "l10n_bg_telegram_bot.l10n_bg_telegram_menu_root": ["fa-telegram", "work"],
     "ai_agent_console.menu_ai_agent_root": ["fa-magic", "work"],
+    "l10n_bg_erp_net_base.menu_erpnet_base_root": ["fa-print", "finance"],
+    // ── o-experts ────────────────────────────────────────────────
+    "oexperts_fsm.menu_fsm_root": ["fa-map-marker", "ops"],
+    "oexperts_station.menu_station_root": ["fa-tablet", "ops"],
 };
 
 /* Табовете в Настройки носят техническото име на модула (<app name="…">),
