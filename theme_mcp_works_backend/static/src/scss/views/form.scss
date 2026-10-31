@@ -1011,20 +1011,23 @@
     overflow: hidden !important;
 }
 /* No in-row control/button may exceed the row height. Етикетът на реда
-   (продукт + описание) и текстовото поле „Етикет“ (section_and_note_text,
+   (продукт + описание; във фактурата product_label_section_and_note_field,
+   в СО/ПО sol_/pol_product_many2one — затова по съдържанието, с :has на
+   обвивката ..._cell, иначе забележката в СО отиваше ДО продукта, не под
+   него) и текстовото поле „Етикет“ (section_and_note_text,
    когато колоната „Продукт“ е скрита) са изключение — виж 🚨 по-долу.
    Изключват се ТУК с :not(), защото това правило е с по-висока
    специфичност от изключението долу и го биеше: описанието на два реда
    оставаше в 33px (Росен, 31.10.2026: „не се показва текста в етикета“). */
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .btn,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell
-    .o_field_widget:not(.o_field_product_label_section_and_note_field):not(.o_field_text) > * {
+    .o_field_widget:not(.o_field_product_label_section_and_note_field):not(:has(.o_field_product_label_section_and_note_cell)):not(.o_field_text) > * {
     max-height: var(--mcp-btn-h) !important;
 }
 .o_form_view .o_field_x2many .o_data_row .o_data_cell
-    .o_field_widget:not(.o_field_product_label_section_and_note_field):not(.o_field_text),
+    .o_field_widget:not(.o_field_product_label_section_and_note_field):not(:has(.o_field_product_label_section_and_note_cell)):not(.o_field_text),
 .o_form_view .o_field_x2many .o_data_row .o_data_cell
-    .o_field_widget:not(.o_field_product_label_section_and_note_field):not(.o_field_text) > div,
+    .o_field_widget:not(.o_field_product_label_section_and_note_field):not(:has(.o_field_product_label_section_and_note_cell)):not(.o_field_text) > div,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_many2one,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_many2one_selection,
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_input_dropdown,
@@ -1110,12 +1113,30 @@
     .o_field_widget.o_field_section_and_note_text.o_field_text:not(.o_field_invalid) {
     border-bottom: 0 !important;
 }
-.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_section_and_note_text textarea.o_input {
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_section_and_note_text textarea.o_input,
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_product_label_section_and_note_cell textarea.o_input {
     /* --mcp-list-line-height е без единица (1.5) ⇒ × 1em, иначе calc е невалиден */
     max-height: calc(5em * var(--mcp-list-line-height)) !important;
     box-shadow: none !important;
 }
 .o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_section_and_note_text > span {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden !important;
+}
+/* Забележката под продукта (СО/ПО/фактура) при четене е div.o_input —
+   пинът на .o_input:not(textarea) я заковаваше на btn-h с line-height
+   btn-h ⇒ вторият ред изчезваше. Същото като етикета: расте до 5 реда. */
+.o_form_view .o_field_x2many .o_data_row .o_data_cell .o_field_product_label_section_and_note_cell > div.o_input {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    line-height: var(--mcp-list-line-height) !important;
+    white-space: pre-wrap;
+    /* при четене е текст, не поле — без белия фон на .o_input върху
+       сивия (четен) ред */
+    background: transparent !important;
     display: -webkit-box !important;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
