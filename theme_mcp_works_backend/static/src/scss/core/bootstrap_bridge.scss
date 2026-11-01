@@ -34,3 +34,50 @@
 :root .text-bg-primary {
     color: var(--mcp-on-accent) !important; // !important: оригиналът .text-bg-primary е !important
 }
+
+/* Превключвателите (.form-switch): ядрото ги пали в $o-success (зелено),
+   топчето е бяло SVG с вграден цвят; а правилото за чекбоксовете в
+   widgets/boolean.scss (14×14 !important, `background` shorthand) свиваше
+   пистата в квадрат и триеше топчето. Тук — същият вид като в настройките
+   (views/settings.scss): писта 32×18, квадратно топче 14 на 2px от ръба.
+   По правилото на марката (ADR theme-mcp-configurator/0009): отметнатото е в
+   акцента с топче в --mcp-on-accent (бяло върху бордо, тъмно върху
+   пастелното синьо). SVG не чете CSS променливи ⇒ топчето е градиент.
+   A↔B вариантът (.o_switch_toggle) не е вкл./изкл. и остава на ядрото;
+   настройките имат свой превключвател с топче в ::after (settings.scss).
+   !important само там, където го има правилото за чекбоксовете. */
+:root .form-switch:not(.o_switch_toggle):not(.settings *):not(.o_setting_box *) input[type="checkbox"].form-check-input {
+    width: var(--mcp-sp-32) !important;
+    height: var(--mcp-sp-18) !important;
+    min-width: var(--mcp-sp-32);
+    max-width: var(--mcp-sp-32);
+    aspect-ratio: auto;
+    border: 0 !important;
+    border-radius: 0;
+    background-color: var(--mcp-rule-strong) !important;
+    background-image: linear-gradient(var(--mcp-surface), var(--mcp-surface));
+    background-size: var(--mcp-sp-14) var(--mcp-sp-14);
+    background-repeat: no-repeat;
+    background-position: left var(--mcp-sp-2) center;
+    box-shadow: none !important;
+    transition: background-position var(--mcp-t-fast), background-color var(--mcp-t-fast);
+
+    &:checked {
+        background-color: var(--mcp-accent) !important;
+        background-image: linear-gradient(var(--mcp-on-accent), var(--mcp-on-accent));
+        background-position: right var(--mcp-sp-2) center;
+
+        // тикчето на чекбокса (boolean.scss, ::after) не е за превключвател
+        &::after { content: none; }
+    }
+
+    &:focus-visible {
+        box-shadow: 0 0 0 var(--mcp-sp-2) var(--mcp-accent-soft) !important;
+    }
+}
+
+/* Разделителят на датите в чатъра/обсъждането (mail.DateSection) е
+   .text-muted + .opacity-50 ⇒ в тъмния под 3:1. Плътност 90 (Росен, 01.11.2026). */
+:root .o-mail-DateSection > span.opacity-50 {
+    opacity: 0.9 !important; // !important: оригиналът .opacity-50 е !important
+}
