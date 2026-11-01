@@ -1,12 +1,20 @@
 # Иконите o-experts
 
-Изходът на набора „o-experts“ (Настройки → Иконите на приложенията).
+Наборът „o-experts“ в Настройки → Иконите на приложенията.
 
-- `glyphs.mjs` — рисунките (мрежа 64×64, линия 3,5) и картата на приложенията
-- `build.mjs` — сглобява:
-  - `node build.mjs sprite ../../theme_mcp_works_backend/static/src/img/app_icons_oexperts.svg ../../theme_mcp_works_backend/static/src/webclient/app_icon/oxi_glyphs.js` — спрайта и списъка за темата
-  - `node build.mjs sheet` — листа за преглед (`sheet.html`, по `sheet.tpl.html`)
-  - `node build.mjs svgset <файл.svg>` — целия набор в един векторен файл, светъл и тъмен слой
+## Действащ: стил „на ръка“ (от 01.11.2026)
 
-Нова рисунка: добави я в `GLYPHS` под ключа на глифа от картата на темата
-(`app_icon.js`), после пусни `sprite`. Генерираните файлове не се пипат на ръка.
+- `pack/01..85` — пакетът на дизайнера (стандартните приложения на Odoo 19); не се пипат
+- `pack/86..107` — дорисуваните (нашите и липсващите), генерират се от `EXTRA` в `build_pack.py`
+- `python3 build_pack.py` — дорисува и сглобява темата:
+  `theme_mcp_works_backend/static/src/img/oxi/*.svg` и `webclient/app_icon/oxi_icons.js`
+  (приложение → икона по xmlid на коренното меню, модул → икона за табовете в Настройки)
+- `python3 build_pack.py --sheet <файл.html>` — + лист за преглед
+
+Ново приложение: икона в `EXTRA` (същата граматика: плочка 48, rx 11, k1/k2/k3 по групата,
+линия 3 в хартия, детайлът в лайм) и ред в `APPS`, после `build_pack.py`.
+
+## Архив: първата версия (остри ъгли, CSS променливи)
+
+`glyphs.mjs`, `build.mjs`, `sheet.tpl.html` — заменена от пакета; темата не я ползва.
+`node build.mjs svgset <файл.svg>` още сглобява векторния лист за справка.

@@ -6,9 +6,9 @@
     <!-- Плочка с глиф, ако приложението е в картата; иначе родната иконка
          на модула, а без нея — първата буква (както досега в Dash) -->
     <t t-name="theme_mcp_works_backend.McpAppIcon">
-        <!-- наборът o-experts: рисунката от спрайта, цветовете — CSS променливи -->
+        <!-- наборът o-experts: готовата плочка като картинка -->
         <span t-if="oxi" class="mcp_app_tile mcp_app_oxi">
-            <svg viewBox="0 0 64 64" aria-hidden="true"><use t-att-href="oxi"/></svg>
+            <img t-att-src="oxi" alt="" aria-hidden="true"/>
         </span>
         <span t-elif="glyph" class="mcp_app_tile" t-att-style="hueStyle">
             <i t-attf-class="fa {{ glyph }}" aria-hidden="true"/>
@@ -19,7 +19,7 @@
 
     <t t-name="theme_mcp_works_backend.McpModuleIcon">
         <span t-if="oxi" class="mcp_app_tile mcp_app_oxi d-none d-md-inline-flex">
-            <svg viewBox="0 0 64 64" aria-hidden="true"><use t-att-href="oxi"/></svg>
+            <img t-att-src="oxi" alt="" aria-hidden="true"/>
         </span>
         <span t-elif="entry" class="mcp_app_tile d-none d-md-inline-flex" t-att-style="hueStyle">
             <i t-attf-class="fa {{ entry[0] }}" aria-hidden="true"/>

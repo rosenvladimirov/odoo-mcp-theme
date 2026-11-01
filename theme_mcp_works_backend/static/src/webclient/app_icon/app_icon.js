@@ -4,17 +4,24 @@
 
 import { Component } from "@odoo/owl";
 import { session } from "@web/session";
-import { OXI_GLYPHS } from "./oxi_glyphs";
+import { OXI_APPS, OXI_MODULES } from "./oxi_icons";
 
-// спрайтът на набора o-experts (генериран от tools/oexperts_icons)
-const OXI_SPRITE = "/theme_mcp_works_backend/static/src/img/app_icons_oexperts.svg";
+// наборът o-experts: по един SVG на икона (tools/oexperts_icons/build_pack.py);
+// отделни файлове, защото филтрите „на ръка“ в тях не минават през <use>
+const OXI_DIR = "/theme_mcp_works_backend/static/src/img/oxi";
 
-// адресът на рисунката o-experts за глифа или null (друг избор / няма рисунка)
-function oxiHref(entry) {
-    if (session.mcp_app_icons !== "oexperts" || !entry || !OXI_GLYPHS.has(entry[0])) {
+// модул → икона: изричните (табовете в Настройки) + първото меню на модула
+const OXI_BY_MODULE = { ...OXI_MODULES };
+for (const [xmlid, name] of Object.entries(OXI_APPS)) {
+    OXI_BY_MODULE[xmlid.split(".")[0]] ??= name;
+}
+
+// адресът на иконата o-experts или null (друг избор / няма икона)
+function oxiSrc(name) {
+    if (session.mcp_app_icons !== "oexperts" || !name) {
         return null;
     }
-    return `${OXI_SPRITE}#oxi-${entry[0].slice(3)}`;
+    return `${OXI_DIR}/${name}.svg`;
 }
 
 /* Иконките на приложенията, рисувани от темата.
@@ -171,7 +178,8 @@ export class McpModuleIcon extends Component {
     }
 
     get oxi() {
-        return oxiHref(this.entry);
+        const module = MODULE_ALIASES[this.props.module] || this.props.module;
+        return oxiSrc(OXI_BY_MODULE[module]);
     }
 
     get hueStyle() {
@@ -197,7 +205,7 @@ export class McpAppIcon extends Component {
     }
 
     get oxi() {
-        return oxiHref(this.entry);
+        return oxiSrc(OXI_APPS[this.props.app.xmlid]);
     }
 
     get hueStyle() {
