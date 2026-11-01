@@ -42,6 +42,29 @@
     }
 }
 
+/* „Document Layout“ в режим за разработчици: етикетът „Layout“ на
+   base_setup е в колона col-3 и с дългия превод („Редактирай изгледа“) се
+   застъпва със стойността (Ledger). Вместо текст — иконка „тефтер с молив“
+   (FA4 pencil-square-o, \f044); текстът остава в DOM за екранните четци
+   (Росен, 01.11.2026). */
+#document_layout_setting label.o_light_label[for] {
+    width: auto;
+    flex: 0 0 auto;
+    max-width: none;
+    padding-right: var(--mcp-sp-8);
+    // !important: етикетите в настройките носят font-size/line-height !important
+    font-size: 0 !important;
+    line-height: 1 !important;
+    vertical-align: middle;
+
+    &::before {
+        content: "\f044";
+        font-family: "FontAwesome";
+        font-size: var(--mcp-fs-14, 14px);
+        color: var(--mcp-ink-3);
+    }
+}
+
 /* ── Settings sidebar (section list) ────────────────────────── */
 .settings_tab,
 .o_setting_search_panel,
