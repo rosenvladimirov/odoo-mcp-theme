@@ -1,0 +1,116 @@
+<title>Икони o-experts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Оформление: каталог по групи — всяка група е лента с два екрана (светъл и тъмен пресет) един до друг */
+:root {
+    --bg: #F5F3EE;
+    --fg: #181A1D;
+    --fg-2: #4A4F56;
+    --rule: rgba(24, 26, 29, 0.14);
+    --card: #FFFFFF;
+    --mark: #721C32;
+    --scr-light: #F3F6F9;
+    --scr-light-fg: #181A1D;
+    --scr-dark: #141A20;
+    --scr-dark-fg: #E6EDF3;
+    --f-ui: "Golos Text", "Segoe UI", system-ui, sans-serif;
+    --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #111214; --fg: #EEEBE4; --fg-2: #A9ADB3;
+        --rule: rgba(238, 235, 228, 0.14); --card: #1B1D20; --mark: #B6F500;
+        color-scheme: dark;
+    }
+}
+:root[data-theme="dark"] {
+    --bg: #111214; --fg: #EEEBE4; --fg-2: #A9ADB3;
+    --rule: rgba(238, 235, 228, 0.14); --card: #1B1D20; --mark: #B6F500;
+    color-scheme: dark;
+}
+/* плочката: светлият пресет (Б) и тъмният (А) — само променливи */
+.screen.light {
+    --oxi-tile: #E8EFF5; --oxi-edge: #721C32; --oxi-relief: #C6D6E3;
+    --oxi-ink: #181A1D; --oxi-acc: #721C32; --oxi-hl: transparent;
+    background: var(--scr-light); color: var(--scr-light-fg);
+}
+.screen.dark {
+    --oxi-tile: #181A1D; --oxi-edge: #303439; --oxi-relief: #303439;
+    --oxi-ink: #F5F3EE; --oxi-acc: #B6F500; --oxi-hl: transparent;
+    background: var(--scr-dark); color: var(--scr-dark-fg);
+}
+
+body { background: var(--bg); color: var(--fg); font-family: var(--f-ui); font-size: 15px; line-height: 1.55; }
+.page {
+    max-width: 1240px; margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 40px 64px;
+    display: grid; gap: 40px;
+}
+.head { display: grid; gap: 12px; max-width: 780px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand svg { width: 40px; height: 40px; flex: 0 0 auto; }
+.brand b { font-size: 15px; font-weight: 700; letter-spacing: 0.02em; }
+h1 { margin: 0; font-size: clamp(30px, 5vw, 46px); line-height: 1.08; font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; }
+.lede { margin: 0; color: var(--fg-2); max-width: 66ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; }
+.facts span { font: 500 12px var(--f-mono); padding: 4px 10px; border: 1px solid var(--rule); background: var(--card); font-variant-numeric: tabular-nums; }
+
+.grp { display: grid; gap: 12px; }
+.grp h2 { margin: 0; font-size: 20px; font-weight: 700; display: flex; align-items: baseline; gap: 10px; }
+.grp h2 small { font: 500 13px var(--f-mono); color: var(--mark); }
+.screens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.screen { padding: 20px 16px 16px; min-width: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 18px 6px; }
+.app { display: grid; justify-items: center; align-content: start; gap: 7px; text-align: center; min-width: 0; }
+.app svg { width: 100%; max-width: 64px; height: auto; display: block; }
+.app span { font-size: 12px; line-height: 1.2; font-weight: 500; overflow-wrap: anywhere; }
+
+.how { border-top: 1px solid var(--rule); padding-top: 24px; display: grid; gap: 10px; max-width: 780px; }
+.how h2 { margin: 0; font-size: 20px; }
+.how dl { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 18px; font-size: 14px; }
+.how dt { font: 500 12px var(--f-mono); color: var(--fg-2); padding-top: 2px; }
+.how dd { margin: 0; }
+
+@media (max-width: 820px) { .screens { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 420px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .how dl { grid-template-columns: minmax(0, 1fr); } }
+</style>
+
+<main class="page">
+    <header class="head">
+        <div class="brand">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M30 6A26 26 0 0 0 6 30h10a16 16 0 0 1 14-14z" fill="#721C32"/>
+                <path d="M6 34a26 26 0 0 0 24 24V48a16 16 0 0 1-14-14z" fill="#B6F500"/>
+                <path d="M34 6a26 26 0 0 1 0 52V48a16 16 0 0 0 0-32z" fill="currentColor"/>
+            </svg>
+            <b>o-experts · иконите на приложенията</b>
+        </div>
+        <h1>Целият набор: <!--N_APPS--> приложения</h1>
+        <p class="lede">
+            Всички приложения на Odoo 19 с плочка на началния екран — CE, Enterprise, OCA и нашите.
+            На светлия пресет плочката е бяла с лек синкав оттенък, бордова рамка и бордов детайл, на тъмния е мастилена
+            с лаймов детайл. Една рисунка, двата вида идват от CSS променливи.
+            Задръж мишката над плочка, за да видиш менюто ѝ.
+        </p>
+        <div class="facts">
+            <span><!--N_APPS--> приложения</span><span><!--N_GLYPHS--> рисунки</span>
+            <span>мрежа 64 × 64</span><span>линия 3,5</span><span>остри ъгли</span>
+        </div>
+    </header>
+
+<!--SECTIONS-->
+
+    <section class="how">
+        <h2>Как влиза в темата</h2>
+        <dl>
+            <dt>набор</dt><dd>нов избор „o-experts“ в Настройки → Икони на приложенията, до тези на Odoo и Phosphor</dd>
+            <dt>файл</dt><dd>един SVG спрайт с по един символ на рисунка; плочката го вика с &lt;use&gt;</dd>
+            <dt>цвят</dt><dd>плочката, линията и детайлът са CSS променливи — следват светлия и тъмния режим</dd>
+            <dt>ключ</dt><dd>глифът от картата на темата; ново приложение в картата получава рисунката си, ако тя съществува, иначе пази глифа</dd>
+        </dl>
+    </section>
+</main>

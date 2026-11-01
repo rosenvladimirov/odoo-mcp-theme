@@ -31,14 +31,17 @@ class ResConfigSettings(models.TransientModel):
     mcp_app_icons = fields.Selection(
         selection=[
             ("theme", "Drawn by the theme"),
+            ("oexperts", "o-experts set"),
             ("odoo", "Odoo / module icons"),
         ],
         string="App icons",
         default="theme",
         config_parameter="theme_mcp_works_backend.app_icons",
         help="Icons of the apps in the Dash and the home menu. The theme's "
-             "icons follow the selected preset and dark mode; apps the theme "
-             "does not know keep their own icon. Applied after reloading.",
+             "icons follow the selected preset and dark mode; the o-experts "
+             "set is drawn in the brand colours (light tile with a wine frame, "
+             "ink tile with a lime detail in dark mode); apps the theme does "
+             "not know keep their own icon. Applied after reloading.",
     )
 
     mcp_icon_set = fields.Selection(

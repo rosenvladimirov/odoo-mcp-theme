@@ -6,7 +6,11 @@
     <!-- Плочка с глиф, ако приложението е в картата; иначе родната иконка
          на модула, а без нея — първата буква (както досега в Dash) -->
     <t t-name="theme_mcp_works_backend.McpAppIcon">
-        <span t-if="glyph" class="mcp_app_tile" t-att-style="hueStyle">
+        <!-- наборът o-experts: рисунката от спрайта, цветовете — CSS променливи -->
+        <span t-if="oxi" class="mcp_app_tile mcp_app_oxi">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><use t-att-href="oxi"/></svg>
+        </span>
+        <span t-elif="glyph" class="mcp_app_tile" t-att-style="hueStyle">
             <i t-attf-class="fa {{ glyph }}" aria-hidden="true"/>
         </span>
         <img t-elif="props.app.webIconData" t-att-class="props.imgClass" t-att-src="props.app.webIconData" t-att-alt="props.app.name"/>
@@ -14,7 +18,10 @@
     </t>
 
     <t t-name="theme_mcp_works_backend.McpModuleIcon">
-        <span t-if="entry" class="mcp_app_tile d-none d-md-inline-flex" t-att-style="hueStyle">
+        <span t-if="oxi" class="mcp_app_tile mcp_app_oxi d-none d-md-inline-flex">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><use t-att-href="oxi"/></svg>
+        </span>
+        <span t-elif="entry" class="mcp_app_tile d-none d-md-inline-flex" t-att-style="hueStyle">
             <i t-attf-class="fa {{ entry[0] }}" aria-hidden="true"/>
         </span>
         <span t-else="" class="icon d-none d-md-block" t-attf-style="background : url('{{props.imgurl}}') no-repeat center;background-size:contain;"/>

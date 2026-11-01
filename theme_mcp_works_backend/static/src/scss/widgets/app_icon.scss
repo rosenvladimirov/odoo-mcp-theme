@@ -25,6 +25,41 @@
         line-height: 1;
     }
 }
+/* Наборът o-experts (Настройки → Иконите на приложенията): плочката е в
+   рисунката (спрайтът, tools/oexperts_icons), тук са само цветовете ѝ.
+   Светло: синкаво бяла плочка, рамка и детайл в бордо; тъмно: мастилена
+   плочка с графитен ръб, знакът в хартия, детайлът в лайм (Росен, 01.11.2026).
+   Остри ъгли като марката; посочването не сменя тинта — рисунката е готова. */
+:root {
+    --oxi-tile: #E8EFF5;
+    --oxi-edge: #721C32;
+    --oxi-relief: #C6D6E3;
+    --oxi-ink: #181A1D;
+    --oxi-acc: #721C32;
+    --oxi-hl: transparent;
+}
+:root[data-mcp-mode="dark"],
+[data-mcp-mode="dark"] {
+    --oxi-tile: #181A1D;
+    --oxi-edge: #303439;
+    --oxi-relief: #303439;
+    --oxi-ink: #F5F3EE;
+    --oxi-acc: #B6F500;
+}
+.mcp_app_tile.mcp_app_oxi,
+a:hover > .mcp_app_tile.mcp_app_oxi,
+.is-active > .mcp_app_tile.mcp_app_oxi {
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+
+    > svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+}
+
 /* посочване / активно приложение — по-плътен тинт, глифът остава */
 a:hover > .mcp_app_tile,
 .is-active > .mcp_app_tile {

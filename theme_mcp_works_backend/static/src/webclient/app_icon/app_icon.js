@@ -4,6 +4,18 @@
 
 import { Component } from "@odoo/owl";
 import { session } from "@web/session";
+import { OXI_GLYPHS } from "./oxi_glyphs";
+
+// спрайтът на набора o-experts (генериран от tools/oexperts_icons)
+const OXI_SPRITE = "/theme_mcp_works_backend/static/src/img/app_icons_oexperts.svg";
+
+// адресът на рисунката o-experts за глифа или null (друг избор / няма рисунка)
+function oxiHref(entry) {
+    if (session.mcp_app_icons !== "oexperts" || !entry || !OXI_GLYPHS.has(entry[0])) {
+        return null;
+    }
+    return `${OXI_SPRITE}#oxi-${entry[0].slice(3)}`;
+}
 
 /* Иконките на приложенията, рисувани от темата.
    Ключът е xmlid-ът на коренното меню (app.xmlid от menu service) — така
@@ -111,6 +123,12 @@ export const APP_ICONS = {
     // ── o-experts ────────────────────────────────────────────────
     "oexperts_fsm.menu_fsm_root": ["fa-map-marker", "ops"],
     "oexperts_station.menu_station_root": ["fa-tablet", "ops"],
+    "lunch.menu_lunch": ["fa-coffee", "work"],
+    "hr_attendance_access_control.menu_lpr_camera_main": ["fa-video-camera", "people"],
+    "l10n_bg_ai_billing.menu_ai_billing_root": ["fa-magic", "finance"],
+    // ── OCA ──────────────────────────────────────────────────────
+    "document_knowledge.menu_document_root": ["fa-book", "work"],
+    "mgmtsystem.menu_mgmtsystem_root": ["fa-sitemap", "ops"],
 };
 
 /* Табовете в Настройки носят техническото име на модула (<app name="…">),
@@ -152,6 +170,10 @@ export class McpModuleIcon extends Component {
         return mcpModuleIconEntry(this.props.module);
     }
 
+    get oxi() {
+        return oxiHref(this.entry);
+    }
+
     get hueStyle() {
         return hueStyleOf(this.entry);
     }
@@ -172,6 +194,10 @@ export class McpAppIcon extends Component {
 
     get glyph() {
         return this.entry && this.entry[0];
+    }
+
+    get oxi() {
+        return oxiHref(this.entry);
     }
 
     get hueStyle() {
