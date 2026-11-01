@@ -71,6 +71,17 @@
         &::after { content: none; }
     }
 
+    // Ховерът на чекбокса (boolean.scss) е `background: … !important` —
+    // пълният запис трие и градиента, тоест топчето, и пистата побелява.
+    // Връщаме пистата и топчето при ховер на изключения (Росен, 01.11.2026).
+    &:hover:not(:checked) {
+        background-color: var(--mcp-rule-strong) !important;
+        background-image: linear-gradient(var(--mcp-surface), var(--mcp-surface)) !important;
+        background-size: var(--mcp-sp-14) var(--mcp-sp-14) !important;
+        background-repeat: no-repeat !important;
+        background-position: left var(--mcp-sp-2) center !important;
+    }
+
     &:focus-visible {
         box-shadow: 0 0 0 var(--mcp-sp-2) var(--mcp-accent-soft) !important;
     }
