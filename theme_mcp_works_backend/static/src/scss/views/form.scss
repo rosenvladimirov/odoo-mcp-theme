@@ -795,6 +795,16 @@
 .o_form_view .o_field_x2many .o_x2m_control_panel:empty {
     display: none !important;
 }
+/* Пейджърът (над 20/40 реда) пълни панела. Ядрото дърпа първия списък в
+   таба с margin-top: -16px към лентата на табовете и разчита на mb-4 на
+   панела; без него таблицата покриваше пейджъра наполовина (Росен,
+   ErpNet.FP История). При видим панел списъкът остава под него. */
+.o_form_view .o_field_x2many .o_x2m_control_panel:not(:empty) {
+    margin-bottom: var(--mcp-sp-8) !important;
+}
+.o_form_view .o_field_x2many .o_x2m_control_panel:not(:empty) + .o_list_renderer {
+    margin-top: 0 !important;
+}
 
 /* ── One2many list inside a form (Rosen #2: "tragic") ───────────
    The nested renderer must NOT inherit the page-list panel halo /
