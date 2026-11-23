@@ -171,7 +171,11 @@ function sizeOne(btn, H) {
 const TRUNCATABLE =
     ".o_form_statusbar .o_statusbar_buttons .btn," +
     ".o_modules_kanban .o_kanban_record footer .btn," +
-    ".o_kanban_record .btn.btn-primary, .o_kanban_record .btn.btn-secondary";
+    ".o_kanban_record .btn.btn-primary, .o_kanban_record .btn.btn-secondary," +
+    // Chatter-ът беше изпуснат: „Изпратете съобщение“ е с трета повече знаци
+    // от „Send message“ и се скъсява на български, но оставаше без tooltip —
+    // скъсен надпис без подсказка е по-лош от дълъг.
+    ".o-mail-Chatter-topbar .btn:not(.btn-link)";
 
 /* Truncated action buttons expose the full label as a native `title` so the
    browser shows a tooltip (Rosen: тоолтип на скъсените надписи). Only OUR

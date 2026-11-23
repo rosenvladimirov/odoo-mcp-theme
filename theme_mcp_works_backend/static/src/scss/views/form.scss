@@ -518,11 +518,18 @@
     border: 0 !important;
     box-shadow: none !important;
     padding: 0 !important;
+    /* 🚨 Височината: правилото за smart бутоните по-горе важи само за
+       :has(.o_stat_info) / :has(.o_stat_text), а „Повече“ няма нито едното —
+       обвивката му е гола .oe_stat_button. Без това то излиза по-ниско от
+       съседите си и редът изглежда счупен. */
+    min-height: var(--mcp-btn-h);
+    align-self: stretch;
 }
 .o_form_view .o-form-buttonbox .o_button_more {
     /* пълни обвивката (иначе стои центриран в нея с празно поле отляво) */
     width: 100%;
     align-self: stretch;
+    min-height: var(--mcp-btn-h);
     background: var(--mcp-bg) !important;
     border: var(--mcp-bw-1) solid var(--mcp-control-border) !important;
     border-radius: var(--mcp-r-control) !important;
@@ -1411,6 +1418,27 @@
         min-width: 0 !important;
         width: auto !important;
         padding: var(--mcp-sp-5) var(--mcp-sp-10) !important;
+        /* 🚨 Без това дълъг етикет („Изпратете съобщение“ на български е с
+           трета повече знаци от „Send message“) се пренася на два реда и
+           бутонът израства над съседите си — зададената height не го спира,
+           защото съдържанието я надвишава. Режем на един ред с многоточие;
+           целият текст остава достъпен като native tooltip (title), който
+           button_sizing.js вече слага на скъсените. */
+        max-width: var(--mcp-chatter-btn-max-w, 14rem);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-flex !important;
+        align-items: center !important;
+    }
+    /* Самият етикет също трябва да се реже — иначе flex контейнерът го
+       оставя да излезе извън бутона, вместо да го скъси. */
+    .o-mail-Chatter-topbar .btn > span,
+    .o-mail-Chatter-topbar .btn .o-mail-Chatter-topbar-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 0;
     }
     .o-mail-Chatter-topbar .btn-link {
         padding: var(--mcp-sp-5) var(--mcp-sp-4) !important;
