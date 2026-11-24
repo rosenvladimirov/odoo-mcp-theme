@@ -522,14 +522,24 @@
        :has(.o_stat_info) / :has(.o_stat_text), а „Повече“ няма нито едното —
        обвивката му е гола .oe_stat_button. Без това то излиза по-ниско от
        съседите си и редът изглежда счупен. */
-    min-height: var(--mcp-btn-h);
-    align-self: stretch;
+    /* 🚨 !important е ЗАДЪЛЖИТЕЛНО: обвивката е .btn и попада в обхвата на
+       „.o_control_panel .btn.btn-secondary { align-self: center !important }“.
+       Без него съседните smart бутони се разтягат до 40px, а „Повече“ остава
+       на своите 33 и редът изглежда счупен. Измерено в браузъра, не предположено. */
+    min-height: var(--mcp-btn-h) !important;
+    align-self: stretch !important;
+    /* 🚨 И height: auto. „.o_control_panel .btn:not(.btn-primary)“ дава
+       height: var(--mcp-btn-h) !important — ФИКСИРАНА височина, която бие
+       align-self: stretch. Съседните smart бутони стигат 39.6px заради
+       своя padding; „Повече“ оставаше заковано на 33. Измерено в браузъра. */
+    height: auto !important;
 }
 .o_form_view .o-form-buttonbox .o_button_more {
     /* пълни обвивката (иначе стои центриран в нея с празно поле отляво) */
     width: 100%;
-    align-self: stretch;
-    min-height: var(--mcp-btn-h);
+    height: 100% !important;          /* пълни разтегнатата обвивка */
+    align-self: stretch !important;
+    min-height: var(--mcp-btn-h) !important;
     background: var(--mcp-bg) !important;
     border: var(--mcp-bw-1) solid var(--mcp-control-border) !important;
     border-radius: var(--mcp-r-control) !important;
