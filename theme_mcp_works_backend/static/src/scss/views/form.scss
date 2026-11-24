@@ -534,6 +534,17 @@
        своя padding; „Повече“ оставаше заковано на 33. Измерено в браузъра. */
     height: auto !important;
 }
+/* 🚨 Специфичността, не !important, решава тук. Насреща стои
+   „.o_control_panel .btn:not(.btn-primary):not(.o_optional_columns_dropdown_toggle)
+    { height: var(--mcp-btn-h) !important }“ = 0,4,0. Моето правило беше 0,3,0 и
+   губеше, затова ВЪТРЕШНИЯТ бутон оставаше 33px, докато обвивката вече беше 40
+   и отвън изглеждаше, че поправката не е хванала. Пет класа = 0,5,0 и печели.
+   Мерено в браузъра: обвивка 40 / бутон 33 — разликата се вижда само отвътре. */
+.o_form_view .o-form-buttonbox .oe_stat_button > .o_button_more.btn {
+    height: 100% !important;
+    min-height: var(--mcp-btn-h) !important;
+    align-self: stretch !important;
+}
 .o_form_view .o-form-buttonbox .o_button_more {
     /* пълни обвивката (иначе стои центриран в нея с празно поле отляво) */
     width: 100%;
